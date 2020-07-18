@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.3.1.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'com.intershop.gradle.javacc' version '4.0.0'
 }
 
 group = 'de.compilerbau'
@@ -22,4 +23,15 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+javacc {
+	// configuration container for all javacc configurations
+	configs {
+		template {
+			inputFile = file('C:\\Directory42\\github\\compilerbau\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkScannerParser.jj')
+			packageName = 'de.compilerbau.NewAwkCompiler'
+			lookahead = '2'
+		}
+	}
 }

@@ -1,41 +1,27 @@
-// 1. Options
-
-// 2. Rahmen für Scanner /Parser
-
 PARSER_BEGIN(NewAwkParser)
 
 public class NewAwkParser {
  public static void main(String[] args) {
-        /*try {
-            new SyntaxChecker(new java.io.StringReader(args[0])).S();
-            System.out.println("Syntax is okay");
-        } catch (Throwable e) {
-            // Catching Throwable is ugly but JavaCC throws Error objects!
-            System.out.println("Syntax check failed: " + e.getMessage());
-        }*/
-
         NewAwkParser parser = new NewAwkParser(System.in);
         Token t;
         do {
             t = scanner.getNextToken();
             switch(t.kind) {
-            case KlammerAuf:
-            System.out.println("KlammerAuf"); break;
-            case KlammerZu:
-            System.out.println("KlammerZu"); break;
-            case Bezeichner:
-            System.out.println("Bezeichner"); break;
-            case TypKonverter:
-            System.out.println("TypKonverter"); break;
-            case EOF:
-            System.out.println("EOF"); break;
+                case KlammerAuf:
+                System.out.println("KlammerAuf"); break;
+                case KlammerZu:
+                System.out.println("KlammerZu"); break;
+                case Bezeichner:
+                System.out.println("Bezeichner"); break;
+                case TypKonverter:
+                System.out.println("TypKonverter"); break;
+                case EOF:
+                System.out.println("EOF"); break;
+            }
         } while (t.kind != EOF);
-
-    }
+  }
 }
 PARSER_END(NewAwkParser)
-
-// 3. Regeln (4 Typen: Lexemdefinitionen, Syntax-Regeln, Java-Code und TokenManager-Definitionen)
 TOKEN : {
 <#Alpha: ["a"-"z","A"-"Z"]>
 | <#Digit: ["0"-"9"]>
@@ -50,9 +36,10 @@ TOKEN : {
 | <PlusSymbol: "+">
 | <MinusSymbol: "-">
 | <Multiplikation: "*">
-| <Division: "/{">
+| <Division: "/">
 | <ModuloOperator: "%">
 | <Exponentiation: "^">
+| <Boolean: ("true"|"false")>
 }
 
 SKIP : {
