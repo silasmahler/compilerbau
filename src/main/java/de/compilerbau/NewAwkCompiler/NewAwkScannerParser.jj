@@ -40,6 +40,12 @@ TOKEN : {
 | <ModuloOperator: "%">
 | <Exponentiation: "^">
 | <Boolean: ("true"|"false")>
+| <Equal_Op: "==">
+| <Not_Equal_Op: "!=">
+| <Greater_Equal_Op: ">=">
+| <Smaller_Equal_Op: "<=">
+| <Greater_Op: ">">
+| <Smaller_Op: "<">
 }
 
 SKIP : {
