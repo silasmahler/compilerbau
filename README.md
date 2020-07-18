@@ -1,6 +1,6 @@
-Compilerbau
+# Compilerbau
 
-1. Lexikalische Analyse lex, jlex, javaCC
+## 1. Lexikalische Analyse lex, jlex, javaCC
 
 1.1 Erkennen von "Grundsymbolen", genannt Token im als Zeichenfolge
 vorliegenden Programm (oder anderen Texten)
@@ -16,7 +16,7 @@ Token in gängigen Programmiersprachen sind z.B.
 – …
 
 
-2. Syntax-Analyse javaCC, yacc
+## 2. Syntax-Analyse javaCC, yacc
 
 2.1 Überprüfen der Struktur eines Programms (oder anderer Texte)
 
@@ -27,7 +27,7 @@ zunächst (meist implizit) in einen Syntaxbaum transformiert
 erzeugt
 
 
-3. Semantische Analyse
+## 3. Semantische Analyse
 
 3.1 Sammeln weiterer Informationen die,
 -  in der Syntaxanalyse nicht erfasste Korrektheitsaspekte betreffen
@@ -39,9 +39,9 @@ erzeugt
 – Typanpassungsoperationen
 
 
-4. Fehlerbehandlung
+## 4. Fehlerbehandlung
 
-5. Codeerzeugung/Interpreter llvm, asm, Interpreter (AST, Zwischencode), C++, Java, Java-Script
+## 5. Codeerzeugung/Interpreter llvm, asm, Interpreter (AST, Zwischencode), C++, Java, Java-Script
 
 – Stackmaschinen (Bspl. Java-Bytecode)
 
