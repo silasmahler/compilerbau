@@ -14,7 +14,9 @@ public class NewAwkParser {
                 case Bezeichner:
                 System.out.println("Bezeichner"); break;
                 case TypKonverter:
-                System.out.println("TypKonverter"); break;
+                System.out.println("TypKonverter"); break;                case TypKonverter:
+                case Schluesselwort:
+                System.out.println("Schluesselwort"); break;
                 case EOF:
                 System.out.println("EOF"); break;
             }
