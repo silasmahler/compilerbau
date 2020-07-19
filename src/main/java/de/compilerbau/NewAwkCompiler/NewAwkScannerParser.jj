@@ -23,10 +23,10 @@ public class NewAwkParser {
 }
 PARSER_END(NewAwkParser)
 TOKEN : {
-<#Alpha: ["a"-"z","A"-"Z"]>
+<#Alphabet: ["a"-"z","A"-"Z"]>
 | <#Digit: ["0"-"9"]>
 | <#Expo: ["e","E"]("+"|"-")?(<Digit>)+>
-| <Bezeichner: <Alpha>(<Digit>|<Alpha>)*>
+| <Bezeichner: <Alphabet>(<Digit>|<Alphabet>)*>
 | <Schluesselwort: ("int"|"double"|"char"|"boolean"|"String")>
 | <TypKonverter: "!">
 | <KlammerAuf: "(">
