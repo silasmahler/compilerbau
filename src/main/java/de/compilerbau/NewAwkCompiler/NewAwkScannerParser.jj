@@ -29,7 +29,8 @@ TOKEN : {
 | <#Digit: ["0"-"9"]>
 | <#Expo: ["e","E"]("+"|"-")?(<Digit>)+>
 | <Bezeichner: <Alphabet>(<Digit>|<Alphabet>)*>
-| <Schluesselwort: ("int"|"double"|"char"|"boolean"|"String")>
+| <Datentyp: ("int"|"double"|"char"|"boolean"|"String")>
+| <Schluesselwort: ("if"|"else"|"while"|"do"|"return"|"void"|"break"|"switch"|"case"|"for")>
 | <TypKonverter: "!">
 | <KlammerAuf: "(">
 | <KlammerZu: ")">
