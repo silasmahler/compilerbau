@@ -27,6 +27,7 @@ TOKEN : {
 | <#Digit: ["0"-"9"]>
 | <#Expo: ["e","E"]("+"|"-")?(<Digit>)+>
 | <Bezeichner: <Alpha>(<Digit>|<Alpha>)*>
+| <Schluesselwort: ("int"|"double"|"char"|"boolean"|"String")>
 | <TypKonverter: "!">
 | <KlammerAuf: "(">
 | <KlammerZu: ")">
@@ -40,12 +41,14 @@ TOKEN : {
 | <ModuloOperator: "%">
 | <Exponentiation: "^">
 | <Boolean: ("true"|"false")>
-| <Equal_Op: "==">
-| <Not_Equal_Op: "!=">
-| <Greater_Equal_Op: ">=">
-| <Smaller_Equal_Op: "<=">
-| <Greater_Op: ">">
-| <Smaller_Op: "<">
+| <Equal: "==">
+| <NotEqual: "!=">
+| <GreaterOrEqual: ">=">
+| <SmallerOrEqual: "<=">
+| <Greater: ">">
+| <Smaller: "<">
+| <Semicolon: ";">
+| <Zuweisung: "=">
 }
 
 SKIP : {
