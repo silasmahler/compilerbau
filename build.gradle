@@ -31,8 +31,9 @@ javacc {
 	// https://github.com/IntershopCommunicationsAG/javacc-gradle-plugin
 	configs {
 		template {
-			inputFile = file('C:\\Directory42\\github\\compilerbau\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkScannerParser.jj')
-			packageName = 'de.compilerbau.NewAwkCompiler'
+			inputFile = file('.\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkScannerParser.jj')
+			packageName = 'de.compilerbau.NewAwkCompiler.generated'
+			outputDir = file('.\\src\\main\\java\\')
 			lookahead = '1'
 			jdkVersion = '1.8'
 		}
