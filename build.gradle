@@ -31,7 +31,7 @@ javacc {
 	// https://github.com/IntershopCommunicationsAG/javacc-gradle-plugin
 	configs {
 		template {
-			inputFile = file('.\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkScannerParser.jj')
+			inputFile = file('.\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkParser.jj')
 			packageName = 'de.compilerbau.NewAwkCompiler.generated'
 			outputDir = file('.\\src\\main\\java\\')
 			lookahead = '1'

@@ -9,35 +9,13 @@ import de.compilerbau.NewAwkCompiler.generated.Token;
 
 
 public class NewAwkParser implements NewAwkParserConstants {
- public static void main(String[] args) {
-        NewAwkParser parser = new NewAwkParser(System.in);
-        Token t;
-        do {
-            t = parser.getNextToken();
-            switch(t.kind) {
-                case KlammerAuf:
-                System.out.println("KlammerAuf"); break;
-                case KlammerZu:
-                System.out.println("KlammerZu"); break;
-                case Bezeichner:
-                System.out.println("Bezeichner"); break;
-                case TypKonverter:
-                System.out.println("TypKonverter"); break;
-                case Schluesselwort:
-                System.out.println("Schluesselwort"); break;
-                case EOF:
-                System.out.println("EOF"); break;
-            }
-        } while (t.kind != EOF);
-  parser = new NewAwkParser(new StringReader("int main(String[] args) { \n" +
-                                                  "int x = 5; \n" +
-                                                  "return x; \n" +
-                                              "} \n" +
-                                              "int y = 7;")).parseFile();
-  }
+ public static void main(String[] args) throws ParseException, TokenMgrError {
+     NewAwkParser parser = new NewAwkParser(System.in);
 
-  static final public List<String> parseFile() throws ParseException {Token token;
-                List<String> names = new ArrayList<String>();
+     }
+
+  static final public void Start() throws ParseException {
+    jj_consume_token(IntegerLiteral);
     label_1:
     while (true) {
       if (jj_2_1(49)) {
@@ -45,12 +23,10 @@ public class NewAwkParser implements NewAwkParserConstants {
       } else {
         break label_1;
       }
-      token = jj_consume_token(NAME);
-names.add(token.toString());
+      jj_consume_token(PlusSymbol);
+      jj_consume_token(IntegerLiteral);
     }
     jj_consume_token(0);
-{if ("" != null) return names;}
-    throw new Error("Missing return statement in function");
 }
 
   static private boolean jj_2_1(int xla)
@@ -63,7 +39,8 @@ names.add(token.toString());
 
   static private boolean jj_3_1()
  {
-    if (jj_scan_token(NAME)) return true;
+    if (jj_scan_token(PlusSymbol)) return true;
+    if (jj_scan_token(IntegerLiteral)) return true;
     return false;
   }
 
