@@ -1,5 +1,13 @@
 PARSER_BEGIN(NewAwkParser)
 
+package de.compilerbau.NewAwkCompiler.generated;
+
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import de.compilerbau.NewAwkCompiler.generated.Token;
+
+
 public class NewAwkParser {
  public static void main(String[] args) {
         NewAwkParser parser = new NewAwkParser(System.in);
@@ -21,9 +29,20 @@ public class NewAwkParser {
                 System.out.println("EOF"); break;
             }
         } while (t.kind != EOF);
+  parser = new NewAwkParser(new StringReader("int main(String[] args) { \n" +
+                                                  "int x = 5; \n" +
+                                                  "return x; \n" +
+                                              "} \n" +
+                                              "int y = 7;")).parseFile();
   }
 }
 PARSER_END(NewAwkParser)
+SKIP : {
+<Whitespace: " ">
+| <Tab: "\t">
+| <Newline: "\n">
+| <CarriageReturn: "\r">
+}
 TOKEN : {
 <#Alphabet: ["a"-"z","A"-"Z"]>
 | <#Digit: ["0"-"9"]>
@@ -52,11 +71,16 @@ TOKEN : {
 | <Smaller: "<">
 | <Semicolon: ";">
 | <Zuweisung: "=">
+| <NAME: (["a"-"z", "A"-"Z"])+>
 }
 
-SKIP : {
-<Whitespace: " ">
-| <Tab: "\t">
-| <Newline: "\n">
-}
+List<String> parseFile() :
+	{
+		Token token;
+		List<String> names = new ArrayList<String>();
+	}
+	{
+		( token=<NAME> { names.add(token.toString()); } )*
+		<EOF> { return names; }
+	}
 
