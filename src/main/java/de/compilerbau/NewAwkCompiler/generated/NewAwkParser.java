@@ -11,22 +11,29 @@ import de.compilerbau.NewAwkCompiler.generated.Token;
 public class NewAwkParser implements NewAwkParserConstants {
  public static void main(String[] args) throws ParseException, TokenMgrError {
      NewAwkParser parser = new NewAwkParser(System.in);
+     parser.start();
 
      }
 
-  static final public void Start() throws ParseException {
-    jj_consume_token(IntegerLiteral);
-    label_1:
-    while (true) {
-      if (jj_2_1(49)) {
-        ;
-      } else {
-        break label_1;
-      }
-      jj_consume_token(PlusSymbol);
+  static final public void start() throws ParseException {
+    trace_call("start");
+    try {
+
       jj_consume_token(IntegerLiteral);
+      label_1:
+      while (true) {
+        if (jj_2_1(49)) {
+          ;
+        } else {
+          break label_1;
+        }
+        jj_consume_token(PlusSymbol);
+        jj_consume_token(IntegerLiteral);
+      }
+      jj_consume_token(0);
+    } finally {
+      trace_return("start");
     }
-    jj_consume_token(0);
 }
 
   static private boolean jj_2_1(int xla)
@@ -68,6 +75,9 @@ public class NewAwkParser implements NewAwkParserConstants {
   static private boolean jj_rescan = false;
   static private int jj_gc = 0;
 
+  {
+      enable_tracing();
+  }
   /** Constructor with InputStream. */
   public NewAwkParser(java.io.InputStream stream) {
 	  this(stream, null);
@@ -181,6 +191,7 @@ public class NewAwkParser implements NewAwkParserConstants {
 		   }
 		 }
 	   }
+	   trace_token(token, "");
 	   return token;
 	 }
 	 token = oldToken;
@@ -224,6 +235,7 @@ public class NewAwkParser implements NewAwkParserConstants {
 	 else token = token.next = token_source.getNextToken();
 	 jj_ntk = -1;
 	 jj_gen++;
+	   trace_token(token, " (in getNextToken)");
 	 return token;
   }
 
@@ -329,12 +341,53 @@ public class NewAwkParser implements NewAwkParserConstants {
 	 return trace_enabled;
   }
 
-  /** Enable tracing. */
+  static private int trace_indent = 0;
+/** Enable tracing. */
   static final public void enable_tracing() {
+	 trace_enabled = true;
   }
 
-  /** Disable tracing. */
+/** Disable tracing. */
   static final public void disable_tracing() {
+	 trace_enabled = false;
+  }
+
+  static protected void trace_call(String s) {
+	 if (trace_enabled) {
+	   for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+	   System.out.println("Call:	" + s);
+	 }
+	 trace_indent = trace_indent + 2;
+  }
+
+  static protected void trace_return(String s) {
+	 trace_indent = trace_indent - 2;
+	 if (trace_enabled) {
+	   for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+	   System.out.println("Return: " + s);
+	 }
+  }
+
+  static protected void trace_token(Token t, String where) {
+	 if (trace_enabled) {
+	   for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+	   System.out.print("Consumed token: <" + tokenImage[t.kind]);
+	   if (t.kind != 0 && !tokenImage[t.kind].equals("\"" + t.image + "\"")) {
+		 System.out.print(": \"" + TokenMgrError.addEscapes(t.image) + "\"");
+	   }
+	   System.out.println(" at line " + t.beginLine + " column " + t.beginColumn + ">" + where);
+	 }
+  }
+
+  static protected void trace_scan(Token t1, int t2) {
+	 if (trace_enabled) {
+	   for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+	   System.out.print("Visited token: <" + tokenImage[t1.kind]);
+	   if (t1.kind != 0 && !tokenImage[t1.kind].equals("\"" + t1.image + "\"")) {
+		 System.out.print(": \"" + TokenMgrError.addEscapes(t1.image) + "\"");
+	   }
+	   System.out.println(" at line " + t1.beginLine + " column " + t1.beginColumn + ">; Expected token: <" + tokenImage[t2] + ">");
+	 }
   }
 
   static private void jj_rescan_token() {

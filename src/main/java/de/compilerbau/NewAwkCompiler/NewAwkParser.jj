@@ -1,3 +1,8 @@
+options {
+   DEBUG_PARSER = true;
+   DEBUG_TOKEN_MANAGER = true;
+}
+
 PARSER_BEGIN(NewAwkParser)
 
 package de.compilerbau.NewAwkCompiler.generated;
@@ -11,6 +16,7 @@ import de.compilerbau.NewAwkCompiler.generated.Token;
 public class NewAwkParser {
  public static void main(String[] args) throws ParseException, TokenMgrError {
      NewAwkParser parser = new NewAwkParser(System.in);
+     parser.start();
 
      }
 }
@@ -52,7 +58,7 @@ TOKEN : {
 | <NAME: (["a"-"z", "A"-"Z"])+>
 }
 
-void Start() :
+void start() :
 {}
 {
     <IntegerLiteral>
