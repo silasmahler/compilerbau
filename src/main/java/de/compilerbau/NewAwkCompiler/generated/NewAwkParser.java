@@ -12,9 +12,7 @@ public class NewAwkParser implements NewAwkParserConstants {
      File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
      FileInputStream is = new FileInputStream(file);
      NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
-        for (String name : parser.Start()) {
-                        System.out.println("Hello " + name + "!");
-                }
+        parser.Start();
      }
 
   static final public void Start() throws ParseException {
