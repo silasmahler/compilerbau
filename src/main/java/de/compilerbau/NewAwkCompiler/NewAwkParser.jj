@@ -7,17 +7,19 @@ PARSER_BEGIN(NewAwkParser)
 
 package de.compilerbau.NewAwkCompiler.generated;
 
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.io.*;
 import de.compilerbau.NewAwkCompiler.generated.Token;
 
 
 public class NewAwkParser {
- public static void main(String[] args) throws ParseException, TokenMgrError {
-     NewAwkParser parser = new NewAwkParser(System.in);
-     parser.start();
-
+ public static void main(String[] args) throws ParseException, FileNotFoundException, TokenMgrError {
+     File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
+     FileInputStream is = new FileInputStream(file);
+     NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
+        for (String name : parser.Start()) {
+			System.out.println("Hello " + name + "!");
+		}
      }
 }
 PARSER_END(NewAwkParser)
@@ -58,13 +60,13 @@ TOKEN : {
 | <NAME: (["a"-"z", "A"-"Z"])+>
 }
 
-void start() :
+void Start() :
 {}
 {
     <IntegerLiteral>
     (
-    <PlusSymbol>
-    <IntegerLiteral>
+        <PlusSymbol>
+        <IntegerLiteral>
     )*
     <EOF>
 }
