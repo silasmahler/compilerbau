@@ -9,17 +9,22 @@ import de.compilerbau.NewAwkCompiler.generated.Token;
 
 public class NewAwkParser implements NewAwkParserConstants {
  public static void main(String[] args) throws ParseException, FileNotFoundException, TokenMgrError {
-     File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
+     /*File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTestAddNumbers.txt");
      FileInputStream is = new FileInputStream(file);
      NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
-        parser.Start();
+     parser.Start();*/
+
+     File file2 = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
+     FileInputStream is2 = new FileInputStream(file2);
+     NewAwkParser parser2 = new NewAwkParser(new BufferedInputStream(is2));
+     parser2.program();
+
      }
 
-  static final public void Start() throws ParseException {
-    trace_call("Start");
+  static final public void program() throws ParseException {
+    trace_call("program");
     try {
 
-      jj_consume_token(IntegerLiteral);
       label_1:
       while (true) {
         if (jj_2_1(49)) {
@@ -27,12 +32,153 @@ public class NewAwkParser implements NewAwkParserConstants {
         } else {
           break label_1;
         }
+        if (jj_2_2(49)) {
+          method();
+        } else if (jj_2_3(49)) {
+          fieldDeclaration();
+        } else {
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
+    } finally {
+      trace_return("program");
+    }
+}
+
+  static final public void method() throws ParseException {
+    trace_call("method");
+    try {
+
+      methodSignature();
+      methodBody();
+    } finally {
+      trace_return("method");
+    }
+}
+
+  static final public void methodCall() throws ParseException {
+    trace_call("methodCall");
+    try {
+
+      jj_consume_token(Bezeichner);
+      jj_consume_token(34);
+    } finally {
+      trace_return("methodCall");
+    }
+}
+
+  static final public void fieldDeclaration() throws ParseException {
+    trace_call("fieldDeclaration");
+    try {
+
+      jj_consume_token(Datentyp);
+      jj_consume_token(Bezeichner);
+      jj_consume_token(Zuweisung);
+      if (jj_2_4(49)) {
+        jj_consume_token(IntegerLiteral);
+      } else if (jj_2_5(49)) {
+        jj_consume_token(DoubleLiteral);
+      } else {
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    } finally {
+      trace_return("fieldDeclaration");
+    }
+}
+
+  static final public void methodBody() throws ParseException {
+    trace_call("methodBody");
+    try {
+
+      jj_consume_token(BlockAuf);
+      label_2:
+      while (true) {
+        if (jj_2_6(49)) {
+          fieldDeclaration();
+        } else if (jj_2_7(49)) {
+          methodCall();
+        } else if (jj_2_8(49)) {
+          jj_consume_token(35);
+        } else {
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+        if (jj_2_9(49)) {
+          ;
+        } else {
+          break label_2;
+        }
+      }
+      jj_consume_token(BlockZu);
+    } finally {
+      trace_return("methodBody");
+    }
+}
+
+  static final public void methodSignature() throws ParseException {
+    trace_call("methodSignature");
+    try {
+
+      jj_consume_token(Datentyp);
+      jj_consume_token(Bezeichner);
+      jj_consume_token(KlammerAuf);
+      parameterListe();
+      jj_consume_token(KlammerZu);
+    } finally {
+      trace_return("methodSignature");
+    }
+}
+
+  static final public void parameterListe() throws ParseException {
+    trace_call("parameterListe");
+    try {
+
+      jj_consume_token(Datentyp);
+      label_3:
+      while (true) {
+        if (jj_2_10(49)) {
+          ;
+        } else {
+          break label_3;
+        }
+        jj_consume_token(36);
+      }
+      jj_consume_token(Bezeichner);
+    } finally {
+      trace_return("parameterListe");
+    }
+}
+
+  static final public void adderSubstracter() throws ParseException {
+    trace_call("adderSubstracter");
+    try {
+
+      jj_consume_token(IntegerLiteral);
+      label_4:
+      while (true) {
+        if (jj_2_11(49)) {
+          ;
+        } else {
+          break label_4;
+        }
         jj_consume_token(PlusSymbol);
+        jj_consume_token(IntegerLiteral);
+      }
+      label_5:
+      while (true) {
+        if (jj_2_12(49)) {
+          ;
+        } else {
+          break label_5;
+        }
+        jj_consume_token(MinusSymbol);
         jj_consume_token(IntegerLiteral);
       }
       jj_consume_token(0);
     } finally {
-      trace_return("Start");
+      trace_return("adderSubstracter");
     }
 }
 
@@ -44,10 +190,241 @@ public class NewAwkParser implements NewAwkParserConstants {
     finally { jj_save(0, xla); }
   }
 
-  static private boolean jj_3_1()
+  static private boolean jj_2_2(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_2()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(1, xla); }
+  }
+
+  static private boolean jj_2_3(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_3()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(2, xla); }
+  }
+
+  static private boolean jj_2_4(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_4()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(3, xla); }
+  }
+
+  static private boolean jj_2_5(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_5()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(4, xla); }
+  }
+
+  static private boolean jj_2_6(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_6()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(5, xla); }
+  }
+
+  static private boolean jj_2_7(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_7()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(6, xla); }
+  }
+
+  static private boolean jj_2_8(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_8()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(7, xla); }
+  }
+
+  static private boolean jj_2_9(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_9()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(8, xla); }
+  }
+
+  static private boolean jj_2_10(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_10()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(9, xla); }
+  }
+
+  static private boolean jj_2_11(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_11()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(10, xla); }
+  }
+
+  static private boolean jj_2_12(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_12()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(11, xla); }
+  }
+
+  static private boolean jj_3_4()
+ {
+    if (jj_scan_token(IntegerLiteral)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_fieldDeclaration_84_5_7()
+ {
+    if (jj_scan_token(Datentyp)) return true;
+    if (jj_scan_token(Bezeichner)) return true;
+    if (jj_scan_token(Zuweisung)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3_5()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3_3()
+ {
+    if (jj_3R_fieldDeclaration_84_5_7()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_methodCall_80_5_8()
+ {
+    if (jj_scan_token(Bezeichner)) return true;
+    if (jj_scan_token(34)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_12()
+ {
+    if (jj_scan_token(MinusSymbol)) return true;
+    if (jj_scan_token(IntegerLiteral)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_11()
  {
     if (jj_scan_token(PlusSymbol)) return true;
     if (jj_scan_token(IntegerLiteral)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_method_75_5_6()
+ {
+    if (jj_3R_methodSignature_101_5_9()) return true;
+    if (jj_3R_methodBody_89_5_10()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_10()
+ {
+    if (jj_scan_token(36)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_2()
+ {
+    if (jj_3R_method_75_5_6()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_1()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_3_3()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_parameterListe_110_5_11()
+ {
+    if (jj_scan_token(Datentyp)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_10()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(Bezeichner)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_5()
+ {
+    if (jj_scan_token(DoubleLiteral)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_methodSignature_101_5_9()
+ {
+    if (jj_scan_token(Datentyp)) return true;
+    if (jj_scan_token(Bezeichner)) return true;
+    if (jj_scan_token(KlammerAuf)) return true;
+    if (jj_3R_parameterListe_110_5_11()) return true;
+    if (jj_scan_token(KlammerZu)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_8()
+ {
+    if (jj_scan_token(35)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_7()
+ {
+    if (jj_3R_methodCall_80_5_8()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_6()
+ {
+    if (jj_3R_fieldDeclaration_84_5_7()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_9()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_6()) {
+    jj_scanpos = xsp;
+    if (jj_3_7()) {
+    jj_scanpos = xsp;
+    if (jj_3_8()) return true;
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_methodBody_89_5_10()
+ {
+    if (jj_scan_token(BlockAuf)) return true;
+    Token xsp;
+    if (jj_3_9()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_9()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(BlockZu)) return true;
     return false;
   }
 
@@ -65,13 +442,18 @@ public class NewAwkParser implements NewAwkParserConstants {
   static private int jj_gen;
   static final private int[] jj_la1 = new int[0];
   static private int[] jj_la1_0;
+  static private int[] jj_la1_1;
   static {
 	   jj_la1_init_0();
+	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
 	   jj_la1_0 = new int[] {};
 	}
-  static final private JJCalls[] jj_2_rtns = new JJCalls[1];
+	private static void jj_la1_init_1() {
+	   jj_la1_1 = new int[] {};
+	}
+  static final private JJCalls[] jj_2_rtns = new JJCalls[12];
   static private boolean jj_rescan = false;
   static private int jj_gc = 0;
 
@@ -303,7 +685,7 @@ public class NewAwkParser implements NewAwkParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[32];
+	 boolean[] la1tokens = new boolean[37];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -314,10 +696,13 @@ public class NewAwkParser implements NewAwkParserConstants {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {
 			 la1tokens[j] = true;
 		   }
+		   if ((jj_la1_1[i] & (1<<j)) != 0) {
+			 la1tokens[32+j] = true;
+		   }
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 32; i++) {
+	 for (int i = 0; i < 37; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
@@ -392,7 +777,7 @@ public class NewAwkParser implements NewAwkParserConstants {
 
   static private void jj_rescan_token() {
 	 jj_rescan = true;
-	 for (int i = 0; i < 1; i++) {
+	 for (int i = 0; i < 12; i++) {
 	   try {
 		 JJCalls p = jj_2_rtns[i];
 
@@ -401,6 +786,17 @@ public class NewAwkParser implements NewAwkParserConstants {
 			 jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
 			 switch (i) {
 			   case 0: jj_3_1(); break;
+			   case 1: jj_3_2(); break;
+			   case 2: jj_3_3(); break;
+			   case 3: jj_3_4(); break;
+			   case 4: jj_3_5(); break;
+			   case 5: jj_3_6(); break;
+			   case 6: jj_3_7(); break;
+			   case 7: jj_3_8(); break;
+			   case 8: jj_3_9(); break;
+			   case 9: jj_3_10(); break;
+			   case 10: jj_3_11(); break;
+			   case 11: jj_3_12(); break;
 			 }
 		   }
 		   p = p.next;
