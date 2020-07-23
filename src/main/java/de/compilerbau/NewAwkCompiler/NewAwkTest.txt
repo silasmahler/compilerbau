@@ -3,3 +3,4 @@ int main(String[] args) {
     return x;
 }
 int y = 7;
+char a = 'A';

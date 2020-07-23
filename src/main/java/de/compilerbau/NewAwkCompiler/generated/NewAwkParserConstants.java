@@ -27,55 +27,69 @@ public interface NewAwkParserConstants {
   /** RegularExpression Id. */
   int Datentyp = 8;
   /** RegularExpression Id. */
-  int Schluesselwort = 9;
+  int CharLiteral = 9;
   /** RegularExpression Id. */
-  int Bezeichner = 10;
+  int ArrayType = 10;
   /** RegularExpression Id. */
-  int TypKonverter = 11;
+  int Type = 11;
   /** RegularExpression Id. */
-  int KlammerAuf = 12;
+  int Schluesselwort = 12;
   /** RegularExpression Id. */
-  int KlammerZu = 13;
+  int Bezeichner = 13;
   /** RegularExpression Id. */
-  int BlockAuf = 14;
+  int ConditionalAndExpression = 14;
   /** RegularExpression Id. */
-  int BlockZu = 15;
+  int ConditionalOrExpression = 15;
   /** RegularExpression Id. */
-  int IntegerLiteral = 16;
+  int ConditionalNotExpression = 16;
   /** RegularExpression Id. */
-  int DoubleLiteral = 17;
+  int KlammerAuf = 17;
   /** RegularExpression Id. */
-  int PlusSymbol = 18;
+  int KlammerZu = 18;
   /** RegularExpression Id. */
-  int MinusSymbol = 19;
+  int BlockAuf = 19;
   /** RegularExpression Id. */
-  int Multiplikation = 20;
+  int BlockZu = 20;
   /** RegularExpression Id. */
-  int Division = 21;
+  int IntegerLiteral = 21;
   /** RegularExpression Id. */
-  int ModuloOperator = 22;
+  int DoubleLiteral = 22;
   /** RegularExpression Id. */
-  int Exponentiation = 23;
+  int PlusSymbol = 23;
   /** RegularExpression Id. */
-  int Boolean = 24;
+  int MinusSymbol = 24;
   /** RegularExpression Id. */
-  int Equal = 25;
+  int Multiplikation = 25;
   /** RegularExpression Id. */
-  int NotEqual = 26;
+  int Division = 26;
   /** RegularExpression Id. */
-  int GreaterOrEqual = 27;
+  int ModuloOperator = 27;
   /** RegularExpression Id. */
-  int SmallerOrEqual = 28;
+  int Exponentiation = 28;
   /** RegularExpression Id. */
-  int Greater = 29;
+  int Boolean = 29;
   /** RegularExpression Id. */
-  int Smaller = 30;
+  int Equal = 30;
   /** RegularExpression Id. */
-  int Semicolon = 31;
+  int NotEqual = 31;
   /** RegularExpression Id. */
-  int Zuweisung = 32;
+  int GreaterOrEqual = 32;
   /** RegularExpression Id. */
-  int NullLiteral = 33;
+  int SmallerOrEqual = 33;
+  /** RegularExpression Id. */
+  int Greater = 34;
+  /** RegularExpression Id. */
+  int Smaller = 35;
+  /** RegularExpression Id. */
+  int Semicolon = 36;
+  /** RegularExpression Id. */
+  int Zuweisung = 37;
+  /** RegularExpression Id. */
+  int NullLiteral = 38;
+  /** RegularExpression Id. */
+  int Commata = 39;
+  /** RegularExpression Id. */
+  int Apostrophe = 40;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -91,8 +105,13 @@ public interface NewAwkParserConstants {
     "<Digit>",
     "<Expo>",
     "<Datentyp>",
+    "<CharLiteral>",
+    "<ArrayType>",
+    "<Type>",
     "<Schluesselwort>",
     "<Bezeichner>",
+    "\"&&\"",
+    "\"||\"",
     "\"!\"",
     "\"(\"",
     "\")\"",
@@ -116,6 +135,8 @@ public interface NewAwkParserConstants {
     "\";\"",
     "\"=\"",
     "\"null\"",
+    "\",\"",
+    "\"\\\'\"",
     "\"()\"",
     "\"return null;\"",
     "\"[]\"",

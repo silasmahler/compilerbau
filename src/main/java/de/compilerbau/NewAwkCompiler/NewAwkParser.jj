@@ -38,9 +38,14 @@ TOKEN : {
 | <#Digit: ["0"-"9"]>
 | <#Expo: ["e","E"]("+"|"-")?(<Digit>)+>
 | <Datentyp: ("int"|"double"|"char"|"boolean"|"String")>
+| <CharLiteral: <Apostrophe> (<Alphabet> | <Digit>) <Apostrophe>>
+| <ArrayType: <Datentyp>"[]">
+| <Type: <Datentyp> | <ArrayType>>
 | <Schluesselwort: ("if"|"else"|"while"|"do"|"return"|"void"|"break"|"switch"|"case"|"for")>
 | <Bezeichner: <Alphabet>(<Digit>|<Alphabet>)*>
-| <TypKonverter: "!">
+| <ConditionalAndExpression: "&&">
+| <ConditionalOrExpression: "||">
+| <ConditionalNotExpression: "!">
 | <KlammerAuf: "(">
 | <KlammerZu: ")">
 | <BlockAuf: "{">
@@ -48,11 +53,13 @@ TOKEN : {
 | <IntegerLiteral: (<Digit>)+>
 | <DoubleLiteral: ((<Digit>)+"."(<Digit>)*(<Expo>)?)
 | ((<Digit>)*"."(<Digit>)+(<Expo>)?)>
+
 | <PlusSymbol: "+">
 | <MinusSymbol: "-">
 | <Multiplikation: "*">
 | <Division: "/">
 | <ModuloOperator: "%">
+
 | <Exponentiation: "^">
 | <Boolean: ("true"|"false")>
 | <Equal: "==">
@@ -64,6 +71,9 @@ TOKEN : {
 | <Semicolon: ";">
 | <Zuweisung: "=">
 | <NullLiteral: "null">
+| <Commata: ",">
+| <Apostrophe: "'">
+
 }
 
 void program() : {}
@@ -86,42 +96,36 @@ void fieldDeclaration() : {}
 }
 void methodBody() : {}
 {
-    <BlockAuf>
-    (
-    fieldDeclaration()
-    |
-    methodCall()
-    |
-    "return null;"
-    )+
-    <BlockZu>
+    <BlockAuf> (fieldDeclaration() | methodCall() | "return null;")+ <BlockZu>
 }
 void methodSignature() : {}
 {
-    <Datentyp>
-    <Bezeichner>
-    <KlammerAuf>
-    parameterListe()
-    <KlammerZu>
+    <Datentyp> <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>
 }
 void parameterListe() :
 {}
 {
-    <Datentyp>("[]")*
-    <Bezeichner>
+    (<Datentyp>("[]")* <Bezeichner>
+
+    (<Commata>)?)+
+}
+void intDoubleCharOperations() :
+{}
+{
+    (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral>)
+    (<PlusSymbol> | <MinusSymbol> | <Multiplikation> | <Division> | <ModuloOperator> )
+    (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral>)
+}
+
+
+void test() :
+{}
+{
+    <BlockAuf>
 }
 
 void adderSubstracter() :
 {}
 {
-    <IntegerLiteral>
-    (
-        <PlusSymbol>
-        <IntegerLiteral>
-    )*
-    (
-        <MinusSymbol>
-        <IntegerLiteral>
-        )*
-    <EOF>
+    <IntegerLiteral> (<PlusSymbol> <IntegerLiteral>)* (<MinusSymbol> <IntegerLiteral>)* <EOF>
 }
