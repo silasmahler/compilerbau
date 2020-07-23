@@ -5,8 +5,8 @@ int main(String[] args, boolean a) {
 int y = 7;
 char a = 'A';
 String s = "hallo";
-
 void test123(int a, char b) {
     a = 5;
     return a;
 }
+int z = 5 * 3 + 8 - 2;

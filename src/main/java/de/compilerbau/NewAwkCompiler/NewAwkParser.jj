@@ -100,12 +100,43 @@ TOKEN : /* CONDITIONALS and BRACKETS*/
 void program() : {}
 {
     { System.out.println("ENTER: program()"); }
-    (method() | fieldDeclaration() | returnStatement())*
+    (method() | fieldDeclaration())*
 }
 void returnStatement(): {}
 {
     { System.out.println("ENTER: returnStatement()"); }
     <RETURN> <VALUE> <SEMICOLON>
+}
+Token operator():
+{
+  Token tok;
+}
+{
+  tok=< PLUS >
+  {
+    System.out.println(tok.image);
+    return tok;
+  }
+  |tok=< MINUS >
+  {
+    System.out.println(tok.image);
+    return tok;
+  }
+  |tok=< MULTIPLICATION>
+  {
+    System.out.println(tok.image);
+    return tok;
+  }
+  |tok=< DIVISION>
+  {
+    System.out.println(tok.image);
+    return tok;
+  }
+  |tok=< MODULO >
+  {
+    System.out.println(tok.image);
+    return tok;
+  }
 }
 void condition():
 {}
@@ -133,7 +164,7 @@ void fieldDeclaration() : {}
 }
 void methodBody() : {}
 {
-    <BlockAuf> (fieldDeclaration() | methodCall())+ <BlockZu>
+    <BlockAuf> (fieldDeclaration() | methodCall() | returnStatement())+ <BlockZu>
 }
 void methodSignature() : {}
 {
