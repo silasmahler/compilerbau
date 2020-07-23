@@ -1,4 +1,4 @@
-int main(String[] args) {
+int main(String[] args, boolean a) {
     int x = 5;
     return x;
 }

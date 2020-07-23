@@ -41,7 +41,8 @@ TOKEN : {
 | <CharLiteral: <Apostrophe> (<Alphabet> | <Digit>) <Apostrophe>>
 | <ArrayType: <Datentyp>"[]">
 | <Type: <Datentyp> | <ArrayType>>
-| <Schluesselwort: ("if"|"else"|"while"|"do"|"return"|"void"|"break"|"switch"|"case"|"for")>
+| <Schluesselwort: ("if"|"else"|"while"|"do"|"return"|"break"|"switch"|"case"|"for")>
+| <Void: "void">
 | <Bezeichner: <Alphabet>(<Digit>|<Alphabet>)*>
 | <ConditionalAndExpression: "&&">
 | <ConditionalOrExpression: "||">
@@ -61,7 +62,8 @@ TOKEN : {
 | <ModuloOperator: "%">
 
 | <Exponentiation: "^">
-| <Boolean: ("true"|"false")>
+| <BooleanExpression: ("true"|"false")>
+
 | <Equal: "==">
 | <NotEqual: "!=">
 | <GreaterOrEqual: ">=">
@@ -70,6 +72,7 @@ TOKEN : {
 | <Smaller: "<">
 | <Semicolon: ";">
 | <Zuweisung: "=">
+
 | <NullLiteral: "null">
 | <Commata: ",">
 | <Apostrophe: "'">
@@ -91,25 +94,23 @@ void methodCall() : {}
 }
 void fieldDeclaration() : {}
 {
-    <Datentyp> <Bezeichner> <Zuweisung>
+    <Type> <Bezeichner> <Zuweisung>
     (<IntegerLiteral> | <DoubleLiteral> )
 }
 void methodBody() : {}
 {
-    <BlockAuf> (fieldDeclaration() | methodCall() | "return null;")+ <BlockZu>
+    <BlockAuf> (fieldDeclaration() | methodCall())+ <BlockZu>
 }
 void methodSignature() : {}
 {
-    <Datentyp> <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>
+    (<Type> | <Void> ) <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>
 }
 void parameterListe() :
 {}
 {
-    (<Datentyp>("[]")* <Bezeichner>
-
-    (<Commata>)?)+
+    <Type> <Bezeichner> (<Commata> <Type> <Bezeichner>)*
 }
-void intDoubleCharOperations() :
+void intDoubleCharOperation() :
 {}
 {
     (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral>)
