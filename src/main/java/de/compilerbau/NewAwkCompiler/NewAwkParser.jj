@@ -98,10 +98,12 @@ TOKEN : /* CONDITIONALS and BRACKETS*/
 
 void program() : {}
 {
+    { System.out.println("ENTER: program()"); }
     (method() | fieldDeclaration() | returnStatement())*
 }
 void returnStatement(): {}
 {
+    { System.out.println("ENTER: returnStatement()"); }
     <RETURN>
     (<Bezeichner> | (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> )
     <SEMICOLON>
@@ -109,6 +111,7 @@ void returnStatement(): {}
 }
 void method() : {}
 {
+    { System.out.println("ENTER: method()"); }
     methodSignature()
     methodBody()
 }

@@ -25,6 +25,7 @@ public class NewAwkParser implements NewAwkParserConstants {
     trace_call("program");
     try {
 
+System.out.println("ENTER: program()");
       label_1:
       while (true) {
         if (jj_2_1(49)) {
@@ -52,6 +53,7 @@ public class NewAwkParser implements NewAwkParserConstants {
     trace_call("returnStatement");
     try {
 
+System.out.println("ENTER: returnStatement()");
       jj_consume_token(RETURN);
       if (jj_2_10(49)) {
         jj_consume_token(Bezeichner);
@@ -84,6 +86,7 @@ public class NewAwkParser implements NewAwkParserConstants {
     trace_call("method");
     try {
 
+System.out.println("ENTER: method()");
       methodSignature();
       methodBody();
     } finally {
@@ -572,12 +575,6 @@ public class NewAwkParser implements NewAwkParserConstants {
     finally { jj_save(34, xla); }
   }
 
-  static private boolean jj_3_25()
- {
-    if (jj_scan_token(CharLiteral)) return true;
-    return false;
-  }
-
   static private boolean jj_3_34()
  {
     if (jj_scan_token(PLUS)) return true;
@@ -629,7 +626,7 @@ public class NewAwkParser implements NewAwkParserConstants {
 
   static private boolean jj_3_18()
  {
-    if (jj_3R_methodCall_117_5_9()) return true;
+    if (jj_3R_methodCall_120_5_9()) return true;
     return false;
   }
 
@@ -685,7 +682,7 @@ public class NewAwkParser implements NewAwkParserConstants {
 
   static private boolean jj_3_17()
  {
-    if (jj_3R_fieldDeclaration_121_5_7()) return true;
+    if (jj_3R_fieldDeclaration_124_5_7()) return true;
     return false;
   }
 
@@ -700,7 +697,7 @@ public class NewAwkParser implements NewAwkParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_parameterListe_135_5_12()
+  static private boolean jj_3R_parameterListe_138_5_12()
  {
     if (jj_scan_token(Type)) return true;
     if (jj_scan_token(Bezeichner)) return true;
@@ -714,7 +711,7 @@ public class NewAwkParser implements NewAwkParserConstants {
 
   static private boolean jj_3_4()
  {
-    if (jj_3R_returnStatement_105_5_8()) return true;
+    if (jj_3R_returnStatement_106_5_8()) return true;
     return false;
   }
 
@@ -724,7 +721,7 @@ public class NewAwkParser implements NewAwkParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_methodSignature_130_5_10()
+  static private boolean jj_3R_methodSignature_133_5_10()
  {
     Token xsp;
     xsp = jj_scanpos;
@@ -734,12 +731,12 @@ public class NewAwkParser implements NewAwkParserConstants {
     }
     if (jj_scan_token(Bezeichner)) return true;
     if (jj_scan_token(KlammerAuf)) return true;
-    if (jj_3R_parameterListe_135_5_12()) return true;
+    if (jj_3R_parameterListe_138_5_12()) return true;
     if (jj_scan_token(KlammerZu)) return true;
     return false;
   }
 
-  static private boolean jj_3R_methodBody_126_5_11()
+  static private boolean jj_3R_methodBody_129_5_11()
  {
     if (jj_scan_token(BlockAuf)) return true;
     Token xsp;
@@ -764,28 +761,7 @@ public class NewAwkParser implements NewAwkParserConstants {
     return false;
   }
 
-  static private boolean jj_3_11()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_5()) {
-    jj_scanpos = xsp;
-    if (jj_3_6()) {
-    jj_scanpos = xsp;
-    if (jj_3_7()) {
-    jj_scanpos = xsp;
-    if (jj_3_8()) {
-    jj_scanpos = xsp;
-    if (jj_3_9()) return true;
-    }
-    }
-    }
-    }
-    if (jj_scan_token(SEMICOLON)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_fieldDeclaration_121_5_7()
+  static private boolean jj_3R_fieldDeclaration_124_5_7()
  {
     if (jj_scan_token(Type)) return true;
     if (jj_scan_token(Bezeichner)) return true;
@@ -808,23 +784,44 @@ public class NewAwkParser implements NewAwkParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_methodCall_117_5_9()
+  static private boolean jj_3_11()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_5()) {
+    jj_scanpos = xsp;
+    if (jj_3_6()) {
+    jj_scanpos = xsp;
+    if (jj_3_7()) {
+    jj_scanpos = xsp;
+    if (jj_3_8()) {
+    jj_scanpos = xsp;
+    if (jj_3_9()) return true;
+    }
+    }
+    }
+    }
+    if (jj_scan_token(SEMICOLON)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_methodCall_120_5_9()
  {
     if (jj_scan_token(Bezeichner)) return true;
     if (jj_scan_token(57)) return true;
     return false;
   }
 
-  static private boolean jj_3_3()
+  static private boolean jj_3R_method_114_5_6()
  {
-    if (jj_3R_fieldDeclaration_121_5_7()) return true;
+    if (jj_3R_methodSignature_133_5_10()) return true;
+    if (jj_3R_methodBody_129_5_11()) return true;
     return false;
   }
 
-  static private boolean jj_3R_method_112_5_6()
+  static private boolean jj_3_3()
  {
-    if (jj_3R_methodSignature_130_5_10()) return true;
-    if (jj_3R_methodBody_126_5_11()) return true;
+    if (jj_3R_fieldDeclaration_124_5_7()) return true;
     return false;
   }
 
@@ -841,7 +838,13 @@ public class NewAwkParser implements NewAwkParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_returnStatement_105_5_8()
+  static private boolean jj_3_30()
+ {
+    if (jj_scan_token(MODULO)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_returnStatement_106_5_8()
  {
     if (jj_scan_token(RETURN)) return true;
     Token xsp;
@@ -850,12 +853,6 @@ public class NewAwkParser implements NewAwkParserConstants {
     jj_scanpos = xsp;
     if (jj_3_11()) return true;
     }
-    return false;
-  }
-
-  static private boolean jj_3_30()
- {
-    if (jj_scan_token(MODULO)) return true;
     return false;
   }
 
@@ -887,7 +884,7 @@ public class NewAwkParser implements NewAwkParserConstants {
 
   static private boolean jj_3_2()
  {
-    if (jj_3R_method_112_5_6()) return true;
+    if (jj_3R_method_114_5_6()) return true;
     return false;
   }
 
@@ -898,6 +895,12 @@ public class NewAwkParser implements NewAwkParserConstants {
   }
 
   static private boolean jj_3_33()
+ {
+    if (jj_scan_token(CharLiteral)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_25()
  {
     if (jj_scan_token(CharLiteral)) return true;
     return false;
