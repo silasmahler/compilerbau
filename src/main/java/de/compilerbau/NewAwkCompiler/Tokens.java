@@ -4,6 +4,7 @@ import de.compilerbau.NewAwkCompiler.generated.NewAwkParser;
 import de.compilerbau.NewAwkCompiler.generated.NewAwkParserConstants;
 import de.compilerbau.NewAwkCompiler.generated.Token;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,7 +14,9 @@ import java.util.List;
 public class Tokens {
 
     public static void main(String[] args) throws FileNotFoundException {
-        NewAwkParser parser = new NewAwkParser(new FileInputStream(new File(args[0])));
+        File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
+        FileInputStream is = new FileInputStream(file);
+        NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
 
         for (Token token : tokenize(parser)) {
             String name = NewAwkParserConstants.tokenImage[token.kind];
