@@ -69,7 +69,7 @@ TOKEN : /* BASIC */
 | <Commata: ",">
 | <Apostrophe: "'">
 | <Colon: ":">
-| <SEMICOL : ";">
+| <SEMICOLON : ";">
 }
 TOKEN : /* LITERALS */
 { <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
@@ -98,7 +98,14 @@ TOKEN : /* CONDITIONALS and BRACKETS*/
 
 void program() : {}
 {
-    (method() | fieldDeclaration())*
+    (method() | fieldDeclaration() | returnStatement())*
+}
+void returnStatement(): {}
+{
+    <RETURN>
+    (<Bezeichner> | (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> )
+    <SEMICOLON>
+)
 }
 void method() : {}
 {

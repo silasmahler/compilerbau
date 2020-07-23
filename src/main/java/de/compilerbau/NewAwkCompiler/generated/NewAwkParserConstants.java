@@ -81,7 +81,7 @@ public interface NewAwkParserConstants {
   /** RegularExpression Id. */
   int Colon = 35;
   /** RegularExpression Id. */
-  int SEMICOL = 36;
+  int SEMICOLON = 36;
   /** RegularExpression Id. */
   int CharLiteral = 37;
   /** RegularExpression Id. */
