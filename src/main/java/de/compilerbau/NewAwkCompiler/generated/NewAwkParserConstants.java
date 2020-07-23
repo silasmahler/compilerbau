@@ -95,33 +95,35 @@ public interface NewAwkParserConstants {
   /** RegularExpression Id. */
   int Bezeichner = 42;
   /** RegularExpression Id. */
-  int StringLiteral = 43;
+  int VALUE = 43;
   /** RegularExpression Id. */
-  int STRING_CONTENT = 44;
+  int StringLiteral = 44;
   /** RegularExpression Id. */
-  int BooleanExpression = 45;
+  int STRING_CONTENT = 45;
   /** RegularExpression Id. */
-  int TRUE = 46;
+  int BooleanExpression = 46;
   /** RegularExpression Id. */
-  int FALSE = 47;
+  int TRUE = 47;
   /** RegularExpression Id. */
-  int ConditionalAndExpression = 48;
+  int FALSE = 48;
   /** RegularExpression Id. */
-  int ConditionalOrExpression = 49;
+  int ConditionalAndExpression = 49;
   /** RegularExpression Id. */
-  int ConditionalNotExpression = 50;
+  int ConditionalOrExpression = 50;
   /** RegularExpression Id. */
-  int KlammerAuf = 51;
+  int ConditionalNotExpression = 51;
   /** RegularExpression Id. */
-  int KlammerZu = 52;
+  int KlammerAuf = 52;
   /** RegularExpression Id. */
-  int BlockAuf = 53;
+  int KlammerZu = 53;
   /** RegularExpression Id. */
-  int BlockZu = 54;
+  int BlockAuf = 54;
   /** RegularExpression Id. */
-  int BracketOpen = 55;
+  int BlockZu = 55;
   /** RegularExpression Id. */
-  int BracketClose = 56;
+  int BracketOpen = 56;
+  /** RegularExpression Id. */
+  int BracketClose = 57;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -171,6 +173,7 @@ public interface NewAwkParserConstants {
     "\"void\"",
     "\"null\"",
     "<Bezeichner>",
+    "<VALUE>",
     "<StringLiteral>",
     "<STRING_CONTENT>",
     "<BooleanExpression>",

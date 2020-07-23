@@ -33,7 +33,7 @@ SKIP :
 | <NEW_LINE: "\n">
 | <CARRIAGE_RETURN: "\r">
 }
-TOKEN : /* OPERATORS */
+TOKEN : /* OPERATORS and CONDITONAL OPERATORS */
 { <PLUS: "+">
 | <MINUS: "-">
 | <MULTIPLICATION: "*">
@@ -78,6 +78,7 @@ TOKEN : /* LITERALS */
 | <VOID: "void">
 | <NullLiteral: "null">
 | <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
+| <VALUE: (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> | <NullLiteral> )>
 | <StringLiteral: "\"" <STRING_CONTENT> "\"">
 | <#STRING_CONTENT: (<LETTER>|<DIGIT>)* >
 | <BooleanExpression: (<TRUE>|<FALSE>)>
@@ -104,10 +105,17 @@ void program() : {}
 void returnStatement(): {}
 {
     { System.out.println("ENTER: returnStatement()"); }
-    <RETURN>
-    (<Bezeichner> | (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> )
-    <SEMICOLON>
-)
+    <RETURN> <VALUE> <SEMICOLON>
+}
+void condition():
+{}
+{
+    <VALUE> condOperator() <VALUE>
+}
+void condOperator():
+{}
+{
+  (<EQUAL> | <NOT_EQUAL> | <SMALLER> | <S_OR_EQUAL> | <GREATER> | <G_OR_EQUAL>)
 }
 void method() : {}
 {
@@ -121,8 +129,7 @@ void methodCall() : {}
 }
 void fieldDeclaration() : {}
 {
-    <Type> <Bezeichner> <Zuweisung>
-    (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> )
+    <Type> <Bezeichner> <Zuweisung> <VALUE>
 }
 void methodBody() : {}
 {
