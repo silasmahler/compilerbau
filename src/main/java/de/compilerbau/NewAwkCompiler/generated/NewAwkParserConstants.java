@@ -11,87 +11,117 @@ public interface NewAwkParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int Whitespace = 1;
+  int WHITESPACE = 1;
   /** RegularExpression Id. */
-  int Tab = 2;
+  int TAB = 2;
   /** RegularExpression Id. */
-  int Newline = 3;
+  int NEW_LINE = 3;
   /** RegularExpression Id. */
-  int CarriageReturn = 4;
+  int CARRIAGE_RETURN = 4;
   /** RegularExpression Id. */
-  int Alphabet = 5;
+  int PLUS = 5;
   /** RegularExpression Id. */
-  int Digit = 6;
+  int MINUS = 6;
   /** RegularExpression Id. */
-  int Expo = 7;
+  int MULTIPLICATION = 7;
   /** RegularExpression Id. */
-  int Datentyp = 8;
+  int DIVISION = 8;
   /** RegularExpression Id. */
-  int CharLiteral = 9;
+  int MODULO = 9;
   /** RegularExpression Id. */
-  int ArrayType = 10;
+  int EQUAL = 10;
   /** RegularExpression Id. */
-  int Type = 11;
+  int NOT_EQUAL = 11;
   /** RegularExpression Id. */
-  int Schluesselwort = 12;
+  int G_OR_EQUAL = 12;
   /** RegularExpression Id. */
-  int Void = 13;
+  int S_OR_EQUAL = 13;
   /** RegularExpression Id. */
-  int Bezeichner = 14;
+  int GREATER = 14;
   /** RegularExpression Id. */
-  int ConditionalAndExpression = 15;
+  int SMALLER = 15;
   /** RegularExpression Id. */
-  int ConditionalOrExpression = 16;
+  int IF = 16;
   /** RegularExpression Id. */
-  int ConditionalNotExpression = 17;
+  int ELSE = 17;
   /** RegularExpression Id. */
-  int KlammerAuf = 18;
+  int WHILE = 18;
   /** RegularExpression Id. */
-  int KlammerZu = 19;
+  int DO = 19;
   /** RegularExpression Id. */
-  int BlockAuf = 20;
+  int FOR = 20;
   /** RegularExpression Id. */
-  int BlockZu = 21;
+  int SWITCH = 21;
   /** RegularExpression Id. */
-  int IntegerLiteral = 22;
+  int CASE = 22;
   /** RegularExpression Id. */
-  int DoubleLiteral = 23;
+  int RETURN = 23;
   /** RegularExpression Id. */
-  int PlusSymbol = 24;
+  int BREAK = 24;
   /** RegularExpression Id. */
-  int MinusSymbol = 25;
+  int LETTER = 25;
   /** RegularExpression Id. */
-  int Multiplikation = 26;
+  int DIGIT = 26;
   /** RegularExpression Id. */
-  int Division = 27;
+  int EXPO = 27;
   /** RegularExpression Id. */
-  int ModuloOperator = 28;
+  int Type = 28;
   /** RegularExpression Id. */
-  int Exponentiation = 29;
+  int ArrayType = 29;
   /** RegularExpression Id. */
-  int Boolean = 30;
+  int Datentyp = 30;
   /** RegularExpression Id. */
-  int Equal = 31;
+  int Exponentiation = 31;
   /** RegularExpression Id. */
-  int NotEqual = 32;
+  int Zuweisung = 32;
   /** RegularExpression Id. */
-  int GreaterOrEqual = 33;
+  int Commata = 33;
   /** RegularExpression Id. */
-  int SmallerOrEqual = 34;
+  int Apostrophe = 34;
   /** RegularExpression Id. */
-  int Greater = 35;
+  int Colon = 35;
   /** RegularExpression Id. */
-  int Smaller = 36;
+  int SEMICOL = 36;
   /** RegularExpression Id. */
-  int Semicolon = 37;
+  int CharLiteral = 37;
   /** RegularExpression Id. */
-  int Zuweisung = 38;
+  int IntegerLiteral = 38;
   /** RegularExpression Id. */
-  int NullLiteral = 39;
+  int DoubleLiteral = 39;
   /** RegularExpression Id. */
-  int Commata = 40;
+  int VOID = 40;
   /** RegularExpression Id. */
-  int Apostrophe = 41;
+  int NullLiteral = 41;
+  /** RegularExpression Id. */
+  int Bezeichner = 42;
+  /** RegularExpression Id. */
+  int StringLiteral = 43;
+  /** RegularExpression Id. */
+  int STRING_CONTENT = 44;
+  /** RegularExpression Id. */
+  int BooleanExpression = 45;
+  /** RegularExpression Id. */
+  int TRUE = 46;
+  /** RegularExpression Id. */
+  int FALSE = 47;
+  /** RegularExpression Id. */
+  int ConditionalAndExpression = 48;
+  /** RegularExpression Id. */
+  int ConditionalOrExpression = 49;
+  /** RegularExpression Id. */
+  int ConditionalNotExpression = 50;
+  /** RegularExpression Id. */
+  int KlammerAuf = 51;
+  /** RegularExpression Id. */
+  int KlammerZu = 52;
+  /** RegularExpression Id. */
+  int BlockAuf = 53;
+  /** RegularExpression Id. */
+  int BlockZu = 54;
+  /** RegularExpression Id. */
+  int BracketOpen = 55;
+  /** RegularExpression Id. */
+  int BracketClose = 56;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -103,16 +133,49 @@ public interface NewAwkParserConstants {
     "\"\\t\"",
     "\"\\n\"",
     "\"\\r\"",
-    "<Alphabet>",
-    "<Digit>",
-    "<Expo>",
-    "<Datentyp>",
-    "<CharLiteral>",
-    "<ArrayType>",
+    "\"+\"",
+    "\"-\"",
+    "\"*\"",
+    "\"/\"",
+    "\"%\"",
+    "\"==\"",
+    "\"!=\"",
+    "\">=\"",
+    "\"<=\"",
+    "\">\"",
+    "\"<\"",
+    "\"if\"",
+    "\"else\"",
+    "\"while\"",
+    "\"do\"",
+    "\"for\"",
+    "\"switch\"",
+    "\"case\"",
+    "\"return\"",
+    "\"break\"",
+    "<LETTER>",
+    "<DIGIT>",
+    "<EXPO>",
     "<Type>",
-    "<Schluesselwort>",
+    "<ArrayType>",
+    "<Datentyp>",
+    "\"^\"",
+    "\"=\"",
+    "\",\"",
+    "\"\\\'\"",
+    "\":\"",
+    "\";\"",
+    "<CharLiteral>",
+    "<IntegerLiteral>",
+    "<DoubleLiteral>",
     "\"void\"",
+    "\"null\"",
     "<Bezeichner>",
+    "<StringLiteral>",
+    "<STRING_CONTENT>",
+    "<BooleanExpression>",
+    "\"true\"",
+    "\"false\"",
     "\"&&\"",
     "\"||\"",
     "\"!\"",
@@ -120,26 +183,8 @@ public interface NewAwkParserConstants {
     "\")\"",
     "\"{\"",
     "\"}\"",
-    "<IntegerLiteral>",
-    "<DoubleLiteral>",
-    "\"+\"",
-    "\"-\"",
-    "\"*\"",
-    "\"/\"",
-    "\"%\"",
-    "\"^\"",
-    "<Boolean>",
-    "\"==\"",
-    "\"!=\"",
-    "\">=\"",
-    "\"<=\"",
-    "\">\"",
-    "\"<\"",
-    "\";\"",
-    "\"=\"",
-    "\"null\"",
-    "\",\"",
-    "\"\\\'\"",
+    "\"[\"",
+    "\"]\"",
     "\"()\"",
   };
 

@@ -27,56 +27,73 @@ public class NewAwkParser {
      }
 }
 PARSER_END(NewAwkParser)
-SKIP : {
-<Whitespace: " ">
-| <Tab: "\t">
-| <Newline: "\n">
-| <CarriageReturn: "\r">
+SKIP :
+{ <WHITESPACE: " ">
+| <TAB: "\t">
+| <NEW_LINE: "\n">
+| <CARRIAGE_RETURN: "\r">
 }
-TOKEN : {
-<#Alphabet: ["a"-"z","A"-"Z"]>
-| <#Digit: ["0"-"9"]>
-| <#Expo: ["e","E"]("+"|"-")?(<Digit>)+>
-| <Datentyp: ("int"|"double"|"char"|"boolean"|"String")>
-| <CharLiteral: <Apostrophe> (<Alphabet> | <Digit>) <Apostrophe>>
-| <ArrayType: <Datentyp>"[]">
+TOKEN : /* OPERATORS */
+{ <PLUS: "+">
+| <MINUS: "-">
+| <MULTIPLICATION: "*">
+| <DIVISION: "/">
+| <MODULO: "%">
+| <EQUAL: "==">
+| <NOT_EQUAL: "!=">
+| <G_OR_EQUAL: ">=">
+| <S_OR_EQUAL: "<=">
+| <GREATER: ">">
+| <SMALLER: "<">
+}
+TOKEN : /* KEYWORDS */
+{ <IF : "if">
+| <ELSE : "else">
+| <WHILE: "while">
+| <DO : "do">
+| <FOR : "for">
+| <SWITCH : "switch">
+| <CASE : "case">
+| <RETURN : "return">
+| <BREAK : "break">
+}
+TOKEN : /* BASIC */
+{ <#LETTER: ["_","a"-"z","A"-"Z"]>
+| <#DIGIT: ["0"-"9"]>
+| <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
 | <Type: <Datentyp> | <ArrayType>>
-| <Schluesselwort: ("if"|"else"|"while"|"do"|"return"|"break"|"switch"|"case"|"for")>
-| <Void: "void">
-| <Bezeichner: <Alphabet>(<Digit>|<Alphabet>)*>
-| <ConditionalAndExpression: "&&">
+| <ArrayType: <Datentyp><BracketOpen><BracketClose>>
+| <Datentyp: ("int"|"double"|"char"|"boolean"|"String")>
+| <Exponentiation: "^">
+| <Zuweisung: "=">
+| <Commata: ",">
+| <Apostrophe: "'">
+| <Colon: ":">
+| <SEMICOL : ";">
+}
+TOKEN : /* LITERALS */
+{ <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
+| <IntegerLiteral: (<DIGIT>)+>
+| <DoubleLiteral: ((<DIGIT>)+"."(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*"."(<DIGIT>)+(<EXPO> )?)>
+| <VOID: "void">
+| <NullLiteral: "null">
+| <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
+| <StringLiteral: "\"" <STRING_CONTENT> "\"">
+| <#STRING_CONTENT: (<LETTER>|<DIGIT>)* >
+| <BooleanExpression: (<TRUE>|<FALSE>)>
+| <#TRUE: "true">
+| <#FALSE: "false">
+}
+TOKEN : /* CONDITIONALS and BRACKETS*/
+{ <ConditionalAndExpression: "&&">
 | <ConditionalOrExpression: "||">
 | <ConditionalNotExpression: "!">
 | <KlammerAuf: "(">
 | <KlammerZu: ")">
 | <BlockAuf: "{">
 | <BlockZu: "}">
-| <IntegerLiteral: (<Digit>)+>
-| <DoubleLiteral: ((<Digit>)+"."(<Digit>)*(<Expo>)?)
-| ((<Digit>)*"."(<Digit>)+(<Expo>)?)>
-
-| <PlusSymbol: "+">
-| <MinusSymbol: "-">
-| <Multiplikation: "*">
-| <Division: "/">
-| <ModuloOperator: "%">
-
-| <Exponentiation: "^">
-| <BooleanExpression: ("true"|"false")>
-
-| <Equal: "==">
-| <NotEqual: "!=">
-| <GreaterOrEqual: ">=">
-| <SmallerOrEqual: "<=">
-| <Greater: ">">
-| <Smaller: "<">
-| <Semicolon: ";">
-| <Zuweisung: "=">
-
-| <NullLiteral: "null">
-| <Commata: ",">
-| <Apostrophe: "'">
-
+| <BracketOpen: "[">
+| <BracketClose: "]">
 }
 
 void program() : {}
@@ -95,7 +112,7 @@ void methodCall() : {}
 void fieldDeclaration() : {}
 {
     <Type> <Bezeichner> <Zuweisung>
-    (<IntegerLiteral> | <DoubleLiteral> )
+    (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> )
 }
 void methodBody() : {}
 {
@@ -103,18 +120,24 @@ void methodBody() : {}
 }
 void methodSignature() : {}
 {
-    (<Type> | <Void> ) <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>
+    (<Type> | <VOID> ) <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>
 }
 void parameterListe() :
 {}
 {
     <Type> <Bezeichner> (<Commata> <Type> <Bezeichner>)*
 }
+void booleanValue(): {}
+{
+(<BooleanExpression>)
+}
+
+
 void intDoubleCharOperation() :
 {}
 {
     (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral>)
-    (<PlusSymbol> | <MinusSymbol> | <Multiplikation> | <Division> | <ModuloOperator> )
+    (<PLUS> | <MINUS> | <MULTIPLICATION> | <DIVISION> | <MODULO> )
     (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral>)
 }
 
@@ -128,5 +151,5 @@ void test() :
 void adderSubstracter() :
 {}
 {
-    <IntegerLiteral> (<PlusSymbol> <IntegerLiteral>)* (<MinusSymbol> <IntegerLiteral>)* <EOF>
+    <IntegerLiteral> (<PLUS> <IntegerLiteral>)* (<MINUS> <IntegerLiteral>)* <EOF>
 }

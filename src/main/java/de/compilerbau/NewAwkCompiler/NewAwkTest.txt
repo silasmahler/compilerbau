@@ -4,3 +4,4 @@ int main(String[] args, boolean a) {
 }
 int y = 7;
 char a = 'A';
+String s = "hallo";
