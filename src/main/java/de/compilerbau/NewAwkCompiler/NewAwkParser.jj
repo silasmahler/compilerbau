@@ -33,7 +33,7 @@ SKIP :
 | <NEW_LINE: "\n">
 | <CARRIAGE_RETURN: "\r">
 }
-TOKEN : /* OPERATORS and CONDITONAL OPERATORS */
+TOKEN : /* OPERATORS */
 { <PLUS: "+">
 | <MINUS: "-">
 | <MULTIPLICATION: "*">
@@ -46,6 +46,11 @@ TOKEN : /* OPERATORS and CONDITONAL OPERATORS */
 | <S_OR_EQUAL: "<=">
 | <GREATER: ">">
 | <SMALLER: "<">
+| <Colon: ":">
+| <ConditionalAnd: "&&">
+| <ConditionalOr: "||">
+| <ConditionalNot: "!">
+| <Exponentiation: "^">
 }
 TOKEN : /* KEYWORDS */
 { <IF : "if">
@@ -58,18 +63,25 @@ TOKEN : /* KEYWORDS */
 | <RETURN : "return">
 | <BREAK : "break">
 }
+TOKEN : /* SEPARATORS */
+{ <KlammerAuf: "(">
+| <KlammerZu: ")">
+| <BlockAuf: "{">
+| <BlockZu: "}">
+| <LBRACKET: "[">
+| <RBRACKET: "]">
+| <SEMICOLON: ";">
+| <COMMA: ",">
+| <DOT: ".">
+}
 TOKEN : /* BASIC */
 { <#LETTER: ["_","a"-"z","A"-"Z"]>
 | <#DIGIT: ["0"-"9"]>
 | <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
-| <Type: <Datentyp> | <ArrayType>>
-| <ArrayType: <Datentyp><BracketOpen><BracketClose>>
-| <Datentyp: ("int"|"double"|"char"|"boolean"|"String")>
-| <Exponentiation: "^">
-| <Commata: ",">
+| <Type: <ArrayType> | <Datatype> >
+| <ArrayType: <Datatype><LBRACKET> <RBRACKET>>
+| <Datatype: ("int"|"double"|"char"|"boolean"|"String")>
 | <Apostrophe: "'">
-| <Colon: ":">
-| <SEMICOLON : ";">
 }
 TOKEN : /* LITERALS */
 { <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
@@ -85,18 +97,6 @@ TOKEN : /* LITERALS */
 | <#TRUE: "true">
 | <#FALSE: "false">
 }
-TOKEN : /* CONDITIONALS and BRACKETS*/
-{ <ConditionalAndExpression: "&&">
-| <ConditionalOrExpression: "||">
-| <ConditionalNotExpression: "!">
-| <KlammerAuf: "(">
-| <KlammerZu: ")">
-| <BlockAuf: "{">
-| <BlockZu: "}">
-| <BracketOpen: "[">
-| <BracketClose: "]">
-}
-
 void program() : {}
 {
     { System.out.println("ENTER: program()"); }
@@ -174,10 +174,6 @@ void methodCall() : {}
 {
     <Bezeichner>"()"
 }
-void fieldDeclaration() : {}
-{
-    <Type> <Bezeichner> <Zuweisung> <VALUE>
-}
 void methodBody() : {}
 {
     <BlockAuf> (fieldDeclaration() | methodCall() | returnStatement())+ <BlockZu>
@@ -186,10 +182,14 @@ void methodSignature() : {}
 {
     (<Type> | <VOID> ) <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>
 }
-void parameterListe() :
-{}
+
+void fieldDeclaration() : {}
 {
-    <Type> <Bezeichner> (<Commata> <Type> <Bezeichner>)*
+    <Type> <Bezeichner> <Zuweisung> <VALUE>
+}
+void parameterListe() : {}
+{
+    <Type> <Bezeichner> (<COMMA> <Type> <Bezeichner>)*
 }
 void booleanValue(): {}
 {
@@ -204,14 +204,6 @@ void intDoubleCharOperation() :
     (<PLUS> | <MINUS> | <MULTIPLICATION> | <DIVISION> | <MODULO> )
     (<IntegerLiteral> | <DoubleLiteral> | <CharLiteral>)
 }
-
-
-void test() :
-{}
-{
-    <BlockAuf>
-}
-
 void adderSubstracter() :
 {}
 {

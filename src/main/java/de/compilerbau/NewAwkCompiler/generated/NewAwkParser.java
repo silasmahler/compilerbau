@@ -165,22 +165,9 @@ System.out.println("ENTER: method()");
     try {
 
       jj_consume_token(Bezeichner);
-      jj_consume_token(58);
+      jj_consume_token(59);
     } finally {
       trace_return("methodCall");
-    }
-}
-
-  static final public void fieldDeclaration() throws ParseException {
-    trace_call("fieldDeclaration");
-    try {
-
-      jj_consume_token(Type);
-      jj_consume_token(Bezeichner);
-      jj_consume_token(Zuweisung);
-      jj_consume_token(VALUE);
-    } finally {
-      trace_return("fieldDeclaration");
     }
 }
 
@@ -234,6 +221,19 @@ System.out.println("ENTER: method()");
     }
 }
 
+  static final public void fieldDeclaration() throws ParseException {
+    trace_call("fieldDeclaration");
+    try {
+
+      jj_consume_token(Type);
+      jj_consume_token(Bezeichner);
+      jj_consume_token(Zuweisung);
+      jj_consume_token(VALUE);
+    } finally {
+      trace_return("fieldDeclaration");
+    }
+}
+
   static final public void parameterListe() throws ParseException {
     trace_call("parameterListe");
     try {
@@ -247,7 +247,7 @@ System.out.println("ENTER: method()");
         } else {
           break label_3;
         }
-        jj_consume_token(Commata);
+        jj_consume_token(COMMA);
         jj_consume_token(Type);
         jj_consume_token(Bezeichner);
       }
@@ -306,16 +306,6 @@ System.out.println("ENTER: method()");
       }
     } finally {
       trace_return("intDoubleCharOperation");
-    }
-}
-
-  static final public void test() throws ParseException {
-    trace_call("test");
-    try {
-
-      jj_consume_token(BlockAuf);
-    } finally {
-      trace_return("test");
     }
 }
 
@@ -622,7 +612,28 @@ System.out.println("ENTER: method()");
     finally { jj_save(33, xla); }
   }
 
-  static private boolean jj_3R_methodBody_183_5_11()
+  static private boolean jj_3_19()
+ {
+    if (jj_scan_token(Type)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_methodSignature_183_5_10()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_19()) {
+    jj_scanpos = xsp;
+    if (jj_3_20()) return true;
+    }
+    if (jj_scan_token(Bezeichner)) return true;
+    if (jj_scan_token(KlammerAuf)) return true;
+    if (jj_3R_parameterListe_192_5_12()) return true;
+    if (jj_scan_token(KlammerZu)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_methodBody_179_5_11()
  {
     if (jj_scan_token(BlockAuf)) return true;
     Token xsp;
@@ -635,19 +646,10 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3R_fieldDeclaration_179_5_7()
- {
-    if (jj_scan_token(Type)) return true;
-    if (jj_scan_token(Bezeichner)) return true;
-    if (jj_scan_token(Zuweisung)) return true;
-    if (jj_scan_token(VALUE)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_methodCall_175_5_8()
  {
     if (jj_scan_token(Bezeichner)) return true;
-    if (jj_scan_token(58)) return true;
+    if (jj_scan_token(59)) return true;
     return false;
   }
 
@@ -659,15 +661,8 @@ System.out.println("ENTER: method()");
 
   static private boolean jj_3R_method_169_5_6()
  {
-    if (jj_3R_methodSignature_187_5_10()) return true;
-    if (jj_3R_methodBody_183_5_11()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_34()
- {
-    if (jj_scan_token(MINUS)) return true;
-    if (jj_scan_token(IntegerLiteral)) return true;
+    if (jj_3R_methodSignature_183_5_10()) return true;
+    if (jj_3R_methodBody_179_5_11()) return true;
     return false;
   }
 
@@ -680,6 +675,13 @@ System.out.println("ENTER: method()");
   static private boolean jj_3_29()
  {
     if (jj_scan_token(MODULO)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_34()
+ {
+    if (jj_scan_token(MINUS)) return true;
+    if (jj_scan_token(IntegerLiteral)) return true;
     return false;
   }
 
@@ -701,6 +703,12 @@ System.out.println("ENTER: method()");
     return false;
   }
 
+  static private boolean jj_3_8()
+ {
+    if (jj_scan_token(MODULO)) return true;
+    return false;
+  }
+
   static private boolean jj_3_33()
  {
     if (jj_scan_token(PLUS)) return true;
@@ -711,12 +719,6 @@ System.out.println("ENTER: method()");
   static private boolean jj_3_17()
  {
     if (jj_3R_returnStatement_107_5_9()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_8()
- {
-    if (jj_scan_token(MODULO)) return true;
     return false;
   }
 
@@ -756,12 +758,6 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3_16()
- {
-    if (jj_3R_methodCall_175_5_8()) return true;
-    return false;
-  }
-
   static private boolean jj_3_13()
  {
     if (jj_scan_token(GREATER)) return true;
@@ -782,15 +778,21 @@ System.out.println("ENTER: method()");
 
   static private boolean jj_3_21()
  {
-    if (jj_scan_token(Commata)) return true;
+    if (jj_scan_token(COMMA)) return true;
     if (jj_scan_token(Type)) return true;
     if (jj_scan_token(Bezeichner)) return true;
     return false;
   }
 
+  static private boolean jj_3_16()
+ {
+    if (jj_3R_methodCall_175_5_8()) return true;
+    return false;
+  }
+
   static private boolean jj_3_3()
  {
-    if (jj_3R_fieldDeclaration_179_5_7()) return true;
+    if (jj_3R_fieldDeclaration_188_5_7()) return true;
     return false;
   }
 
@@ -855,9 +857,21 @@ System.out.println("ENTER: method()");
     return false;
   }
 
+  static private boolean jj_3R_parameterListe_192_5_12()
+ {
+    if (jj_scan_token(Type)) return true;
+    if (jj_scan_token(Bezeichner)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_21()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
   static private boolean jj_3_15()
  {
-    if (jj_3R_fieldDeclaration_179_5_7()) return true;
+    if (jj_3R_fieldDeclaration_188_5_7()) return true;
     return false;
   }
 
@@ -875,42 +889,18 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3R_parameterListe_192_5_12()
+  static private boolean jj_3R_fieldDeclaration_188_5_7()
  {
     if (jj_scan_token(Type)) return true;
     if (jj_scan_token(Bezeichner)) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_21()) { jj_scanpos = xsp; break; }
-    }
+    if (jj_scan_token(Zuweisung)) return true;
+    if (jj_scan_token(VALUE)) return true;
     return false;
   }
 
   static private boolean jj_3_11()
  {
     if (jj_scan_token(SMALLER)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_19()
- {
-    if (jj_scan_token(Type)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_methodSignature_187_5_10()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_19()) {
-    jj_scanpos = xsp;
-    if (jj_3_20()) return true;
-    }
-    if (jj_scan_token(Bezeichner)) return true;
-    if (jj_scan_token(KlammerAuf)) return true;
-    if (jj_3R_parameterListe_192_5_12()) return true;
-    if (jj_scan_token(KlammerZu)) return true;
     return false;
   }
 
@@ -1171,7 +1161,7 @@ System.out.println("ENTER: method()");
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[59];
+	 boolean[] la1tokens = new boolean[60];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -1188,7 +1178,7 @@ System.out.println("ENTER: method()");
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 59; i++) {
+	 for (int i = 0; i < 60; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
