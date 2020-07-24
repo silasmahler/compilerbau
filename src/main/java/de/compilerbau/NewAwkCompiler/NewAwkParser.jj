@@ -53,15 +53,7 @@ TOKEN : /* OPERATORS */
 | <Exponentiation: "^">
 }
 TOKEN : /* KEYWORDS */
-{ <IF : "if">
-| <ELSE : "else">
-| <WHILE: "while">
-| <DO : "do">
-| <FOR : "for">
-| <SWITCH : "switch">
-| <CASE : "case">
-| <RETURN : "return">
-| <BREAK : "break">
+{ <RETURN : "return">
 }
 TOKEN : /* SEPARATORS */
 { <KlammerAuf: "(">
@@ -79,9 +71,15 @@ TOKEN : /* BASIC */
 | <#DIGIT: ["0"-"9"]>
 | <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
 | <Type: <ArrayType> | <Datatype> >
-| <ArrayType: <Datatype><LBRACKET> <RBRACKET>>
+| <ArrayType: <Datatype> <LBRACKET> <RBRACKET>>
 | <Datatype: ("int"|"double"|"char"|"boolean"|"String")>
 | <Apostrophe: "'">
+| <BooleanConditionalAnd: <BooleanExpression><ConditionalAnd><BooleanExpression>
+                          (<ConditionalAnd><BooleanExpression> )* >
+| <BooleanConditionalOr: <BooleanExpression><ConditionalOr><BooleanExpression>
+                          (<ConditionalOr><BooleanExpression> )* >
+| <BooleanConditionalNot: (<ConditionalNot><BooleanExpression>)>
+
 }
 TOKEN : /* LITERALS */
 { <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
@@ -90,7 +88,6 @@ TOKEN : /* LITERALS */
 | <VOID: "void">
 | <NullLiteral: "null">
 | <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
-| <VALUE: (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> | <NullLiteral> )>
 | <StringLiteral: "\"" <STRING_CONTENT> "\"">
 | <#STRING_CONTENT: (<LETTER>|<DIGIT>)* >
 | <BooleanExpression: (<TRUE>|<FALSE>)>
@@ -101,63 +98,22 @@ void program() : {}
 {
     { System.out.println("ENTER: program()"); }
     (method() | fieldDeclaration())*
+    { System.out.println("LEAVE: program()"); }
+
 }
 void returnStatement(): {}
 {
     { System.out.println("ENTER: returnStatement()"); }
-    <RETURN> <VALUE> <SEMICOLON>
+    <RETURN>
+    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral>
+    | <BooleanExpression> | <StringLiteral> | <NullLiteral> ) <SEMICOLON>
 }
-Token operator():
-{
-  Token tok;
-}
-{
-  tok=<PLUS>
-  {
-    System.out.println(tok.image);
-    return tok;
-  }
-  |tok=<MINUS>
-  {
-    System.out.println(tok.image);
-    return tok;
-  }
-  |tok=<MULTIPLICATION>
-  {
-    System.out.println(tok.image);
-    return tok;
-  }
-  |tok=<DIVISION>
-  {
-    System.out.println(tok.image);
-    return tok;
-  }
-  |tok=<MODULO>
-  {
-    System.out.println(tok.image);
-    return tok;
-  }
-}
-void expression(Token writeTo):
-{
-  Token t1, t2, t3;
-}
-{
-  t1 = <VALUE>
-  t2 = operator()
-  t3 = <VALUE>
-  <SEMICOLON>
-{
-  if(t2.image.equals("+"))
-  {
-      System.out.println("ADD "+t1.image+" "+t2.image);
-  }
-}
-}
-void condition():
+void comparision():
 {}
 {
-    <VALUE> condOperator() <VALUE>
+    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> | <NullLiteral> )
+    condOperator()
+    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> | <NullLiteral> )
 }
 void condOperator():
 {}
@@ -172,20 +128,23 @@ void method() : {}
 }
 void methodCall() : {}
 {
-    <Bezeichner>"()"
+    <Bezeichner><KlammerAuf><KlammerZu>
 }
 void methodBody() : {}
 {
+    { System.out.println("ENTER: methodBody()"); }
     <BlockAuf> (fieldDeclaration() | methodCall() | returnStatement())+ <BlockZu>
 }
 void methodSignature() : {}
 {
+    { System.out.println("ENTER: methodSignature()"); }
     (<Type> | <VOID> ) <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>
 }
 
 void fieldDeclaration() : {}
 {
-    <Type> <Bezeichner> <Zuweisung> <VALUE>
+    <Type> <Bezeichner> <Zuweisung>
+    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanExpression> | <StringLiteral> | <NullLiteral> )
 }
 void parameterListe() : {}
 {

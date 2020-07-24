@@ -53,79 +53,67 @@ public interface NewAwkParserConstants {
   /** RegularExpression Id. */
   int Exponentiation = 21;
   /** RegularExpression Id. */
-  int IF = 22;
+  int RETURN = 22;
   /** RegularExpression Id. */
-  int ELSE = 23;
+  int KlammerAuf = 23;
   /** RegularExpression Id. */
-  int WHILE = 24;
+  int KlammerZu = 24;
   /** RegularExpression Id. */
-  int DO = 25;
+  int BlockAuf = 25;
   /** RegularExpression Id. */
-  int FOR = 26;
+  int BlockZu = 26;
   /** RegularExpression Id. */
-  int SWITCH = 27;
+  int LBRACKET = 27;
   /** RegularExpression Id. */
-  int CASE = 28;
+  int RBRACKET = 28;
   /** RegularExpression Id. */
-  int RETURN = 29;
+  int SEMICOLON = 29;
   /** RegularExpression Id. */
-  int BREAK = 30;
+  int COMMA = 30;
   /** RegularExpression Id. */
-  int KlammerAuf = 31;
+  int DOT = 31;
   /** RegularExpression Id. */
-  int KlammerZu = 32;
+  int LETTER = 32;
   /** RegularExpression Id. */
-  int BlockAuf = 33;
+  int DIGIT = 33;
   /** RegularExpression Id. */
-  int BlockZu = 34;
+  int EXPO = 34;
   /** RegularExpression Id. */
-  int LBRACKET = 35;
+  int Type = 35;
   /** RegularExpression Id. */
-  int RBRACKET = 36;
+  int ArrayType = 36;
   /** RegularExpression Id. */
-  int SEMICOLON = 37;
+  int Datatype = 37;
   /** RegularExpression Id. */
-  int COMMA = 38;
+  int Apostrophe = 38;
   /** RegularExpression Id. */
-  int DOT = 39;
+  int BooleanConditionalAnd = 39;
   /** RegularExpression Id. */
-  int LETTER = 40;
+  int BooleanConditionalOr = 40;
   /** RegularExpression Id. */
-  int DIGIT = 41;
+  int BooleanConditionalNot = 41;
   /** RegularExpression Id. */
-  int EXPO = 42;
+  int CharLiteral = 42;
   /** RegularExpression Id. */
-  int Type = 43;
+  int IntegerLiteral = 43;
   /** RegularExpression Id. */
-  int ArrayType = 44;
+  int DoubleLiteral = 44;
   /** RegularExpression Id. */
-  int Datatype = 45;
+  int VOID = 45;
   /** RegularExpression Id. */
-  int Apostrophe = 46;
+  int NullLiteral = 46;
   /** RegularExpression Id. */
-  int CharLiteral = 47;
+  int Bezeichner = 47;
   /** RegularExpression Id. */
-  int IntegerLiteral = 48;
+  int StringLiteral = 48;
   /** RegularExpression Id. */
-  int DoubleLiteral = 49;
+  int STRING_CONTENT = 49;
   /** RegularExpression Id. */
-  int VOID = 50;
+  int BooleanExpression = 50;
   /** RegularExpression Id. */
-  int NullLiteral = 51;
+  int TRUE = 51;
   /** RegularExpression Id. */
-  int Bezeichner = 52;
-  /** RegularExpression Id. */
-  int VALUE = 53;
-  /** RegularExpression Id. */
-  int StringLiteral = 54;
-  /** RegularExpression Id. */
-  int STRING_CONTENT = 55;
-  /** RegularExpression Id. */
-  int BooleanExpression = 56;
-  /** RegularExpression Id. */
-  int TRUE = 57;
-  /** RegularExpression Id. */
-  int FALSE = 58;
+  int FALSE = 52;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -154,15 +142,7 @@ public interface NewAwkParserConstants {
     "\"||\"",
     "\"!\"",
     "\"^\"",
-    "\"if\"",
-    "\"else\"",
-    "\"while\"",
-    "\"do\"",
-    "\"for\"",
-    "\"switch\"",
-    "\"case\"",
     "\"return\"",
-    "\"break\"",
     "\"(\"",
     "\")\"",
     "\"{\"",
@@ -179,19 +159,20 @@ public interface NewAwkParserConstants {
     "<ArrayType>",
     "<Datatype>",
     "\"\\\'\"",
+    "<BooleanConditionalAnd>",
+    "<BooleanConditionalOr>",
+    "<BooleanConditionalNot>",
     "<CharLiteral>",
     "<IntegerLiteral>",
     "<DoubleLiteral>",
     "\"void\"",
     "\"null\"",
     "<Bezeichner>",
-    "<VALUE>",
     "<StringLiteral>",
     "<STRING_CONTENT>",
     "<BooleanExpression>",
     "\"true\"",
     "\"false\"",
-    "\"()\"",
   };
 
 }
