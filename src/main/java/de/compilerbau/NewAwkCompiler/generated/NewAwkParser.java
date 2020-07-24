@@ -94,6 +94,23 @@ System.out.println(tok.image);
     }
 }
 
+  static final public void expression(Token writeTo) throws ParseException {
+    trace_call("expression");
+    try {
+Token t1, t2, t3;
+      t1 = jj_consume_token(VALUE);
+      t2 = operator();
+      t3 = jj_consume_token(VALUE);
+      jj_consume_token(SEMICOLON);
+if(t2.image.equals("+"))
+  {
+      System.out.println("ADD "+t1.image+" "+t2.image);
+  }
+    } finally {
+      trace_return("expression");
+    }
+}
+
   static final public void condition() throws ParseException {
     trace_call("condition");
     try {
@@ -605,78 +622,7 @@ System.out.println("ENTER: method()");
     finally { jj_save(33, xla); }
   }
 
-  static private boolean jj_3_12()
- {
-    if (jj_scan_token(S_OR_EQUAL)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_20()
- {
-    if (jj_scan_token(VOID)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_15()
- {
-    if (jj_3R_fieldDeclaration_163_5_7()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_18()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_15()) {
-    jj_scanpos = xsp;
-    if (jj_3_16()) {
-    jj_scanpos = xsp;
-    if (jj_3_17()) return true;
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_parameterListe_176_5_12()
- {
-    if (jj_scan_token(Type)) return true;
-    if (jj_scan_token(Bezeichner)) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_21()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  static private boolean jj_3_11()
- {
-    if (jj_scan_token(SMALLER)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_19()
- {
-    if (jj_scan_token(Type)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_methodSignature_171_5_10()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_19()) {
-    jj_scanpos = xsp;
-    if (jj_3_20()) return true;
-    }
-    if (jj_scan_token(Bezeichner)) return true;
-    if (jj_scan_token(KlammerAuf)) return true;
-    if (jj_3R_parameterListe_176_5_12()) return true;
-    if (jj_scan_token(KlammerZu)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_methodBody_167_5_11()
+  static private boolean jj_3R_methodBody_183_5_11()
  {
     if (jj_scan_token(BlockAuf)) return true;
     Token xsp;
@@ -689,7 +635,7 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3R_fieldDeclaration_163_5_7()
+  static private boolean jj_3R_fieldDeclaration_179_5_7()
  {
     if (jj_scan_token(Type)) return true;
     if (jj_scan_token(Bezeichner)) return true;
@@ -698,7 +644,7 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3R_methodCall_159_5_8()
+  static private boolean jj_3R_methodCall_175_5_8()
  {
     if (jj_scan_token(Bezeichner)) return true;
     if (jj_scan_token(58)) return true;
@@ -711,10 +657,10 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3R_method_153_5_6()
+  static private boolean jj_3R_method_169_5_6()
  {
-    if (jj_3R_methodSignature_171_5_10()) return true;
-    if (jj_3R_methodBody_167_5_11()) return true;
+    if (jj_3R_methodSignature_187_5_10()) return true;
+    if (jj_3R_methodBody_183_5_11()) return true;
     return false;
   }
 
@@ -732,12 +678,6 @@ System.out.println("ENTER: method()");
   }
 
   static private boolean jj_3_29()
- {
-    if (jj_scan_token(MODULO)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_8()
  {
     if (jj_scan_token(MODULO)) return true;
     return false;
@@ -761,22 +701,10 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3_7()
- {
-    if (jj_scan_token(DIVISION)) return true;
-    return false;
-  }
-
   static private boolean jj_3_33()
  {
     if (jj_scan_token(PLUS)) return true;
     if (jj_scan_token(IntegerLiteral)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_6()
- {
-    if (jj_scan_token(MULTIPLICATION)) return true;
     return false;
   }
 
@@ -786,9 +714,9 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3_5()
+  static private boolean jj_3_8()
  {
-    if (jj_scan_token(MINUS)) return true;
+    if (jj_scan_token(MODULO)) return true;
     return false;
   }
 
@@ -798,21 +726,15 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3_3()
- {
-    if (jj_3R_fieldDeclaration_163_5_7()) return true;
-    return false;
-  }
-
   static private boolean jj_3_31()
  {
     if (jj_scan_token(DoubleLiteral)) return true;
     return false;
   }
 
-  static private boolean jj_3_4()
+  static private boolean jj_3_7()
  {
-    if (jj_scan_token(PLUS)) return true;
+    if (jj_scan_token(DIVISION)) return true;
     return false;
   }
 
@@ -828,40 +750,27 @@ System.out.println("ENTER: method()");
     return false;
   }
 
-  static private boolean jj_3R_returnStatement_107_5_9()
+  static private boolean jj_3_6()
  {
-    if (jj_scan_token(RETURN)) return true;
-    if (jj_scan_token(VALUE)) return true;
-    if (jj_scan_token(SEMICOLON)) return true;
+    if (jj_scan_token(MULTIPLICATION)) return true;
     return false;
   }
 
   static private boolean jj_3_16()
  {
-    if (jj_3R_methodCall_159_5_8()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_1()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3_3()) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3_2()
- {
-    if (jj_3R_method_153_5_6()) return true;
+    if (jj_3R_methodCall_175_5_8()) return true;
     return false;
   }
 
   static private boolean jj_3_13()
  {
     if (jj_scan_token(GREATER)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_5()
+ {
+    if (jj_scan_token(MINUS)) return true;
     return false;
   }
 
@@ -876,6 +785,18 @@ System.out.println("ENTER: method()");
     if (jj_scan_token(Commata)) return true;
     if (jj_scan_token(Type)) return true;
     if (jj_scan_token(Bezeichner)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_3()
+ {
+    if (jj_3R_fieldDeclaration_179_5_7()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_4()
+ {
+    if (jj_scan_token(PLUS)) return true;
     return false;
   }
 
@@ -894,6 +815,102 @@ System.out.println("ENTER: method()");
   static private boolean jj_3_22()
  {
     if (jj_scan_token(IntegerLiteral)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_returnStatement_107_5_9()
+ {
+    if (jj_scan_token(RETURN)) return true;
+    if (jj_scan_token(VALUE)) return true;
+    if (jj_scan_token(SEMICOLON)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_12()
+ {
+    if (jj_scan_token(S_OR_EQUAL)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_1()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_3_3()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3_2()
+ {
+    if (jj_3R_method_169_5_6()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_20()
+ {
+    if (jj_scan_token(VOID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_15()
+ {
+    if (jj_3R_fieldDeclaration_179_5_7()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_18()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_15()) {
+    jj_scanpos = xsp;
+    if (jj_3_16()) {
+    jj_scanpos = xsp;
+    if (jj_3_17()) return true;
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_parameterListe_192_5_12()
+ {
+    if (jj_scan_token(Type)) return true;
+    if (jj_scan_token(Bezeichner)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_21()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_11()
+ {
+    if (jj_scan_token(SMALLER)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_19()
+ {
+    if (jj_scan_token(Type)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_methodSignature_187_5_10()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_19()) {
+    jj_scanpos = xsp;
+    if (jj_3_20()) return true;
+    }
+    if (jj_scan_token(Bezeichner)) return true;
+    if (jj_scan_token(KlammerAuf)) return true;
+    if (jj_3R_parameterListe_192_5_12()) return true;
+    if (jj_scan_token(KlammerZu)) return true;
     return false;
   }
 

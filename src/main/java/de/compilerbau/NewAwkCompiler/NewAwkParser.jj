@@ -39,6 +39,7 @@ TOKEN : /* OPERATORS and CONDITONAL OPERATORS */
 | <MULTIPLICATION: "*">
 | <DIVISION: "/">
 | <MODULO: "%">
+| <Zuweisung: "=">
 | <EQUAL: "==">
 | <NOT_EQUAL: "!=">
 | <G_OR_EQUAL: ">=">
@@ -65,7 +66,6 @@ TOKEN : /* BASIC */
 | <ArrayType: <Datentyp><BracketOpen><BracketClose>>
 | <Datentyp: ("int"|"double"|"char"|"boolean"|"String")>
 | <Exponentiation: "^">
-| <Zuweisung: "=">
 | <Commata: ",">
 | <Apostrophe: "'">
 | <Colon: ":">
@@ -112,31 +112,47 @@ Token operator():
   Token tok;
 }
 {
-  tok=< PLUS >
+  tok=<PLUS>
   {
     System.out.println(tok.image);
     return tok;
   }
-  |tok=< MINUS >
+  |tok=<MINUS>
   {
     System.out.println(tok.image);
     return tok;
   }
-  |tok=< MULTIPLICATION>
+  |tok=<MULTIPLICATION>
   {
     System.out.println(tok.image);
     return tok;
   }
-  |tok=< DIVISION>
+  |tok=<DIVISION>
   {
     System.out.println(tok.image);
     return tok;
   }
-  |tok=< MODULO >
+  |tok=<MODULO>
   {
     System.out.println(tok.image);
     return tok;
   }
+}
+void expression(Token writeTo):
+{
+  Token t1, t2, t3;
+}
+{
+  t1 = <VALUE>
+  t2 = operator()
+  t3 = <VALUE>
+  <SEMICOLON>
+{
+  if(t2.image.equals("+"))
+  {
+      System.out.println("ADD "+t1.image+" "+t2.image);
+  }
+}
 }
 void condition():
 {}
