@@ -84,7 +84,7 @@ TOKEN : /* BASIC */
 TOKEN : /* LITERALS */
 { <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
 | <IntegerLiteral: (<DIGIT>)+>
-| <DoubleLiteral: ((<DIGIT>)+"."(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*"."(<DIGIT>)+(<EXPO> )?)>
+| <DoubleLiteral: ((<DIGIT>)+<DOT>(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*<DOT> (<DIGIT>)+(<EXPO> )?)>
 | <VOID: "void">
 | <NullLiteral: "null">
 | <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
