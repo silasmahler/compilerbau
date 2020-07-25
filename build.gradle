@@ -31,6 +31,25 @@ javacc {
 	// https://github.com/IntershopCommunicationsAG/javacc-gradle-plugin
 	configs {
 		template {
+			inputFile = file('.\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\Adder.jjt')
+			packageName = 'de.compilerbau.NewAwkCompiler.generated.adder'
+			outputDir = file('.\\src\\main\\java\\')
+			lookahead = '1'
+			jdkVersion = '1.8'
+			jjtree {
+				multi = "false"
+				trackTokens = "true"
+			}
+		}
+	}
+}
+
+javacc {
+	javaCCVersion = '7.0.9'
+	// configuration container for all javacc configurations
+	// https://github.com/IntershopCommunicationsAG/javacc-gradle-plugin
+	configs {
+		template {
 			inputFile = file('.\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkParser.jjt')
 			packageName = 'de.compilerbau.NewAwkCompiler.generated'
 			outputDir = file('.\\src\\main\\java\\')

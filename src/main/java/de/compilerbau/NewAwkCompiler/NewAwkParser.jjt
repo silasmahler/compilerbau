@@ -1,6 +1,7 @@
 options {
    DEBUG_PARSER = true;
    DEBUG_TOKEN_MANAGER = true;
+   FORCE_LA_CHECK = true;
 }
 
 PARSER_BEGIN(NewAwkParser)
@@ -23,6 +24,8 @@ public class NewAwkParser {
      FileInputStream is2 = new FileInputStream(file2);
      NewAwkParser parser2 = new NewAwkParser(new BufferedInputStream(is2));
      parser2.program();
+
+     ((SimpleNode)jjtree.rootNode()).dump(">");
 
      }
 }
@@ -106,10 +109,7 @@ TOKEN : /* LITERALS */
 */
 void program() : {}
 {
-    { System.out.println("ENTER: program()"); }
     (method() | fieldDeclaration())*
-    { System.out.println("LEAVE: program()"); }
-
 }
 void returnStatement(): {}
 {

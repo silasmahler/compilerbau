@@ -19,6 +19,8 @@ public class NewAwkParser/*@bgen(jjtree)*/implements NewAwkParserTreeConstants, 
      NewAwkParser parser2 = new NewAwkParser(new BufferedInputStream(is2));
      parser2.program();
 
+     ((SimpleNode)jjtree.rootNode()).dump(">");
+
      }
 
 /*
@@ -33,6 +35,7 @@ public class NewAwkParser/*@bgen(jjtree)*/implements NewAwkParserTreeConstants, 
   SimpleNode jjtn000 = new SimpleNode(JJTPROGRAM);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
 System.out.println("ENTER: program()");
         label_1:
@@ -53,6 +56,7 @@ System.out.println("ENTER: program()");
         }
 jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
+      jjtn000.jjtSetLastToken(getToken(0));
 System.out.println("LEAVE: program()");
       } catch (Throwable jjte000) {
 if (jjtc000) {
@@ -71,6 +75,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -85,6 +90,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTRETURNSTATEMENT);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
 System.out.println("ENTER: returnStatement()");
         jj_consume_token(RETURN);
@@ -110,6 +116,7 @@ System.out.println("ENTER: returnStatement()");
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -124,6 +131,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTCOMPARISION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         if (jj_2_11(49)) {
           jj_consume_token(Bezeichner);
@@ -179,6 +187,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -193,6 +202,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTCONDOPERATOR);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         if (jj_2_25(49)) {
           jj_consume_token(EQUAL);
@@ -213,6 +223,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
+      jjtn000.jjtSetLastToken(getToken(0));
     }
       }
     } finally {
@@ -227,6 +238,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTMETHOD);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
 System.out.println("ENTER: method()");
         methodSignature();
@@ -248,6 +260,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -262,6 +275,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTMETHODCALL);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         jj_consume_token(Bezeichner);
         jj_consume_token(KlammerAuf);
@@ -269,6 +283,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -283,6 +298,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTMETHODBODY);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
 System.out.println("ENTER: methodBody()");
         jj_consume_token(BlockAuf);
@@ -322,6 +338,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -336,6 +353,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTMETHODSIGNATURE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
 System.out.println("ENTER: methodSignature()");
         if (jj_2_35(49)) {
@@ -367,6 +385,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -381,6 +400,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTFIELDDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         jj_consume_token(Type);
         jj_consume_token(Bezeichner);
@@ -406,6 +426,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -420,6 +441,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTPARAMETERLISTE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         jj_consume_token(Type);
         jj_consume_token(Bezeichner);
@@ -437,6 +459,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -451,6 +474,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTARRAY);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         jj_consume_token(LBRACKET);
         valueList();
@@ -472,6 +496,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -486,6 +511,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTNAMEVALUEPAIRLIST);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         nameValuePair();
         label_4:
@@ -515,6 +541,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -529,6 +556,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTNAMEVALUEPAIR);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         name();
         jj_consume_token(Colon);
@@ -550,6 +578,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -564,11 +593,13 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTNAME);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         jj_consume_token(StringLiteral);
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -583,6 +614,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTVALUELIST);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         value();
         label_5:
@@ -612,6 +644,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -626,6 +659,7 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTVALUE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         if (jj_2_47(49)) {
           array();
@@ -645,6 +679,7 @@ if (jjtc000) {
         }
 jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
+      jjtn000.jjtSetLastToken(getToken(0));
 {if ("" != null) return jjtn000;}
       } catch (Throwable jjte000) {
 if (jjtc000) {
@@ -663,6 +698,7 @@ if (jjtc000) {
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     throw new Error("Missing return statement in function");
@@ -678,11 +714,13 @@ if (jjtc000) {
   SimpleNode jjtn000 = new SimpleNode(JJTBOOLEANVALUE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
       try {
         jj_consume_token(BooleanValue);
       } finally {
 if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
       }
       }
     } finally {
@@ -1106,17 +1144,9 @@ if (jjtc000) {
     finally { jj_save(51, xla); }
   }
 
-  static private boolean jj_3_44()
+  static private boolean jj_3R_valueList_184_5_11()
  {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_scan_token(Type)) return true;
-    if (jj_scan_token(Bezeichner)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_valueList_181_5_11()
- {
-    if (jj_3R_value_185_5_17()) return true;
+    if (jj_3R_value_188_5_17()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
@@ -1139,11 +1169,11 @@ if (jjtc000) {
 
   static private boolean jj_3_32()
  {
-    if (jj_3R_methodCall_141_5_8()) return true;
+    if (jj_3R_methodCall_144_5_8()) return true;
     return false;
   }
 
-  static private boolean jj_3R_name_177_5_19()
+  static private boolean jj_3R_name_180_5_19()
  {
     if (jj_scan_token(StringLiteral)) return true;
     return false;
@@ -1155,11 +1185,11 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_nameValuePair_173_5_16()
+  static private boolean jj_3R_nameValuePair_176_5_16()
  {
-    if (jj_3R_name_177_5_19()) return true;
+    if (jj_3R_name_180_5_19()) return true;
     if (jj_scan_token(Colon)) return true;
-    if (jj_3R_value_185_5_17()) return true;
+    if (jj_3R_value_188_5_17()) return true;
     return false;
   }
 
@@ -1171,7 +1201,7 @@ if (jjtc000) {
 
   static private boolean jj_3_52()
  {
-    if (jj_3R_booleanValue_190_5_13()) return true;
+    if (jj_3R_booleanValue_193_5_13()) return true;
     return false;
   }
 
@@ -1181,9 +1211,9 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_nameValuePairList_169_5_10()
+  static private boolean jj_3R_nameValuePairList_172_5_10()
  {
-    if (jj_3R_nameValuePair_173_5_16()) return true;
+    if (jj_3R_nameValuePair_176_5_16()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
@@ -1204,15 +1234,15 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_array_165_5_12()
+  static private boolean jj_3R_array_168_5_12()
  {
     if (jj_scan_token(LBRACKET)) return true;
-    if (jj_3R_valueList_181_5_11()) return true;
+    if (jj_3R_valueList_184_5_11()) return true;
     if (jj_scan_token(RBRACKET)) return true;
     return false;
   }
 
-  static private boolean jj_3R_parameterListe_161_5_18()
+  static private boolean jj_3R_parameterListe_164_5_18()
  {
     if (jj_scan_token(Type)) return true;
     if (jj_scan_token(Bezeichner)) return true;
@@ -1250,7 +1280,7 @@ if (jjtc000) {
 
   static private boolean jj_3_31()
  {
-    if (jj_3R_fieldDeclaration_156_5_7()) return true;
+    if (jj_3R_fieldDeclaration_159_5_7()) return true;
     return false;
   }
 
@@ -1268,7 +1298,7 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_fieldDeclaration_156_5_7()
+  static private boolean jj_3R_fieldDeclaration_159_5_7()
  {
     if (jj_scan_token(Type)) return true;
     if (jj_scan_token(Bezeichner)) return true;
@@ -1327,7 +1357,7 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_methodSignature_150_5_14()
+  static private boolean jj_3R_methodSignature_153_5_14()
  {
     Token xsp;
     xsp = jj_scanpos;
@@ -1337,7 +1367,7 @@ if (jjtc000) {
     }
     if (jj_scan_token(Bezeichner)) return true;
     if (jj_scan_token(KlammerAuf)) return true;
-    if (jj_3R_parameterListe_161_5_18()) return true;
+    if (jj_3R_parameterListe_164_5_18()) return true;
     if (jj_scan_token(KlammerZu)) return true;
     return false;
   }
@@ -1348,7 +1378,7 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_methodBody_145_5_15()
+  static private boolean jj_3R_methodBody_148_5_15()
  {
     if (jj_scan_token(BlockAuf)) return true;
     Token xsp;
@@ -1367,7 +1397,7 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_methodCall_141_5_8()
+  static private boolean jj_3R_methodCall_144_5_8()
  {
     if (jj_scan_token(Bezeichner)) return true;
     if (jj_scan_token(KlammerAuf)) return true;
@@ -1399,10 +1429,10 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_method_135_5_6()
+  static private boolean jj_3R_method_138_5_6()
  {
-    if (jj_3R_methodSignature_150_5_14()) return true;
-    if (jj_3R_methodBody_145_5_15()) return true;
+    if (jj_3R_methodSignature_153_5_14()) return true;
+    if (jj_3R_methodBody_148_5_15()) return true;
     return false;
   }
 
@@ -1450,7 +1480,7 @@ if (jjtc000) {
 
   static private boolean jj_3_3()
  {
-    if (jj_3R_fieldDeclaration_156_5_7()) return true;
+    if (jj_3R_fieldDeclaration_159_5_7()) return true;
     return false;
   }
 
@@ -1478,7 +1508,7 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_returnStatement_116_5_9()
+  static private boolean jj_3R_returnStatement_119_5_9()
  {
     if (jj_scan_token(RETURN)) return true;
     Token xsp;
@@ -1531,7 +1561,7 @@ if (jjtc000) {
 
   static private boolean jj_3_2()
  {
-    if (jj_3R_method_135_5_6()) return true;
+    if (jj_3R_method_138_5_6()) return true;
     return false;
   }
 
@@ -1549,7 +1579,7 @@ if (jjtc000) {
 
   static private boolean jj_3_33()
  {
-    if (jj_3R_returnStatement_116_5_9()) return true;
+    if (jj_3R_returnStatement_119_5_9()) return true;
     return false;
   }
 
@@ -1571,7 +1601,7 @@ if (jjtc000) {
     return false;
   }
 
-  static private boolean jj_3R_booleanValue_190_5_13()
+  static private boolean jj_3R_booleanValue_193_5_13()
  {
     if (jj_scan_token(BooleanValue)) return true;
     return false;
@@ -1580,24 +1610,24 @@ if (jjtc000) {
   static private boolean jj_3_46()
  {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_valueList_181_5_11()) return true;
+    if (jj_3R_valueList_184_5_11()) return true;
     return false;
   }
 
   static private boolean jj_3_47()
  {
-    if (jj_3R_array_165_5_12()) return true;
+    if (jj_3R_array_168_5_12()) return true;
     return false;
   }
 
   static private boolean jj_3_45()
  {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_nameValuePairList_169_5_10()) return true;
+    if (jj_3R_nameValuePairList_172_5_10()) return true;
     return false;
   }
 
-  static private boolean jj_3R_value_185_5_17()
+  static private boolean jj_3R_value_188_5_17()
  {
     Token xsp;
     xsp = jj_scanpos;
@@ -1617,6 +1647,14 @@ if (jjtc000) {
     }
     }
     }
+    return false;
+  }
+
+  static private boolean jj_3_44()
+ {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_scan_token(Type)) return true;
+    if (jj_scan_token(Bezeichner)) return true;
     return false;
   }
 
