@@ -4,42 +4,26 @@ package de.compilerbau.NewAwkCompiler.generated;
 public interface NewAwkParserTreeConstants
 {
   public int JJTPROGRAM = 0;
-  public int JJTRETURNSTATEMENT = 1;
-  public int JJTCOMPARISION = 2;
-  public int JJTCONDOPERATOR = 3;
-  public int JJTMETHOD = 4;
-  public int JJTMETHODCALL = 5;
-  public int JJTMETHODBODY = 6;
-  public int JJTMETHODSIGNATURE = 7;
-  public int JJTFIELDDECLARATION = 8;
-  public int JJTPARAMETERLISTE = 9;
-  public int JJTARRAY = 10;
-  public int JJTNAMEVALUEPAIRLIST = 11;
-  public int JJTNAMEVALUEPAIR = 12;
-  public int JJTNAME = 13;
-  public int JJTVALUELIST = 14;
-  public int JJTVALUE = 15;
-  public int JJTBOOLEANVALUE = 16;
+  public int JJTFIELDDECLARATION = 1;
+  public int JJTMETHOD = 2;
+  public int JJTMETHODSIGNATURE = 3;
+  public int JJTPARAMETERLIST = 4;
+  public int JJTMETHODBODY = 5;
+  public int JJTMETHODCALL = 6;
+  public int JJTRETURNSTATEMENT = 7;
+  public int JJTCOMPARISION = 8;
 
 
   public String[] jjtNodeName = {
-    "program",
-    "returnStatement",
-    "comparision",
-    "condOperator",
-    "method",
-    "methodCall",
-    "methodBody",
-    "methodSignature",
-    "fieldDeclaration",
-    "parameterListe",
-    "Array",
-    "NameValuePairList",
-    "NameValuePair",
-    "Name",
-    "ValueList",
-    "Value",
-    "booleanValue",
+    "Program",
+    "FieldDeclaration",
+    "Method",
+    "MethodSignature",
+    "ParameterList",
+    "MethodBody",
+    "MethodCall",
+    "ReturnStatement",
+    "Comparision",
   };
 }
-/* JavaCC - OriginalChecksum=6c4e5120a6f0848b8f8180963921de4e (do not edit this line) */
+/* JavaCC - OriginalChecksum=ff649f42c7907f88eb00c35cafd78a55 (do not edit this line) */

@@ -3,7 +3,6 @@
 package de.compilerbau.NewAwkCompiler.generated;
 import java.util.*;
 import java.io.*;
-import de.compilerbau.NewAwkCompiler.generated.Token;
 
 /** Token Manager. */
 @SuppressWarnings ("unused")

@@ -3,6 +3,7 @@
    DEBUG_PARSER = true;
    DEBUG_TOKEN_MANAGER = true;
    FORCE_LA_CHECK = true;
+   LOOKAHEAD = 1;
 }
 
 PARSER_BEGIN(NewAwkParser)
@@ -11,23 +12,16 @@ package de.compilerbau.NewAwkCompiler.generated;
 
 import java.util.*;
 import java.io.*;
-import de.compilerbau.NewAwkCompiler.generated.Token;
-
 
 public class NewAwkParser/*@bgen(jjtree)*/implements NewAwkParserTreeConstants/*@egen*/ {/*@bgen(jjtree)*/
   protected static JJTNewAwkParserState jjtree = new JJTNewAwkParserState();
 
 /*@egen*/
  public static void main(String[] args) throws ParseException, FileNotFoundException, TokenMgrError {
-     /*File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTestAddNumbers.txt");
+     File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
      FileInputStream is = new FileInputStream(file);
      NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
-     parser.Start();*/
-
-     File file2 = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
-     FileInputStream is2 = new FileInputStream(file2);
-     NewAwkParser parser2 = new NewAwkParser(new BufferedInputStream(is2));
-     parser2.program();
+     parser.program();
 
      ((SimpleNode)jjtree.rootNode()).dump(">");
 
@@ -111,24 +105,17 @@ TOKEN : /* LITERALS */
     Parser Rules and AST generation are defined/handled in this section
     ==============================================================================================
 */
-void program() : {/*@bgen(jjtree) program */
+void program()          : {/*@bgen(jjtree) Program */
   SimpleNode jjtn000 = new SimpleNode(JJTPROGRAM);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
   jjtn000.jjtSetFirstToken(getToken(1));
 /*@egen*/}
-{/*@bgen(jjtree) program */
+{/*@bgen(jjtree) Program */
     try {
 /*@egen*/
-    { System.out.println("ENTER: program()"); }
-    (method() | fieldDeclaration())*/*@bgen(jjtree)*/
-    {
-      jjtree.closeNodeScope(jjtn000, true);
-      jjtc000 = false;
-      jjtn000.jjtSetLastToken(getToken(0));
-    }
-/*@egen*/
-    { System.out.println("LEAVE: program()"); }/*@bgen(jjtree)*/
+    (fieldDeclaration() | method())
+    [fieldDeclaration() | method()]/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -150,56 +137,18 @@ void program() : {/*@bgen(jjtree) program */
       }
     }
 /*@egen*/
-
 }
-void returnStatement(): {/*@bgen(jjtree) returnStatement */
-  SimpleNode jjtn000 = new SimpleNode(JJTRETURNSTATEMENT);
+void fieldDeclaration()                  : {/*@bgen(jjtree) FieldDeclaration */
+  SimpleNode jjtn000 = new SimpleNode(JJTFIELDDECLARATION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
   jjtn000.jjtSetFirstToken(getToken(1));
 /*@egen*/}
-{/*@bgen(jjtree) returnStatement */
+{/*@bgen(jjtree) FieldDeclaration */
     try {
 /*@egen*/
-    { System.out.println("ENTER: returnStatement()"); }
-    <RETURN>
-    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral>
-    | <BooleanValue> | <StringLiteral> | <NullLiteral> ) <SEMICOLON>/*@bgen(jjtree)*/
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-void comparision():
-{/*@bgen(jjtree) comparision */
-  SimpleNode jjtn000 = new SimpleNode(JJTCOMPARISION);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) comparision */
-    try {
-/*@egen*/
-    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
-    condOperator()
+    <Type> <Bezeichner> <Zuweisung>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -208,35 +157,15 @@ void comparision():
     }
 /*@egen*/
 }
-void condOperator():
-{/*@bgen(jjtree) condOperator */
-  SimpleNode jjtn000 = new SimpleNode(JJTCONDOPERATOR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) condOperator */
-  try {
-/*@egen*/
-  (<EQUAL> | <NOT_EQUAL> | <SMALLER> | <S_OR_EQUAL> | <GREATER> | <G_OR_EQUAL>)/*@bgen(jjtree)*/
-  } finally {
-    if (jjtc000) {
-      jjtree.closeNodeScope(jjtn000, true);
-      jjtn000.jjtSetLastToken(getToken(0));
-    }
-  }
-/*@egen*/
-}
-void method() : {/*@bgen(jjtree) method */
+void method()         : {/*@bgen(jjtree) Method */
   SimpleNode jjtn000 = new SimpleNode(JJTMETHOD);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
   jjtn000.jjtSetFirstToken(getToken(1));
 /*@egen*/}
-{/*@bgen(jjtree) method */
+{/*@bgen(jjtree) Method */
     try {
 /*@egen*/
-    { System.out.println("ENTER: method()"); }
     methodSignature()
     methodBody()/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
@@ -261,16 +190,30 @@ void method() : {/*@bgen(jjtree) method */
     }
 /*@egen*/
 }
-void methodCall() : {/*@bgen(jjtree) methodCall */
-  SimpleNode jjtn000 = new SimpleNode(JJTMETHODCALL);
+void methodSignature()                  : {/*@bgen(jjtree) MethodSignature */
+  SimpleNode jjtn000 = new SimpleNode(JJTMETHODSIGNATURE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
   jjtn000.jjtSetFirstToken(getToken(1));
 /*@egen*/}
-{/*@bgen(jjtree) methodCall */
+{/*@bgen(jjtree) MethodSignature */
     try {
 /*@egen*/
-    <Bezeichner><KlammerAuf><KlammerZu>/*@bgen(jjtree)*/
+    (LOOKAHEAD(2) <Type> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -279,16 +222,33 @@ void methodCall() : {/*@bgen(jjtree) methodCall */
     }
 /*@egen*/
 }
-void methodBody() : {/*@bgen(jjtree) methodBody */
+void parameterList()                : {/*@bgen(jjtree) ParameterList */
+  SimpleNode jjtn000 = new SimpleNode(JJTPARAMETERLIST);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/}
+{/*@bgen(jjtree) ParameterList */
+    try {
+/*@egen*/
+    <Type> <Bezeichner> (LOOKAHEAD(2) <COMMA> <Type> <Bezeichner>)*/*@bgen(jjtree)*/
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
+    }
+/*@egen*/
+}
+void methodBody()             : {/*@bgen(jjtree) MethodBody */
   SimpleNode jjtn000 = new SimpleNode(JJTMETHODBODY);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
   jjtn000.jjtSetFirstToken(getToken(1));
 /*@egen*/}
-{/*@bgen(jjtree) methodBody */
+{/*@bgen(jjtree) MethodBody */
     try {
 /*@egen*/
-    { System.out.println("ENTER: methodBody()"); }
     <BlockAuf> (fieldDeclaration() | methodCall() | returnStatement())+ <BlockZu>/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
@@ -312,272 +272,59 @@ void methodBody() : {/*@bgen(jjtree) methodBody */
     }
 /*@egen*/
 }
-void methodSignature() : {/*@bgen(jjtree) methodSignature */
-  SimpleNode jjtn000 = new SimpleNode(JJTMETHODSIGNATURE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) methodSignature */
-    try {
-/*@egen*/
-    { System.out.println("ENTER: methodSignature()"); }
-    (<Type> | <VOID> ) <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
 
-void fieldDeclaration() : {/*@bgen(jjtree) fieldDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTFIELDDECLARATION);
+void methodCall()             : {/*@bgen(jjtree) MethodCall */
+  SimpleNode jjtn000 = new SimpleNode(JJTMETHODCALL);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
   jjtn000.jjtSetFirstToken(getToken(1));
 /*@egen*/}
-{/*@bgen(jjtree) fieldDeclaration */
+{/*@bgen(jjtree) MethodCall */
     try {
 /*@egen*/
-    <Type> <Bezeichner> <Zuweisung>
+    <Bezeichner><KlammerAuf><KlammerZu>/*@bgen(jjtree)*/
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
+    }
+/*@egen*/
+}
+void returnStatement()                  : {/*@bgen(jjtree) ReturnStatement */
+  SimpleNode jjtn000 = new SimpleNode(JJTRETURNSTATEMENT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/}
+{/*@bgen(jjtree) ReturnStatement */
+    try {
+/*@egen*/
+    { System.out.println("ENTER: returnStatement()"); }
+    <RETURN>
+    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral>
+    | <BooleanValue> | <StringLiteral> | <NullLiteral> ) <SEMICOLON>/*@bgen(jjtree)*/
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
+    }
+/*@egen*/
+}
+void comparision()             :
+{/*@bgen(jjtree) Comparision */
+  SimpleNode jjtn000 = new SimpleNode(JJTCOMPARISION);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/}
+{/*@bgen(jjtree) Comparision */
+    try {
+/*@egen*/
+    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
+    (<EQUAL> | <NOT_EQUAL> | <SMALLER> | <S_OR_EQUAL> | <GREATER> | <G_OR_EQUAL>)
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )/*@bgen(jjtree)*/
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-void parameterListe() : {/*@bgen(jjtree) parameterListe */
-  SimpleNode jjtn000 = new SimpleNode(JJTPARAMETERLISTE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) parameterListe */
-    try {
-/*@egen*/
-    <Type> <Bezeichner> (<COMMA> <Type> <Bezeichner>)*/*@bgen(jjtree)*/
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-void array()        : {/*@bgen(jjtree) Array */
-  SimpleNode jjtn000 = new SimpleNode(JJTARRAY);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) Array */
-    try {
-/*@egen*/
-    <LBRACKET> valueList() <RBRACKET>/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-void nameValuePairList()                    : {/*@bgen(jjtree) NameValuePairList */
-  SimpleNode jjtn000 = new SimpleNode(JJTNAMEVALUEPAIRLIST);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) NameValuePairList */
-    try {
-/*@egen*/
-    nameValuePair() (<COMMA> nameValuePairList())*/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-void nameValuePair()                : {/*@bgen(jjtree) NameValuePair */
-  SimpleNode jjtn000 = new SimpleNode(JJTNAMEVALUEPAIR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) NameValuePair */
-    try {
-/*@egen*/
-    name() <Colon> value()/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-void name()       : {/*@bgen(jjtree) Name */
-  SimpleNode jjtn000 = new SimpleNode(JJTNAME);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) Name */
-    try {
-/*@egen*/
-    <StringLiteral>/*@bgen(jjtree)*/
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-void valueList()            : {/*@bgen(jjtree) ValueList */
-  SimpleNode jjtn000 = new SimpleNode(JJTVALUELIST);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) ValueList */
-    try {
-/*@egen*/
-    value() ((<COMMA>) valueList())*/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-SimpleNode value()        : {/*@bgen(jjtree) Value */
-  SimpleNode jjtn000 = new SimpleNode(JJTVALUE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) Value */
-    try {
-/*@egen*/
-    (array() | <StringLiteral> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | booleanValue())/*@bgen(jjtree)*/
-    {
-      jjtree.closeNodeScope(jjtn000, true);
-      jjtc000 = false;
-      jjtn000.jjtSetLastToken(getToken(0));
-    }
-/*@egen*/
-    { return jjtn000; }/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
-void booleanValue()               : {/*@bgen(jjtree) booleanValue */
-  SimpleNode jjtn000 = new SimpleNode(JJTBOOLEANVALUE);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) booleanValue */
-    try {
-/*@egen*/
-    <BooleanValue>/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);

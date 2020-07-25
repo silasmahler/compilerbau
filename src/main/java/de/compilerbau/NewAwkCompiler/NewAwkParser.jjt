@@ -2,6 +2,7 @@ options {
    DEBUG_PARSER = true;
    DEBUG_TOKEN_MANAGER = true;
    FORCE_LA_CHECK = true;
+   LOOKAHEAD = 1;
 }
 
 PARSER_BEGIN(NewAwkParser)
@@ -10,20 +11,13 @@ package de.compilerbau.NewAwkCompiler.generated;
 
 import java.util.*;
 import java.io.*;
-import de.compilerbau.NewAwkCompiler.generated.Token;
-
 
 public class NewAwkParser {
  public static void main(String[] args) throws ParseException, FileNotFoundException, TokenMgrError {
-     /*File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTestAddNumbers.txt");
+     File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
      FileInputStream is = new FileInputStream(file);
      NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
-     parser.Start();*/
-
-     File file2 = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
-     FileInputStream is2 = new FileInputStream(file2);
-     NewAwkParser parser2 = new NewAwkParser(new BufferedInputStream(is2));
-     parser2.program();
+     parser.program();
 
      ((SimpleNode)jjtree.rootNode()).dump(">");
 
@@ -107,85 +101,49 @@ TOKEN : /* LITERALS */
     Parser Rules and AST generation are defined/handled in this section
     ==============================================================================================
 */
-void program() : {}
+void program() #Program : {}
 {
-    (method() | fieldDeclaration())*
+    (fieldDeclaration() | method())
+    [fieldDeclaration() | method()]
 }
-void returnStatement(): {}
+void fieldDeclaration() #FieldDeclaration: {}
+{
+    <Type> <Bezeichner> <Zuweisung>
+    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
+}
+void method() #Method : {}
+{
+    methodSignature()
+    methodBody()
+}
+void methodSignature() #MethodSignature : {}
+{
+    (LOOKAHEAD(2) <Type> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>
+}
+void parameterList() #ParameterList : {}
+{
+    <Type> <Bezeichner> (LOOKAHEAD(2) <COMMA> <Type> <Bezeichner>)*
+}
+void methodBody() #MethodBody : {}
+{
+    <BlockAuf> (fieldDeclaration() | methodCall() | returnStatement())+ <BlockZu>
+}
+
+void methodCall() #MethodCall : {}
+{
+    <Bezeichner><KlammerAuf><KlammerZu>
+}
+void returnStatement() #ReturnStatement : {}
 {
     { System.out.println("ENTER: returnStatement()"); }
     <RETURN>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral>
     | <BooleanValue> | <StringLiteral> | <NullLiteral> ) <SEMICOLON>
 }
-void comparision():
+void comparision() #Comparision:
 {}
 {
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
-    condOperator()
+    (<EQUAL> | <NOT_EQUAL> | <SMALLER> | <S_OR_EQUAL> | <GREATER> | <G_OR_EQUAL>)
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
-}
-void condOperator():
-{}
-{
-  (<EQUAL> | <NOT_EQUAL> | <SMALLER> | <S_OR_EQUAL> | <GREATER> | <G_OR_EQUAL>)
-}
-void method() : {}
-{
-    { System.out.println("ENTER: method()"); }
-    methodSignature()
-    methodBody()
-}
-void methodCall() : {}
-{
-    <Bezeichner><KlammerAuf><KlammerZu>
-}
-void methodBody() : {}
-{
-    { System.out.println("ENTER: methodBody()"); }
-    <BlockAuf> (fieldDeclaration() | methodCall() | returnStatement())+ <BlockZu>
-}
-void methodSignature() : {}
-{
-    { System.out.println("ENTER: methodSignature()"); }
-    (<Type> | <VOID> ) <Bezeichner> <KlammerAuf> parameterListe() <KlammerZu>
-}
-
-void fieldDeclaration() : {}
-{
-    <Type> <Bezeichner> <Zuweisung>
-    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
-}
-void parameterListe() : {}
-{
-    <Type> <Bezeichner> (<COMMA> <Type> <Bezeichner>)*
-}
-void array() #Array : {}
-{
-    <LBRACKET> valueList() <RBRACKET>
-}
-void nameValuePairList() #NameValuePairList : {}
-{
-    nameValuePair() (<COMMA> nameValuePairList())*
-}
-void nameValuePair() #NameValuePair : {}
-{
-    name() <Colon> value()
-}
-void name() #Name : {}
-{
-    <StringLiteral>
-}
-void valueList() #ValueList : {}
-{
-    value() ((<COMMA>) valueList())*
-}
-SimpleNode value() #Value : {}
-{
-    (array() | <StringLiteral> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | booleanValue())
-    { return jjtThis; }
-}
-void booleanValue() #booleanValue : {}
-{
-    <BooleanValue>
 }
