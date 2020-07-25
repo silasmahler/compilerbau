@@ -150,6 +150,11 @@ void parameterListe() : {}
 {
     <Type> <Bezeichner> (<COMMA> <Type> <Bezeichner>)*
 }
+SimpleNode value() #Value : {}
+{
+(jsonObject() | array() | <STRING> | <NUMBER> | booleanValue())
+{ return jjtThis; }
+}
 void booleanValue(): {}
 {
 (<BooleanExpression>)

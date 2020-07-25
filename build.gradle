@@ -31,11 +31,15 @@ javacc {
 	// https://github.com/IntershopCommunicationsAG/javacc-gradle-plugin
 	configs {
 		template {
-			inputFile = file('.\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkParser.jj')
+			inputFile = file('.\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkParser.jjt')
 			packageName = 'de.compilerbau.NewAwkCompiler.generated'
 			outputDir = file('.\\src\\main\\java\\')
 			lookahead = '1'
 			jdkVersion = '1.8'
+			jjtree {
+				multi = "false"
+			}
 		}
 	}
+
 }
