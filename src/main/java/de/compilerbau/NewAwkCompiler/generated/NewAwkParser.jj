@@ -105,7 +105,7 @@ TOKEN : /* LITERALS */
     Parser Rules and AST generation are defined/handled in this section
     ==============================================================================================
 */
-void program()          : {/*@bgen(jjtree) Program */
+SimpleNode program()          : {/*@bgen(jjtree) Program */
   SimpleNode jjtn000 = new SimpleNode(JJTPROGRAM);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
@@ -113,7 +113,44 @@ void program()          : {/*@bgen(jjtree) Program */
 {/*@bgen(jjtree) Program */
     try {
 /*@egen*/
-    (fieldDeclaration() | method())+/*@bgen(jjtree)*/
+    fieldOrMethods()
+    <EOF>/*@bgen(jjtree)*/
+    {
+      jjtree.closeNodeScope(jjtn000, true);
+      jjtc000 = false;
+    }
+/*@egen*/
+    {return jjtn000;}/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+/*@egen*/
+}
+void fieldOrMethods()                 : {/*@bgen(jjtree) FieldOrMethods */
+  SimpleNode jjtn000 = new SimpleNode(JJTFIELDORMETHODS);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) FieldOrMethods */
+    try {
+/*@egen*/
+    (LOOKAHEAD(3) fieldDeclaration() | LOOKAHEAD(3) method())+/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -144,7 +181,8 @@ void fieldDeclaration()                  : {/*@bgen(jjtree) FieldDeclaration */
     try {
 /*@egen*/
     <Type> <Bezeichner> <Zuweisung>
-    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )/*@bgen(jjtree)*/
+    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
+    <SEMICOLON>/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -221,7 +259,7 @@ void parameterList()                : {/*@bgen(jjtree) ParameterList */
 {/*@bgen(jjtree) ParameterList */
     try {
 /*@egen*/
-    <Type> <Bezeichner> [<COMMA> <Type> <Bezeichner>]/*@bgen(jjtree)*/
+    <Type> <Bezeichner> [LOOKAHEAD(2) <COMMA> <Type> <Bezeichner>]/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -237,7 +275,7 @@ void methodBody()             : {/*@bgen(jjtree) MethodBody */
 {/*@bgen(jjtree) MethodBody */
     try {
 /*@egen*/
-    <BlockAuf> (fieldDeclaration() | methodCall() | returnStatement())+ <BlockZu>/*@bgen(jjtree)*/
+    <BlockAuf> (fieldDeclaration() | returnStatement())+ <BlockZu>/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -252,23 +290,6 @@ void methodBody()             : {/*@bgen(jjtree) MethodBody */
         throw (ParseException)jjte000;
       }
       throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-      }
-    }
-/*@egen*/
-}
-
-void methodCall()             : {/*@bgen(jjtree) MethodCall */
-  SimpleNode jjtn000 = new SimpleNode(JJTMETHODCALL);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) MethodCall */
-    try {
-/*@egen*/
-    <Bezeichner><KlammerAuf><KlammerZu>/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);

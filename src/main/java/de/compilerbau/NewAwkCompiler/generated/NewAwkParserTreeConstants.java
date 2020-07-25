@@ -4,26 +4,26 @@ package de.compilerbau.NewAwkCompiler.generated;
 public interface NewAwkParserTreeConstants
 {
   public int JJTPROGRAM = 0;
-  public int JJTFIELDDECLARATION = 1;
-  public int JJTMETHOD = 2;
-  public int JJTMETHODSIGNATURE = 3;
-  public int JJTPARAMETERLIST = 4;
-  public int JJTMETHODBODY = 5;
-  public int JJTMETHODCALL = 6;
+  public int JJTFIELDORMETHODS = 1;
+  public int JJTFIELDDECLARATION = 2;
+  public int JJTMETHOD = 3;
+  public int JJTMETHODSIGNATURE = 4;
+  public int JJTPARAMETERLIST = 5;
+  public int JJTMETHODBODY = 6;
   public int JJTRETURNSTATEMENT = 7;
   public int JJTCOMPARISION = 8;
 
 
   public String[] jjtNodeName = {
     "Program",
+    "FieldOrMethods",
     "FieldDeclaration",
     "Method",
     "MethodSignature",
     "ParameterList",
     "MethodBody",
-    "MethodCall",
     "ReturnStatement",
     "Comparision",
   };
 }
-/* JavaCC - OriginalChecksum=ff649f42c7907f88eb00c35cafd78a55 (do not edit this line) */
+/* JavaCC - OriginalChecksum=a5fb6182e662594214c38f0ab1f3acf3 (do not edit this line) */
