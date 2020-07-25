@@ -103,8 +103,7 @@ TOKEN : /* LITERALS */
 */
 void program() #Program : {}
 {
-    (fieldDeclaration() | method())
-    [fieldDeclaration() | method()]
+    (fieldDeclaration() | method())+
 }
 void fieldDeclaration() #FieldDeclaration: {}
 {
@@ -118,11 +117,11 @@ void method() #Method : {}
 }
 void methodSignature() #MethodSignature : {}
 {
-    (LOOKAHEAD(2) <Type> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>
+    (<Type> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>
 }
 void parameterList() #ParameterList : {}
 {
-    <Type> <Bezeichner> (LOOKAHEAD(2) <COMMA> <Type> <Bezeichner>)*
+    <Type> <Bezeichner> [<COMMA> <Type> <Bezeichner>]
 }
 void methodBody() #MethodBody : {}
 {
