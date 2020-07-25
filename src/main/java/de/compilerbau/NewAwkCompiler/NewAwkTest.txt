@@ -10,4 +10,3 @@ void test123(int a, char b) {
     b = 'A';
     return a;
 }
-int z = 5 * 3 + 8 - 2;

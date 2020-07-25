@@ -109,11 +109,15 @@ SimpleNode program() #Program : {}
 }
 void fieldOrMethods() #FieldOrMethods : {}
 {
-    (LOOKAHEAD(3) fieldDeclaration() | LOOKAHEAD(3) method())+
+    (LOOKAHEAD(3) fieldDeclarationAndAssignment() | LOOKAHEAD(3) method())+
 }
-void fieldDeclaration() #FieldDeclaration: {}
+void fieldDeclarationAndAssignment() #FieldDeclaration: {}
 {
-    <Type> <Bezeichner> <Zuweisung>
+    <Type> assignment()
+}
+void assignment() #Assignment: {}
+{
+    <Bezeichner> <Zuweisung>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
     <SEMICOLON>
 }
@@ -128,18 +132,20 @@ void methodSignature() #MethodSignature : {}
 }
 void parameterList() #ParameterList : {}
 {
-    <Type> <Bezeichner> [LOOKAHEAD(2) <COMMA> <Type> <Bezeichner>]
+    <Type> <Bezeichner> [<COMMA> <Type> <Bezeichner>]
 }
 void methodBody() #MethodBody : {}
 {
-    <BlockAuf> (fieldDeclaration() | returnStatement())+ <BlockZu>
+    <BlockAuf> (LOOKAHEAD(3) assignment()
+                            | fieldDeclarationAndAssignment()
+                            | returnStatement())+ <BlockZu>
 }
 void returnStatement() #ReturnStatement : {}
 {
-    { System.out.println("ENTER: returnStatement()"); }
     <RETURN>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral>
-    | <BooleanValue> | <StringLiteral> | <NullLiteral> ) <SEMICOLON>
+    | <BooleanValue> | <StringLiteral> | <NullLiteral> )
+    <SEMICOLON>
 }
 void comparision() #Comparision:
 {}
