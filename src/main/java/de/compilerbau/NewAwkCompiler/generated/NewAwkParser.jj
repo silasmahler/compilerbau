@@ -2,6 +2,7 @@
 /*@egen*/options {
    DEBUG_PARSER = true;
    DEBUG_TOKEN_MANAGER = true;
+   DEBUG_LOOKAHEAD = true;
    FORCE_LA_CHECK = true;
    LOOKAHEAD = 1;
 }
@@ -17,14 +18,20 @@ public class NewAwkParser/*@bgen(jjtree)*/implements NewAwkParserTreeConstants/*
   protected static JJTNewAwkParserState jjtree = new JJTNewAwkParserState();
 
 /*@egen*/
+ private static String testToken;
+
  public static void main(String[] args) throws ParseException, FileNotFoundException, TokenMgrError {
      File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
      FileInputStream is = new FileInputStream(file);
      NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
      parser.program();
 
+     parser.printTokens(testToken);
      ((SimpleNode)jjtree.rootNode()).dump(">");
 
+     }
+     private void printTokens(String testToken) {
+        System.out.println("Test: " + testToken);
      }
 }
 PARSER_END(NewAwkParser)
@@ -76,9 +83,9 @@ TOKEN : /* BASIC */
 { <#LETTER: ["_","a"-"z","A"-"Z"]>
 | <#DIGIT: ["0"-"9"]>
 | <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
-| <Type: <ArrayType> | <Datatype> >
-| <ArrayType: <Datatype> <LBRACKET> <RBRACKET>>
-| <Datatype: ("int"|"double"|"char"|"boolean"|"String")>
+| <DataType: ("int"|"double"|"char"|"boolean"|"String")>
+| <ArrayType: <DataType> <LBRACKET> <RBRACKET>>
+/*| <Type: <ArrayType> | <DataType> >*/
 | <Apostrophe: "'">
 | <BooleanConditionalAnd: <BooleanValue><ConditionalAnd><BooleanValue>
                           (<ConditionalAnd><BooleanValue> )* >
@@ -89,16 +96,16 @@ TOKEN : /* BASIC */
 }
 TOKEN : /* LITERALS */
 { <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
-| <IntegerLiteral: (<DIGIT>)+>
-| <DoubleLiteral: ((<DIGIT>)+<DOT>(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*<DOT> (<DIGIT>)+(<EXPO> )?)>
 | <VOID: "void">
 | <NullLiteral: "null">
-| <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
-| <StringLiteral: "\"" <STRING_CONTENT> "\"">
-| <#STRING_CONTENT: (<LETTER>|<DIGIT>)* >
 | <BooleanValue: (<TRUE>|<FALSE>)>
 | <#TRUE: "true">
 | <#FALSE: "false">
+| <IntegerLiteral: (<DIGIT>)+>
+| <DoubleLiteral: ((<DIGIT>)+<DOT>(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*<DOT> (<DIGIT>)+(<EXPO> )?)>
+| <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
+| <StringLiteral: "\"" <STRING_CONTENT> "\"">
+| <#STRING_CONTENT: (<LETTER>|<DIGIT>)* >
 }
 /*
     ==============================================================================================
@@ -172,15 +179,15 @@ void fieldOrMethods()                 : {/*@bgen(jjtree) FieldOrMethods */
     }
 /*@egen*/
 }
-void fieldDeclarationAndAssignment()                  : {/*@bgen(jjtree) FieldDeclaration */
-  SimpleNode jjtn000 = new SimpleNode(JJTFIELDDECLARATION);
+void fieldDeclarationAndAssignment()                               : {/*@bgen(jjtree) FieldDeclarationAndAssignment */
+  SimpleNode jjtn000 = new SimpleNode(JJTFIELDDECLARATIONANDASSIGNMENT);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
-{/*@bgen(jjtree) FieldDeclaration */
+{/*@bgen(jjtree) FieldDeclarationAndAssignment */
     try {
 /*@egen*/
-    <Type> assignment()/*@bgen(jjtree)*/
+    <DataType> assignment()/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -213,6 +220,22 @@ void assignment()            : {/*@bgen(jjtree) Assignment */
     <Bezeichner> <Zuweisung>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
     <SEMICOLON>/*@bgen(jjtree)*/
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+/*@egen*/
+}
+void arrayAssignment()                 : {/*@bgen(jjtree) ArrayAssignment */
+  SimpleNode jjtn000 = new SimpleNode(JJTARRAYASSIGNMENT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) ArrayAssignment */
+    try {
+/*@egen*/
+    <ArrayType>/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -259,7 +282,7 @@ void methodSignature()                  : {/*@bgen(jjtree) MethodSignature */
 {/*@bgen(jjtree) MethodSignature */
     try {
 /*@egen*/
-    (<Type> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>/*@bgen(jjtree)*/
+    (<DataType> | <ArrayType> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -289,7 +312,7 @@ void parameterList()                : {/*@bgen(jjtree) ParameterList */
 {/*@bgen(jjtree) ParameterList */
     try {
 /*@egen*/
-    <Type> <Bezeichner> [<COMMA> <Type> <Bezeichner>]/*@bgen(jjtree)*/
+    (<DataType> | <ArrayType>) <Bezeichner> [<COMMA> (<DataType> | <ArrayType>) <Bezeichner>]/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);

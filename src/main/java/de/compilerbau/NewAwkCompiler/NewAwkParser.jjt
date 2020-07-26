@@ -1,6 +1,7 @@
 options {
    DEBUG_PARSER = true;
    DEBUG_TOKEN_MANAGER = true;
+   DEBUG_LOOKAHEAD = true;
    FORCE_LA_CHECK = true;
    LOOKAHEAD = 1;
 }
@@ -13,14 +14,20 @@ import java.util.*;
 import java.io.*;
 
 public class NewAwkParser {
+ private static String testToken;
+
  public static void main(String[] args) throws ParseException, FileNotFoundException, TokenMgrError {
      File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
      FileInputStream is = new FileInputStream(file);
      NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
      parser.program();
 
+     parser.printTokens(testToken);
      ((SimpleNode)jjtree.rootNode()).dump(">");
 
+     }
+     private void printTokens(String testToken) {
+        System.out.println("Test: " + testToken);
      }
 }
 PARSER_END(NewAwkParser)
@@ -72,9 +79,9 @@ TOKEN : /* BASIC */
 { <#LETTER: ["_","a"-"z","A"-"Z"]>
 | <#DIGIT: ["0"-"9"]>
 | <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
-| <Type: <ArrayType> | <Datatype> >
-| <ArrayType: <Datatype> <LBRACKET> <RBRACKET>>
-| <Datatype: ("int"|"double"|"char"|"boolean"|"String")>
+| <DataType: ("int"|"double"|"char"|"boolean"|"String")>
+| <ArrayType: <DataType> <LBRACKET> <RBRACKET>>
+/*| <Type: <ArrayType> | <DataType> >*/
 | <Apostrophe: "'">
 | <BooleanConditionalAnd: <BooleanValue><ConditionalAnd><BooleanValue>
                           (<ConditionalAnd><BooleanValue> )* >
@@ -85,16 +92,16 @@ TOKEN : /* BASIC */
 }
 TOKEN : /* LITERALS */
 { <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
-| <IntegerLiteral: (<DIGIT>)+>
-| <DoubleLiteral: ((<DIGIT>)+<DOT>(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*<DOT> (<DIGIT>)+(<EXPO> )?)>
 | <VOID: "void">
 | <NullLiteral: "null">
-| <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
-| <StringLiteral: "\"" <STRING_CONTENT> "\"">
-| <#STRING_CONTENT: (<LETTER>|<DIGIT>)* >
 | <BooleanValue: (<TRUE>|<FALSE>)>
 | <#TRUE: "true">
 | <#FALSE: "false">
+| <IntegerLiteral: (<DIGIT>)+>
+| <DoubleLiteral: ((<DIGIT>)+<DOT>(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*<DOT> (<DIGIT>)+(<EXPO> )?)>
+| <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
+| <StringLiteral: "\"" <STRING_CONTENT> "\"">
+| <#STRING_CONTENT: (<LETTER>|<DIGIT>)* >
 }
 /*
     ==============================================================================================
@@ -111,15 +118,19 @@ void fieldOrMethods() #FieldOrMethods : {}
 {
     (LOOKAHEAD(3) fieldDeclarationAndAssignment() | LOOKAHEAD(3) method())+
 }
-void fieldDeclarationAndAssignment() #FieldDeclaration: {}
+void fieldDeclarationAndAssignment() #FieldDeclarationAndAssignment: {}
 {
-    <Type> assignment()
+    <DataType> assignment()
 }
 void assignment() #Assignment: {}
 {
     <Bezeichner> <Zuweisung>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
     <SEMICOLON>
+}
+void arrayAssignment() #ArrayAssignment: {}
+{
+    <ArrayType>
 }
 void method() #Method : {}
 {
@@ -128,11 +139,11 @@ void method() #Method : {}
 }
 void methodSignature() #MethodSignature : {}
 {
-    (<Type> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>
+    (<DataType> | <ArrayType> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>
 }
 void parameterList() #ParameterList : {}
 {
-    <Type> <Bezeichner> [<COMMA> <Type> <Bezeichner>]
+    (<DataType> | <ArrayType>) <Bezeichner> [<COMMA> (<DataType> | <ArrayType>) <Bezeichner>]
 }
 void methodBody() #MethodBody : {}
 {

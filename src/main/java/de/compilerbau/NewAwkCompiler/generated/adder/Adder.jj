@@ -35,6 +35,7 @@ PARSER_END(Adder)
 SKIP : { " " }
 SKIP : { "\n" | "\r" | "\r\n" }
 TOKEN : { < PLUS : "+" > }
+TOKEN : { < MINUS : "-" > }
 TOKEN : { < NUMBER : (["0"-"9"])+ > }
 /*
     ==============================================================================================
@@ -47,29 +48,19 @@ void Start()        :
   SimpleNode jjtn000 = new SimpleNode(JJTADDER);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
 /*@egen*/}
 {/*@bgen(jjtree) Adder */
     try {
 /*@egen*/
-    { System.out.println("ENTER: START()"); }
     <NUMBER>
     (
-    <PLUS>
+    (<PLUS> | <MINUS>)
     <NUMBER>
     )*
     <EOF>/*@bgen(jjtree)*/
-    {
-      jjtree.closeNodeScope(jjtn000, true);
-      jjtc000 = false;
-      jjtn000.jjtSetLastToken(getToken(0));
-    }
-/*@egen*/
-    { System.out.println("EXIT: START()"); }/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
       }
     }
 /*@egen*/

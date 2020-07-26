@@ -13,7 +13,9 @@ public interface AdderConstants {
   /** RegularExpression Id. */
   int PLUS = 5;
   /** RegularExpression Id. */
-  int NUMBER = 6;
+  int MINUS = 6;
+  /** RegularExpression Id. */
+  int NUMBER = 7;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -26,6 +28,7 @@ public interface AdderConstants {
     "\"\\r\"",
     "\"\\r\\n\"",
     "\"+\"",
+    "\"-\"",
     "<NUMBER>",
   };
 

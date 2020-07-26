@@ -39,6 +39,8 @@ static private int jjMoveStringLiteralDfa0_0(){
          return jjMoveStringLiteralDfa1_0(0x10L);
       case 43:
          return jjStopAtPos(0, 5);
+      case 45:
+         return jjStopAtPos(0, 6);
       default :
       debugStream.println("   No string literal matches possible.");
          return jjMoveNfa_0(0, 0);
@@ -93,7 +95,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
                case 0:
                   if ((0x3ff000000000000L & l) == 0L)
                      break;
-                  kind = 6;
+                  kind = 7;
                   jjstateSet[jjnewStateCnt++] = 0;
                   break;
                default : break;
@@ -143,7 +145,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
 
 /** Token literal values. */
 public static final String[] jjstrLiteralImages = {
-"", null, null, null, null, "\53", null, };
+"", null, null, null, null, "\53", "\55", null, };
 static protected Token jjFillToken()
 {
    final Token t;
@@ -260,7 +262,7 @@ protected static final int[][][] statesForState = {
 };
 protected static final int[][] kindForState = {
 { 
-  6, }
+  7, }
 };
   static int kindCnt = 0;
   protected static final String jjKindsForBitVector(int i, long vec)
@@ -285,7 +287,7 @@ protected static final int[][] kindForState = {
 
   protected static final String jjKindsForStateVector(int lexState, int[] vec, int start, int end)
   {
-    boolean[] kindDone = new boolean[7];
+    boolean[] kindDone = new boolean[8];
     String retVal = "";
     int cnt = 0;
     for (int i = start; i < end; i++)
@@ -421,10 +423,10 @@ public static final String[] lexStateNames = {
 
 /** Lex State array. */
 public static final int[] jjnewLexState = {
-   -1, -1, -1, -1, -1, -1, -1, 
+   -1, -1, -1, -1, -1, -1, -1, -1, 
 };
 static final long[] jjtoToken = {
-   0x61L, 
+   0xe1L, 
 };
 static final long[] jjtoSkip = {
    0x1eL, 

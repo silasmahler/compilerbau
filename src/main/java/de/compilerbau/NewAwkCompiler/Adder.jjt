@@ -31,6 +31,7 @@ PARSER_END(Adder)
 SKIP : { " " }
 SKIP : { "\n" | "\r" | "\r\n" }
 TOKEN : { < PLUS : "+" > }
+TOKEN : { < MINUS : "-" > }
 TOKEN : { < NUMBER : (["0"-"9"])+ > }
 /*
     ==============================================================================================
@@ -41,13 +42,11 @@ TOKEN : { < NUMBER : (["0"-"9"])+ > }
 void Start() #Adder :
 {}
 {
-    { System.out.println("ENTER: START()"); }
     <NUMBER>
     (
-    <PLUS>
+    (<PLUS> | <MINUS>)
     <NUMBER>
     )*
     <EOF>
-    { System.out.println("EXIT: START()"); }
 
 }

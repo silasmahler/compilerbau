@@ -5,21 +5,23 @@ public interface NewAwkParserTreeConstants
 {
   public int JJTPROGRAM = 0;
   public int JJTFIELDORMETHODS = 1;
-  public int JJTFIELDDECLARATION = 2;
+  public int JJTFIELDDECLARATIONANDASSIGNMENT = 2;
   public int JJTASSIGNMENT = 3;
-  public int JJTMETHOD = 4;
-  public int JJTMETHODSIGNATURE = 5;
-  public int JJTPARAMETERLIST = 6;
-  public int JJTMETHODBODY = 7;
-  public int JJTRETURNSTATEMENT = 8;
-  public int JJTCOMPARISION = 9;
+  public int JJTARRAYASSIGNMENT = 4;
+  public int JJTMETHOD = 5;
+  public int JJTMETHODSIGNATURE = 6;
+  public int JJTPARAMETERLIST = 7;
+  public int JJTMETHODBODY = 8;
+  public int JJTRETURNSTATEMENT = 9;
+  public int JJTCOMPARISION = 10;
 
 
   public String[] jjtNodeName = {
     "Program",
     "FieldOrMethods",
-    "FieldDeclaration",
+    "FieldDeclarationAndAssignment",
     "Assignment",
+    "ArrayAssignment",
     "Method",
     "MethodSignature",
     "ParameterList",
@@ -28,4 +30,4 @@ public interface NewAwkParserTreeConstants
     "Comparision",
   };
 }
-/* JavaCC - OriginalChecksum=a4390906d2c7eca8eb7d190c308e530c (do not edit this line) */
+/* JavaCC - OriginalChecksum=7e3560867192c1cf805188c04d2551ba (do not edit this line) */

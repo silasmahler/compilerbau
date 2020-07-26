@@ -79,41 +79,39 @@ public interface NewAwkParserConstants {
   /** RegularExpression Id. */
   int EXPO = 34;
   /** RegularExpression Id. */
-  int Type = 35;
+  int DataType = 35;
   /** RegularExpression Id. */
   int ArrayType = 36;
   /** RegularExpression Id. */
-  int Datatype = 37;
+  int Apostrophe = 37;
   /** RegularExpression Id. */
-  int Apostrophe = 38;
+  int BooleanConditionalAnd = 38;
   /** RegularExpression Id. */
-  int BooleanConditionalAnd = 39;
+  int BooleanConditionalOr = 39;
   /** RegularExpression Id. */
-  int BooleanConditionalOr = 40;
+  int BooleanConditionalNot = 40;
   /** RegularExpression Id. */
-  int BooleanConditionalNot = 41;
+  int CharLiteral = 41;
   /** RegularExpression Id. */
-  int CharLiteral = 42;
+  int VOID = 42;
   /** RegularExpression Id. */
-  int IntegerLiteral = 43;
+  int NullLiteral = 43;
   /** RegularExpression Id. */
-  int DoubleLiteral = 44;
+  int BooleanValue = 44;
   /** RegularExpression Id. */
-  int VOID = 45;
+  int TRUE = 45;
   /** RegularExpression Id. */
-  int NullLiteral = 46;
+  int FALSE = 46;
   /** RegularExpression Id. */
-  int Bezeichner = 47;
+  int IntegerLiteral = 47;
   /** RegularExpression Id. */
-  int StringLiteral = 48;
+  int DoubleLiteral = 48;
   /** RegularExpression Id. */
-  int STRING_CONTENT = 49;
+  int Bezeichner = 49;
   /** RegularExpression Id. */
-  int BooleanValue = 50;
+  int StringLiteral = 50;
   /** RegularExpression Id. */
-  int TRUE = 51;
-  /** RegularExpression Id. */
-  int FALSE = 52;
+  int STRING_CONTENT = 51;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -155,24 +153,23 @@ public interface NewAwkParserConstants {
     "<LETTER>",
     "<DIGIT>",
     "<EXPO>",
-    "<Type>",
+    "<DataType>",
     "<ArrayType>",
-    "<Datatype>",
     "\"\\\'\"",
     "<BooleanConditionalAnd>",
     "<BooleanConditionalOr>",
     "<BooleanConditionalNot>",
     "<CharLiteral>",
-    "<IntegerLiteral>",
-    "<DoubleLiteral>",
     "\"void\"",
     "\"null\"",
-    "<Bezeichner>",
-    "<StringLiteral>",
-    "<STRING_CONTENT>",
     "<BooleanValue>",
     "\"true\"",
     "\"false\"",
+    "<IntegerLiteral>",
+    "<DoubleLiteral>",
+    "<Bezeichner>",
+    "<StringLiteral>",
+    "<STRING_CONTENT>",
   };
 
 }
