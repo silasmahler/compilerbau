@@ -1,9 +1,14 @@
 options {
    DEBUG_PARSER = true;
    DEBUG_TOKEN_MANAGER = true;
+   DEBUG_LOOKAHEAD = true;
+   FORCE_LA_CHECK = true;
+   LOOKAHEAD = 1;
 }
 
 PARSER_BEGIN(NewAwkParser)
+
+package de.compilerbau.NewAwkCompiler.generated;
 
 import java.util.*;
 import java.io.*;
