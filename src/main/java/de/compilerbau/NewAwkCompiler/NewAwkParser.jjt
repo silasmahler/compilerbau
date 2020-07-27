@@ -56,7 +56,7 @@ public class NewAwkParser {
      for (File file : files) {
          try {
              // A bit screwball, we'll dump the tree if there is only one arg. :-)
-             parseFile(file, files.size() == 1);
+             parseFile(file, files.size() >= 1);
          }
          catch (Exception e) {
              System.err.println("Error processing file: " + file);
@@ -148,8 +148,10 @@ TOKEN #Operator : /* OPERATORS */
 | <ConditionalNot: "!">
 | <Exponentiation: "^">
 ;
-TOKEN : /* KEYWORDS */
+TOKEN #Keywords : /* KEYWORDS */
 { <RETURN : "return">
+| <VOID: "void">
+| <NullLiteral: "null">
 }
 TOKEN : /* SEPARATORS */
 { <KlammerAuf: "(">
@@ -179,8 +181,6 @@ TOKEN : /* BASIC */
 }
 TOKEN : /* LITERALS */
 { <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
-| <VOID: "void">
-| <NullLiteral: "null">
 | <BooleanValue: (<TRUE>|<FALSE>)>
 | <#TRUE: "true">
 | <#FALSE: "false">

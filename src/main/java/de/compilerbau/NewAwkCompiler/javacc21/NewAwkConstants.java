@@ -6,7 +6,7 @@ package de.compilerbau.NewAwkCompiler.javacc21;
  */
 public interface NewAwkConstants {
     public enum TokenType {
-        EOF, WHITESPACE, TAB, NEW_LINE, CARRIAGE_RETURN, PLUS, MINUS, MULTIPLICATION, DIVISION, MODULO, Zuweisung, EQUAL, NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER, Colon, ConditionalAnd, ConditionalOr, ConditionalNot, Exponentiation, RETURN, KlammerAuf, KlammerZu, BlockAuf, BlockZu, LBRACKET, RBRACKET, SEMICOLON, COMMA, DOT, LETTER, DIGIT, EXPO, DataType, ArrayType, Apostrophe, BooleanConditionalAnd, BooleanConditionalOr, BooleanConditionalNot, CharLiteral, VOID, NullLiteral, BooleanValue, TRUE, FALSE, IntegerLiteral, DoubleLiteral, Bezeichner, StringLiteral, STRING_CONTENT, INVALID
+        EOF, WHITESPACE, TAB, NEW_LINE, CARRIAGE_RETURN, PLUS, MINUS, MULTIPLICATION, DIVISION, MODULO, Zuweisung, EQUAL, NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER, Colon, ConditionalAnd, ConditionalOr, ConditionalNot, Exponentiation, RETURN, VOID, NullLiteral, KlammerAuf, KlammerZu, BlockAuf, BlockZu, LBRACKET, RBRACKET, SEMICOLON, COMMA, DOT, LETTER, DIGIT, EXPO, DataType, ArrayType, Apostrophe, BooleanConditionalAnd, BooleanConditionalOr, BooleanConditionalNot, CharLiteral, BooleanValue, TRUE, FALSE, IntegerLiteral, DoubleLiteral, Bezeichner, StringLiteral, STRING_CONTENT, INVALID
     }
     /**
    * Lexical States
@@ -14,5 +14,5 @@ public interface NewAwkConstants {
     public enum LexicalState {
         DEFAULT, 
     }
-    String[] tokenImage= {"<EOF>", "\" \"", "\"\\t\"", "\"\\n\"", "\"\\r\"", "\"+\"", "\"-\"", "\"*\"", "\"/\"", "\"%\"", "\"=\"", "\"==\"", "\"!=\"", "\">=\"", "\"<=\"", "\">\"", "\"<\"", "\":\"", "\"&&\"", "\"||\"", "\"!\"", "\"^\"", "\"return\"", "\"(\"", "\")\"", "\"{\"", "\"}\"", "\"[\"", "\"]\"", "\";\"", "\",\"", "\".\"", "<LETTER>", "<DIGIT>", "<EXPO>", "<DataType>", "<ArrayType>", "\"\\\'\"", "<BooleanConditionalAnd>", "<BooleanConditionalOr>", "<BooleanConditionalNot>", "<CharLiteral>", "\"void\"", "\"null\"", "<BooleanValue>", "\"true\"", "\"false\"", "<IntegerLiteral>", "<DoubleLiteral>", "<Bezeichner>", "<StringLiteral>", "<STRING_CONTENT>", };
+    String[] tokenImage= {"<EOF>", "\" \"", "\"\\t\"", "\"\\n\"", "\"\\r\"", "\"+\"", "\"-\"", "\"*\"", "\"/\"", "\"%\"", "\"=\"", "\"==\"", "\"!=\"", "\">=\"", "\"<=\"", "\">\"", "\"<\"", "\":\"", "\"&&\"", "\"||\"", "\"!\"", "\"^\"", "\"return\"", "\"void\"", "\"null\"", "\"(\"", "\")\"", "\"{\"", "\"}\"", "\"[\"", "\"]\"", "\";\"", "\",\"", "\".\"", "<LETTER>", "<DIGIT>", "<EXPO>", "<DataType>", "<ArrayType>", "\"\\\'\"", "<BooleanConditionalAnd>", "<BooleanConditionalOr>", "<BooleanConditionalNot>", "<CharLiteral>", "<BooleanValue>", "\"true\"", "\"false\"", "<IntegerLiteral>", "<DoubleLiteral>", "<Bezeichner>", "<StringLiteral>", "<STRING_CONTENT>", };
 }

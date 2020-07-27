@@ -117,7 +117,7 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjmatchedKind;
     private String inputSource= "input";
     // BitSet for TOKEN
-    static private BitSet tokenSet= BitSet.valueOf(new long[]{2146216632647649L, });
+    static private BitSet tokenSet= BitSet.valueOf(new long[]{2146126438334433L, });
     private final int[] jjrounds= new int[138];
     private final int[] jjstateSet= new int[276];
     private final StringBuilder image= new StringBuilder();
@@ -257,7 +257,7 @@ public class NewAwkLexer implements NewAwkConstants {
     }
 
     protected static final int[][][] statesForState= {{{0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {10}, {11}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {13}, {14}, {15}, {16}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {18}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {20}, {21}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {23}, {24}, {25}, {26}, {27}, {28}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {30}, {31}, {32}, {33}, {34}, {35}, {36}, {37}, {38}, {39}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {41}, {42}, {43}, {44}, {45}, {46}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {48}, {49}, {50}, {51}, {52}, {53}, {54}, {55}, {56}, {57}, {58}, {59}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {61}, {62}, {63}, {64}, {65}, {66}, {67}, {68}, {69}, {70}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {72}, {73}, {74}, {75}, {76}, {77}, {78}, {79}, {80}, {81}, {82}, {83}, {84}, {85}, {86}, {87}, {88}, {89}, {90}, {91}, {92}, {93}, {94}, {95}, {96}, {97}, {98}, {99}, {100}, {101}, {102}, {103}, {104}, {105}, {106}, {107}, {108}, {109}, {110}, {111}, {112}, {113}, {114}, {115}, {116}, {117}, {118}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {120}, {121}, {122}, {123}, {124}, {125}, {126}, {127}, {128}, {0, 9, 12, 17, 19, 22, 29, 40, 47, 60, 71, 119, 129, }, {130}, {131}, {132}, {133}, {134}, {135}, {136}, {137}, }, };
-    protected static final int[][] kindForState= {{40, 40, 40, 40, 40, 40, 40, 40, 40, 41, 41, 41, 48, 48, 48, 48, 48, 49, 49, 50, 50, 50, 35, 35, 35, 36, 36, 36, 36, 35, 35, 35, 35, 35, 35, 36, 36, 36, 36, 36, 35, 35, 35, 35, 36, 36, 36, 35, 35, 35, 35, 35, 35, 35, 36, 36, 36, 36, 36, 36, 35, 35, 35, 35, 35, 35, 36, 36, 36, 36, 36, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 39, 44, 44, 44, 38, 38, 38, 38, 39, 39, 39, 44, 44, 44, 47, 47, 48, 48, 48, 48, 48, 48, 48}};
+    protected static final int[][] kindForState= {{42, 42, 42, 42, 42, 42, 42, 42, 42, 43, 43, 43, 48, 48, 48, 48, 48, 49, 49, 50, 50, 50, 37, 37, 37, 38, 38, 38, 38, 37, 37, 37, 37, 37, 37, 38, 38, 38, 38, 38, 37, 37, 37, 37, 38, 38, 38, 37, 37, 37, 37, 37, 37, 37, 38, 38, 38, 38, 38, 38, 37, 37, 37, 37, 37, 37, 38, 38, 38, 38, 38, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 44, 44, 44, 40, 40, 40, 40, 41, 41, 41, 44, 44, 44, 47, 47, 48, 48, 48, 48, 48, 48, 48}};
     int kindCnt= 0;
     protected final String jjKindsForBitVector(int i, long vec) {
         String retVal= "";
@@ -309,30 +309,30 @@ public class NewAwkLexer implements NewAwkConstants {
         if (trace_enabled) LOGGER.info("   No more string literal token matches are possible.");
         switch(pos) {
             case 0:
-            if ((active0&0xc0000400000L)!=0L) {
+            if ((active0&0x1c00000L)!=0L) {
                 jjmatchedKind= 49;
                 return 18;
             }
-            if ((active0&0x2000000000L)!=0L) return 10;
+            if ((active0&0x8000000000L)!=0L) return 10;
             if ((active0&0x101000L)!=0L) return 4;
-            if ((active0&0x80000000L)!=0L) return 13;
+            if ((active0&0x200000000L)!=0L) return 13;
             return-1;
             case 1:
-            if ((active0&0xc0000400000L)!=0L) {
+            if ((active0&0x1c00000L)!=0L) {
                 jjmatchedKind= 49;
                 jjmatchedPos= 1;
                 return 18;
             }
             return-1;
             case 2:
-            if ((active0&0xc0000400000L)!=0L) {
+            if ((active0&0x1c00000L)!=0L) {
                 jjmatchedKind= 49;
                 jjmatchedPos= 2;
                 return 18;
             }
             return-1;
             case 3:
-            if ((active0&0xc0000000000L)!=0L) return 18;
+            if ((active0&0x1800000L)!=0L) return 18;
             if ((active0&0x400000L)!=0L) {
                 jjmatchedKind= 49;
                 jjmatchedPos= 3;
@@ -380,27 +380,27 @@ public class NewAwkLexer implements NewAwkConstants {
             case 38:
             return jjMoveStringLiteralDfa1(0x40000L);
             case 39:
-            return jjStartNfaWithStates(0, 37, 10);
+            return jjStartNfaWithStates(0, 39, 10);
             case 40:
-            return jjStopAtPos(0, 23);
+            return jjStopAtPos(0, 25);
             case 41:
-            return jjStopAtPos(0, 24);
+            return jjStopAtPos(0, 26);
             case 42:
             return jjStopAtPos(0, 7);
             case 43:
             return jjStopAtPos(0, 5);
             case 44:
-            return jjStopAtPos(0, 30);
+            return jjStopAtPos(0, 32);
             case 45:
             return jjStopAtPos(0, 6);
             case 46:
-            return jjStartNfaWithStates(0, 31, 13);
+            return jjStartNfaWithStates(0, 33, 13);
             case 47:
             return jjStopAtPos(0, 8);
             case 58:
             return jjStopAtPos(0, 17);
             case 59:
-            return jjStopAtPos(0, 29);
+            return jjStopAtPos(0, 31);
             case 60:
             jjmatchedKind= 16;
             return jjMoveStringLiteralDfa1(0x4000L);
@@ -411,23 +411,23 @@ public class NewAwkLexer implements NewAwkConstants {
             jjmatchedKind= 15;
             return jjMoveStringLiteralDfa1(0x2000L);
             case 91:
-            return jjStopAtPos(0, 27);
+            return jjStopAtPos(0, 29);
             case 93:
-            return jjStopAtPos(0, 28);
+            return jjStopAtPos(0, 30);
             case 94:
             return jjStopAtPos(0, 21);
             case 110:
-            return jjMoveStringLiteralDfa1(0x80000000000L);
+            return jjMoveStringLiteralDfa1(0x1000000L);
             case 114:
             return jjMoveStringLiteralDfa1(0x400000L);
             case 118:
-            return jjMoveStringLiteralDfa1(0x40000000000L);
+            return jjMoveStringLiteralDfa1(0x800000L);
             case 123:
-            return jjStopAtPos(0, 25);
+            return jjStopAtPos(0, 27);
             case 124:
             return jjMoveStringLiteralDfa1(0x80000L);
             case 125:
-            return jjStopAtPos(0, 26);
+            return jjStopAtPos(0, 28);
             default:
             if (trace_enabled) LOGGER.info("   No string literal matches possible.");
             return jjMoveNfa(0, 0);
@@ -464,9 +464,9 @@ public class NewAwkLexer implements NewAwkConstants {
             case 101:
             return jjMoveStringLiteralDfa2(active0, 0x400000L);
             case 111:
-            return jjMoveStringLiteralDfa2(active0, 0x40000000000L);
+            return jjMoveStringLiteralDfa2(active0, 0x800000L);
             case 117:
-            return jjMoveStringLiteralDfa2(active0, 0x80000000000L);
+            return jjMoveStringLiteralDfa2(active0, 0x1000000L);
             case 124:
             if ((active0&0x80000L)!=0L) return jjStopAtPos(1, 19);
             break;
@@ -498,9 +498,9 @@ public class NewAwkLexer implements NewAwkConstants {
         if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 105:
-            return jjMoveStringLiteralDfa3(active0, 0x40000000000L);
+            return jjMoveStringLiteralDfa3(active0, 0x800000L);
             case 108:
-            return jjMoveStringLiteralDfa3(active0, 0x80000000000L);
+            return jjMoveStringLiteralDfa3(active0, 0x1000000L);
             case 116:
             return jjMoveStringLiteralDfa3(active0, 0x400000L);
             default:
@@ -531,10 +531,10 @@ public class NewAwkLexer implements NewAwkConstants {
         if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 100:
-            if ((active0&0x40000000000L)!=0L) return jjStartNfaWithStates(3, 42, 18);
+            if ((active0&0x800000L)!=0L) return jjStartNfaWithStates(3, 23, 18);
             break;
             case 108:
-            if ((active0&0x80000000000L)!=0L) return jjStartNfaWithStates(3, 43, 18);
+            if ((active0&0x1000000L)!=0L) return jjStartNfaWithStates(3, 24, 18);
             break;
             case 117:
             return jjMoveStringLiteralDfa4(active0, 0x400000L);
@@ -637,7 +637,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         if ((0x3ff000000000000L&l)!=0L) jjstateSet[jjnewStateCnt++]= 11;
                         break;
                         case 11:
-                        if (curChar== 39&&kind> 41) kind= 41;
+                        if (curChar== 39&&kind> 43) kind= 43;
                         break;
                         case 12:
                         if (curChar== 46) jjCheckNAdd(13);
@@ -743,7 +743,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         else if (curChar== 116) jjstateSet[jjnewStateCnt++]= 3;
                         break;
                         case 1:
-                        if (curChar== 101&&kind> 40) kind= 40;
+                        if (curChar== 101&&kind> 42) kind= 42;
                         break;
                         case 2:
                         if (curChar== 117) jjstateSet[jjnewStateCnt++]= 1;
@@ -786,7 +786,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         if (curChar== 105) jjCheckNAddTwoStates(24, 28);
                         break;
                         case 23:
-                        if (curChar== 116&&kind> 35) kind= 35;
+                        if (curChar== 116&&kind> 37) kind= 37;
                         break;
                         case 24:
                         if (curChar== 110) jjstateSet[jjnewStateCnt++]= 23;
@@ -798,7 +798,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         if (curChar== 91) jjstateSet[jjnewStateCnt++]= 27;
                         break;
                         case 27:
-                        if (curChar== 93) kind= 36;
+                        if (curChar== 93) kind= 38;
                         break;
                         case 28:
                         if (curChar== 110) jjstateSet[jjnewStateCnt++]= 25;
@@ -807,7 +807,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         if (curChar== 100) jjCheckNAddTwoStates(34, 39);
                         break;
                         case 30:
-                        if (curChar== 101&&kind> 35) kind= 35;
+                        if (curChar== 101&&kind> 37) kind= 37;
                         break;
                         case 31:
                         if (curChar== 108) jjstateSet[jjnewStateCnt++]= 30;
@@ -840,7 +840,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         if (curChar== 99) jjCheckNAddTwoStates(43, 46);
                         break;
                         case 41:
-                        if (curChar== 114&&kind> 35) kind= 35;
+                        if (curChar== 114&&kind> 37) kind= 37;
                         break;
                         case 42:
                         if (curChar== 97) jjstateSet[jjnewStateCnt++]= 41;
@@ -861,7 +861,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         if (curChar== 98) jjCheckNAddTwoStates(53, 59);
                         break;
                         case 48:
-                        if (curChar== 110&&kind> 35) kind= 35;
+                        if (curChar== 110&&kind> 37) kind= 37;
                         break;
                         case 49:
                         if (curChar== 97) jjstateSet[jjnewStateCnt++]= 48;
@@ -900,7 +900,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         if (curChar== 83) jjCheckNAddTwoStates(65, 70);
                         break;
                         case 61:
-                        if (curChar== 103&&kind> 35) kind= 35;
+                        if (curChar== 103&&kind> 37) kind= 37;
                         break;
                         case 62:
                         if (curChar== 110) jjstateSet[jjnewStateCnt++]= 61;
@@ -937,7 +937,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         break;
                         case 74:
                         if (curChar!=101) break;
-                        if (kind> 38) kind= 38;
+                        if (kind> 40) kind= 40;
                         jjstateSet[jjnewStateCnt++]= 83;
                         break;
                         case 76:
@@ -992,7 +992,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         break;
                         case 96:
                         if (curChar!=101) break;
-                        if (kind> 39) kind= 39;
+                        if (kind> 41) kind= 41;
                         jjstateSet[jjnewStateCnt++]= 105;
                         break;
                         case 97:

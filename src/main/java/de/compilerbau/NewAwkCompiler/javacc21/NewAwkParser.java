@@ -49,7 +49,7 @@ public class NewAwkParser implements NewAwkConstants {
         for (File file : files) {
             try {
                 // A bit screwball, we'll dump the tree if there is only one arg. :-)
-                parseFile(file, files.size()== 1);
+                parseFile(file, files.size()>=1);
             }
             catch(Exception e) {
                 System.err.println("Error processing file: "+file);
@@ -305,7 +305,7 @@ public class NewAwkParser implements NewAwkConstants {
                         popCallStack();
                     }
                 }
-                else if (resetScanAhead(1)&&nextTokenType== TokenType.DataType||nextTokenType== TokenType.ArrayType||nextTokenType== TokenType.VOID) {
+                else if (resetScanAhead(1)&&nextTokenType== TokenType.VOID||nextTokenType== TokenType.DataType||nextTokenType== TokenType.ArrayType) {
                     // Code for NonTerminal specified on line 206 of NewAwkParser.jjt
                     pushOntoCallStack("fieldOrMethods", "NewAwkParser.jjt", 206, 46);
                     try {
@@ -983,16 +983,16 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_206$column_7= EnumSet.of(TokenType.DataType, TokenType.ArrayType, TokenType.VOID);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_215$column_6= EnumSet.of(TokenType.CharLiteral, TokenType.NullLiteral, TokenType.BooleanValue, TokenType.IntegerLiteral, TokenType.DoubleLiteral, TokenType.Bezeichner, TokenType.StringLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_229$column_6= EnumSet.of(TokenType.DataType, TokenType.ArrayType, TokenType.VOID);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_206$column_7= EnumSet.of(TokenType.VOID, TokenType.DataType, TokenType.ArrayType);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_215$column_6= EnumSet.of(TokenType.NullLiteral, TokenType.CharLiteral, TokenType.BooleanValue, TokenType.IntegerLiteral, TokenType.DoubleLiteral, TokenType.Bezeichner, TokenType.StringLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_229$column_6= EnumSet.of(TokenType.VOID, TokenType.DataType, TokenType.ArrayType);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_233$column_6= EnumSet.of(TokenType.DataType, TokenType.ArrayType);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_233$column_55= EnumSet.of(TokenType.DataType, TokenType.ArrayType);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_237$column_17= EnumSet.of(TokenType.RETURN, TokenType.DataType, TokenType.Bezeichner);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_242$column_6= EnumSet.of(TokenType.CharLiteral, TokenType.NullLiteral, TokenType.BooleanValue, TokenType.IntegerLiteral, TokenType.DoubleLiteral, TokenType.Bezeichner, TokenType.StringLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_249$column_6= EnumSet.of(TokenType.CharLiteral, TokenType.NullLiteral, TokenType.BooleanValue, TokenType.IntegerLiteral, TokenType.DoubleLiteral, TokenType.Bezeichner, TokenType.StringLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_242$column_6= EnumSet.of(TokenType.NullLiteral, TokenType.CharLiteral, TokenType.BooleanValue, TokenType.IntegerLiteral, TokenType.DoubleLiteral, TokenType.Bezeichner, TokenType.StringLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_249$column_6= EnumSet.of(TokenType.NullLiteral, TokenType.CharLiteral, TokenType.BooleanValue, TokenType.IntegerLiteral, TokenType.DoubleLiteral, TokenType.Bezeichner, TokenType.StringLiteral);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_250$column_6= EnumSet.of(TokenType.EQUAL, TokenType.NOT_EQUAL, TokenType.G_OR_EQUAL, TokenType.S_OR_EQUAL, TokenType.GREATER, TokenType.SMALLER);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_251$column_6= EnumSet.of(TokenType.CharLiteral, TokenType.NullLiteral, TokenType.BooleanValue, TokenType.IntegerLiteral, TokenType.DoubleLiteral, TokenType.Bezeichner, TokenType.StringLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_251$column_6= EnumSet.of(TokenType.NullLiteral, TokenType.CharLiteral, TokenType.BooleanValue, TokenType.IntegerLiteral, TokenType.DoubleLiteral, TokenType.Bezeichner, TokenType.StringLiteral);
     private final boolean scanToken(TokenType expectedType) {
         if (remainingLookahead<=0) return true;
         if (currentLookaheadToken.getNext()== null) {
