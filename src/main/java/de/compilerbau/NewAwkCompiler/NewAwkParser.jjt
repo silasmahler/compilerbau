@@ -1,4 +1,6 @@
 options {
+   BASE_SRC_DIR = "../../../";
+   PARSER_PACKAGE = "de.compilerbau.NewAwkCompiler.javacc21";
    DEBUG_PARSER = true;
    DEBUG_TOKEN_MANAGER = true;
 }
@@ -11,14 +13,13 @@ import java.io.*;
 public class NewAwkParser {
  private static String testToken;
 
- public static void main(String[] args) throws ParseException, FileNotFoundException, TokenMgrError {
+ public static void main(String[] args) throws ParseException, FileNotFoundException {
      File file = new File(".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler\\NewAwkTest.txt");
      FileInputStream is = new FileInputStream(file);
      NewAwkParser parser = new NewAwkParser(new BufferedInputStream(is));
      parser.program();
 
      parser.printTokens(testToken);
-     ((SimpleNode)jjtree.rootNode()).dump(">");
 
      }
      private void printTokens(String testToken) {
@@ -37,8 +38,8 @@ SKIP :
 | <NEW_LINE: "\n">
 | <CARRIAGE_RETURN: "\r">
 }
-TOKEN : /* OPERATORS */
-{ <PLUS: "+">
+TOKEN #Operator : /* OPERATORS */
+ <PLUS: "+">
 | <MINUS: "-">
 | <MULTIPLICATION: "*">
 | <DIVISION: "/">
@@ -55,7 +56,7 @@ TOKEN : /* OPERATORS */
 | <ConditionalOr: "||">
 | <ConditionalNot: "!">
 | <Exponentiation: "^">
-}
+;
 TOKEN : /* KEYWORDS */
 { <RETURN : "return">
 }
@@ -103,57 +104,55 @@ TOKEN : /* LITERALS */
     Parser Rules and AST generation are defined/handled in this section
     ==============================================================================================
 */
-SimpleNode program() #Program : {}
+Node program() #Program : {}
 {
     fieldOrMethods()
     <EOF>
     {return jjtThis;}
 }
-void fieldOrMethods() #FieldOrMethods : {}
+fieldOrMethods() #FieldOrMethods : {}
 {
-    (LOOKAHEAD(3) fieldDeclarationAndAssignment() | LOOKAHEAD(3) method())+
+     (SCAN fieldDeclarationAndAssignment() | methodDeclaration())+
 }
-void fieldDeclarationAndAssignment() #FieldDeclarationAndAssignment: {}
+fieldDeclarationAndAssignment() #FieldDeclarationAndAssignment: {}
 {
     <DataType> assignment()
 }
-void assignment() #Assignment: {}
+assignment() #Assignment: {}
 {
     <Bezeichner> <Zuweisung>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
     <SEMICOLON>
 }
-void arrayAssignment() #ArrayAssignment: {}
+arrayAssignment() #ArrayAssignment: {}
 {
-    <ArrayType>
+    <ArrayType> assignment()
 }
-void method() #Method : {}
+methodDeclaration() #Method : {}
 {
     methodSignature()
     methodBody()
 }
-void methodSignature() #MethodSignature : {}
+methodSignature() #MethodSignature : {}
 {
     (<DataType> | <ArrayType> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>
 }
-void parameterList() #ParameterList : {}
+parameterList() #ParameterList : {}
 {
     (<DataType> | <ArrayType>) <Bezeichner> [<COMMA> (<DataType> | <ArrayType>) <Bezeichner>]
 }
-void methodBody() #MethodBody : {}
+methodBody() #MethodBody : {}
 {
-    <BlockAuf> (LOOKAHEAD(3) assignment()
-                            | fieldDeclarationAndAssignment()
-                            | returnStatement())+ <BlockZu>
+    <BlockAuf> (assignment() | fieldDeclarationAndAssignment() | returnStatement())+ <BlockZu>
 }
-void returnStatement() #ReturnStatement : {}
+returnStatement() #ReturnStatement : {}
 {
     <RETURN>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral>
     | <BooleanValue> | <StringLiteral> | <NullLiteral> )
     <SEMICOLON>
 }
-void comparision() #Comparision:
+comparision() #Comparision:
 {}
 {
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
