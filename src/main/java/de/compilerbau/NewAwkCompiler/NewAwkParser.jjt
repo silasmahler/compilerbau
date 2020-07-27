@@ -205,17 +205,17 @@ fieldOrMethods() #FieldOrMethods : {}
 {
      (SCAN fieldDeclarationAndAssignment() | methodDeclaration())+
 }
-fieldDeclarationAndAssignment() #FieldDeclarationAndAssignment: {}
+fieldDeclarationAndAssignment() #FieldDeclarationAndAssignment : {}
 {
     <DataType> assignment()
 }
-assignment() #Assignment: {}
+assignment() #Assignment : {}
 {
     <Bezeichner> <Zuweisung>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
     <SEMICOLON>
 }
-arrayAssignment() #ArrayAssignment: {}
+arrayAssignment() #ArrayAssignment : {}
 {
     <ArrayType> assignment()
 }
