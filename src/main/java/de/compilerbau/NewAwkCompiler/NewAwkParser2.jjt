@@ -7,10 +7,7 @@ options {
 
 PARSER_BEGIN(NewAwkParser)
 
-import de.compilerbau.NewAwkCompiler.javacc21.NewAwkParser;
-import de.compilerbau.NewAwkCompiler.javacc21.Node;
-import de.compilerbau.NewAwkCompiler.javacc21.Nodes;
-import de.compilerbau.NewAwkCompiler.javacc21.ParseException;
+import de.compilerbau.NewAwkCompiler.javacc21.*;import de.compilerbau.NewAwkCompiler.javacc21.NewAwkParser;
 import java.io.*;
 import java.util.*;
 
@@ -116,6 +113,7 @@ public class NewAwkParser {
              System.out.println("If you just pass it one java source file, it dumps the AST");
              System.exit(-1);
          }
+}}
 }
 PARSER_END(NewAwkParser)
 /*
@@ -129,7 +127,7 @@ SKIP :
 | <NEW_LINE: "\n">
 | <CARRIAGE_RETURN: "\r">
 }
-TOKEN #Operator : /* OPERATORS */
+TOKEN : /* OPERATORS */
 { <PLUS: "+">
 | <MINUS: "-">
 | <MULTIPLICATION: "*">
@@ -148,10 +146,12 @@ TOKEN #Operator : /* OPERATORS */
 | <ConditionalNot: "!">
 | <Exponentiation: "^">
 }
-TOKEN #Keywords : /* KEYWORDS */
+TOKEN : /* KEYWORDS */
 { <RETURN : "return">
 | <VOID: "void">
 | <NullLiteral: "null">
+| <IF: "if">
+| <ELSE: "else">
 }
 TOKEN : /* SEPARATORS */
 { <KlammerAuf: "(">
@@ -172,12 +172,6 @@ TOKEN : /* BASIC */
 | <ArrayType: <DataType> <LBRACKET> <RBRACKET>>
 /*| <Type: <ArrayType> | <DataType> >*/
 | <Apostrophe: "'">
-| <BooleanConditionalAnd: <BooleanValue><ConditionalAnd><BooleanValue>
-                          (<ConditionalAnd><BooleanValue> )* >
-| <BooleanConditionalOr: <BooleanValue><ConditionalOr><BooleanValue>
-                          (<ConditionalOr><BooleanValue> )* >
-| <BooleanConditionalNot: (<ConditionalNot><BooleanValue>)>
-
 }
 TOKEN : /* LITERALS */
 { <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
@@ -195,6 +189,78 @@ TOKEN : /* LITERALS */
     Parser Rules and AST generation are defined/handled in this section
     ==============================================================================================
 */
+
+void Stmnt() #Stmnt : {}
+{
+    (ExprStmnt() | Block() | IfStmnt() | ReturnStmnt())
+}
+
+void ExprStmnt() #ExprStmnt : {}
+{
+    Expr() <SEMICOLON>
+}
+void IfStmnt() #IfStmnt : {}
+{
+    <IF> <KlammerAuf> Expr() <KlammerZu> Stmnt() (<ELSE> Stmnt())* <SEMICOLON>
+}
+void Expr() #Expr : {}
+{
+    LogicalOrExpr() ( <Zuweisung> LogicalOrExpr())*
+}
+void LogicalOrExpr() #LogicalOrExpr : {}
+{
+    LogicalAndExpr() (<ConditionalOr> LogicalAndExpr())*
+}
+void LogicalAndExpr() #LogicalAndExpr : {}
+{
+    LogicalNotExpr() (<ConditionalAnd> LogicalNotExpr())*
+}
+void LogicalNotExpr() #LogicalNotExpr : {}
+{
+    [<ConditionalNot>] CompExpr()
+}
+void CompExpr() #CompExpr : {}
+{
+    Sum() ((<GREATER> | <SMALLER>  | <S_OR_EQUAL> | <G_OR_EQUAL> | <NOT_EQUAL>) Sum())*
+}
+void Sum() #Sum : {}
+{
+    Product() ((<PLUS> | <MINUS> ) Product())*
+}
+void Product() #Product : {}
+{
+    Sign() ((<MULTIPLICATION> | <DIVISION> | <MODULO> | "") Sign() )*
+}
+void Sign() #Sign : {}
+{
+    Atom() [(<PLUS> | <MINUS> ) Atom() ]
+}
+void Atom() #Atom : {}
+{
+    [<KlammerAuf> Type() <KlammerZu>] ((MethodCall() | VariableUse() ) (ArrayAccess())*
+    | <KlammerAuf> Expr() <KlammerZu> | <BooleanValue> | <IntegerLiteral> | <DoubleLiteral>
+    | <StringLiteral> | <CharLiteral>)
+}
+void MethodCall() #MethodCall : {}
+{
+    <Bezeichner> <KlammerAuf> ArgumentList() <KlammerZu>
+}
+void VariableUse() #VariableUse : {}
+{
+    <Bezeichner>
+}
+void ArrayAccess() #ArrayAccess : {}
+{
+    [Expr()]
+}
+void ArgumentList() #ArgumentList : {}
+{
+    [Expr() (<COMMA> Expr())]
+}
+void Type() #IfStmnt : {}
+{
+    <DataType> (<KlammerAuf> <KlammerZu> )*
+}
 Node program() #Program : {
     Token t;
 }
@@ -203,49 +269,46 @@ Node program() #Program : {
     <EOF>
     {return jjtThis;}
 }
-fieldOrMethods() #FieldOrMethods : {}
+void fieldOrMethods() #FieldOrMethods : {}
 {
      (SCAN fieldDeclarationAndAssignment() | methodDeclaration())+
 }
-fieldDeclarationAndAssignment() #FieldDeclarationAndAssignment : {}
+void fieldDeclarationAndAssignment() #FieldDeclarationAndAssignment : {}
 {
     <DataType> assignment()
 }
-assignment() #Assignment : {}
+void assignment() #Assignment : {}
 {
     <Bezeichner> <Zuweisung>
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
     <SEMICOLON>
 }
-arrayAssignment() #ArrayAssignment : {}
+void arrayAssignment() #ArrayAssignment : {}
 {
     <ArrayType> assignment()
 }
-methodDeclaration() #Method : {}
+void methodDeclaration() #Method : {}
 {
     methodSignature()
     methodBody()
 }
-methodSignature() #MethodSignature : {}
+void methodSignature() #MethodSignature : {}
 {
     (<DataType> | <ArrayType> | <VOID>) <Bezeichner> <KlammerAuf> parameterList() <KlammerZu>
 }
-parameterList() #ParameterList : {}
+void parameterList() #ParameterList : {}
 {
     (<DataType> | <ArrayType>) <Bezeichner> [<COMMA> (<DataType> | <ArrayType>) <Bezeichner>]
 }
-methodBody() #MethodBody : {}
+void methodBody() #MethodBody : {}
 {
-    <BlockAuf> (assignment() | fieldDeclarationAndAssignment() | returnStatement())+ <BlockZu>
+    <BlockAuf> (assignment() | fieldDeclarationAndAssignment() | returnStmnt() )+ <BlockZu>
 }
-returnStatement() #ReturnStatement : {}
+void returnStmnt() #ReturnStatement : {}
 {
-    <RETURN>
-    (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral>
-    | <BooleanValue> | <StringLiteral> | <NullLiteral> )
-    <SEMICOLON>
+    <RETURN> Expr() <SEMICOLON>
 }
-comparision() #Comparision:
+void comparision() #Comparision:
 {}
 {
     (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
