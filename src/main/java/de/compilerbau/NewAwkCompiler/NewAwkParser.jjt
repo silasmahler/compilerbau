@@ -3,6 +3,7 @@ options {
    PARSER_PACKAGE = "de.compilerbau.NewAwkCompiler.javacc21";
    DEBUG_PARSER = true;
    DEBUG_TOKEN_MANAGER = true;
+   VISITOR = true;
 }
 
 PARSER_BEGIN(NewAwkParser)
