@@ -140,6 +140,7 @@ TOKEN : /* KEYWORDS */
 | <NullLiteral: "null">
 | <IF: "if">
 | <ELSE: "else">
+| <THIS: "this">
 }
 TOKEN : /* SEPARATORS */
 { <KlammerAuf: "(">
@@ -152,6 +153,7 @@ TOKEN : /* SEPARATORS */
 | <COMMA: ",">
 | <DOT: ".">
 | <Apostrophe: "'">
+| <AET: "@">
 }
 TOKEN : /* BASIC */
 { <DataType: ("int"|"double"|"char"|"boolean"|"String")>
@@ -261,7 +263,7 @@ void Sign() #Sign : {}
 {
     Atom() | (<PLUS> | <MINUS> ) Atom()
 }
-void Atom() #Atom : {}
+void Atom() #void : {}
 {
     [<KlammerAuf> Type() <KlammerZu>] ( (LOOKAHEAD(2) MethodCall() | LOOKAHEAD(2) VariableUse()) [ArrayAccess()]
     | <KlammerAuf> Expr() <KlammerZu> | <BooleanValue> | <IntegerLiteral> | <DoubleLiteral>
@@ -290,4 +292,21 @@ void Type() #Type : {}
 void ReturnStmnt() #ReturnStatement : {}
 {
     <RETURN> Expr() <SEMICOLON>
+}
+void KlammerAffe() #KlammerAffe : {}
+{
+    <AET> <BlockAuf>
+    KlammerAffeRegex() KlammerAffeAusdruck()
+    [KlammerAffeRegex() KlammerAffeAusdruck()]
+    <BlockZu>
+}
+void KlammerAffeRegex() #KlammerAffeRegex : {}
+{
+    [<ConditionalNot>] <Colon> ("Integer" | "Double" | "Char" | "Boolean") <Colon>
+}
+void KlammerAffeAusdruck() #KlammerAffeAusdruck : {}
+{
+    <BlockAuf>
+    <RETURN> (<THIS> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue>)
+    <BlockZu>
 }
