@@ -78,7 +78,7 @@ public class NewAwkParser {
      //       }
 
              if (dumpTree) {
-                 Nodes.dump(root, "");
+                 Nodes.dump(root, ">");
              }
          }
 
@@ -151,19 +151,19 @@ TOKEN : /* SEPARATORS */
 | <SEMICOLON: ";">
 | <COMMA: ",">
 | <DOT: ".">
-}
-TOKEN : /* BASIC */
-{ <#LETTER: ["_","a"-"z","A"-"Z"]>
-| <#DIGIT: ["0"-"9"]>
-| <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
-| <DataType: ("int"|"double"|"char"|"boolean"|"String")>
 | <Apostrophe: "'">
 }
+TOKEN : /* BASIC */
+{ <DataType: ("int"|"double"|"char"|"boolean"|"String")>
+| <#LETTER: ["_","a"-"z","A"-"Z"]>
+| <#DIGIT: ["0"-"9"]>
+| <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
+}
 TOKEN : /* LITERALS */
-{ <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
-| <BooleanValue: (<TRUE>|<FALSE>)>
-| <#TRUE: "true">
+{ <#TRUE: "true">
 | <#FALSE: "false">
+| <BooleanValue: (<TRUE>|<FALSE>)>
+| <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
 | <IntegerLiteral: (<DIGIT>)+>
 | <DoubleLiteral: ((<DIGIT>)+<DOT>(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*<DOT> (<DIGIT>)+(<EXPO> )?)>
 | <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
@@ -181,11 +181,11 @@ Node CompilationUnit() #CompilationUnit : {}
     <EOF>
     {return jjtThis;}
 }
-void Stmnt() #Stmnt : {}
+void Stmnt() #void : {}
 {
     (ExprStmnt() | Block() | IfStmnt() | ReturnStmnt())
 }
-void Block() #Block : {}
+void Block() #void : {}
 {
     <BlockAuf> (VariableDecl() | Stmnt())+ <BlockZu>
 }
@@ -259,7 +259,7 @@ void Product() #Product : {}
 }
 void Sign() #Sign : {}
 {
-    Atom() [(<PLUS> | <MINUS> ) Atom() ]
+    Atom() | (<PLUS> | <MINUS> ) Atom()
 }
 void Atom() #Atom : {}
 {
@@ -285,7 +285,7 @@ void ArgumentList() #ArgumentList : {}
 }
 void Type() #Type : {}
 {
-    <DataType> (<ArrayAuf> <ArrayZu>)*
+    <DataType> [<ArrayAuf> <ArrayZu> { jjtThis.isArray = true; } ]
 }
 void ReturnStmnt() #ReturnStatement : {}
 {
