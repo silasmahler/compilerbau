@@ -4,6 +4,7 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
+import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class SMALLER extends Token {
     public SMALLER(TokenType type, String image, String inputSource) {

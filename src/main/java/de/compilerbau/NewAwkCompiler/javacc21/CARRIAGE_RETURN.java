@@ -4,6 +4,7 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
+import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class CARRIAGE_RETURN extends Token {
     public CARRIAGE_RETURN(TokenType type, String image, String inputSource) {

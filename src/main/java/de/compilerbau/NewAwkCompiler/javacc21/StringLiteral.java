@@ -4,6 +4,7 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
+import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class StringLiteral extends Token {
     public StringLiteral(TokenType type, String image, String inputSource) {

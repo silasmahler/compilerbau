@@ -66,7 +66,7 @@ public class JParse {
         FileReader fr = new FileReader(file);
         NewAwkParser parser = new NewAwkParser(fr);
         parser.setInputSource(file.toString());
-        Node root=parser.program();
+        Node root=parser.CompilationUnit();
 // Uncomment the following code if you want all the parsed trees
 //  to remain in memory. This is useful if you want to know how much
 //  memory it takes to parse all the source code in the JDK, for example.

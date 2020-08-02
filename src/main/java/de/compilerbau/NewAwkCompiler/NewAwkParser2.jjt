@@ -102,7 +102,6 @@ public class NewAwkParser {
              System.out.println("If you just pass it one java source file, it dumps the AST");
              System.exit(-1);
          }
-}}
 }
 PARSER_END(NewAwkParser)
 /*
@@ -158,8 +157,6 @@ TOKEN : /* BASIC */
 | <#DIGIT: ["0"-"9"]>
 | <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
 | <DataType: ("int"|"double"|"char"|"boolean"|"String")>
-| <ArrayType: <DataType> <ArrayAuf> <ArrayZu> >
-/*| <Type: <ArrayType> | <DataType> >*/
 | <Apostrophe: "'">
 }
 TOKEN : /* LITERALS */
@@ -180,7 +177,7 @@ TOKEN : /* LITERALS */
 */
 Node CompilationUnit() #CompilationUnit : {}
 {
-    (AttrDecl() | AttrDeclAndAssignement() | MethodDecl())+
+    (LOOKAHEAD(5) AttrDecl() | MethodDecl())+
     <EOF>
     {return jjtThis;}
 }
@@ -194,18 +191,23 @@ void Block() #Block : {}
 }
 void VariableDecl() #VariableDecl : {}
 {
-    Type() <Bezeichner> <SEMICOLON>
+    Type() <Bezeichner>
+    [VariableAssignement()]
+    <SEMICOLON>
+}
+void VariableAssignement() #VariableAssignement : {}
+{
+      <Zuweisung> (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
 }
 void AttrDecl() #AttrDecl : {}
 {
-    Type() <Bezeichner> <SEMICOLON>
-
+    Type() <Bezeichner>
+    [AttrAssignement()]
+    <SEMICOLON>
 }
-void AttrDeclAndAssignement() #AttrDeclAndAssignement : {}
+void AttrAssignement() #AttrAssignement : {}
 {
-      Type() <Bezeichner> <Zuweisung>
-      (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
-      <SEMICOLON>
+      <Zuweisung> (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
 }
 void MethodDecl() #MethodDecl : {}
 {
@@ -253,7 +255,7 @@ void Sum() #Sum : {}
 }
 void Product() #Product : {}
 {
-    Sign() ((<MULTIPLICATION> | <DIVISION> | <MODULO> | "") Sign() )*
+    Sign() ((<MULTIPLICATION> | <DIVISION> | <MODULO>) Sign() )*
 }
 void Sign() #Sign : {}
 {
@@ -261,7 +263,7 @@ void Sign() #Sign : {}
 }
 void Atom() #Atom : {}
 {
-    [<KlammerAuf> Type() <KlammerZu>] ((MethodCall() | VariableUse() ) (ArrayAccess())*
+    [<KlammerAuf> Type() <KlammerZu>] ( (LOOKAHEAD(2) MethodCall() | LOOKAHEAD(2) VariableUse()) [ArrayAccess()]
     | <KlammerAuf> Expr() <KlammerZu> | <BooleanValue> | <IntegerLiteral> | <DoubleLiteral>
     | <StringLiteral> | <CharLiteral>)
 }
@@ -275,13 +277,13 @@ void VariableUse() #VariableUse : {}
 }
 void ArrayAccess() #ArrayAccess : {}
 {
-    [Expr()]
+    <ArrayAuf> Expr() <ArrayZu>
 }
 void ArgumentList() #ArgumentList : {}
 {
     [Expr() (<COMMA> Expr())]
 }
-void Type() #IfStmnt : {}
+void Type() #Type : {}
 {
     <DataType> (<ArrayAuf> <ArrayZu>)*
 }

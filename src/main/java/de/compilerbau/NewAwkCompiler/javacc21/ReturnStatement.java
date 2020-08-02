@@ -4,6 +4,11 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
+import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class ReturnStatement extends BaseNode {
+    public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
+        return visitor.visit(this, data);
+    }
+
 }

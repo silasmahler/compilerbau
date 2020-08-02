@@ -189,6 +189,14 @@ public class Token implements NewAwkConstants, Node {
             return new Exponentiation(TokenType.Exponentiation, image, fileLineMap);
             case RETURN:
             return new RETURN(TokenType.RETURN, image, fileLineMap);
+            case VOID:
+            return new VOID(TokenType.VOID, image, fileLineMap);
+            case NullLiteral:
+            return new NullLiteral(TokenType.NullLiteral, image, fileLineMap);
+            case IF:
+            return new IF(TokenType.IF, image, fileLineMap);
+            case ELSE:
+            return new ELSE(TokenType.ELSE, image, fileLineMap);
             case KlammerAuf:
             return new KlammerAuf(TokenType.KlammerAuf, image, fileLineMap);
             case KlammerZu:
@@ -197,10 +205,10 @@ public class Token implements NewAwkConstants, Node {
             return new BlockAuf(TokenType.BlockAuf, image, fileLineMap);
             case BlockZu:
             return new BlockZu(TokenType.BlockZu, image, fileLineMap);
-            case LBRACKET:
-            return new LBRACKET(TokenType.LBRACKET, image, fileLineMap);
-            case RBRACKET:
-            return new RBRACKET(TokenType.RBRACKET, image, fileLineMap);
+            case ArrayAuf:
+            return new ArrayAuf(TokenType.ArrayAuf, image, fileLineMap);
+            case ArrayZu:
+            return new ArrayZu(TokenType.ArrayZu, image, fileLineMap);
             case SEMICOLON:
             return new SEMICOLON(TokenType.SEMICOLON, image, fileLineMap);
             case COMMA:
@@ -209,22 +217,10 @@ public class Token implements NewAwkConstants, Node {
             return new DOT(TokenType.DOT, image, fileLineMap);
             case DataType:
             return new DataType(TokenType.DataType, image, fileLineMap);
-            case ArrayType:
-            return new ArrayType(TokenType.ArrayType, image, fileLineMap);
             case Apostrophe:
             return new Apostrophe(TokenType.Apostrophe, image, fileLineMap);
-            case BooleanConditionalAnd:
-            return new BooleanConditionalAnd(TokenType.BooleanConditionalAnd, image, fileLineMap);
-            case BooleanConditionalOr:
-            return new BooleanConditionalOr(TokenType.BooleanConditionalOr, image, fileLineMap);
-            case BooleanConditionalNot:
-            return new BooleanConditionalNot(TokenType.BooleanConditionalNot, image, fileLineMap);
             case CharLiteral:
             return new CharLiteral(TokenType.CharLiteral, image, fileLineMap);
-            case VOID:
-            return new VOID(TokenType.VOID, image, fileLineMap);
-            case NullLiteral:
-            return new NullLiteral(TokenType.NullLiteral, image, fileLineMap);
             case BooleanValue:
             return new BooleanValue(TokenType.BooleanValue, image, fileLineMap);
             case IntegerLiteral:
@@ -356,6 +352,16 @@ public class Token implements NewAwkConstants, Node {
     public Set<String> getAttributeNames() {
         if (attributes== null) return Collections.emptySet();
         return attributes.keySet();
+    }
+
+    /** Accept the visitor. **/
+    public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
+        return visitor.visit(this, data);
+    }
+
+    /** Accept the visitor. **/
+    public Object childrenAccept(NewAwkParserVisitor visitor, Object data) {
+        return data;
     }
 
 }

@@ -41,6 +41,19 @@ public class BaseNode implements Node {
         this.unparsed= unparsed;
     }
 
+    /** Accept the visitor. **/
+    public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
+        return visitor.visit(this, data);
+    }
+
+    /** Accept the visitor. **/
+    public Object childrenAccept(NewAwkParserVisitor visitor, Object data) {
+        for (Node child : children) {
+            child.jjtAccept(visitor, data);
+        }
+        return data;
+    }
+
     public void open() {
     }
 

@@ -45,5 +45,5 @@ test {
 
 task execJavaCC21(type: Exec) {
 	workingDir ".\\src\\main\\java\\de\\compilerbau\\NewAwkCompiler"
-	commandLine  'java', '-jar', 'javacc-full.jar', 'NewAwkParser.jjt'
+	commandLine  'java', '-jar', 'javacc-full.jar', 'NewAwkParser2.jjt'
 }
