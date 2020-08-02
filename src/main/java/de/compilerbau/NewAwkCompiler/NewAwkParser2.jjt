@@ -297,7 +297,7 @@ void KlammerAffe() #KlammerAffe : {}
 {
     <AET> <BlockAuf>
     KlammerAffeRegex() KlammerAffeAusdruck()
-    [KlammerAffeRegex() KlammerAffeAusdruck()]
+    (KlammerAffeRegex() KlammerAffeAusdruck())*
     <BlockZu>
 }
 void KlammerAffeRegex() #KlammerAffeRegex : {}
