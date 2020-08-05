@@ -1,4 +1,4 @@
-package de.compilerbau.NewAwkCompiler;
+package de.compilerbau.NewAwkCompiler.old;
 import de.compilerbau.NewAwkCompiler.javacc21.NewAwkParser;
 import de.compilerbau.NewAwkCompiler.javacc21.Node;
 import de.compilerbau.NewAwkCompiler.javacc21.Nodes;

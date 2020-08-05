@@ -1,4 +1,4 @@
-package de.compilerbau.NewAwkCompiler;
+package de.compilerbau.NewAwkCompiler.old;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
