@@ -7,8 +7,9 @@ public interface NewAwkParserVisitor {
     Object visit(Stmnt node, Object data); 
     Object visit(Block node, Object data); 
     Object visit(VariableDecl node, Object data); 
+    Object visit(VariableAssignement node, Object data); 
     Object visit(AttrDecl node, Object data); 
-    Object visit(AttrDeclAndAssignement node, Object data); 
+    Object visit(AttrAssignement node, Object data); 
     Object visit(MethodDecl node, Object data); 
     Object visit(ParameterList node, Object data); 
     Object visit(Parameter node, Object data); 
@@ -29,5 +30,8 @@ public interface NewAwkParserVisitor {
     Object visit(ArgumentList node, Object data); 
     Object visit(Type node, Object data); 
     Object visit(ReturnStatement node, Object data); 
+    Object visit(KlammerAffe node, Object data); 
+    Object visit(KlammerAffeRegex node, Object data); 
+    Object visit(KlammerAffeAusdruck node, Object data); 
     Object visit(Token node, Object data); 
 }

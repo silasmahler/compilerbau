@@ -13,7 +13,7 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     private String indentString() {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < indent; ++i) {
-            sb.append(" ");
+            sb.append("-");
         }
         return sb.toString();
     }
@@ -61,6 +61,14 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     }
 
     @Override
+    public Object visit(VariableAssignement node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;    }
+
+    @Override
     public Object visit(AttrDecl node, Object data) {
             System.out.println(indentString() + node);
     ++indent;
@@ -70,12 +78,8 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(AttrDeclAndAssignement node, Object data) {
-            System.out.println(indentString() + node);
-    ++indent;
-    data = node.childrenAccept(this, data);
-    --indent;
-    return data;
+    public Object visit(AttrAssignement node, Object data) {
+        return null;
     }
 
     @Override
@@ -257,6 +261,30 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     --indent;
     return data;
     }
+
+    @Override
+    public Object visit(KlammerAffe node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;    }
+
+    @Override
+    public Object visit(KlammerAffeRegex node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;    }
+
+    @Override
+    public Object visit(KlammerAffeAusdruck node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;    }
 
     @Override
     public Object visit(Token node, Object data) {

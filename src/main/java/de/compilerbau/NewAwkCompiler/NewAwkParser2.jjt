@@ -145,6 +145,10 @@ TOKEN : /* KEYWORDS */
 | <IF: "if">
 | <ELSE: "else">
 | <THIS: "this">
+| <INTEGER: "Integer">
+| <DOUBLE: "Double">
+| <CHAR: "Char">
+| <BOOLEAN: "Boolean">
 }
 TOKEN : /* SEPARATORS */
 { <KlammerAuf: "(">
@@ -187,11 +191,11 @@ Node CompilationUnit() #CompilationUnit : {}
     <EOF>
     {return jjtThis;}
 }
-void Stmnt() #void : {}
+void Stmnt() #Stmnt : {}
 {
     (ExprStmnt() | Block() | IfStmnt() | ReturnStmnt())
 }
-void Block() #void : {}
+void Block() #Block : {}
 {
     <BlockAuf> (VariableDecl() | Stmnt())+ <BlockZu>
 }
@@ -267,7 +271,7 @@ void Sign() #Sign : {}
 {
     Atom() | (<PLUS> | <MINUS> ) Atom()
 }
-void Atom() #void : {}
+void Atom() #Atom : {}
 {
     [<KlammerAuf> Type() <KlammerZu>] ( (LOOKAHEAD(2) MethodCall() | LOOKAHEAD(2) VariableUse()) [ArrayAccess()]
     | <KlammerAuf> Expr() <KlammerZu> | <BooleanValue> | <IntegerLiteral> | <DoubleLiteral>
@@ -306,7 +310,7 @@ void KlammerAffe() #KlammerAffe : {}
 }
 void KlammerAffeRegex() #KlammerAffeRegex : {}
 {
-    [<ConditionalNot>] <Colon> ("Integer" | "Double" | "Char" | "Boolean") <Colon>
+    [<ConditionalNot>] <Colon> (<INTEGER> | <DOUBLE> | <CHAR> | <BOOLEAN> ) <Colon>
 }
 void KlammerAffeAusdruck() #KlammerAffeAusdruck : {}
 {

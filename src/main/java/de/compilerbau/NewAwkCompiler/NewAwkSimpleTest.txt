@@ -1,0 +1,5 @@
+int main(String[] args) {
+    int x = 5;
+    return x;
+}
+int y = 7;
