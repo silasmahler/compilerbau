@@ -108,7 +108,6 @@ public class NewAwkParser {
              System.out.println("If you just pass it one java source file, it dumps the AST");
              System.exit(-1);
          }
-}}
 }
 PARSER_END(NewAwkParser)
 /*
