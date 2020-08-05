@@ -8,7 +8,7 @@ options {
 
 PARSER_BEGIN(NewAwkParser)
 
-import de.compilerbau.NewAwkCompiler.NewAwkDumpVisitor;import de.compilerbau.NewAwkCompiler.javacc21.*;import de.compilerbau.NewAwkCompiler.javacc21.NewAwkParser;
+import de.compilerbau.NewAwkCompiler.NewAwkDumpVisitor;import de.compilerbau.NewAwkCompiler.NewAwkTypeCheckVisitor;import de.compilerbau.NewAwkCompiler.javacc21.*;import de.compilerbau.NewAwkCompiler.javacc21.NewAwkParser;
 import java.io.*;
 import java.util.*;
 
@@ -80,8 +80,10 @@ public class NewAwkParser {
              if (dumpTree) {
                  Nodes.dump(root, ">");
                  NewAwkDumpVisitor newAwkDumpVisitor = new NewAwkDumpVisitor();
+                 NewAwkTypeCheckVisitor newAwkTypeCheckVisitor = new NewAwkTypeCheckVisitor();
                  if(root instanceof CompilationUnit) {
                      ((CompilationUnit) root).jjtAccept(newAwkDumpVisitor, null);
+                     ((CompilationUnit) root).jjtAccept(newAwkTypeCheckVisitor, null);
                  }
              }
         }
@@ -106,6 +108,7 @@ public class NewAwkParser {
              System.out.println("If you just pass it one java source file, it dumps the AST");
              System.exit(-1);
          }
+}}
 }
 PARSER_END(NewAwkParser)
 /*
