@@ -197,6 +197,16 @@ public class Token implements NewAwkConstants, Node {
             return new IF(TokenType.IF, image, fileLineMap);
             case ELSE:
             return new ELSE(TokenType.ELSE, image, fileLineMap);
+            case THIS:
+            return new THIS(TokenType.THIS, image, fileLineMap);
+            case INTEGER:
+            return new INTEGER(TokenType.INTEGER, image, fileLineMap);
+            case DOUBLE:
+            return new DOUBLE(TokenType.DOUBLE, image, fileLineMap);
+            case CHAR:
+            return new CHAR(TokenType.CHAR, image, fileLineMap);
+            case BOOLEAN:
+            return new BOOLEAN(TokenType.BOOLEAN, image, fileLineMap);
             case KlammerAuf:
             return new KlammerAuf(TokenType.KlammerAuf, image, fileLineMap);
             case KlammerZu:
@@ -217,16 +227,28 @@ public class Token implements NewAwkConstants, Node {
             return new DOT(TokenType.DOT, image, fileLineMap);
             case Apostrophe:
             return new Apostrophe(TokenType.Apostrophe, image, fileLineMap);
+            case AT:
+            return new AT(TokenType.AT, image, fileLineMap);
+            case IntType:
+            return new IntType(TokenType.IntType, image, fileLineMap);
+            case DoubleType:
+            return new DoubleType(TokenType.DoubleType, image, fileLineMap);
+            case CharType:
+            return new CharType(TokenType.CharType, image, fileLineMap);
+            case BooleanType:
+            return new BooleanType(TokenType.BooleanType, image, fileLineMap);
+            case StringType:
+            return new StringType(TokenType.StringType, image, fileLineMap);
+            case BooleanLiteral:
+            return new BooleanLiteral(TokenType.BooleanLiteral, image, fileLineMap);
             case CharLiteral:
             return new CharLiteral(TokenType.CharLiteral, image, fileLineMap);
-            case BooleanValue:
-            return new BooleanValue(TokenType.BooleanValue, image, fileLineMap);
             case IntegerLiteral:
             return new IntegerLiteral(TokenType.IntegerLiteral, image, fileLineMap);
             case DoubleLiteral:
             return new DoubleLiteral(TokenType.DoubleLiteral, image, fileLineMap);
-            case Bezeichner:
-            return new Bezeichner(TokenType.Bezeichner, image, fileLineMap);
+            case ID:
+            return new ID(TokenType.ID, image, fileLineMap);
             case StringLiteral:
             return new StringLiteral(TokenType.StringLiteral, image, fileLineMap);
             default:

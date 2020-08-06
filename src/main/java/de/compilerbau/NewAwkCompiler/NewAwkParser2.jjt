@@ -178,11 +178,11 @@ TOKEN : /* BASIC */
 TOKEN : /* LITERALS */
 { <#TRUE: "true">
 | <#FALSE: "false">
-| <BooleanValue: (<TRUE>|<FALSE>)>
+| <BooleanLiteral: (<TRUE>|<FALSE>)>
 | <CharLiteral: <Apostrophe> (<LETTER> | <DIGIT>) <Apostrophe>>
 | <IntegerLiteral: (<DIGIT>)+>
 | <DoubleLiteral: ((<DIGIT>)+<DOT>(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*<DOT> (<DIGIT>)+(<EXPO> )?)>
-| <Bezeichner: <LETTER>(<DIGIT>|<LETTER>)*>
+| <ID: <LETTER>(<DIGIT>|<LETTER>)*>
 | <StringLiteral: "\"" <STRING_CONTENT> "\"">
 | <#STRING_CONTENT: (<LETTER>|<DIGIT>| (" ") )* >
 }
@@ -193,13 +193,13 @@ TOKEN : /* LITERALS */
 */
 Node CompilationUnit() #CompilationUnit : {}
 {
-    (LOOKAHEAD(5) AttrDecl() | MethodDecl())+
+    (LOOKAHEAD(5) VariableDecl() | MethodDecl())+
     <EOF>
     {return jjtThis;}
 }
 void Stmnt() #Stmnt : {}
 {
-    (ExprStmnt() | Block() | IfStmnt() | ReturnStmnt())
+     (LOOKAHEAD(2)ExprStmnt() | Block() | IfStmnt() | ReturnStmnt() | KlammerAffe())
 }
 void Block() #Block : {}
 {
@@ -207,27 +207,17 @@ void Block() #Block : {}
 }
 void VariableDecl() #VariableDecl : {}
 {
-    Type() <Bezeichner>
-    [VariableAssignement()]
+    Type() <ID>
+    [Assignement()]
     <SEMICOLON>
 }
-void VariableAssignement() #VariableAssignement : {}
+void Assignement() #Assignement: {}
 {
-      <Zuweisung> (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
-}
-void AttrDecl() #AttrDecl : {}
-{
-    Type() <Bezeichner>
-    [AttrAssignement()]
-    <SEMICOLON>
-}
-void AttrAssignement() #AttrAssignement : {}
-{
-      <Zuweisung> (<Bezeichner> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue> | <StringLiteral> | <NullLiteral> )
+      <Zuweisung> (<ID> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanLiteral> | <StringLiteral> | <NullLiteral> )
 }
 void MethodDecl() #MethodDecl : {}
 {
-    (Type() | <VOID>) <Bezeichner> <KlammerAuf> ParameterList() <KlammerZu> Block()
+    (Type() | <VOID>) <ID> <KlammerAuf> ParameterList() <KlammerZu> Block()
 }
 void ParameterList() #ParameterList : {}
 {
@@ -235,7 +225,7 @@ void ParameterList() #ParameterList : {}
 }
 void Parameter() #Parameter : {}
 {
-    Type() <Bezeichner>
+    Type() <ID>
 }
 void ExprStmnt() #ExprStmnt : {}
 {
@@ -282,16 +272,16 @@ void Atom() #Atom : {
 }
 {
     [<KlammerAuf> Type() <KlammerZu>] ( (LOOKAHEAD(2) MethodCall() | LOOKAHEAD(2) VariableUse()) [ArrayAccess()]
-    | <KlammerAuf> Expr() <KlammerZu> | t=<BooleanValue> | t=<IntegerLiteral> | t=<DoubleLiteral>
-    | t=<StringLiteral> | t=<CharLiteral>)
+    | <KlammerAuf> Expr() <KlammerZu> | t=<BooleanLiteral> | t=<IntegerLiteral> | t=<DoubleLiteral>
+    | t=<StringLiteral> | t=<CharLiteral> | t=<NullLiteral> )
 }
 void MethodCall() #MethodCall : {}
 {
-    <Bezeichner> <KlammerAuf> ArgumentList() <KlammerZu>
+    <ID> <KlammerAuf> ArgumentList() <KlammerZu>
 }
 void VariableUse() #VariableUse : {}
 {
-    <Bezeichner>
+    <ID>
 }
 void ArrayAccess() #ArrayAccess : {}
 {
@@ -318,7 +308,7 @@ void ReturnStmnt() #ReturnStatement : {}
 }
 void KlammerAffe() #KlammerAffe : {}
 {
-    <AT> <BlockAuf>
+    <StringLiteral> <AT> <BlockAuf>
     KlammerAffeRegex() KlammerAffeAusdruck()
     (KlammerAffeRegex() KlammerAffeAusdruck())*
     <BlockZu>
@@ -330,6 +320,6 @@ void KlammerAffeRegex() #KlammerAffeRegex : {}
 void KlammerAffeAusdruck() #KlammerAffeAusdruck : {}
 {
     <BlockAuf>
-    <RETURN> (<THIS> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanValue>)
+    <RETURN> (<THIS> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanLiteral>)
     <BlockZu>
 }

@@ -13,10 +13,3 @@ void test123(int a, char b) {
     x = a != b * 3 + 2;
     c = 3 + 5 * 3 || true;
 }
-
-String hello() {
-    "1 2 3 4 5 a"@{
-      :Integer: { return this; }
-      !:Integer: { return ; }
-     }
-}

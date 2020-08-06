@@ -49,16 +49,6 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(AttrDecl node, Object data) {
-        return null;
-    }
-
-    @Override
-    public Object visit(AttrAssignement node, Object data) {
-        return null;
-    }
-
-    @Override
     public Object visit(MethodDecl node, Object data) {
         return null;
     }
