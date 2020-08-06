@@ -166,7 +166,11 @@ TOKEN : /* SEPARATORS */
 | <AET: "@">
 }
 TOKEN : /* BASIC */
-{ <DataType: ("int"|"double"|"char"|"boolean"|"String")>
+{ <IntType: "int">
+| <DoubleType: "double">
+| <CharType: "char">
+| <BooleanType: "boolean">
+| <StringType: "String">
 | <#LETTER: ["_","a"-"z","A"-"Z"]>
 | <#DIGIT: ["0"-"9"]>
 | <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
@@ -273,11 +277,13 @@ void Sign() #Sign : {}
 {
     Atom() | (<PLUS> | <MINUS> ) Atom()
 }
-void Atom() #Atom : {}
+void Atom() #Atom : {
+    Token t;
+}
 {
     [<KlammerAuf> Type() <KlammerZu>] ( (LOOKAHEAD(2) MethodCall() | LOOKAHEAD(2) VariableUse()) [ArrayAccess()]
-    | <KlammerAuf> Expr() <KlammerZu> | <BooleanValue> | <IntegerLiteral> | <DoubleLiteral>
-    | <StringLiteral> | <CharLiteral>)
+    | <KlammerAuf> Expr() <KlammerZu> | t=<BooleanValue> | t=<IntegerLiteral> | t=<DoubleLiteral>
+    | t=<StringLiteral> | t=<CharLiteral>)
 }
 void MethodCall() #MethodCall : {}
 {
@@ -296,10 +302,15 @@ void ArgumentList() #ArgumentList : {}
     [Expr() (<COMMA> Expr())]
 }
 void Type() #Type : {
- Token t;
+    Token t;
 }
 {
-    t=<DataType> { jjtThis.dataType = t.getImage(); } [<ArrayAuf> <ArrayZu> { jjtThis.isArray = true; } ]
+  (t=<IntType> | t=<DoubleType> | t=<CharType> | t=<BooleanType> | t=<StringType>)
+  {
+       jjtThis.type = t.getImage();
+       System.out.println("Type found: " + t.getImage());
+  }
+  [<ArrayAuf> <ArrayZu> { jjtThis.isArray = true; } ]
 }
 void ReturnStmnt() #ReturnStatement : {}
 {

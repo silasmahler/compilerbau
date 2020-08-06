@@ -215,8 +215,6 @@ public class Token implements NewAwkConstants, Node {
             return new COMMA(TokenType.COMMA, image, fileLineMap);
             case DOT:
             return new DOT(TokenType.DOT, image, fileLineMap);
-            case DataType:
-            return new DataType(TokenType.DataType, image, fileLineMap);
             case Apostrophe:
             return new Apostrophe(TokenType.Apostrophe, image, fileLineMap);
             case CharLiteral:
