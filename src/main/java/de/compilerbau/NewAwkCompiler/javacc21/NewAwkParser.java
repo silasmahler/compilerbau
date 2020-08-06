@@ -101,9 +101,6 @@ public class NewAwkParser implements NewAwkConstants {
     }
 
     private static final java.util.logging.Logger LOGGER= Logger.getLogger(NewAwkParser.class.getName());
-    static {
-        LOGGER.setLevel(Level.FINEST);
-    }
     public static void setLogLevel(Level level) {
         LOGGER.setLevel(level);
         Logger.getGlobal().getParent().getHandlers()[0].setLevel(level);
@@ -1965,7 +1962,7 @@ public class NewAwkParser implements NewAwkConstants {
         int callStackSize28= parsingStack.size();
         try {
             // Code for RegexpRef specified on line 321 of NewAwkParser2.jjt
-            consumeToken(AET);
+            consumeToken(AT);
             // Code for RegexpRef specified on line 321 of NewAwkParser2.jjt
             consumeToken(BlockAuf);
             // Code for NonTerminal specified on line 322 of NewAwkParser2.jjt
@@ -2063,6 +2060,10 @@ public class NewAwkParser implements NewAwkConstants {
             else if (resetScanAhead(1)&&nextTokenType== BOOLEAN) {
                 // Code for RegexpRef specified on line 328 of NewAwkParser2.jjt
                 consumeToken(BOOLEAN);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== StringType) {
+                // Code for RegexpRef specified on line 328 of NewAwkParser2.jjt
+                consumeToken(StringType);
             }
             else {
                 pushOntoCallStack("KlammerAffeRegex", "NewAwkParser2.jjt", 328, 33);
@@ -2180,7 +2181,7 @@ public class NewAwkParser implements NewAwkConstants {
     static private final EnumSet<TokenType> first_set$NewAwkParser2_jjt$line_284$column_42= EnumSet.of(Bezeichner);
     static private final EnumSet<TokenType> first_set$NewAwkParser2_jjt$line_302$column_5= EnumSet.of(PLUS, MINUS, ConditionalNot, KlammerAuf, BooleanValue, CharLiteral, IntegerLiteral, DoubleLiteral, Bezeichner, StringLiteral);
     static private final EnumSet<TokenType> first_set$NewAwkParser2_jjt$line_308$column_4= EnumSet.of(IntType, DoubleType, CharType, BooleanType, StringType);
-    static private final EnumSet<TokenType> first_set$NewAwkParser2_jjt$line_328$column_33= EnumSet.of(INTEGER, DOUBLE, CHAR, BOOLEAN);
+    static private final EnumSet<TokenType> first_set$NewAwkParser2_jjt$line_328$column_33= EnumSet.of(INTEGER, DOUBLE, CHAR, BOOLEAN, StringType);
     static private final EnumSet<TokenType> first_set$NewAwkParser2_jjt$line_333$column_15= EnumSet.of(THIS, BooleanValue, CharLiteral, IntegerLiteral, DoubleLiteral);
     private final boolean scanToken(TokenType expectedType) {
         if (remainingLookahead<=0) return true;
@@ -2292,7 +2293,7 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private boolean trace_enabled= true;
+    private boolean trace_enabled= false;
     public void setTracingEnabled(boolean tracingEnabled) {
         trace_enabled= tracingEnabled;
     }

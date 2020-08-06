@@ -789,7 +789,7 @@ public class NewAwkLexer implements NewAwkConstants {
                         if (curChar== 34) jjCheckNAddTwoStates(19, 20);
                         break;
                         case 19:
-                        if ((0x3ff000000000000L&l)!=0L) jjCheckNAddTwoStates(19, 20);
+                        if ((0x3ff000100000000L&l)!=0L) jjCheckNAddTwoStates(19, 20);
                         break;
                         case 20:
                         if (curChar== 34&&kind> 58) kind= 58;
