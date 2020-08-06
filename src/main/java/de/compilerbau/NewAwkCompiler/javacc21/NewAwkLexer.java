@@ -167,7 +167,7 @@ public class NewAwkLexer implements NewAwkConstants {
                     if (trace_enabled) LOGGER.info("   Putting back "+(curPos-jjmatchedPos-1)+" characters into the input stream.");
                     input_stream.backup(curPos-jjmatchedPos-1);
                 }
-                if (trace_enabled) LOGGER.info("****** FOUND A "+tokenImage[jjmatchedKind]+" MATCH ("+ParseException.addEscapes(input_stream.getSuffix(jjmatchedPos+1))+") ******\n");
+                if (trace_enabled) LOGGER.info("****** FOUND A "+tokenImage[jjmatchedKind]+" MATCH ("+ParseException.addEscapes(input_stream.getSuffix(jjmatchedPos+2))+") ******\n");
                 if (tokenSet.get(jjmatchedKind)) {
                     matchedToken= jjFillToken();
                     tokenLexicalActions();

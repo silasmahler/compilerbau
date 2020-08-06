@@ -6,9 +6,9 @@ import java.util.concurrent.CancellationException;
 import java.util.logging.*;
 import java.io.*;
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
+import de.compilerbau.NewAwkCompiler.NewAwkTypeCheckVisitor;
 import de.compilerbau.NewAwkCompiler.NewAwkDumpVisitor;
 import de.compilerbau.NewAwkCompiler.javacc21.NewAwkParser;
-import de.compilerbau.NewAwkCompiler.NewAwkTypeCheckVisitor;
 import de.compilerbau.NewAwkCompiler.javacc21.*;
 @SuppressWarnings("unused")
 public class NewAwkParser implements NewAwkConstants {
