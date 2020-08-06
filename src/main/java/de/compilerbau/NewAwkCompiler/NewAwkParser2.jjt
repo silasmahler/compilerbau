@@ -295,9 +295,11 @@ void ArgumentList() #ArgumentList : {}
 {
     [Expr() (<COMMA> Expr())]
 }
-void Type() #Type : {}
+void Type() #Type : {
+ Token t;
+}
 {
-    <DataType> [<ArrayAuf> <ArrayZu> { jjtThis.isArray = true; } ]
+    t=<DataType> { jjtThis.dataType = t.getImage(); } [<ArrayAuf> <ArrayZu> { jjtThis.isArray = true; } ]
 }
 void ReturnStmnt() #ReturnStatement : {}
 {

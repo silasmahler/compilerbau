@@ -8,6 +8,7 @@ import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*
 @SuppressWarnings("unused")
 public class Type extends BaseNode {
     public boolean isArray = false;
+    public String dataType = "";
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }
@@ -16,6 +17,7 @@ public class Type extends BaseNode {
     public String toString() {
         return "Type{" +
                 "isArray=" + isArray +
+                ", dataType='" + dataType + '\'' +
                 '}';
     }
 }
