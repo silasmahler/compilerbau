@@ -4,10 +4,13 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
+import java.util.List;
+
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class Sum extends BaseNode {
     public Token opToken;
+    public List<Node> sumList;
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);

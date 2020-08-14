@@ -8,7 +8,9 @@ options {
 
 PARSER_BEGIN(NewAwkParser)
 
-import de.compilerbau.NewAwkCompiler.Visitors.NewAwkDumpVisitor;import de.compilerbau.NewAwkCompiler.Visitors.NewAwkTypeCheckVisitor;import de.compilerbau.NewAwkCompiler.javacc21.*;
+import de.compilerbau.NewAwkCompiler.Visitors.NewAwkDumpVisitor;
+import de.compilerbau.NewAwkCompiler.Visitors.NewAwkTypeCheckVisitor;
+import de.compilerbau.NewAwkCompiler.javacc21.*;
 import java.io.*;
 import java.util.*;
 
@@ -82,6 +84,7 @@ public class NewAwkParser {
                  NewAwkDumpVisitor newAwkDumpVisitor = new NewAwkDumpVisitor();
                  NewAwkTypeCheckVisitor newAwkTypeCheckVisitor = new NewAwkTypeCheckVisitor();
                  if(root instanceof CompilationUnit) {
+                     System.out.println("Entering Visitors...");
                      //((CompilationUnit) root).jjtAccept(newAwkDumpVisitor, null);
                      ((CompilationUnit) root).jjtAccept(newAwkTypeCheckVisitor, null);
                  }

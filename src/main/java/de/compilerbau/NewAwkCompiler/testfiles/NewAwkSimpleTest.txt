@@ -1,5 +1,7 @@
 int main(String[] args) {
     int x = 5;
     return x;
+
+    a = 4 + 2;
 }
 int y = 7;
