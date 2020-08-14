@@ -1,9 +1,8 @@
-package de.compilerbau.NewAwkCompiler;
+package de.compilerbau.NewAwkCompiler.Visitors;
 
 import de.compilerbau.NewAwkCompiler.javacc21.*;
 
 public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
-
 
     @Override
     public Object visit(BaseNode node, Object data) {
@@ -111,12 +110,12 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(VariableUse node, Object data) {
+    public Object visit(ArrayAccess node, Object data) {
         return null;
     }
 
     @Override
-    public Object visit(ArrayAccess node, Object data) {
+    public Object visit(ArrayLength node, Object data) {
         return null;
     }
 
@@ -147,6 +146,11 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
 
     @Override
     public Object visit(KlammerAffeAusdruck node, Object data) {
+        return null;
+    }
+
+    @Override
+    public Object visit(PrintStmnt node, Object data) {
         return null;
     }
 

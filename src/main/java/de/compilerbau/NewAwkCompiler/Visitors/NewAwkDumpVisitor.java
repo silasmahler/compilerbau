@@ -1,4 +1,4 @@
-package de.compilerbau.NewAwkCompiler;
+package de.compilerbau.NewAwkCompiler.Visitors;
 
 import de.compilerbau.NewAwkCompiler.javacc21.*;
 
@@ -208,7 +208,7 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(VariableUse node, Object data) {
+    public Object visit(ArrayAccess node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
@@ -217,13 +217,12 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(ArrayAccess node, Object data) {
+    public Object visit(ArrayLength node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
-        return data;
-    }
+        return data;    }
 
     @Override
     public Object visit(ArgumentList node, Object data) {
@@ -277,6 +276,11 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
         data = node.childrenAccept(this, data);
         --indent;
         return data;
+    }
+
+    @Override
+    public Object visit(PrintStmnt node, Object data) {
+        return null;
     }
 
     @Override

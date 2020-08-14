@@ -8,7 +8,7 @@ options {
 
 PARSER_BEGIN(NewAwkParser)
 
-import de.compilerbau.NewAwkCompiler.NewAwkDumpVisitor;import de.compilerbau.NewAwkCompiler.NewAwkTypeCheckVisitor;import de.compilerbau.NewAwkCompiler.javacc21.*;
+import de.compilerbau.NewAwkCompiler.Visitors.NewAwkDumpVisitor;import de.compilerbau.NewAwkCompiler.Visitors.NewAwkTypeCheckVisitor;import de.compilerbau.NewAwkCompiler.javacc21.*;
 import java.io.*;
 import java.util.*;
 
@@ -82,7 +82,7 @@ public class NewAwkParser {
                  NewAwkDumpVisitor newAwkDumpVisitor = new NewAwkDumpVisitor();
                  NewAwkTypeCheckVisitor newAwkTypeCheckVisitor = new NewAwkTypeCheckVisitor();
                  if(root instanceof CompilationUnit) {
-                     ((CompilationUnit) root).jjtAccept(newAwkDumpVisitor, null);
+                     //((CompilationUnit) root).jjtAccept(newAwkDumpVisitor, null);
                      ((CompilationUnit) root).jjtAccept(newAwkTypeCheckVisitor, null);
                  }
              }
@@ -211,7 +211,7 @@ void Block() #Block : {}
 void VariableDecl() #VariableDecl : {}
 {
     Type() <ID>
-    [Assignement()]
+    [Assignement() { jjtThis.andAssignement = true; } ]
     <SEMICOLON>
 }
 void Assignement() #Assignement: {}
@@ -274,17 +274,13 @@ void Atom() #Atom : {
     Token t;
 }
 {
-    [<KlammerAuf> Type() <KlammerZu>] ( (LOOKAHEAD(2) MethodCall() | LOOKAHEAD(2) VariableUse()) [ArrayAccess()]
+    [<KlammerAuf> Type() <KlammerZu>] ( (LOOKAHEAD(2) MethodCall() | LOOKAHEAD(2) <ID>) [ArrayAccess()]
     | <KlammerAuf> Expr() <KlammerZu> | t=<BooleanLiteral> | t=<IntegerLiteral> | t=<DoubleLiteral>
     | t=<StringLiteral> | t=<CharLiteral> | t=<NullLiteral> )
 }
 void MethodCall() #MethodCall : {}
 {
     <ID> <KlammerAuf> ArgumentList() <KlammerZu>
-}
-void VariableUse() #VariableUse : {}
-{
-    <ID>
 }
 void ArrayAccess() #ArrayAccess : {}
 {
