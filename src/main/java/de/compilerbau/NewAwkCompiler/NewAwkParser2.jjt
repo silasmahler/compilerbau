@@ -185,6 +185,9 @@ TOKEN : /* LITERALS */
 | <ID: <LETTER>(<DIGIT>|<LETTER>)*>
 | <StringLiteral: "\"" <STRING_CONTENT> "\"">
 | <#STRING_CONTENT: (<LETTER>|<DIGIT>| (" ") )* >
+| <PRINT_LINE: "System.out.println">
+| <PRINT: "System.out.print">
+| <LENGTH: "length()">
 }
 /*
     ==============================================================================================
@@ -199,7 +202,7 @@ Node CompilationUnit() #CompilationUnit : {}
 }
 void Stmnt() #Stmnt : {}
 {
-     (LOOKAHEAD(2)ExprStmnt() | Block() | IfStmnt() | ReturnStmnt() | KlammerAffe())
+     (LOOKAHEAD(2) ExprStmnt() | Block() | IfStmnt() | ReturnStmnt() | KlammerAffe() | PrintStmnt() )
 }
 void Block() #Block : {}
 {
@@ -287,6 +290,11 @@ void ArrayAccess() #ArrayAccess : {}
 {
     <ArrayAuf> Expr() <ArrayZu>
 }
+void ArrayLength() #ArrayLength:
+{}
+{
+  Expr() <DOT> <LENGTH>
+}
 void ArgumentList() #ArgumentList : {}
 {
     [Expr() (<COMMA> Expr())]
@@ -320,6 +328,11 @@ void KlammerAffeRegex() #KlammerAffeRegex : {}
 void KlammerAffeAusdruck() #KlammerAffeAusdruck : {}
 {
     <BlockAuf>
-    <RETURN> (<THIS> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanLiteral>)
+    <RETURN> [(<THIS> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanLiteral>)] <SEMICOLON>
     <BlockZu>
+}
+void PrintStmnt() #PrintStmnt :
+{}
+{
+  (<PRINT_LINE> | <PRINT> ) <KlammerAuf> Expr() <KlammerZu> <SEMICOLON>
 }

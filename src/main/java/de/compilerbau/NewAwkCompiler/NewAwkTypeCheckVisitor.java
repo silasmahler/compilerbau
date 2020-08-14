@@ -32,13 +32,7 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
 
     @Override
     public Object visit(Assignement node, Object data) {
-
-        // Check identifier
-        Assignement identType = node.getChild(0).(this, data);
-        if(identType == DataType.Error)
-            return DataType.Error;
-
-
+        return null;
     }
 
     @Override

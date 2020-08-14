@@ -117,7 +117,7 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjmatchedKind;
     private String inputSource= "input";
     // BitSet for TOKEN
-    static private BitSet tokenSet= BitSet.valueOf(new long[]{567735028025393121L, });
+    static private BitSet tokenSet= BitSet.valueOf(new long[]{8638185560273321953L, });
     private final int[] jjrounds= new int[30];
     private final int[] jjstateSet= new int[60];
     private final StringBuilder image= new StringBuilder();
@@ -273,7 +273,7 @@ public class NewAwkLexer implements NewAwkConstants {
     }
 
     protected final String jjKindsForStateVector(int lexState, int[] vec, int start, int end) {
-        boolean[] kindDone= new boolean[60];
+        boolean[] kindDone= new boolean[63];
         String retVal= "";
         int cnt= 0;
         for (int i= start; i<end; i++) {
@@ -310,7 +310,7 @@ public class NewAwkLexer implements NewAwkConstants {
         switch(pos) {
             case 0:
             if ((active0&0x20000000000L)!=0L) return 9;
-            if ((active0&0xf800f7c00000L)!=0L) {
+            if ((active0&0x7000f800f7c00000L)!=0L) {
                 jjmatchedKind= 57;
                 return 17;
             }
@@ -322,7 +322,7 @@ public class NewAwkLexer implements NewAwkConstants {
             return-1;
             case 1:
             if ((active0&0x2000000L)!=0L) return 17;
-            if ((active0&0xf800fdc00000L)!=0L) {
+            if ((active0&0x7000f800fdc00000L)!=0L) {
                 jjmatchedKind= 57;
                 jjmatchedPos= 1;
                 return 17;
@@ -330,7 +330,7 @@ public class NewAwkLexer implements NewAwkConstants {
             return-1;
             case 2:
             if ((active0&0x80000000000L)!=0L) return 17;
-            if ((active0&0xf000fdc00000L)!=0L) {
+            if ((active0&0x7000f000fdc00000L)!=0L) {
                 jjmatchedKind= 57;
                 jjmatchedPos= 2;
                 return 17;
@@ -338,14 +338,14 @@ public class NewAwkLexer implements NewAwkConstants {
             return-1;
             case 3:
             if ((active0&0x20004d800000L)!=0L) return 17;
-            if ((active0&0xd000b0400000L)!=0L) {
+            if ((active0&0x7000d000b0400000L)!=0L) {
                 jjmatchedKind= 57;
                 jjmatchedPos= 3;
                 return 17;
             }
             return-1;
             case 4:
-            if ((active0&0xd000b0400000L)!=0L) {
+            if ((active0&0x7000d000b0400000L)!=0L) {
                 jjmatchedKind= 57;
                 jjmatchedPos= 4;
                 return 17;
@@ -353,7 +353,7 @@ public class NewAwkLexer implements NewAwkConstants {
             return-1;
             case 5:
             if ((active0&0x900020400000L)!=0L) return 17;
-            if ((active0&0x400090000000L)!=0L) {
+            if ((active0&0x7000400090000000L)!=0L) {
                 jjmatchedKind= 57;
                 jjmatchedPos= 5;
                 return 17;
@@ -361,6 +361,112 @@ public class NewAwkLexer implements NewAwkConstants {
             return-1;
             case 6:
             if ((active0&0x400090000000L)!=0L) return 17;
+            if ((active0&0x7000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 7:
+            if ((active0&0x7000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 8:
+            if ((active0&0x3000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 9:
+            if ((active0&0x3000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 10:
+            if ((active0&0x3000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 11:
+            if ((active0&0x3000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 12:
+            if ((active0&0x3000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 13:
+            if ((active0&0x3000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 14:
+            if ((active0&0x3000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 15:
+            if ((active0&0x3000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 16:
+            if ((active0&0x1000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
+            return-1;
+            case 17:
+            if ((active0&0x1000000000000000L)!=0L) {
+                if (jjmatchedPos<5) {
+                    jjmatchedKind= 57;
+                    jjmatchedPos= 5;
+                }
+                return-1;
+            }
             return-1;
             default:
             return-1;
@@ -434,7 +540,7 @@ public class NewAwkLexer implements NewAwkConstants {
             case 73:
             return jjMoveStringLiteralDfa1(0x10000000L);
             case 83:
-            return jjMoveStringLiteralDfa1(0x800000000000L);
+            return jjMoveStringLiteralDfa1(0x3000800000000000L);
             case 91:
             return jjStopAtPos(0, 36);
             case 93:
@@ -451,6 +557,8 @@ public class NewAwkLexer implements NewAwkConstants {
             return jjMoveStringLiteralDfa1(0x4000000L);
             case 105:
             return jjMoveStringLiteralDfa1(0x80002000000L);
+            case 108:
+            return jjMoveStringLiteralDfa1(0x4000000000000000L);
             case 110:
             return jjMoveStringLiteralDfa1(0x1000000L);
             case 114:
@@ -499,7 +607,7 @@ public class NewAwkLexer implements NewAwkConstants {
             else if ((active0&0x4000L)!=0L) return jjStopAtPos(1, 14);
             break;
             case 101:
-            return jjMoveStringLiteralDfa2(active0, 0x400000L);
+            return jjMoveStringLiteralDfa2(active0, 0x4000000000400000L);
             case 102:
             if ((active0&0x2000000L)!=0L) return jjStartNfaWithStates(1, 25, 17);
             break;
@@ -515,6 +623,8 @@ public class NewAwkLexer implements NewAwkConstants {
             return jjMoveStringLiteralDfa2(active0, 0x800000000000L);
             case 117:
             return jjMoveStringLiteralDfa2(active0, 0x1000000L);
+            case 121:
+            return jjMoveStringLiteralDfa2(active0, 0x3000000000000000L);
             case 124:
             if ((active0&0x80000L)!=0L) return jjStopAtPos(1, 19);
             break;
@@ -551,12 +661,14 @@ public class NewAwkLexer implements NewAwkConstants {
             return jjMoveStringLiteralDfa3(active0, 0x8800000L);
             case 108:
             return jjMoveStringLiteralDfa3(active0, 0x1000000L);
+            case 110:
+            return jjMoveStringLiteralDfa3(active0, 0x4000000000000000L);
             case 111:
             return jjMoveStringLiteralDfa3(active0, 0x400080000000L);
             case 114:
             return jjMoveStringLiteralDfa3(active0, 0x800000000000L);
             case 115:
-            return jjMoveStringLiteralDfa3(active0, 0x4000000L);
+            return jjMoveStringLiteralDfa3(active0, 0x3000000004000000L);
             case 116:
             if ((active0&0x80000000000L)!=0L) return jjStartNfaWithStates(2, 43, 17);
             return jjMoveStringLiteralDfa3(active0, 0x10400000L);
@@ -597,6 +709,8 @@ public class NewAwkLexer implements NewAwkConstants {
             case 101:
             if ((active0&0x4000000L)!=0L) return jjStartNfaWithStates(3, 26, 17);
             return jjMoveStringLiteralDfa4(active0, 0x10000000L);
+            case 103:
+            return jjMoveStringLiteralDfa4(active0, 0x4000000000000000L);
             case 105:
             return jjMoveStringLiteralDfa4(active0, 0x800000000000L);
             case 108:
@@ -609,6 +723,8 @@ public class NewAwkLexer implements NewAwkConstants {
             case 115:
             if ((active0&0x8000000L)!=0L) return jjStartNfaWithStates(3, 27, 17);
             break;
+            case 116:
+            return jjMoveStringLiteralDfa4(active0, 0x3000000000000000L);
             case 117:
             return jjMoveStringLiteralDfa4(active0, 0x400000L);
             default:
@@ -639,7 +755,7 @@ public class NewAwkLexer implements NewAwkConstants {
         if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 101:
-            return jjMoveStringLiteralDfa5(active0, 0x400080000000L);
+            return jjMoveStringLiteralDfa5(active0, 0x3000400080000000L);
             case 103:
             return jjMoveStringLiteralDfa5(active0, 0x10000000L);
             case 108:
@@ -648,6 +764,8 @@ public class NewAwkLexer implements NewAwkConstants {
             return jjMoveStringLiteralDfa5(active0, 0x800000000000L);
             case 114:
             return jjMoveStringLiteralDfa5(active0, 0x400000L);
+            case 116:
+            return jjMoveStringLiteralDfa5(active0, 0x4000000000000000L);
             default:
             if (trace_enabled) LOGGER.info("   No string literal matches possible.");
             break;
@@ -684,6 +802,10 @@ public class NewAwkLexer implements NewAwkConstants {
             case 103:
             if ((active0&0x800000000000L)!=0L) return jjStartNfaWithStates(5, 47, 17);
             break;
+            case 104:
+            return jjMoveStringLiteralDfa6(active0, 0x4000000000000000L);
+            case 109:
+            return jjMoveStringLiteralDfa6(active0, 0x3000000000000000L);
             case 110:
             if ((active0&0x400000L)!=0L) return jjStartNfaWithStates(5, 22, 17);
             break;
@@ -714,6 +836,10 @@ public class NewAwkLexer implements NewAwkConstants {
         }
         if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
+            case 40:
+            return jjMoveStringLiteralDfa7(active0, 0x4000000000000000L);
+            case 46:
+            return jjMoveStringLiteralDfa7(active0, 0x3000000000000000L);
             case 110:
             if ((active0&0x80000000L)!=0L) return jjStartNfaWithStates(6, 31, 17);
             else if ((active0&0x400000000000L)!=0L) return jjStartNfaWithStates(6, 46, 17);
@@ -726,6 +852,333 @@ public class NewAwkLexer implements NewAwkConstants {
             break;
         }
         return jjStartNfa(5, active0);
+    }
+
+    private int jjMoveStringLiteralDfa7(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(5, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(6, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 7;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 41:
+            if ((active0&0x4000000000000000L)!=0L) return jjStopAtPos(7, 62);
+            break;
+            case 111:
+            return jjMoveStringLiteralDfa8(active0, 0x3000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(6, active0);
+    }
+
+    private int jjMoveStringLiteralDfa8(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(6, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(7, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 8;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 117:
+            return jjMoveStringLiteralDfa9(active0, 0x3000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(7, active0);
+    }
+
+    private int jjMoveStringLiteralDfa9(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(7, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(8, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 9;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 116:
+            return jjMoveStringLiteralDfa10(active0, 0x3000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(8, active0);
+    }
+
+    private int jjMoveStringLiteralDfa10(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(8, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(9, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 10;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 46:
+            return jjMoveStringLiteralDfa11(active0, 0x3000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(9, active0);
+    }
+
+    private int jjMoveStringLiteralDfa11(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(9, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(10, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 11;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 112:
+            return jjMoveStringLiteralDfa12(active0, 0x3000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(10, active0);
+    }
+
+    private int jjMoveStringLiteralDfa12(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(10, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(11, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 12;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 114:
+            return jjMoveStringLiteralDfa13(active0, 0x3000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(11, active0);
+    }
+
+    private int jjMoveStringLiteralDfa13(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(11, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(12, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 13;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 105:
+            return jjMoveStringLiteralDfa14(active0, 0x3000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(12, active0);
+    }
+
+    private int jjMoveStringLiteralDfa14(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(12, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(13, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 14;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 110:
+            return jjMoveStringLiteralDfa15(active0, 0x3000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(13, active0);
+    }
+
+    private int jjMoveStringLiteralDfa15(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(13, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(14, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 15;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 116:
+            if ((active0&0x2000000000000000L)!=0L) {
+                jjmatchedKind= 61;
+                jjmatchedPos= 15;
+            }
+            return jjMoveStringLiteralDfa16(active0, 0x1000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(14, active0);
+    }
+
+    private int jjMoveStringLiteralDfa16(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(14, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(15, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 16;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 108:
+            return jjMoveStringLiteralDfa17(active0, 0x1000000000000000L);
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(15, active0);
+    }
+
+    private int jjMoveStringLiteralDfa17(long old0, long active0) {
+        active0= active0&old0;
+        if ((active0)== 0L) return jjStartNfa(15, old0);
+        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
+        }
+        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
+        int retval= input_stream.readChar();
+        if (retval>=0) {
+            curChar= (char) retval;
+        }
+        else {
+            jjStopStringLiteralDfa(16, active0);
+            if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
+                LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token. ");
+            }
+            return 17;
+        }
+        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        switch(curChar) {
+            case 110:
+            if ((active0&0x1000000000000000L)!=0L) return jjStopAtPos(17, 60);
+            break;
+            default:
+            if (trace_enabled) LOGGER.info("   No string literal matches possible.");
+            break;
+        }
+        return jjStartNfa(16, active0);
     }
 
     private int jjMoveNfa(int startState, int curPos) {
