@@ -8,7 +8,7 @@ options {
 
 PARSER_BEGIN(NewAwkParser)
 
-import de.compilerbau.NewAwkCompiler.NewAwkDumpVisitor;import de.compilerbau.NewAwkCompiler.NewAwkTypeCheckVisitor;import de.compilerbau.NewAwkCompiler.javacc21.*;import de.compilerbau.NewAwkCompiler.javacc21.NewAwkParser;
+import de.compilerbau.NewAwkCompiler.NewAwkDumpVisitor;import de.compilerbau.NewAwkCompiler.NewAwkTypeCheckVisitor;import de.compilerbau.NewAwkCompiler.javacc21.*;
 import java.io.*;
 import java.util.*;
 

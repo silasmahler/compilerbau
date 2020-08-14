@@ -4,19 +4,6 @@ import de.compilerbau.NewAwkCompiler.javacc21.*;
 
 public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
 
-    private int indent = 0;
-
-    // Visitors can include any number of helper fields and methods, like
-    // the indent variable above and the following method
-    // indentString(), which is used during the dumping
-
-    private String indentString() {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < indent; ++i) {
-            sb.append("-");
-        }
-        return sb.toString();
-    }
 
     @Override
     public Object visit(BaseNode node, Object data) {
@@ -44,8 +31,14 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(VariableAssignement node, Object data) {
-        return null;
+    public Object visit(Assignement node, Object data) {
+
+        // Check identifier
+        Assignement identType = node.getChild(0).(this, data);
+        if(identType == DataType.Error)
+            return DataType.Error;
+
+
     }
 
     @Override

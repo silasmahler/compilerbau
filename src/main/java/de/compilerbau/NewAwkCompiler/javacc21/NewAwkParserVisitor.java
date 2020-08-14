@@ -7,7 +7,7 @@ public interface NewAwkParserVisitor {
     Object visit(Stmnt node, Object data); 
     Object visit(Block node, Object data); 
     Object visit(VariableDecl node, Object data); 
-    Object visit(VariableAssignement node, Object data);
+    Object visit(Assignement node, Object data); 
     Object visit(MethodDecl node, Object data); 
     Object visit(ParameterList node, Object data); 
     Object visit(Parameter node, Object data); 

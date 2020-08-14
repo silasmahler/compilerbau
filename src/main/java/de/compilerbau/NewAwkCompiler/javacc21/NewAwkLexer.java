@@ -5,7 +5,6 @@ import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*
 import de.compilerbau.NewAwkCompiler.NewAwkDumpVisitor;
 import de.compilerbau.NewAwkCompiler.NewAwkTypeCheckVisitor;
 import de.compilerbau.NewAwkCompiler.javacc21.*;
-import de.compilerbau.NewAwkCompiler.javacc21.NewAwkParser;
 import java.io.*;
 import java.util.*;
 import java.io.Reader;
