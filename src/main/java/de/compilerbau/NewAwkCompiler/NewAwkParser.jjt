@@ -199,43 +199,55 @@ TOKEN : /* LITERALS */
 */
 Node CompilationUnit() #CompilationUnit : {}
 {
-    (LOOKAHEAD(5) VariableDecl() | MethodDecl())+
+    (LOOKAHEAD(3) VariableDecl() | LOOKAHEAD(3) Assignement() | LOOKAHEAD(3) VariableDeclAndAssignement() | MethodDecl())+
     <EOF>
     {return jjtThis;}
 }
 void Stmnt() #Stmnt : {}
 {
-     (LOOKAHEAD(2) ExprStmnt() | Block() | IfStmnt() | ReturnStmnt() | KlammerAffe() | PrintStmnt() )
+     (
+     //LOOKAHEAD(3) ExprStmnt() |
+       Block()
+     | IfStmnt()
+     | ReturnStmnt()
+     | LOOKAHEAD(3) VariableDecl()
+     | LOOKAHEAD(3) Assignement()
+     | LOOKAHEAD(3) VariableDeclAndAssignement()
+     | PrintStmnt()
+     | LOOKAHEAD(3) KlammerAffe()
+      )
 }
 void Block() #Block : {}
 {
-    <BlockAuf> (VariableDecl() | Stmnt())+ <BlockZu>
-}
-void VariableDecl() #VariableDecl : {}
-{
-    Type() <ID>
-    [Assignement() { jjtThis.andAssignement = true; } ]
-    <SEMICOLON>
+    <BlockAuf> (Stmnt())+ <BlockZu>
 }
 void Assignement() #Assignement: {}
 {
-      <Zuweisung> Expr()
+    <ID> <Zuweisung> ExprStmnt()
+}
+void VariableDecl() #VariableDecl : {}
+{
+    Type() <ID> <SEMICOLON>
+}
+void VariableDeclAndAssignement() #VariableDeclAndAssignement : {}
+{
+    Type() <ID> <Zuweisung> ExprStmnt()
 }
 void MethodDecl() #MethodDecl : {}
 {
-    (Type() | <VOID>) <ID>
-     <KlammerAuf>
-    [Type() <ID> {/*Possible Parameter*/}
-    (<COMMA> Type() <ID> {/*More Parameters*/})*]
-     <KlammerZu> Block()
-}
-void ExprStmnt() #ExprStmnt : {}
-{
-    Expr() <SEMICOLON>
+    (Type() | <VOID>)
+    <ID>
+    <KlammerAuf>
+    [Type() <ID> {/*Possible Parameter*/} (<COMMA> Type() <ID> {/*More Parameters*/})*]
+    <KlammerZu> Block()
 }
 void IfStmnt() #IfStmnt : {}
 {
     <IF> <KlammerAuf> Expr() <KlammerZu> Stmnt() (<ELSE> Stmnt())* <SEMICOLON>
+}
+void ExprStmnt() #ExprStmnt : {}
+{
+    Expr() <SEMICOLON>
 }
 void Expr() #Expr : {}
 {

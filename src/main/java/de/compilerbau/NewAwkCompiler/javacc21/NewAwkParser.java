@@ -243,7 +243,7 @@ public class NewAwkParser implements NewAwkConstants {
             boolean inFirst0= true;
             do {
                 // Code for ExpansionChoice specified on line 202 of NewAwkParser.jjt
-                if (resetScanAhead(5)&&check$NewAwkParser_jjt$line_202$column_6()) {
+                if (resetScanAhead(3)&&check$NewAwkParser_jjt$line_202$column_6()) {
                     // Code for NonTerminal specified on line 202 of NewAwkParser.jjt
                     pushOntoCallStack("CompilationUnit", "NewAwkParser.jjt", 202, 19);
                     try {
@@ -253,9 +253,29 @@ public class NewAwkParser implements NewAwkConstants {
                         popCallStack();
                     }
                 }
-                else if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_202$column_36.contains(nextTokenType)) {
+                else if (resetScanAhead(3)&&check$NewAwkParser_jjt$line_202$column_36()) {
                     // Code for NonTerminal specified on line 202 of NewAwkParser.jjt
-                    pushOntoCallStack("CompilationUnit", "NewAwkParser.jjt", 202, 36);
+                    pushOntoCallStack("CompilationUnit", "NewAwkParser.jjt", 202, 49);
+                    try {
+                        Assignement();
+                    }
+                    finally {
+                        popCallStack();
+                    }
+                }
+                else if (resetScanAhead(3)&&check$NewAwkParser_jjt$line_202$column_65()) {
+                    // Code for NonTerminal specified on line 202 of NewAwkParser.jjt
+                    pushOntoCallStack("CompilationUnit", "NewAwkParser.jjt", 202, 78);
+                    try {
+                        VariableDeclAndAssignement();
+                    }
+                    finally {
+                        popCallStack();
+                    }
+                }
+                else if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_202$column_109.contains(nextTokenType)) {
+                    // Code for NonTerminal specified on line 202 of NewAwkParser.jjt
+                    pushOntoCallStack("CompilationUnit", "NewAwkParser.jjt", 202, 109);
                     try {
                         MethodDecl();
                     }
@@ -311,20 +331,10 @@ public class NewAwkParser implements NewAwkConstants {
         ParseException parseException2= null;
         int callStackSize2= parsingStack.size();
         try {
-            // Code for ExpansionChoice specified on line 208 of NewAwkParser.jjt
-            if (resetScanAhead(2)&&check$NewAwkParser_jjt$line_208$column_7()) {
-                // Code for NonTerminal specified on line 208 of NewAwkParser.jjt
-                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 208, 20);
-                try {
-                    ExprStmnt();
-                }
-                finally {
-                    popCallStack();
-                }
-            }
-            else if (resetScanAhead(1)&&nextTokenType== BlockAuf) {
-                // Code for NonTerminal specified on line 208 of NewAwkParser.jjt
-                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 208, 34);
+            // Code for ExpansionChoice specified on line 210 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== BlockAuf) {
+                // Code for NonTerminal specified on line 210 of NewAwkParser.jjt
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 210, 8);
                 try {
                     Block();
                 }
@@ -333,8 +343,8 @@ public class NewAwkParser implements NewAwkConstants {
                 }
             }
             else if (resetScanAhead(1)&&nextTokenType== IF) {
-                // Code for NonTerminal specified on line 208 of NewAwkParser.jjt
-                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 208, 44);
+                // Code for NonTerminal specified on line 211 of NewAwkParser.jjt
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 211, 8);
                 try {
                     IfStmnt();
                 }
@@ -343,8 +353,8 @@ public class NewAwkParser implements NewAwkConstants {
                 }
             }
             else if (resetScanAhead(1)&&nextTokenType== RETURN) {
-                // Code for NonTerminal specified on line 208 of NewAwkParser.jjt
-                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 208, 56);
+                // Code for NonTerminal specified on line 212 of NewAwkParser.jjt
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 212, 8);
                 try {
                     ReturnStmnt();
                 }
@@ -352,19 +362,39 @@ public class NewAwkParser implements NewAwkConstants {
                     popCallStack();
                 }
             }
-            else if (resetScanAhead(1)&&nextTokenType== StringLiteral) {
-                // Code for NonTerminal specified on line 208 of NewAwkParser.jjt
-                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 208, 72);
+            else if (resetScanAhead(3)&&check$NewAwkParser_jjt$line_213$column_8()) {
+                // Code for NonTerminal specified on line 213 of NewAwkParser.jjt
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 213, 21);
                 try {
-                    KlammerAffe();
+                    VariableDecl();
+                }
+                finally {
+                    popCallStack();
+                }
+            }
+            else if (resetScanAhead(3)&&check$NewAwkParser_jjt$line_214$column_8()) {
+                // Code for NonTerminal specified on line 214 of NewAwkParser.jjt
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 214, 21);
+                try {
+                    Assignement();
+                }
+                finally {
+                    popCallStack();
+                }
+            }
+            else if (resetScanAhead(3)&&check$NewAwkParser_jjt$line_215$column_8()) {
+                // Code for NonTerminal specified on line 215 of NewAwkParser.jjt
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 215, 21);
+                try {
+                    VariableDeclAndAssignement();
                 }
                 finally {
                     popCallStack();
                 }
             }
             else if (resetScanAhead(1)&&nextTokenType== PRINT_LINE||nextTokenType== PRINT) {
-                // Code for NonTerminal specified on line 208 of NewAwkParser.jjt
-                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 208, 88);
+                // Code for NonTerminal specified on line 216 of NewAwkParser.jjt
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 216, 8);
                 try {
                     PrintStmnt();
                 }
@@ -372,9 +402,19 @@ public class NewAwkParser implements NewAwkConstants {
                     popCallStack();
                 }
             }
+            else if (resetScanAhead(3)&&check$NewAwkParser_jjt$line_217$column_8()) {
+                // Code for NonTerminal specified on line 217 of NewAwkParser.jjt
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 217, 21);
+                try {
+                    KlammerAffe();
+                }
+                finally {
+                    popCallStack();
+                }
+            }
             else {
-                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 208, 7);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_208$column_7, parsingStack);
+                pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 210, 8);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_210$column_8, parsingStack);
             }
             if (trace_enabled) LOGGER.info("Exiting normally from Stmnt");
         }
@@ -398,9 +438,9 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 210
+    // NewAwkParser.jjt, line 220
     final public void Block() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 210 of NewAwkParser.jjt");
+        if (trace_enabled) LOGGER.info("Entering production defined on line 220 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
         boolean Block3forced= false;
         Block Block3= null;
@@ -411,43 +451,21 @@ public class NewAwkParser implements NewAwkConstants {
         ParseException parseException3= null;
         int callStackSize3= parsingStack.size();
         try {
-            // Code for RegexpRef specified on line 212 of NewAwkParser.jjt
+            // Code for RegexpRef specified on line 222 of NewAwkParser.jjt
             consumeToken(BlockAuf);
-            // Code for OneOrMore specified on line 212 of NewAwkParser.jjt
-            boolean inFirst1= true;
+            // Code for OneOrMore specified on line 222 of NewAwkParser.jjt
             do {
-                // Code for ExpansionChoice specified on line 212 of NewAwkParser.jjt
-                if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_212$column_17.contains(nextTokenType)) {
-                    // Code for NonTerminal specified on line 212 of NewAwkParser.jjt
-                    pushOntoCallStack("Block", "NewAwkParser.jjt", 212, 17);
-                    try {
-                        VariableDecl();
-                    }
-                    finally {
-                        popCallStack();
-                    }
+                // Code for NonTerminal specified on line 222 of NewAwkParser.jjt
+                pushOntoCallStack("Block", "NewAwkParser.jjt", 222, 17);
+                try {
+                    Stmnt();
                 }
-                else if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_212$column_34.contains(nextTokenType)) {
-                    // Code for NonTerminal specified on line 212 of NewAwkParser.jjt
-                    pushOntoCallStack("Block", "NewAwkParser.jjt", 212, 34);
-                    try {
-                        Stmnt();
-                    }
-                    finally {
-                        popCallStack();
-                    }
+                finally {
+                    popCallStack();
                 }
-                else if (inFirst1) {
-                    pushOntoCallStack("Block", "NewAwkParser.jjt", 212, 17);
-                    throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_212$column_17$, parsingStack);
-                }
-                else {
-                    break;
-                }
-                inFirst1= false;
             }
-            while (true);
-            // Code for RegexpRef specified on line 212 of NewAwkParser.jjt
+            while (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_222$column_16.contains(nextTokenType));
+            // Code for RegexpRef specified on line 222 of NewAwkParser.jjt
             consumeToken(BlockZu);
             if (trace_enabled) LOGGER.info("Exiting normally from Block");
         }
@@ -471,45 +489,32 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 214
-    final public void VariableDecl() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 214 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 224
+    final public void Assignement() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 224 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean VariableDecl4forced= false;
-        VariableDecl VariableDecl4= null;
+        boolean Assignement4forced= false;
+        Assignement Assignement4= null;
         if (buildTree) {
-            VariableDecl4= new VariableDecl();
-            openNodeScope(VariableDecl4);
+            Assignement4= new Assignement();
+            openNodeScope(Assignement4);
         }
         ParseException parseException4= null;
         int callStackSize4= parsingStack.size();
         try {
-            // Code for NonTerminal specified on line 216 of NewAwkParser.jjt
-            pushOntoCallStack("VariableDecl", "NewAwkParser.jjt", 216, 5);
+            // Code for RegexpRef specified on line 226 of NewAwkParser.jjt
+            consumeToken(ID);
+            // Code for RegexpRef specified on line 226 of NewAwkParser.jjt
+            consumeToken(Zuweisung);
+            // Code for NonTerminal specified on line 226 of NewAwkParser.jjt
+            pushOntoCallStack("Assignement", "NewAwkParser.jjt", 226, 22);
             try {
-                Type();
+                ExprStmnt();
             }
             finally {
                 popCallStack();
             }
-            // Code for RegexpRef specified on line 216 of NewAwkParser.jjt
-            consumeToken(ID);
-            // Code for ZeroOrOne specified on line 217 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== Zuweisung) {
-                // Code for NonTerminal specified on line 217 of NewAwkParser.jjt
-                pushOntoCallStack("VariableDecl", "NewAwkParser.jjt", 217, 6);
-                try {
-                    Assignement();
-                }
-                finally {
-                    popCallStack();
-                }
-                // Code for CodeBlock specified on line 217 of NewAwkParser.jjt
-                VariableDecl4.andAssignement= true;
-            }
-            // Code for RegexpRef specified on line 218 of NewAwkParser.jjt
-            consumeToken(SEMICOLON);
-            if (trace_enabled) LOGGER.info("Exiting normally from VariableDecl");
+            if (trace_enabled) LOGGER.info("Exiting normally from Assignement");
         }
         catch(ParseException e) {
             parseException4= e;
@@ -521,7 +526,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException4== null) {
-                    closeNodeScope(VariableDecl4, true);
+                    closeNodeScope(Assignement4, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException4.getMessage());
@@ -531,30 +536,32 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 220
-    final public void Assignement() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 220 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 228
+    final public void VariableDecl() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 228 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean Assignement5forced= false;
-        Assignement Assignement5= null;
+        boolean VariableDecl5forced= false;
+        VariableDecl VariableDecl5= null;
         if (buildTree) {
-            Assignement5= new Assignement();
-            openNodeScope(Assignement5);
+            VariableDecl5= new VariableDecl();
+            openNodeScope(VariableDecl5);
         }
         ParseException parseException5= null;
         int callStackSize5= parsingStack.size();
         try {
-            // Code for RegexpRef specified on line 222 of NewAwkParser.jjt
-            consumeToken(Zuweisung);
-            // Code for NonTerminal specified on line 222 of NewAwkParser.jjt
-            pushOntoCallStack("Assignement", "NewAwkParser.jjt", 222, 19);
+            // Code for NonTerminal specified on line 230 of NewAwkParser.jjt
+            pushOntoCallStack("VariableDecl", "NewAwkParser.jjt", 230, 5);
             try {
-                Expr();
+                Type();
             }
             finally {
                 popCallStack();
             }
-            if (trace_enabled) LOGGER.info("Exiting normally from Assignement");
+            // Code for RegexpRef specified on line 230 of NewAwkParser.jjt
+            consumeToken(ID);
+            // Code for RegexpRef specified on line 230 of NewAwkParser.jjt
+            consumeToken(SEMICOLON);
+            if (trace_enabled) LOGGER.info("Exiting normally from VariableDecl");
         }
         catch(ParseException e) {
             parseException5= e;
@@ -566,7 +573,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException5== null) {
-                    closeNodeScope(Assignement5, true);
+                    closeNodeScope(VariableDecl5, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException5.getMessage());
@@ -576,85 +583,40 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 224
-    final public void MethodDecl() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 224 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 232
+    final public void VariableDeclAndAssignement() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 232 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean MethodDecl6forced= false;
-        MethodDecl MethodDecl6= null;
+        boolean VariableDeclAndAssignement6forced= false;
+        VariableDeclAndAssignement VariableDeclAndAssignement6= null;
         if (buildTree) {
-            MethodDecl6= new MethodDecl();
-            openNodeScope(MethodDecl6);
+            VariableDeclAndAssignement6= new VariableDeclAndAssignement();
+            openNodeScope(VariableDeclAndAssignement6);
         }
         ParseException parseException6= null;
         int callStackSize6= parsingStack.size();
         try {
-            // Code for ExpansionChoice specified on line 226 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_226$column_6.contains(nextTokenType)) {
-                // Code for NonTerminal specified on line 226 of NewAwkParser.jjt
-                pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 226, 6);
-                try {
-                    Type();
-                }
-                finally {
-                    popCallStack();
-                }
-            }
-            else if (resetScanAhead(1)&&nextTokenType== VOID) {
-                // Code for RegexpRef specified on line 226 of NewAwkParser.jjt
-                consumeToken(VOID);
-            }
-            else {
-                pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 226, 6);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_226$column_6$, parsingStack);
-            }
-            // Code for RegexpRef specified on line 226 of NewAwkParser.jjt
-            consumeToken(ID);
-            // Code for RegexpRef specified on line 227 of NewAwkParser.jjt
-            consumeToken(KlammerAuf);
-            // Code for ZeroOrOne specified on line 228 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_228$column_5.contains(nextTokenType)) {
-                // Code for NonTerminal specified on line 228 of NewAwkParser.jjt
-                pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 228, 6);
-                try {
-                    Type();
-                }
-                finally {
-                    popCallStack();
-                }
-                // Code for RegexpRef specified on line 228 of NewAwkParser.jjt
-                consumeToken(ID);
-                // Code for CodeBlock specified on line 228 of NewAwkParser.jjt
-                /*Possible Parameter*/
-                // Code for ZeroOrMore specified on line 229 of NewAwkParser.jjt
-                while (resetScanAhead(1)&&nextTokenType== COMMA) {
-                    // Code for RegexpRef specified on line 229 of NewAwkParser.jjt
-                    consumeToken(COMMA);
-                    // Code for NonTerminal specified on line 229 of NewAwkParser.jjt
-                    pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 229, 14);
-                    try {
-                        Type();
-                    }
-                    finally {
-                        popCallStack();
-                    }
-                    // Code for RegexpRef specified on line 229 of NewAwkParser.jjt
-                    consumeToken(ID);
-                    // Code for CodeBlock specified on line 229 of NewAwkParser.jjt
-                    /*More Parameters*/
-                }
-            }
-            // Code for RegexpRef specified on line 230 of NewAwkParser.jjt
-            consumeToken(KlammerZu);
-            // Code for NonTerminal specified on line 230 of NewAwkParser.jjt
-            pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 230, 18);
+            // Code for NonTerminal specified on line 234 of NewAwkParser.jjt
+            pushOntoCallStack("VariableDeclAndAssignement", "NewAwkParser.jjt", 234, 5);
             try {
-                Block();
+                Type();
             }
             finally {
                 popCallStack();
             }
-            if (trace_enabled) LOGGER.info("Exiting normally from MethodDecl");
+            // Code for RegexpRef specified on line 234 of NewAwkParser.jjt
+            consumeToken(ID);
+            // Code for RegexpRef specified on line 234 of NewAwkParser.jjt
+            consumeToken(Zuweisung);
+            // Code for NonTerminal specified on line 234 of NewAwkParser.jjt
+            pushOntoCallStack("VariableDeclAndAssignement", "NewAwkParser.jjt", 234, 29);
+            try {
+                ExprStmnt();
+            }
+            finally {
+                popCallStack();
+            }
+            if (trace_enabled) LOGGER.info("Exiting normally from VariableDeclAndAssignement");
         }
         catch(ParseException e) {
             parseException6= e;
@@ -666,7 +628,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException6== null) {
-                    closeNodeScope(MethodDecl6, true);
+                    closeNodeScope(VariableDeclAndAssignement6, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException6.getMessage());
@@ -676,30 +638,85 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 232
-    final public void ExprStmnt() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 232 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 236
+    final public void MethodDecl() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 236 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean ExprStmnt7forced= false;
-        ExprStmnt ExprStmnt7= null;
+        boolean MethodDecl7forced= false;
+        MethodDecl MethodDecl7= null;
         if (buildTree) {
-            ExprStmnt7= new ExprStmnt();
-            openNodeScope(ExprStmnt7);
+            MethodDecl7= new MethodDecl();
+            openNodeScope(MethodDecl7);
         }
         ParseException parseException7= null;
         int callStackSize7= parsingStack.size();
         try {
-            // Code for NonTerminal specified on line 234 of NewAwkParser.jjt
-            pushOntoCallStack("ExprStmnt", "NewAwkParser.jjt", 234, 5);
+            // Code for ExpansionChoice specified on line 238 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_238$column_6.contains(nextTokenType)) {
+                // Code for NonTerminal specified on line 238 of NewAwkParser.jjt
+                pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 238, 6);
+                try {
+                    Type();
+                }
+                finally {
+                    popCallStack();
+                }
+            }
+            else if (resetScanAhead(1)&&nextTokenType== VOID) {
+                // Code for RegexpRef specified on line 238 of NewAwkParser.jjt
+                consumeToken(VOID);
+            }
+            else {
+                pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 238, 6);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_238$column_6$, parsingStack);
+            }
+            // Code for RegexpRef specified on line 239 of NewAwkParser.jjt
+            consumeToken(ID);
+            // Code for RegexpRef specified on line 240 of NewAwkParser.jjt
+            consumeToken(KlammerAuf);
+            // Code for ZeroOrOne specified on line 241 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_241$column_5.contains(nextTokenType)) {
+                // Code for NonTerminal specified on line 241 of NewAwkParser.jjt
+                pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 241, 6);
+                try {
+                    Type();
+                }
+                finally {
+                    popCallStack();
+                }
+                // Code for RegexpRef specified on line 241 of NewAwkParser.jjt
+                consumeToken(ID);
+                // Code for CodeBlock specified on line 241 of NewAwkParser.jjt
+                /*Possible Parameter*/
+                // Code for ZeroOrMore specified on line 241 of NewAwkParser.jjt
+                while (resetScanAhead(1)&&nextTokenType== COMMA) {
+                    // Code for RegexpRef specified on line 241 of NewAwkParser.jjt
+                    consumeToken(COMMA);
+                    // Code for NonTerminal specified on line 241 of NewAwkParser.jjt
+                    pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 241, 52);
+                    try {
+                        Type();
+                    }
+                    finally {
+                        popCallStack();
+                    }
+                    // Code for RegexpRef specified on line 241 of NewAwkParser.jjt
+                    consumeToken(ID);
+                    // Code for CodeBlock specified on line 241 of NewAwkParser.jjt
+                    /*More Parameters*/
+                }
+            }
+            // Code for RegexpRef specified on line 242 of NewAwkParser.jjt
+            consumeToken(KlammerZu);
+            // Code for NonTerminal specified on line 242 of NewAwkParser.jjt
+            pushOntoCallStack("MethodDecl", "NewAwkParser.jjt", 242, 17);
             try {
-                Expr();
+                Block();
             }
             finally {
                 popCallStack();
             }
-            // Code for RegexpRef specified on line 234 of NewAwkParser.jjt
-            consumeToken(SEMICOLON);
-            if (trace_enabled) LOGGER.info("Exiting normally from ExprStmnt");
+            if (trace_enabled) LOGGER.info("Exiting normally from MethodDecl");
         }
         catch(ParseException e) {
             parseException7= e;
@@ -711,7 +728,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException7== null) {
-                    closeNodeScope(ExprStmnt7, true);
+                    closeNodeScope(MethodDecl7, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException7.getMessage());
@@ -721,9 +738,9 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 236
+    // NewAwkParser.jjt, line 244
     final public void IfStmnt() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 236 of NewAwkParser.jjt");
+        if (trace_enabled) LOGGER.info("Entering production defined on line 244 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
         boolean IfStmnt8forced= false;
         IfStmnt IfStmnt8= null;
@@ -734,34 +751,34 @@ public class NewAwkParser implements NewAwkConstants {
         ParseException parseException8= null;
         int callStackSize8= parsingStack.size();
         try {
-            // Code for RegexpRef specified on line 238 of NewAwkParser.jjt
+            // Code for RegexpRef specified on line 246 of NewAwkParser.jjt
             consumeToken(IF);
-            // Code for RegexpRef specified on line 238 of NewAwkParser.jjt
+            // Code for RegexpRef specified on line 246 of NewAwkParser.jjt
             consumeToken(KlammerAuf);
-            // Code for NonTerminal specified on line 238 of NewAwkParser.jjt
-            pushOntoCallStack("IfStmnt", "NewAwkParser.jjt", 238, 23);
+            // Code for NonTerminal specified on line 246 of NewAwkParser.jjt
+            pushOntoCallStack("IfStmnt", "NewAwkParser.jjt", 246, 23);
             try {
                 Expr();
             }
             finally {
                 popCallStack();
             }
-            // Code for RegexpRef specified on line 238 of NewAwkParser.jjt
+            // Code for RegexpRef specified on line 246 of NewAwkParser.jjt
             consumeToken(KlammerZu);
-            // Code for NonTerminal specified on line 238 of NewAwkParser.jjt
-            pushOntoCallStack("IfStmnt", "NewAwkParser.jjt", 238, 42);
+            // Code for NonTerminal specified on line 246 of NewAwkParser.jjt
+            pushOntoCallStack("IfStmnt", "NewAwkParser.jjt", 246, 42);
             try {
                 Stmnt();
             }
             finally {
                 popCallStack();
             }
-            // Code for ZeroOrMore specified on line 238 of NewAwkParser.jjt
+            // Code for ZeroOrMore specified on line 246 of NewAwkParser.jjt
             while (resetScanAhead(1)&&nextTokenType== ELSE) {
-                // Code for RegexpRef specified on line 238 of NewAwkParser.jjt
+                // Code for RegexpRef specified on line 246 of NewAwkParser.jjt
                 consumeToken(ELSE);
-                // Code for NonTerminal specified on line 238 of NewAwkParser.jjt
-                pushOntoCallStack("IfStmnt", "NewAwkParser.jjt", 238, 58);
+                // Code for NonTerminal specified on line 246 of NewAwkParser.jjt
+                pushOntoCallStack("IfStmnt", "NewAwkParser.jjt", 246, 58);
                 try {
                     Stmnt();
                 }
@@ -769,7 +786,7 @@ public class NewAwkParser implements NewAwkConstants {
                     popCallStack();
                 }
             }
-            // Code for RegexpRef specified on line 238 of NewAwkParser.jjt
+            // Code for RegexpRef specified on line 246 of NewAwkParser.jjt
             consumeToken(SEMICOLON);
             if (trace_enabled) LOGGER.info("Exiting normally from IfStmnt");
         }
@@ -793,41 +810,30 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 240
-    final public void Expr() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 240 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 248
+    final public void ExprStmnt() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 248 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean Expr9forced= false;
-        Expr Expr9= null;
+        boolean ExprStmnt9forced= false;
+        ExprStmnt ExprStmnt9= null;
         if (buildTree) {
-            Expr9= new Expr();
-            openNodeScope(Expr9);
+            ExprStmnt9= new ExprStmnt();
+            openNodeScope(ExprStmnt9);
         }
         ParseException parseException9= null;
         int callStackSize9= parsingStack.size();
         try {
-            // Code for NonTerminal specified on line 242 of NewAwkParser.jjt
-            pushOntoCallStack("Expr", "NewAwkParser.jjt", 242, 5);
+            // Code for NonTerminal specified on line 250 of NewAwkParser.jjt
+            pushOntoCallStack("ExprStmnt", "NewAwkParser.jjt", 250, 5);
             try {
-                LogicalOrExpr();
+                Expr();
             }
             finally {
                 popCallStack();
             }
-            // Code for ZeroOrMore specified on line 242 of NewAwkParser.jjt
-            while (resetScanAhead(1)&&nextTokenType== Zuweisung) {
-                // Code for RegexpRef specified on line 242 of NewAwkParser.jjt
-                consumeToken(Zuweisung);
-                // Code for NonTerminal specified on line 242 of NewAwkParser.jjt
-                pushOntoCallStack("Expr", "NewAwkParser.jjt", 242, 35);
-                try {
-                    LogicalOrExpr();
-                }
-                finally {
-                    popCallStack();
-                }
-            }
-            if (trace_enabled) LOGGER.info("Exiting normally from Expr");
+            // Code for RegexpRef specified on line 250 of NewAwkParser.jjt
+            consumeToken(SEMICOLON);
+            if (trace_enabled) LOGGER.info("Exiting normally from ExprStmnt");
         }
         catch(ParseException e) {
             parseException9= e;
@@ -839,7 +845,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException9== null) {
-                    closeNodeScope(Expr9, true);
+                    closeNodeScope(ExprStmnt9, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException9.getMessage());
@@ -849,368 +855,41 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    /**
-* OPERATORs (Nodes not in AST becuase precedence comes from nesting order)
-*/
-    // NewAwkParser.jjt, line 247
-    final public void LogicalOrExpr() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 247 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 252
+    final public void Expr() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 252 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        // Code for NonTerminal specified on line 249 of NewAwkParser.jjt
-        pushOntoCallStack("LogicalOrExpr", "NewAwkParser.jjt", 249, 5);
-        try {
-            LogicalAndExpr();
-        }
-        finally {
-            popCallStack();
-        }
-        // Code for ZeroOrMore specified on line 249 of NewAwkParser.jjt
-        while (resetScanAhead(1)&&nextTokenType== ConditionalOr) {
-            // Code for RegexpRef specified on line 249 of NewAwkParser.jjt
-            consumeToken(ConditionalOr);
-            // Code for NonTerminal specified on line 249 of NewAwkParser.jjt
-            pushOntoCallStack("LogicalOrExpr", "NewAwkParser.jjt", 249, 39);
-            try {
-                LogicalAndExpr();
-            }
-            finally {
-                popCallStack();
-            }
-        }
-        if (trace_enabled) LOGGER.info("Exiting normally from LogicalOrExpr");
-    }
-
-    // NewAwkParser.jjt, line 251
-    final public void LogicalAndExpr() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 251 of NewAwkParser.jjt");
-        if (cancelled) throw new CancellationException();
-        // Code for NonTerminal specified on line 253 of NewAwkParser.jjt
-        pushOntoCallStack("LogicalAndExpr", "NewAwkParser.jjt", 253, 5);
-        try {
-            LogicalNotExpr();
-        }
-        finally {
-            popCallStack();
-        }
-        // Code for ZeroOrMore specified on line 253 of NewAwkParser.jjt
-        while (resetScanAhead(1)&&nextTokenType== ConditionalAnd) {
-            // Code for RegexpRef specified on line 253 of NewAwkParser.jjt
-            consumeToken(ConditionalAnd);
-            // Code for NonTerminal specified on line 253 of NewAwkParser.jjt
-            pushOntoCallStack("LogicalAndExpr", "NewAwkParser.jjt", 253, 40);
-            try {
-                LogicalNotExpr();
-            }
-            finally {
-                popCallStack();
-            }
-        }
-        if (trace_enabled) LOGGER.info("Exiting normally from LogicalAndExpr");
-    }
-
-    // NewAwkParser.jjt, line 255
-    final public void LogicalNotExpr() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 255 of NewAwkParser.jjt");
-        if (cancelled) throw new CancellationException();
-        // Code for ZeroOrOne specified on line 257 of NewAwkParser.jjt
-        if (resetScanAhead(1)&&nextTokenType== ConditionalNot) {
-            // Code for RegexpRef specified on line 257 of NewAwkParser.jjt
-            consumeToken(ConditionalNot);
-        }
-        // Code for NonTerminal specified on line 257 of NewAwkParser.jjt
-        pushOntoCallStack("LogicalNotExpr", "NewAwkParser.jjt", 257, 24);
-        try {
-            CompExpr();
-        }
-        finally {
-            popCallStack();
-        }
-        if (trace_enabled) LOGGER.info("Exiting normally from LogicalNotExpr");
-    }
-
-    // NewAwkParser.jjt, line 259
-    final public void CompExpr() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 259 of NewAwkParser.jjt");
-        if (cancelled) throw new CancellationException();
-        // Code for NonTerminal specified on line 261 of NewAwkParser.jjt
-        pushOntoCallStack("CompExpr", "NewAwkParser.jjt", 261, 5);
-        try {
-            Sum();
-        }
-        finally {
-            popCallStack();
-        }
-        // Code for ZeroOrMore specified on line 261 of NewAwkParser.jjt
-        while (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_261$column_11.contains(nextTokenType)) {
-            // Code for ExpansionChoice specified on line 261 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== GREATER) {
-                // Code for RegexpRef specified on line 261 of NewAwkParser.jjt
-                consumeToken(GREATER);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== SMALLER) {
-                // Code for RegexpRef specified on line 261 of NewAwkParser.jjt
-                consumeToken(SMALLER);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== S_OR_EQUAL) {
-                // Code for RegexpRef specified on line 261 of NewAwkParser.jjt
-                consumeToken(S_OR_EQUAL);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== G_OR_EQUAL) {
-                // Code for RegexpRef specified on line 261 of NewAwkParser.jjt
-                consumeToken(G_OR_EQUAL);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== NOT_EQUAL) {
-                // Code for RegexpRef specified on line 261 of NewAwkParser.jjt
-                consumeToken(NOT_EQUAL);
-            }
-            else {
-                pushOntoCallStack("CompExpr", "NewAwkParser.jjt", 261, 13);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_261$column_13, parsingStack);
-            }
-            // Code for NonTerminal specified on line 261 of NewAwkParser.jjt
-            pushOntoCallStack("CompExpr", "NewAwkParser.jjt", 261, 81);
-            try {
-                Sum();
-            }
-            finally {
-                popCallStack();
-            }
-        }
-        if (trace_enabled) LOGGER.info("Exiting normally from CompExpr");
-    }
-
-    // NewAwkParser.jjt, line 263
-    final public void Sum() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 263 of NewAwkParser.jjt");
-        if (cancelled) throw new CancellationException();
-        // Code for NonTerminal specified on line 265 of NewAwkParser.jjt
-        pushOntoCallStack("Sum", "NewAwkParser.jjt", 265, 5);
-        try {
-            Product();
-        }
-        finally {
-            popCallStack();
-        }
-        // Code for ZeroOrMore specified on line 265 of NewAwkParser.jjt
-        while (resetScanAhead(1)&&nextTokenType== PLUS||nextTokenType== MINUS) {
-            // Code for ExpansionChoice specified on line 265 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== PLUS) {
-                // Code for RegexpRef specified on line 265 of NewAwkParser.jjt
-                consumeToken(PLUS);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== MINUS) {
-                // Code for RegexpRef specified on line 265 of NewAwkParser.jjt
-                consumeToken(MINUS);
-            }
-            else {
-                pushOntoCallStack("Sum", "NewAwkParser.jjt", 265, 17);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_265$column_17, parsingStack);
-            }
-            // Code for NonTerminal specified on line 265 of NewAwkParser.jjt
-            pushOntoCallStack("Sum", "NewAwkParser.jjt", 265, 36);
-            try {
-                Product();
-            }
-            finally {
-                popCallStack();
-            }
-        }
-        if (trace_enabled) LOGGER.info("Exiting normally from Sum");
-    }
-
-    // NewAwkParser.jjt, line 267
-    final public void Product() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 267 of NewAwkParser.jjt");
-        if (cancelled) throw new CancellationException();
-        // Code for NonTerminal specified on line 269 of NewAwkParser.jjt
-        pushOntoCallStack("Product", "NewAwkParser.jjt", 269, 5);
-        try {
-            Sign();
-        }
-        finally {
-            popCallStack();
-        }
-        // Code for ZeroOrMore specified on line 269 of NewAwkParser.jjt
-        while (resetScanAhead(1)&&nextTokenType== MULTIPLICATION||nextTokenType== DIVISION||nextTokenType== MODULO) {
-            // Code for ExpansionChoice specified on line 269 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== MULTIPLICATION) {
-                // Code for RegexpRef specified on line 269 of NewAwkParser.jjt
-                consumeToken(MULTIPLICATION);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== DIVISION) {
-                // Code for RegexpRef specified on line 269 of NewAwkParser.jjt
-                consumeToken(DIVISION);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== MODULO) {
-                // Code for RegexpRef specified on line 269 of NewAwkParser.jjt
-                consumeToken(MODULO);
-            }
-            else {
-                pushOntoCallStack("Product", "NewAwkParser.jjt", 269, 14);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_269$column_14, parsingStack);
-            }
-            // Code for NonTerminal specified on line 269 of NewAwkParser.jjt
-            pushOntoCallStack("Product", "NewAwkParser.jjt", 269, 56);
-            try {
-                Sign();
-            }
-            finally {
-                popCallStack();
-            }
-        }
-        if (trace_enabled) LOGGER.info("Exiting normally from Product");
-    }
-
-    static private final EnumSet<TokenType> Sign_FIRST_SET= EnumSet.of(PLUS, MINUS, NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
-    // NewAwkParser.jjt, line 271
-    final public void Sign() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 271 of NewAwkParser.jjt");
-        if (cancelled) throw new CancellationException();
-        // Code for ExpansionChoice specified on line 273 of NewAwkParser.jjt
-        if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_273$column_5.contains(nextTokenType)) {
-            // Code for NonTerminal specified on line 273 of NewAwkParser.jjt
-            pushOntoCallStack("Sign", "NewAwkParser.jjt", 273, 5);
-            try {
-                Atom();
-            }
-            finally {
-                popCallStack();
-            }
-        }
-        else if (resetScanAhead(1)&&nextTokenType== PLUS||nextTokenType== MINUS) {
-            // Code for ExpansionChoice specified on line 273 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== PLUS) {
-                // Code for RegexpRef specified on line 273 of NewAwkParser.jjt
-                consumeToken(PLUS);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== MINUS) {
-                // Code for RegexpRef specified on line 273 of NewAwkParser.jjt
-                consumeToken(MINUS);
-            }
-            else {
-                pushOntoCallStack("Sign", "NewAwkParser.jjt", 273, 15);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_273$column_15, parsingStack);
-            }
-            // Code for NonTerminal specified on line 273 of NewAwkParser.jjt
-            pushOntoCallStack("Sign", "NewAwkParser.jjt", 273, 34);
-            try {
-                Atom();
-            }
-            finally {
-                popCallStack();
-            }
-        }
-        else {
-            pushOntoCallStack("Sign", "NewAwkParser.jjt", 273, 5);
-            throw new ParseException(currentToken.getNext(), Sign_FIRST_SET, parsingStack);
-        }
-        if (trace_enabled) LOGGER.info("Exiting normally from Sign");
-    }
-
-    /**
-* OPERATORs end -------------
-*/
-    // NewAwkParser.jjt, line 278
-    final public void Atom() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 278 of NewAwkParser.jjt");
-        if (cancelled) throw new CancellationException();
-        boolean Atom10forced= false;
-        Atom Atom10= null;
+        boolean Expr10forced= false;
+        Expr Expr10= null;
         if (buildTree) {
-            Atom10= new Atom();
-            openNodeScope(Atom10);
+            Expr10= new Expr();
+            openNodeScope(Expr10);
         }
         ParseException parseException10= null;
         int callStackSize10= parsingStack.size();
-        Token t;
         try {
-            // Code for ZeroOrOne specified on line 282 of NewAwkParser.jjt
-            if (resetScanAhead(2)&&check$NewAwkParser_jjt$line_282$column_6()) {
-                // Code for NonTerminal specified on line 282 of NewAwkParser.jjt
-                pushOntoCallStack("Atom", "NewAwkParser.jjt", 282, 19);
+            // Code for NonTerminal specified on line 254 of NewAwkParser.jjt
+            pushOntoCallStack("Expr", "NewAwkParser.jjt", 254, 5);
+            try {
+                LogicalOrExpr();
+            }
+            finally {
+                popCallStack();
+            }
+            // Code for ZeroOrMore specified on line 254 of NewAwkParser.jjt
+            while (resetScanAhead(1)&&nextTokenType== Zuweisung) {
+                // Code for RegexpRef specified on line 254 of NewAwkParser.jjt
+                consumeToken(Zuweisung);
+                // Code for NonTerminal specified on line 254 of NewAwkParser.jjt
+                pushOntoCallStack("Expr", "NewAwkParser.jjt", 254, 35);
                 try {
-                    Cast();
+                    LogicalOrExpr();
                 }
                 finally {
                     popCallStack();
                 }
             }
-            // Code for ExpansionChoice specified on line 284 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== ID) {
-                // Code for ExpansionChoice specified on line 284 of NewAwkParser.jjt
-                if (resetScanAhead(2)&&check$NewAwkParser_jjt$line_284$column_10()) {
-                    // Code for NonTerminal specified on line 284 of NewAwkParser.jjt
-                    pushOntoCallStack("Atom", "NewAwkParser.jjt", 284, 23);
-                    try {
-                        MethodCall();
-                    }
-                    finally {
-                        popCallStack();
-                    }
-                }
-                else if (resetScanAhead(2)&&(nextTokenType== ID)) {
-                    // Code for RegexpRef specified on line 284 of NewAwkParser.jjt
-                    consumeToken(ID);
-                }
-                else {
-                    pushOntoCallStack("Atom", "NewAwkParser.jjt", 284, 10);
-                    throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_284$column_10, parsingStack);
-                }
-                // Code for ZeroOrOne specified on line 284 of NewAwkParser.jjt
-                if (resetScanAhead(1)&&nextTokenType== ArrayAuf) {
-                    // Code for NonTerminal specified on line 284 of NewAwkParser.jjt
-                    pushOntoCallStack("Atom", "NewAwkParser.jjt", 284, 58);
-                    try {
-                        ArrayAccess();
-                    }
-                    finally {
-                        popCallStack();
-                    }
-                }
-            }
-            else if (resetScanAhead(1)&&nextTokenType== KlammerAuf) {
-                // Code for RegexpRef specified on line 285 of NewAwkParser.jjt
-                consumeToken(KlammerAuf);
-                // Code for NonTerminal specified on line 285 of NewAwkParser.jjt
-                pushOntoCallStack("Atom", "NewAwkParser.jjt", 285, 24);
-                try {
-                    Expr();
-                }
-                finally {
-                    popCallStack();
-                }
-                // Code for RegexpRef specified on line 285 of NewAwkParser.jjt
-                consumeToken(KlammerZu);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== BooleanLiteral) {
-                // Code for RegexpRef specified on line 286 of NewAwkParser.jjt
-                t= consumeToken(BooleanLiteral);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== IntegerLiteral) {
-                // Code for RegexpRef specified on line 286 of NewAwkParser.jjt
-                t= consumeToken(IntegerLiteral);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== DoubleLiteral) {
-                // Code for RegexpRef specified on line 286 of NewAwkParser.jjt
-                t= consumeToken(DoubleLiteral);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== StringLiteral) {
-                // Code for RegexpRef specified on line 287 of NewAwkParser.jjt
-                t= consumeToken(StringLiteral);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== CharLiteral) {
-                // Code for RegexpRef specified on line 287 of NewAwkParser.jjt
-                t= consumeToken(CharLiteral);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== NullLiteral) {
-                // Code for RegexpRef specified on line 287 of NewAwkParser.jjt
-                t= consumeToken(NullLiteral);
-            }
-            else {
-                pushOntoCallStack("Atom", "NewAwkParser.jjt", 284, 9);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_284$column_9, parsingStack);
-            }
-            if (trace_enabled) LOGGER.info("Exiting normally from Atom");
+            if (trace_enabled) LOGGER.info("Exiting normally from Expr");
         }
         catch(ParseException e) {
             parseException10= e;
@@ -1222,7 +901,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException10== null) {
-                    closeNodeScope(Atom10, true);
+                    closeNodeScope(Expr10, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException10.getMessage());
@@ -1232,32 +911,368 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 290
-    final public void Cast() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 290 of NewAwkParser.jjt");
+    /**
+* OPERATORs (Nodes not in AST becuase precedence comes from nesting order)
+*/
+    // NewAwkParser.jjt, line 259
+    final public void LogicalOrExpr() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 259 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean Cast11forced= false;
-        Cast Cast11= null;
-        if (buildTree) {
-            Cast11= new Cast();
-            openNodeScope(Cast11);
-        }
-        ParseException parseException11= null;
-        int callStackSize11= parsingStack.size();
+        // Code for NonTerminal specified on line 261 of NewAwkParser.jjt
+        pushOntoCallStack("LogicalOrExpr", "NewAwkParser.jjt", 261, 5);
         try {
-            // Code for RegexpRef specified on line 291 of NewAwkParser.jjt
-            consumeToken(KlammerAuf);
-            // Code for NonTerminal specified on line 291 of NewAwkParser.jjt
-            pushOntoCallStack("Cast", "NewAwkParser.jjt", 291, 18);
+            LogicalAndExpr();
+        }
+        finally {
+            popCallStack();
+        }
+        // Code for ZeroOrMore specified on line 261 of NewAwkParser.jjt
+        while (resetScanAhead(1)&&nextTokenType== ConditionalOr) {
+            // Code for RegexpRef specified on line 261 of NewAwkParser.jjt
+            consumeToken(ConditionalOr);
+            // Code for NonTerminal specified on line 261 of NewAwkParser.jjt
+            pushOntoCallStack("LogicalOrExpr", "NewAwkParser.jjt", 261, 39);
             try {
-                Type();
+                LogicalAndExpr();
             }
             finally {
                 popCallStack();
             }
-            // Code for RegexpRef specified on line 291 of NewAwkParser.jjt
-            consumeToken(KlammerZu);
-            if (trace_enabled) LOGGER.info("Exiting normally from Cast");
+        }
+        if (trace_enabled) LOGGER.info("Exiting normally from LogicalOrExpr");
+    }
+
+    // NewAwkParser.jjt, line 263
+    final public void LogicalAndExpr() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 263 of NewAwkParser.jjt");
+        if (cancelled) throw new CancellationException();
+        // Code for NonTerminal specified on line 265 of NewAwkParser.jjt
+        pushOntoCallStack("LogicalAndExpr", "NewAwkParser.jjt", 265, 5);
+        try {
+            LogicalNotExpr();
+        }
+        finally {
+            popCallStack();
+        }
+        // Code for ZeroOrMore specified on line 265 of NewAwkParser.jjt
+        while (resetScanAhead(1)&&nextTokenType== ConditionalAnd) {
+            // Code for RegexpRef specified on line 265 of NewAwkParser.jjt
+            consumeToken(ConditionalAnd);
+            // Code for NonTerminal specified on line 265 of NewAwkParser.jjt
+            pushOntoCallStack("LogicalAndExpr", "NewAwkParser.jjt", 265, 40);
+            try {
+                LogicalNotExpr();
+            }
+            finally {
+                popCallStack();
+            }
+        }
+        if (trace_enabled) LOGGER.info("Exiting normally from LogicalAndExpr");
+    }
+
+    // NewAwkParser.jjt, line 267
+    final public void LogicalNotExpr() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 267 of NewAwkParser.jjt");
+        if (cancelled) throw new CancellationException();
+        // Code for ZeroOrOne specified on line 269 of NewAwkParser.jjt
+        if (resetScanAhead(1)&&nextTokenType== ConditionalNot) {
+            // Code for RegexpRef specified on line 269 of NewAwkParser.jjt
+            consumeToken(ConditionalNot);
+        }
+        // Code for NonTerminal specified on line 269 of NewAwkParser.jjt
+        pushOntoCallStack("LogicalNotExpr", "NewAwkParser.jjt", 269, 24);
+        try {
+            CompExpr();
+        }
+        finally {
+            popCallStack();
+        }
+        if (trace_enabled) LOGGER.info("Exiting normally from LogicalNotExpr");
+    }
+
+    // NewAwkParser.jjt, line 271
+    final public void CompExpr() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 271 of NewAwkParser.jjt");
+        if (cancelled) throw new CancellationException();
+        // Code for NonTerminal specified on line 273 of NewAwkParser.jjt
+        pushOntoCallStack("CompExpr", "NewAwkParser.jjt", 273, 5);
+        try {
+            Sum();
+        }
+        finally {
+            popCallStack();
+        }
+        // Code for ZeroOrMore specified on line 273 of NewAwkParser.jjt
+        while (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_273$column_11.contains(nextTokenType)) {
+            // Code for ExpansionChoice specified on line 273 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== GREATER) {
+                // Code for RegexpRef specified on line 273 of NewAwkParser.jjt
+                consumeToken(GREATER);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== SMALLER) {
+                // Code for RegexpRef specified on line 273 of NewAwkParser.jjt
+                consumeToken(SMALLER);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== S_OR_EQUAL) {
+                // Code for RegexpRef specified on line 273 of NewAwkParser.jjt
+                consumeToken(S_OR_EQUAL);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== G_OR_EQUAL) {
+                // Code for RegexpRef specified on line 273 of NewAwkParser.jjt
+                consumeToken(G_OR_EQUAL);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== NOT_EQUAL) {
+                // Code for RegexpRef specified on line 273 of NewAwkParser.jjt
+                consumeToken(NOT_EQUAL);
+            }
+            else {
+                pushOntoCallStack("CompExpr", "NewAwkParser.jjt", 273, 13);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_273$column_13, parsingStack);
+            }
+            // Code for NonTerminal specified on line 273 of NewAwkParser.jjt
+            pushOntoCallStack("CompExpr", "NewAwkParser.jjt", 273, 81);
+            try {
+                Sum();
+            }
+            finally {
+                popCallStack();
+            }
+        }
+        if (trace_enabled) LOGGER.info("Exiting normally from CompExpr");
+    }
+
+    // NewAwkParser.jjt, line 275
+    final public void Sum() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 275 of NewAwkParser.jjt");
+        if (cancelled) throw new CancellationException();
+        // Code for NonTerminal specified on line 277 of NewAwkParser.jjt
+        pushOntoCallStack("Sum", "NewAwkParser.jjt", 277, 5);
+        try {
+            Product();
+        }
+        finally {
+            popCallStack();
+        }
+        // Code for ZeroOrMore specified on line 277 of NewAwkParser.jjt
+        while (resetScanAhead(1)&&nextTokenType== PLUS||nextTokenType== MINUS) {
+            // Code for ExpansionChoice specified on line 277 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== PLUS) {
+                // Code for RegexpRef specified on line 277 of NewAwkParser.jjt
+                consumeToken(PLUS);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== MINUS) {
+                // Code for RegexpRef specified on line 277 of NewAwkParser.jjt
+                consumeToken(MINUS);
+            }
+            else {
+                pushOntoCallStack("Sum", "NewAwkParser.jjt", 277, 17);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_277$column_17, parsingStack);
+            }
+            // Code for NonTerminal specified on line 277 of NewAwkParser.jjt
+            pushOntoCallStack("Sum", "NewAwkParser.jjt", 277, 36);
+            try {
+                Product();
+            }
+            finally {
+                popCallStack();
+            }
+        }
+        if (trace_enabled) LOGGER.info("Exiting normally from Sum");
+    }
+
+    // NewAwkParser.jjt, line 279
+    final public void Product() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 279 of NewAwkParser.jjt");
+        if (cancelled) throw new CancellationException();
+        // Code for NonTerminal specified on line 281 of NewAwkParser.jjt
+        pushOntoCallStack("Product", "NewAwkParser.jjt", 281, 5);
+        try {
+            Sign();
+        }
+        finally {
+            popCallStack();
+        }
+        // Code for ZeroOrMore specified on line 281 of NewAwkParser.jjt
+        while (resetScanAhead(1)&&nextTokenType== MULTIPLICATION||nextTokenType== DIVISION||nextTokenType== MODULO) {
+            // Code for ExpansionChoice specified on line 281 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== MULTIPLICATION) {
+                // Code for RegexpRef specified on line 281 of NewAwkParser.jjt
+                consumeToken(MULTIPLICATION);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== DIVISION) {
+                // Code for RegexpRef specified on line 281 of NewAwkParser.jjt
+                consumeToken(DIVISION);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== MODULO) {
+                // Code for RegexpRef specified on line 281 of NewAwkParser.jjt
+                consumeToken(MODULO);
+            }
+            else {
+                pushOntoCallStack("Product", "NewAwkParser.jjt", 281, 14);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_281$column_14, parsingStack);
+            }
+            // Code for NonTerminal specified on line 281 of NewAwkParser.jjt
+            pushOntoCallStack("Product", "NewAwkParser.jjt", 281, 56);
+            try {
+                Sign();
+            }
+            finally {
+                popCallStack();
+            }
+        }
+        if (trace_enabled) LOGGER.info("Exiting normally from Product");
+    }
+
+    static private final EnumSet<TokenType> Sign_FIRST_SET= EnumSet.of(PLUS, MINUS, NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
+    // NewAwkParser.jjt, line 283
+    final public void Sign() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 283 of NewAwkParser.jjt");
+        if (cancelled) throw new CancellationException();
+        // Code for ExpansionChoice specified on line 285 of NewAwkParser.jjt
+        if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_285$column_5.contains(nextTokenType)) {
+            // Code for NonTerminal specified on line 285 of NewAwkParser.jjt
+            pushOntoCallStack("Sign", "NewAwkParser.jjt", 285, 5);
+            try {
+                Atom();
+            }
+            finally {
+                popCallStack();
+            }
+        }
+        else if (resetScanAhead(1)&&nextTokenType== PLUS||nextTokenType== MINUS) {
+            // Code for ExpansionChoice specified on line 285 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== PLUS) {
+                // Code for RegexpRef specified on line 285 of NewAwkParser.jjt
+                consumeToken(PLUS);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== MINUS) {
+                // Code for RegexpRef specified on line 285 of NewAwkParser.jjt
+                consumeToken(MINUS);
+            }
+            else {
+                pushOntoCallStack("Sign", "NewAwkParser.jjt", 285, 15);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_285$column_15, parsingStack);
+            }
+            // Code for NonTerminal specified on line 285 of NewAwkParser.jjt
+            pushOntoCallStack("Sign", "NewAwkParser.jjt", 285, 34);
+            try {
+                Atom();
+            }
+            finally {
+                popCallStack();
+            }
+        }
+        else {
+            pushOntoCallStack("Sign", "NewAwkParser.jjt", 285, 5);
+            throw new ParseException(currentToken.getNext(), Sign_FIRST_SET, parsingStack);
+        }
+        if (trace_enabled) LOGGER.info("Exiting normally from Sign");
+    }
+
+    /**
+* OPERATORs end -------------
+*/
+    // NewAwkParser.jjt, line 290
+    final public void Atom() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 290 of NewAwkParser.jjt");
+        if (cancelled) throw new CancellationException();
+        boolean Atom11forced= false;
+        Atom Atom11= null;
+        if (buildTree) {
+            Atom11= new Atom();
+            openNodeScope(Atom11);
+        }
+        ParseException parseException11= null;
+        int callStackSize11= parsingStack.size();
+        Token t;
+        try {
+            // Code for ZeroOrOne specified on line 294 of NewAwkParser.jjt
+            if (resetScanAhead(2)&&check$NewAwkParser_jjt$line_294$column_6()) {
+                // Code for NonTerminal specified on line 294 of NewAwkParser.jjt
+                pushOntoCallStack("Atom", "NewAwkParser.jjt", 294, 19);
+                try {
+                    Cast();
+                }
+                finally {
+                    popCallStack();
+                }
+            }
+            // Code for ExpansionChoice specified on line 296 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== ID) {
+                // Code for ExpansionChoice specified on line 296 of NewAwkParser.jjt
+                if (resetScanAhead(2)&&check$NewAwkParser_jjt$line_296$column_10()) {
+                    // Code for NonTerminal specified on line 296 of NewAwkParser.jjt
+                    pushOntoCallStack("Atom", "NewAwkParser.jjt", 296, 23);
+                    try {
+                        MethodCall();
+                    }
+                    finally {
+                        popCallStack();
+                    }
+                }
+                else if (resetScanAhead(2)&&(nextTokenType== ID)) {
+                    // Code for RegexpRef specified on line 296 of NewAwkParser.jjt
+                    consumeToken(ID);
+                }
+                else {
+                    pushOntoCallStack("Atom", "NewAwkParser.jjt", 296, 10);
+                    throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_296$column_10, parsingStack);
+                }
+                // Code for ZeroOrOne specified on line 296 of NewAwkParser.jjt
+                if (resetScanAhead(1)&&nextTokenType== ArrayAuf) {
+                    // Code for NonTerminal specified on line 296 of NewAwkParser.jjt
+                    pushOntoCallStack("Atom", "NewAwkParser.jjt", 296, 58);
+                    try {
+                        ArrayAccess();
+                    }
+                    finally {
+                        popCallStack();
+                    }
+                }
+            }
+            else if (resetScanAhead(1)&&nextTokenType== KlammerAuf) {
+                // Code for RegexpRef specified on line 297 of NewAwkParser.jjt
+                consumeToken(KlammerAuf);
+                // Code for NonTerminal specified on line 297 of NewAwkParser.jjt
+                pushOntoCallStack("Atom", "NewAwkParser.jjt", 297, 24);
+                try {
+                    Expr();
+                }
+                finally {
+                    popCallStack();
+                }
+                // Code for RegexpRef specified on line 297 of NewAwkParser.jjt
+                consumeToken(KlammerZu);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== BooleanLiteral) {
+                // Code for RegexpRef specified on line 298 of NewAwkParser.jjt
+                t= consumeToken(BooleanLiteral);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== IntegerLiteral) {
+                // Code for RegexpRef specified on line 298 of NewAwkParser.jjt
+                t= consumeToken(IntegerLiteral);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== DoubleLiteral) {
+                // Code for RegexpRef specified on line 298 of NewAwkParser.jjt
+                t= consumeToken(DoubleLiteral);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== StringLiteral) {
+                // Code for RegexpRef specified on line 299 of NewAwkParser.jjt
+                t= consumeToken(StringLiteral);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== CharLiteral) {
+                // Code for RegexpRef specified on line 299 of NewAwkParser.jjt
+                t= consumeToken(CharLiteral);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== NullLiteral) {
+                // Code for RegexpRef specified on line 299 of NewAwkParser.jjt
+                t= consumeToken(NullLiteral);
+            }
+            else {
+                pushOntoCallStack("Atom", "NewAwkParser.jjt", 296, 9);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_296$column_9, parsingStack);
+            }
+            if (trace_enabled) LOGGER.info("Exiting normally from Atom");
         }
         catch(ParseException e) {
             parseException11= e;
@@ -1269,7 +1284,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException11== null) {
-                    closeNodeScope(Cast11, true);
+                    closeNodeScope(Atom11, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException11.getMessage());
@@ -1279,54 +1294,32 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 293
-    final public void MethodCall() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 293 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 302
+    final public void Cast() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 302 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean MethodCall12forced= false;
-        MethodCall MethodCall12= null;
+        boolean Cast12forced= false;
+        Cast Cast12= null;
         if (buildTree) {
-            MethodCall12= new MethodCall();
-            openNodeScope(MethodCall12);
+            Cast12= new Cast();
+            openNodeScope(Cast12);
         }
         ParseException parseException12= null;
         int callStackSize12= parsingStack.size();
         try {
-            // Code for RegexpRef specified on line 295 of NewAwkParser.jjt
-            consumeToken(ID);
-            // Code for RegexpRef specified on line 295 of NewAwkParser.jjt
+            // Code for RegexpRef specified on line 303 of NewAwkParser.jjt
             consumeToken(KlammerAuf);
-            // Code for ZeroOrOne specified on line 296 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_296$column_5.contains(nextTokenType)) {
-                // Code for NonTerminal specified on line 296 of NewAwkParser.jjt
-                pushOntoCallStack("MethodCall", "NewAwkParser.jjt", 296, 6);
-                try {
-                    Expr();
-                }
-                finally {
-                    popCallStack();
-                }
-                // Code for CodeBlock specified on line 296 of NewAwkParser.jjt
-                /*Add Arg*/
-                // Code for ZeroOrMore specified on line 297 of NewAwkParser.jjt
-                while (resetScanAhead(1)&&nextTokenType== COMMA) {
-                    // Code for RegexpRef specified on line 297 of NewAwkParser.jjt
-                    consumeToken(COMMA);
-                    // Code for NonTerminal specified on line 297 of NewAwkParser.jjt
-                    pushOntoCallStack("MethodCall", "NewAwkParser.jjt", 297, 14);
-                    try {
-                        Expr();
-                    }
-                    finally {
-                        popCallStack();
-                    }
-                    // Code for CodeBlock specified on line 297 of NewAwkParser.jjt
-                    /*Add more args*/
-                }
+            // Code for NonTerminal specified on line 303 of NewAwkParser.jjt
+            pushOntoCallStack("Cast", "NewAwkParser.jjt", 303, 18);
+            try {
+                Type();
             }
-            // Code for RegexpRef specified on line 298 of NewAwkParser.jjt
+            finally {
+                popCallStack();
+            }
+            // Code for RegexpRef specified on line 303 of NewAwkParser.jjt
             consumeToken(KlammerZu);
-            if (trace_enabled) LOGGER.info("Exiting normally from MethodCall");
+            if (trace_enabled) LOGGER.info("Exiting normally from Cast");
         }
         catch(ParseException e) {
             parseException12= e;
@@ -1338,7 +1331,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException12== null) {
-                    closeNodeScope(MethodCall12, true);
+                    closeNodeScope(Cast12, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException12.getMessage());
@@ -1348,32 +1341,54 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 300
-    final public void ArrayAccess() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 300 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 305
+    final public void MethodCall() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 305 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean ArrayAccess13forced= false;
-        ArrayAccess ArrayAccess13= null;
+        boolean MethodCall13forced= false;
+        MethodCall MethodCall13= null;
         if (buildTree) {
-            ArrayAccess13= new ArrayAccess();
-            openNodeScope(ArrayAccess13);
+            MethodCall13= new MethodCall();
+            openNodeScope(MethodCall13);
         }
         ParseException parseException13= null;
         int callStackSize13= parsingStack.size();
         try {
-            // Code for RegexpRef specified on line 302 of NewAwkParser.jjt
-            consumeToken(ArrayAuf);
-            // Code for NonTerminal specified on line 302 of NewAwkParser.jjt
-            pushOntoCallStack("ArrayAccess", "NewAwkParser.jjt", 302, 16);
-            try {
-                Expr();
+            // Code for RegexpRef specified on line 307 of NewAwkParser.jjt
+            consumeToken(ID);
+            // Code for RegexpRef specified on line 307 of NewAwkParser.jjt
+            consumeToken(KlammerAuf);
+            // Code for ZeroOrOne specified on line 308 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_308$column_5.contains(nextTokenType)) {
+                // Code for NonTerminal specified on line 308 of NewAwkParser.jjt
+                pushOntoCallStack("MethodCall", "NewAwkParser.jjt", 308, 6);
+                try {
+                    Expr();
+                }
+                finally {
+                    popCallStack();
+                }
+                // Code for CodeBlock specified on line 308 of NewAwkParser.jjt
+                /*Add Arg*/
+                // Code for ZeroOrMore specified on line 309 of NewAwkParser.jjt
+                while (resetScanAhead(1)&&nextTokenType== COMMA) {
+                    // Code for RegexpRef specified on line 309 of NewAwkParser.jjt
+                    consumeToken(COMMA);
+                    // Code for NonTerminal specified on line 309 of NewAwkParser.jjt
+                    pushOntoCallStack("MethodCall", "NewAwkParser.jjt", 309, 14);
+                    try {
+                        Expr();
+                    }
+                    finally {
+                        popCallStack();
+                    }
+                    // Code for CodeBlock specified on line 309 of NewAwkParser.jjt
+                    /*Add more args*/
+                }
             }
-            finally {
-                popCallStack();
-            }
-            // Code for RegexpRef specified on line 302 of NewAwkParser.jjt
-            consumeToken(ArrayZu);
-            if (trace_enabled) LOGGER.info("Exiting normally from ArrayAccess");
+            // Code for RegexpRef specified on line 310 of NewAwkParser.jjt
+            consumeToken(KlammerZu);
+            if (trace_enabled) LOGGER.info("Exiting normally from MethodCall");
         }
         catch(ParseException e) {
             parseException13= e;
@@ -1385,7 +1400,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException13== null) {
-                    closeNodeScope(ArrayAccess13, true);
+                    closeNodeScope(MethodCall13, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException13.getMessage());
@@ -1395,32 +1410,32 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 304
-    final public void ArrayLength() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 304 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 312
+    final public void ArrayAccess() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 312 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean ArrayLength14forced= false;
-        ArrayLength ArrayLength14= null;
+        boolean ArrayAccess14forced= false;
+        ArrayAccess ArrayAccess14= null;
         if (buildTree) {
-            ArrayLength14= new ArrayLength();
-            openNodeScope(ArrayLength14);
+            ArrayAccess14= new ArrayAccess();
+            openNodeScope(ArrayAccess14);
         }
         ParseException parseException14= null;
         int callStackSize14= parsingStack.size();
         try {
-            // Code for NonTerminal specified on line 307 of NewAwkParser.jjt
-            pushOntoCallStack("ArrayLength", "NewAwkParser.jjt", 307, 3);
+            // Code for RegexpRef specified on line 314 of NewAwkParser.jjt
+            consumeToken(ArrayAuf);
+            // Code for NonTerminal specified on line 314 of NewAwkParser.jjt
+            pushOntoCallStack("ArrayAccess", "NewAwkParser.jjt", 314, 16);
             try {
                 Expr();
             }
             finally {
                 popCallStack();
             }
-            // Code for RegexpRef specified on line 307 of NewAwkParser.jjt
-            consumeToken(DOT);
-            // Code for RegexpRef specified on line 307 of NewAwkParser.jjt
-            consumeToken(LENGTH);
-            if (trace_enabled) LOGGER.info("Exiting normally from ArrayLength");
+            // Code for RegexpRef specified on line 314 of NewAwkParser.jjt
+            consumeToken(ArrayZu);
+            if (trace_enabled) LOGGER.info("Exiting normally from ArrayAccess");
         }
         catch(ParseException e) {
             parseException14= e;
@@ -1432,7 +1447,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException14== null) {
-                    closeNodeScope(ArrayLength14, true);
+                    closeNodeScope(ArrayAccess14, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException14.getMessage());
@@ -1442,58 +1457,32 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 309
-    final public void Type() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 309 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 316
+    final public void ArrayLength() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 316 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean Type15forced= false;
-        Type Type15= null;
+        boolean ArrayLength15forced= false;
+        ArrayLength ArrayLength15= null;
         if (buildTree) {
-            Type15= new Type();
-            openNodeScope(Type15);
+            ArrayLength15= new ArrayLength();
+            openNodeScope(ArrayLength15);
         }
         ParseException parseException15= null;
         int callStackSize15= parsingStack.size();
-        Token t;
         try {
-            // Code for ExpansionChoice specified on line 313 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== TypeInt) {
-                // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(TypeInt);
+            // Code for NonTerminal specified on line 319 of NewAwkParser.jjt
+            pushOntoCallStack("ArrayLength", "NewAwkParser.jjt", 319, 3);
+            try {
+                Expr();
             }
-            else if (resetScanAhead(1)&&nextTokenType== TypeDouble) {
-                // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(TypeDouble);
+            finally {
+                popCallStack();
             }
-            else if (resetScanAhead(1)&&nextTokenType== TypeChar) {
-                // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(TypeChar);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== TypeBoolean) {
-                // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(TypeBoolean);
-            }
-            else if (resetScanAhead(1)&&nextTokenType== TypeString) {
-                // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(TypeString);
-            }
-            else {
-                pushOntoCallStack("Type", "NewAwkParser.jjt", 313, 4);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_313$column_4, parsingStack);
-            }
-            // Code for CodeBlock specified on line 314 of NewAwkParser.jjt
-            Type15.type= t.getImage();
-            //assign String-Value to Type
-            // Code for ZeroOrOne specified on line 317 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== ArrayAuf) {
-                // Code for RegexpRef specified on line 317 of NewAwkParser.jjt
-                consumeToken(ArrayAuf);
-                // Code for RegexpRef specified on line 317 of NewAwkParser.jjt
-                consumeToken(ArrayZu);
-                // Code for CodeBlock specified on line 317 of NewAwkParser.jjt
-                Type15.isArray= true;
-            }
-            if (trace_enabled) LOGGER.info("Exiting normally from Type");
+            // Code for RegexpRef specified on line 319 of NewAwkParser.jjt
+            consumeToken(DOT);
+            // Code for RegexpRef specified on line 319 of NewAwkParser.jjt
+            consumeToken(LENGTH);
+            if (trace_enabled) LOGGER.info("Exiting normally from ArrayLength");
         }
         catch(ParseException e) {
             parseException15= e;
@@ -1505,7 +1494,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException15== null) {
-                    closeNodeScope(Type15, true);
+                    closeNodeScope(ArrayLength15, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException15.getMessage());
@@ -1515,32 +1504,58 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 319
-    final public void ReturnStmnt() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 319 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 321
+    final public void Type() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 321 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean ReturnStmnt16forced= false;
-        ReturnStatement ReturnStmnt16= null;
+        boolean Type16forced= false;
+        Type Type16= null;
         if (buildTree) {
-            ReturnStmnt16= new ReturnStatement();
-            openNodeScope(ReturnStmnt16);
+            Type16= new Type();
+            openNodeScope(Type16);
         }
         ParseException parseException16= null;
         int callStackSize16= parsingStack.size();
+        Token t;
         try {
-            // Code for RegexpRef specified on line 321 of NewAwkParser.jjt
-            consumeToken(RETURN);
-            // Code for NonTerminal specified on line 321 of NewAwkParser.jjt
-            pushOntoCallStack("ReturnStmnt", "NewAwkParser.jjt", 321, 14);
-            try {
-                Expr();
+            // Code for ExpansionChoice specified on line 325 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== TypeInt) {
+                // Code for RegexpRef specified on line 325 of NewAwkParser.jjt
+                t= consumeToken(TypeInt);
             }
-            finally {
-                popCallStack();
+            else if (resetScanAhead(1)&&nextTokenType== TypeDouble) {
+                // Code for RegexpRef specified on line 325 of NewAwkParser.jjt
+                t= consumeToken(TypeDouble);
             }
-            // Code for RegexpRef specified on line 321 of NewAwkParser.jjt
-            consumeToken(SEMICOLON);
-            if (trace_enabled) LOGGER.info("Exiting normally from ReturnStmnt");
+            else if (resetScanAhead(1)&&nextTokenType== TypeChar) {
+                // Code for RegexpRef specified on line 325 of NewAwkParser.jjt
+                t= consumeToken(TypeChar);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== TypeBoolean) {
+                // Code for RegexpRef specified on line 325 of NewAwkParser.jjt
+                t= consumeToken(TypeBoolean);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== TypeString) {
+                // Code for RegexpRef specified on line 325 of NewAwkParser.jjt
+                t= consumeToken(TypeString);
+            }
+            else {
+                pushOntoCallStack("Type", "NewAwkParser.jjt", 325, 4);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_325$column_4, parsingStack);
+            }
+            // Code for CodeBlock specified on line 326 of NewAwkParser.jjt
+            Type16.type= t.getImage();
+            //assign String-Value to Type
+            // Code for ZeroOrOne specified on line 329 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== ArrayAuf) {
+                // Code for RegexpRef specified on line 329 of NewAwkParser.jjt
+                consumeToken(ArrayAuf);
+                // Code for RegexpRef specified on line 329 of NewAwkParser.jjt
+                consumeToken(ArrayZu);
+                // Code for CodeBlock specified on line 329 of NewAwkParser.jjt
+                Type16.isArray= true;
+            }
+            if (trace_enabled) LOGGER.info("Exiting normally from Type");
         }
         catch(ParseException e) {
             parseException16= e;
@@ -1552,7 +1567,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException16== null) {
-                    closeNodeScope(ReturnStmnt16, true);
+                    closeNodeScope(Type16, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException16.getMessage());
@@ -1562,63 +1577,32 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 323
-    final public void KlammerAffe() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 323 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 331
+    final public void ReturnStmnt() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 331 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean KlammerAffe17forced= false;
-        KlammerAffe KlammerAffe17= null;
+        boolean ReturnStmnt17forced= false;
+        ReturnStatement ReturnStmnt17= null;
         if (buildTree) {
-            KlammerAffe17= new KlammerAffe();
-            openNodeScope(KlammerAffe17);
+            ReturnStmnt17= new ReturnStatement();
+            openNodeScope(ReturnStmnt17);
         }
         ParseException parseException17= null;
         int callStackSize17= parsingStack.size();
         try {
-            // Code for RegexpRef specified on line 325 of NewAwkParser.jjt
-            consumeToken(StringLiteral);
-            // Code for RegexpRef specified on line 325 of NewAwkParser.jjt
-            consumeToken(AT);
-            // Code for RegexpRef specified on line 325 of NewAwkParser.jjt
-            consumeToken(BlockAuf);
-            // Code for NonTerminal specified on line 326 of NewAwkParser.jjt
-            pushOntoCallStack("KlammerAffe", "NewAwkParser.jjt", 326, 5);
+            // Code for RegexpRef specified on line 333 of NewAwkParser.jjt
+            consumeToken(RETURN);
+            // Code for NonTerminal specified on line 333 of NewAwkParser.jjt
+            pushOntoCallStack("ReturnStmnt", "NewAwkParser.jjt", 333, 14);
             try {
-                KlammerAffeRegex();
+                Expr();
             }
             finally {
                 popCallStack();
             }
-            // Code for NonTerminal specified on line 326 of NewAwkParser.jjt
-            pushOntoCallStack("KlammerAffe", "NewAwkParser.jjt", 326, 24);
-            try {
-                KlammerAffeAusdruck();
-            }
-            finally {
-                popCallStack();
-            }
-            // Code for ZeroOrMore specified on line 327 of NewAwkParser.jjt
-            while (resetScanAhead(1)&&nextTokenType== Colon||nextTokenType== ConditionalNot) {
-                // Code for NonTerminal specified on line 327 of NewAwkParser.jjt
-                pushOntoCallStack("KlammerAffe", "NewAwkParser.jjt", 327, 6);
-                try {
-                    KlammerAffeRegex();
-                }
-                finally {
-                    popCallStack();
-                }
-                // Code for NonTerminal specified on line 327 of NewAwkParser.jjt
-                pushOntoCallStack("KlammerAffe", "NewAwkParser.jjt", 327, 25);
-                try {
-                    KlammerAffeAusdruck();
-                }
-                finally {
-                    popCallStack();
-                }
-            }
-            // Code for RegexpRef specified on line 328 of NewAwkParser.jjt
-            consumeToken(BlockZu);
-            if (trace_enabled) LOGGER.info("Exiting normally from KlammerAffe");
+            // Code for RegexpRef specified on line 333 of NewAwkParser.jjt
+            consumeToken(SEMICOLON);
+            if (trace_enabled) LOGGER.info("Exiting normally from ReturnStmnt");
         }
         catch(ParseException e) {
             parseException17= e;
@@ -1630,7 +1614,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException17== null) {
-                    closeNodeScope(KlammerAffe17, true);
+                    closeNodeScope(ReturnStmnt17, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException17.getMessage());
@@ -1640,54 +1624,63 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 330
-    final public void KlammerAffeRegex() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 330 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 335
+    final public void KlammerAffe() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 335 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean KlammerAffeRegex18forced= false;
-        KlammerAffeRegex KlammerAffeRegex18= null;
+        boolean KlammerAffe18forced= false;
+        KlammerAffe KlammerAffe18= null;
         if (buildTree) {
-            KlammerAffeRegex18= new KlammerAffeRegex();
-            openNodeScope(KlammerAffeRegex18);
+            KlammerAffe18= new KlammerAffe();
+            openNodeScope(KlammerAffe18);
         }
         ParseException parseException18= null;
         int callStackSize18= parsingStack.size();
         try {
-            // Code for ZeroOrOne specified on line 332 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== ConditionalNot) {
-                // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(ConditionalNot);
+            // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
+            consumeToken(StringLiteral);
+            // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
+            consumeToken(AT);
+            // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
+            consumeToken(BlockAuf);
+            // Code for NonTerminal specified on line 338 of NewAwkParser.jjt
+            pushOntoCallStack("KlammerAffe", "NewAwkParser.jjt", 338, 5);
+            try {
+                KlammerAffeRegex();
             }
-            // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-            consumeToken(Colon);
-            // Code for ExpansionChoice specified on line 332 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== INTEGER_CLASS) {
-                // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(INTEGER_CLASS);
+            finally {
+                popCallStack();
             }
-            else if (resetScanAhead(1)&&nextTokenType== DOUBLE_CLASS) {
-                // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(DOUBLE_CLASS);
+            // Code for NonTerminal specified on line 338 of NewAwkParser.jjt
+            pushOntoCallStack("KlammerAffe", "NewAwkParser.jjt", 338, 24);
+            try {
+                KlammerAffeAusdruck();
             }
-            else if (resetScanAhead(1)&&nextTokenType== CHAR_CLASS) {
-                // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(CHAR_CLASS);
+            finally {
+                popCallStack();
             }
-            else if (resetScanAhead(1)&&nextTokenType== BOOLEAN_CLASS) {
-                // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(BOOLEAN_CLASS);
+            // Code for ZeroOrMore specified on line 339 of NewAwkParser.jjt
+            while (resetScanAhead(1)&&nextTokenType== Colon||nextTokenType== ConditionalNot) {
+                // Code for NonTerminal specified on line 339 of NewAwkParser.jjt
+                pushOntoCallStack("KlammerAffe", "NewAwkParser.jjt", 339, 6);
+                try {
+                    KlammerAffeRegex();
+                }
+                finally {
+                    popCallStack();
+                }
+                // Code for NonTerminal specified on line 339 of NewAwkParser.jjt
+                pushOntoCallStack("KlammerAffe", "NewAwkParser.jjt", 339, 25);
+                try {
+                    KlammerAffeAusdruck();
+                }
+                finally {
+                    popCallStack();
+                }
             }
-            else if (resetScanAhead(1)&&nextTokenType== TypeString) {
-                // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(TypeString);
-            }
-            else {
-                pushOntoCallStack("KlammerAffeRegex", "NewAwkParser.jjt", 332, 33);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_332$column_33, parsingStack);
-            }
-            // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-            consumeToken(Colon);
-            if (trace_enabled) LOGGER.info("Exiting normally from KlammerAffeRegex");
+            // Code for RegexpRef specified on line 340 of NewAwkParser.jjt
+            consumeToken(BlockZu);
+            if (trace_enabled) LOGGER.info("Exiting normally from KlammerAffe");
         }
         catch(ParseException e) {
             parseException18= e;
@@ -1699,7 +1692,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException18== null) {
-                    closeNodeScope(KlammerAffeRegex18, true);
+                    closeNodeScope(KlammerAffe18, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException18.getMessage());
@@ -1709,56 +1702,54 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 334
-    final public void KlammerAffeAusdruck() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 334 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 342
+    final public void KlammerAffeRegex() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 342 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean KlammerAffeAusdruck19forced= false;
-        KlammerAffeAusdruck KlammerAffeAusdruck19= null;
+        boolean KlammerAffeRegex19forced= false;
+        KlammerAffeRegex KlammerAffeRegex19= null;
         if (buildTree) {
-            KlammerAffeAusdruck19= new KlammerAffeAusdruck();
-            openNodeScope(KlammerAffeAusdruck19);
+            KlammerAffeRegex19= new KlammerAffeRegex();
+            openNodeScope(KlammerAffeRegex19);
         }
         ParseException parseException19= null;
         int callStackSize19= parsingStack.size();
         try {
-            // Code for RegexpRef specified on line 336 of NewAwkParser.jjt
-            consumeToken(BlockAuf);
-            // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
-            consumeToken(RETURN);
-            // Code for ZeroOrOne specified on line 337 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_337$column_14.contains(nextTokenType)) {
-                // Code for ExpansionChoice specified on line 337 of NewAwkParser.jjt
-                if (resetScanAhead(1)&&nextTokenType== THIS) {
-                    // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
-                    consumeToken(THIS);
-                }
-                else if (resetScanAhead(1)&&nextTokenType== IntegerLiteral) {
-                    // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
-                    consumeToken(IntegerLiteral);
-                }
-                else if (resetScanAhead(1)&&nextTokenType== DoubleLiteral) {
-                    // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
-                    consumeToken(DoubleLiteral);
-                }
-                else if (resetScanAhead(1)&&nextTokenType== CharLiteral) {
-                    // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
-                    consumeToken(CharLiteral);
-                }
-                else if (resetScanAhead(1)&&nextTokenType== BooleanLiteral) {
-                    // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
-                    consumeToken(BooleanLiteral);
-                }
-                else {
-                    pushOntoCallStack("KlammerAffeAusdruck", "NewAwkParser.jjt", 337, 16);
-                    throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_337$column_16, parsingStack);
-                }
+            // Code for ZeroOrOne specified on line 344 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== ConditionalNot) {
+                // Code for RegexpRef specified on line 344 of NewAwkParser.jjt
+                consumeToken(ConditionalNot);
             }
-            // Code for RegexpRef specified on line 337 of NewAwkParser.jjt
-            consumeToken(SEMICOLON);
-            // Code for RegexpRef specified on line 338 of NewAwkParser.jjt
-            consumeToken(BlockZu);
-            if (trace_enabled) LOGGER.info("Exiting normally from KlammerAffeAusdruck");
+            // Code for RegexpRef specified on line 344 of NewAwkParser.jjt
+            consumeToken(Colon);
+            // Code for ExpansionChoice specified on line 344 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== INTEGER_CLASS) {
+                // Code for RegexpRef specified on line 344 of NewAwkParser.jjt
+                consumeToken(INTEGER_CLASS);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== DOUBLE_CLASS) {
+                // Code for RegexpRef specified on line 344 of NewAwkParser.jjt
+                consumeToken(DOUBLE_CLASS);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== CHAR_CLASS) {
+                // Code for RegexpRef specified on line 344 of NewAwkParser.jjt
+                consumeToken(CHAR_CLASS);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== BOOLEAN_CLASS) {
+                // Code for RegexpRef specified on line 344 of NewAwkParser.jjt
+                consumeToken(BOOLEAN_CLASS);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== TypeString) {
+                // Code for RegexpRef specified on line 344 of NewAwkParser.jjt
+                consumeToken(TypeString);
+            }
+            else {
+                pushOntoCallStack("KlammerAffeRegex", "NewAwkParser.jjt", 344, 33);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_344$column_33, parsingStack);
+            }
+            // Code for RegexpRef specified on line 344 of NewAwkParser.jjt
+            consumeToken(Colon);
+            if (trace_enabled) LOGGER.info("Exiting normally from KlammerAffeRegex");
         }
         catch(ParseException e) {
             parseException19= e;
@@ -1770,7 +1761,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException19== null) {
-                    closeNodeScope(KlammerAffeAusdruck19, true);
+                    closeNodeScope(KlammerAffeRegex19, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException19.getMessage());
@@ -1780,47 +1771,56 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    // NewAwkParser.jjt, line 340
-    final public void PrintStmnt() throws ParseException {
-        if (trace_enabled) LOGGER.info("Entering production defined on line 340 of NewAwkParser.jjt");
+    // NewAwkParser.jjt, line 346
+    final public void KlammerAffeAusdruck() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 346 of NewAwkParser.jjt");
         if (cancelled) throw new CancellationException();
-        boolean PrintStmnt20forced= false;
-        PrintStmnt PrintStmnt20= null;
+        boolean KlammerAffeAusdruck20forced= false;
+        KlammerAffeAusdruck KlammerAffeAusdruck20= null;
         if (buildTree) {
-            PrintStmnt20= new PrintStmnt();
-            openNodeScope(PrintStmnt20);
+            KlammerAffeAusdruck20= new KlammerAffeAusdruck();
+            openNodeScope(KlammerAffeAusdruck20);
         }
         ParseException parseException20= null;
         int callStackSize20= parsingStack.size();
         try {
-            // Code for ExpansionChoice specified on line 343 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== PRINT_LINE) {
-                // Code for RegexpRef specified on line 343 of NewAwkParser.jjt
-                consumeToken(PRINT_LINE);
+            // Code for RegexpRef specified on line 348 of NewAwkParser.jjt
+            consumeToken(BlockAuf);
+            // Code for RegexpRef specified on line 349 of NewAwkParser.jjt
+            consumeToken(RETURN);
+            // Code for ZeroOrOne specified on line 349 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&first_set$NewAwkParser_jjt$line_349$column_14.contains(nextTokenType)) {
+                // Code for ExpansionChoice specified on line 349 of NewAwkParser.jjt
+                if (resetScanAhead(1)&&nextTokenType== THIS) {
+                    // Code for RegexpRef specified on line 349 of NewAwkParser.jjt
+                    consumeToken(THIS);
+                }
+                else if (resetScanAhead(1)&&nextTokenType== IntegerLiteral) {
+                    // Code for RegexpRef specified on line 349 of NewAwkParser.jjt
+                    consumeToken(IntegerLiteral);
+                }
+                else if (resetScanAhead(1)&&nextTokenType== DoubleLiteral) {
+                    // Code for RegexpRef specified on line 349 of NewAwkParser.jjt
+                    consumeToken(DoubleLiteral);
+                }
+                else if (resetScanAhead(1)&&nextTokenType== CharLiteral) {
+                    // Code for RegexpRef specified on line 349 of NewAwkParser.jjt
+                    consumeToken(CharLiteral);
+                }
+                else if (resetScanAhead(1)&&nextTokenType== BooleanLiteral) {
+                    // Code for RegexpRef specified on line 349 of NewAwkParser.jjt
+                    consumeToken(BooleanLiteral);
+                }
+                else {
+                    pushOntoCallStack("KlammerAffeAusdruck", "NewAwkParser.jjt", 349, 16);
+                    throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_349$column_16, parsingStack);
+                }
             }
-            else if (resetScanAhead(1)&&nextTokenType== PRINT) {
-                // Code for RegexpRef specified on line 343 of NewAwkParser.jjt
-                consumeToken(PRINT);
-            }
-            else {
-                pushOntoCallStack("PrintStmnt", "NewAwkParser.jjt", 343, 4);
-                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_343$column_4, parsingStack);
-            }
-            // Code for RegexpRef specified on line 343 of NewAwkParser.jjt
-            consumeToken(KlammerAuf);
-            // Code for NonTerminal specified on line 343 of NewAwkParser.jjt
-            pushOntoCallStack("PrintStmnt", "NewAwkParser.jjt", 343, 42);
-            try {
-                Expr();
-            }
-            finally {
-                popCallStack();
-            }
-            // Code for RegexpRef specified on line 343 of NewAwkParser.jjt
-            consumeToken(KlammerZu);
-            // Code for RegexpRef specified on line 343 of NewAwkParser.jjt
+            // Code for RegexpRef specified on line 349 of NewAwkParser.jjt
             consumeToken(SEMICOLON);
-            if (trace_enabled) LOGGER.info("Exiting normally from PrintStmnt");
+            // Code for RegexpRef specified on line 350 of NewAwkParser.jjt
+            consumeToken(BlockZu);
+            if (trace_enabled) LOGGER.info("Exiting normally from KlammerAffeAusdruck");
         }
         catch(ParseException e) {
             parseException20= e;
@@ -1832,7 +1832,7 @@ public class NewAwkParser implements NewAwkConstants {
             }
             if (buildTree) {
                 if (parseException20== null) {
-                    closeNodeScope(PrintStmnt20, true);
+                    closeNodeScope(KlammerAffeAusdruck20, true);
                 }
                 else {
                     if (trace_enabled) LOGGER.warning("ParseException: "+parseException20.getMessage());
@@ -1842,29 +1842,89 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_202$column_6= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_202$column_36= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_208$column_7= EnumSet.of(PLUS, MINUS, ConditionalNot, RETURN, NullLiteral, IF, KlammerAuf, BlockAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, PRINT_LINE, PRINT);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_212$column_17$= EnumSet.of(PLUS, MINUS, ConditionalNot, RETURN, NullLiteral, IF, KlammerAuf, BlockAuf, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, PRINT_LINE, PRINT);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_212$column_17= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_212$column_34= EnumSet.of(PLUS, MINUS, ConditionalNot, RETURN, NullLiteral, IF, KlammerAuf, BlockAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, PRINT_LINE, PRINT);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_226$column_6$= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_226$column_6= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_228$column_5= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_261$column_11= EnumSet.of(NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_261$column_13= EnumSet.of(NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_265$column_17= EnumSet.of(PLUS, MINUS);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_269$column_14= EnumSet.of(MULTIPLICATION, DIVISION, MODULO);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_273$column_5= EnumSet.of(NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_273$column_15= EnumSet.of(PLUS, MINUS);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_284$column_9= EnumSet.of(NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_284$column_10= EnumSet.of(ID);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_296$column_5= EnumSet.of(PLUS, MINUS, ConditionalNot, NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_313$column_4= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_332$column_33= EnumSet.of(INTEGER_CLASS, DOUBLE_CLASS, CHAR_CLASS, BOOLEAN_CLASS, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_337$column_14= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_337$column_16= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_343$column_4= EnumSet.of(PRINT_LINE, PRINT);
+    // NewAwkParser.jjt, line 352
+    final public void PrintStmnt() throws ParseException {
+        if (trace_enabled) LOGGER.info("Entering production defined on line 352 of NewAwkParser.jjt");
+        if (cancelled) throw new CancellationException();
+        boolean PrintStmnt21forced= false;
+        PrintStmnt PrintStmnt21= null;
+        if (buildTree) {
+            PrintStmnt21= new PrintStmnt();
+            openNodeScope(PrintStmnt21);
+        }
+        ParseException parseException21= null;
+        int callStackSize21= parsingStack.size();
+        try {
+            // Code for ExpansionChoice specified on line 355 of NewAwkParser.jjt
+            if (resetScanAhead(1)&&nextTokenType== PRINT_LINE) {
+                // Code for RegexpRef specified on line 355 of NewAwkParser.jjt
+                consumeToken(PRINT_LINE);
+            }
+            else if (resetScanAhead(1)&&nextTokenType== PRINT) {
+                // Code for RegexpRef specified on line 355 of NewAwkParser.jjt
+                consumeToken(PRINT);
+            }
+            else {
+                pushOntoCallStack("PrintStmnt", "NewAwkParser.jjt", 355, 4);
+                throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_355$column_4, parsingStack);
+            }
+            // Code for RegexpRef specified on line 355 of NewAwkParser.jjt
+            consumeToken(KlammerAuf);
+            // Code for NonTerminal specified on line 355 of NewAwkParser.jjt
+            pushOntoCallStack("PrintStmnt", "NewAwkParser.jjt", 355, 42);
+            try {
+                Expr();
+            }
+            finally {
+                popCallStack();
+            }
+            // Code for RegexpRef specified on line 355 of NewAwkParser.jjt
+            consumeToken(KlammerZu);
+            // Code for RegexpRef specified on line 355 of NewAwkParser.jjt
+            consumeToken(SEMICOLON);
+            if (trace_enabled) LOGGER.info("Exiting normally from PrintStmnt");
+        }
+        catch(ParseException e) {
+            parseException21= e;
+            throw e;
+        }
+        finally {
+            if (parseException21== null) {
+                restoreCallStack(callStackSize21);
+            }
+            if (buildTree) {
+                if (parseException21== null) {
+                    closeNodeScope(PrintStmnt21, true);
+                }
+                else {
+                    if (trace_enabled) LOGGER.warning("ParseException: "+parseException21.getMessage());
+                    clearNodeScope();
+                }
+            }
+        }
+    }
+
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_202$column_6= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, ID);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_202$column_109= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_210$column_8= EnumSet.of(RETURN, IF, BlockAuf, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, ID, StringLiteral, PRINT_LINE, PRINT);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_222$column_16= EnumSet.of(RETURN, IF, BlockAuf, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, ID, StringLiteral, PRINT_LINE, PRINT);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_238$column_6$= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_238$column_6= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_241$column_5= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_273$column_11= EnumSet.of(NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_273$column_13= EnumSet.of(NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_277$column_17= EnumSet.of(PLUS, MINUS);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_281$column_14= EnumSet.of(MULTIPLICATION, DIVISION, MODULO);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_285$column_5= EnumSet.of(NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_285$column_15= EnumSet.of(PLUS, MINUS);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_296$column_9= EnumSet.of(NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_296$column_10= EnumSet.of(ID);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_308$column_5= EnumSet.of(PLUS, MINUS, ConditionalNot, NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_325$column_4= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_344$column_33= EnumSet.of(INTEGER_CLASS, DOUBLE_CLASS, CHAR_CLASS, BOOLEAN_CLASS, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_349$column_14= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_349$column_16= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_355$column_4= EnumSet.of(PRINT_LINE, PRINT);
     private final boolean scanToken(TokenType expectedType) {
         if (remainingLookahead<=0) return true;
         if (currentLookaheadToken.getNext()== null) {
@@ -1907,10 +1967,10 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_208$column_7() {
+    private final boolean check$NewAwkParser_jjt$line_202$column_36() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 208, 20);
-        if (!check$ExprStmnt()) {
+        pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 202, 49);
+        if (!check$Assignement()) {
             popLookaheadStack();
             return false;
         }
@@ -1918,9 +1978,64 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_282$column_6() {
+    private final boolean check$NewAwkParser_jjt$line_202$column_65() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 282, 19);
+        pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 202, 78);
+        if (!check$VariableDeclAndAssignement()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_213$column_8() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 213, 21);
+        if (!check$VariableDecl()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_214$column_8() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 214, 21);
+        if (!check$Assignement()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_215$column_8() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 215, 21);
+        if (!check$VariableDeclAndAssignement()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_217$column_8() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 217, 21);
+        if (!check$KlammerAffe()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_294$column_6() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 294, 19);
         if (!check$Cast()) {
             popLookaheadStack();
             return false;
@@ -1929,9 +2044,9 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_284$column_10() {
+    private final boolean check$NewAwkParser_jjt$line_296$column_10() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 284, 23);
+        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 296, 23);
         if (!check$MethodCall()) {
             popLookaheadStack();
             return false;
@@ -1942,7 +2057,7 @@ public class NewAwkParser implements NewAwkConstants {
 
     private final boolean check$VariableDecl() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("VariableDecl", "NewAwkParser.jjt", 216, 5);
+        pushOntoLookaheadStack("VariableDecl", "NewAwkParser.jjt", 230, 5);
         stopAtScanLimit= false;
         if (!check$Type()) {
             popLookaheadStack();
@@ -1950,29 +2065,49 @@ public class NewAwkParser implements NewAwkConstants {
         }
         popLookaheadStack();
         if (!scanToken(ID)) return false;
-        Token token21= currentLookaheadToken;
-        if (!(check$NewAwkParser_jjt$line_217$column_6())) currentLookaheadToken= token21;
         if (!scanToken(SEMICOLON)) return false;
         return true;
     }
 
-    private final boolean check$ExprStmnt() {
+    private final boolean check$Assignement() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("ExprStmnt", "NewAwkParser.jjt", 234, 5);
-        stopAtScanLimit= false;
-        if (!check$Expr()) {
+        if (!scanToken(ID)) return false;
+        if (!scanToken(Zuweisung)) return false;
+        pushOntoLookaheadStack("Assignement", "NewAwkParser.jjt", 226, 22);
+        if (!check$ExprStmnt()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        if (!scanToken(SEMICOLON)) return false;
+        return true;
+    }
+
+    private final boolean check$VariableDeclAndAssignement() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("VariableDeclAndAssignement", "NewAwkParser.jjt", 234, 5);
+        stopAtScanLimit= false;
+        if (!check$Type()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(ID)) return false;
+        if (!scanToken(Zuweisung)) return false;
+        return true;
+    }
+
+    private final boolean check$KlammerAffe() {
+        if (remainingLookahead<=0) return true;
+        if (!scanToken(StringLiteral)) return false;
+        if (!scanToken(AT)) return false;
+        if (!scanToken(BlockAuf)) return false;
         return true;
     }
 
     private final boolean check$Cast() {
         if (remainingLookahead<=0) return true;
         if (!scanToken(KlammerAuf)) return false;
-        pushOntoLookaheadStack("Cast", "NewAwkParser.jjt", 291, 18);
+        pushOntoLookaheadStack("Cast", "NewAwkParser.jjt", 303, 18);
         stopAtScanLimit= false;
         if (!check$Type()) {
             popLookaheadStack();
@@ -1991,17 +2126,17 @@ public class NewAwkParser implements NewAwkConstants {
 
     private final boolean check$Type() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_313$column_4)) return false;
+        if (!scanToken(first_set$NewAwkParser_jjt$line_325$column_4)) return false;
         Token token22= currentLookaheadToken;
-        if (!(check$NewAwkParser_jjt$line_317$column_4())) currentLookaheadToken= token22;
+        if (!(check$NewAwkParser_jjt$line_329$column_4())) currentLookaheadToken= token22;
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_217$column_6() {
+    private final boolean check$ExprStmnt() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("VariableDecl", "NewAwkParser.jjt", 217, 6);
+        pushOntoLookaheadStack("ExprStmnt", "NewAwkParser.jjt", 250, 5);
         stopAtScanLimit= false;
-        if (!check$Assignement()) {
+        if (!check$Expr()) {
             popLookaheadStack();
             return false;
         }
@@ -2009,36 +2144,17 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$Expr() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Expr", "NewAwkParser.jjt", 242, 5);
-        if (!check$LogicalOrExpr()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token23= currentLookaheadToken;
-            if (!(check$NewAwkParser_jjt$line_242$column_23())) {
-                currentLookaheadToken= token23;
-                break;
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_317$column_4() {
+    private final boolean check$NewAwkParser_jjt$line_329$column_4() {
         if (remainingLookahead<=0) return true;
         if (!scanToken(ArrayAuf)) return false;
         if (!scanToken(ArrayZu)) return false;
         return true;
     }
 
-    private final boolean check$Assignement() {
+    private final boolean check$Expr() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(Zuweisung)) return false;
-        pushOntoLookaheadStack("Assignement", "NewAwkParser.jjt", 222, 19);
-        if (!check$Expr()) {
+        pushOntoLookaheadStack("Expr", "NewAwkParser.jjt", 254, 5);
+        if (!check$LogicalOrExpr()) {
             popLookaheadStack();
             return false;
         }
@@ -2048,57 +2164,31 @@ public class NewAwkParser implements NewAwkConstants {
 
     private final boolean check$LogicalOrExpr() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("LogicalOrExpr", "NewAwkParser.jjt", 249, 5);
+        pushOntoLookaheadStack("LogicalOrExpr", "NewAwkParser.jjt", 261, 5);
         if (!check$LogicalAndExpr()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token24= currentLookaheadToken;
-            if (!(check$NewAwkParser_jjt$line_249$column_23())) {
-                currentLookaheadToken= token24;
-                break;
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_242$column_23() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(Zuweisung)) return false;
         return true;
     }
 
     private final boolean check$LogicalAndExpr() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("LogicalAndExpr", "NewAwkParser.jjt", 253, 5);
+        pushOntoLookaheadStack("LogicalAndExpr", "NewAwkParser.jjt", 265, 5);
         if (!check$LogicalNotExpr()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token25= currentLookaheadToken;
-            if (!(check$NewAwkParser_jjt$line_253$column_23())) {
-                currentLookaheadToken= token25;
-                break;
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_249$column_23() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(ConditionalOr)) return false;
         return true;
     }
 
     private final boolean check$LogicalNotExpr() {
         if (remainingLookahead<=0) return true;
-        Token token26= currentLookaheadToken;
-        if (!(scanToken(ConditionalNot))) currentLookaheadToken= token26;
-        pushOntoLookaheadStack("LogicalNotExpr", "NewAwkParser.jjt", 257, 24);
+        Token token23= currentLookaheadToken;
+        if (!(scanToken(ConditionalNot))) currentLookaheadToken= token23;
+        pushOntoLookaheadStack("LogicalNotExpr", "NewAwkParser.jjt", 269, 24);
         if (!check$CompExpr()) {
             popLookaheadStack();
             return false;
@@ -2107,101 +2197,56 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_253$column_23() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(ConditionalAnd)) return false;
-        return true;
-    }
-
     private final boolean check$CompExpr() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("CompExpr", "NewAwkParser.jjt", 261, 5);
+        pushOntoLookaheadStack("CompExpr", "NewAwkParser.jjt", 273, 5);
         if (!check$Sum()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token27= currentLookaheadToken;
-            if (!(check$NewAwkParser_jjt$line_261$column_12())) {
-                currentLookaheadToken= token27;
-                break;
-            }
-        }
         return true;
     }
 
     private final boolean check$Sum() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Sum", "NewAwkParser.jjt", 265, 5);
+        pushOntoLookaheadStack("Sum", "NewAwkParser.jjt", 277, 5);
         if (!check$Product()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token28= currentLookaheadToken;
-            if (!(check$NewAwkParser_jjt$line_265$column_16())) {
-                currentLookaheadToken= token28;
-                break;
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_261$column_12() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_261$column_13)) return false;
         return true;
     }
 
     private final boolean check$Product() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Product", "NewAwkParser.jjt", 269, 5);
+        pushOntoLookaheadStack("Product", "NewAwkParser.jjt", 281, 5);
         if (!check$Sign()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token29= currentLookaheadToken;
-            if (!(check$NewAwkParser_jjt$line_269$column_13())) {
-                currentLookaheadToken= token29;
-                break;
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_265$column_16() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_265$column_17)) return false;
         return true;
     }
 
     private final boolean check$Sign() {
         if (remainingLookahead<=0) return true;
-        Token token30= currentLookaheadToken;
-        int remainingLookahead30= remainingLookahead;
-        if (!(check$NewAwkParser_jjt$line_273$column_5())) {
-            currentLookaheadToken= token30;
-            remainingLookahead= remainingLookahead30;
-            if (!(check$NewAwkParser_jjt$line_273$column_14())) {
+        Token token24= currentLookaheadToken;
+        int remainingLookahead24= remainingLookahead;
+        if (!(check$NewAwkParser_jjt$line_285$column_5())) {
+            currentLookaheadToken= token24;
+            remainingLookahead= remainingLookahead24;
+            if (!(check$NewAwkParser_jjt$line_285$column_14())) {
                 return false;
             }
         }
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_269$column_13() {
+    private final boolean check$NewAwkParser_jjt$line_285$column_5() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_269$column_14)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_273$column_5() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Sign", "NewAwkParser.jjt", 273, 5);
+        pushOntoLookaheadStack("Sign", "NewAwkParser.jjt", 285, 5);
         if (!check$Atom()) {
             popLookaheadStack();
             return false;
@@ -2210,45 +2255,39 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_273$column_14() {
+    private final boolean check$NewAwkParser_jjt$line_285$column_14() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_273$column_15)) return false;
-        pushOntoLookaheadStack("Sign", "NewAwkParser.jjt", 273, 34);
-        if (!check$Atom()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
+        if (!scanToken(first_set$NewAwkParser_jjt$line_285$column_15)) return false;
         return true;
     }
 
     private final boolean check$Atom() {
         if (remainingLookahead<=0) return true;
-        Token token31= currentLookaheadToken;
-        if (!(check$NewAwkParser_jjt$line_282$column_6())) currentLookaheadToken= token31;
-        Token token32= currentLookaheadToken;
-        int remainingLookahead32= remainingLookahead;
-        if (!(check$NewAwkParser_jjt$line_284$column_9())) {
-            currentLookaheadToken= token32;
-            remainingLookahead= remainingLookahead32;
-            if (!(check$NewAwkParser_jjt$line_285$column_11())) {
-                currentLookaheadToken= token32;
-                remainingLookahead= remainingLookahead32;
+        Token token25= currentLookaheadToken;
+        if (!(check$NewAwkParser_jjt$line_294$column_6())) currentLookaheadToken= token25;
+        Token token26= currentLookaheadToken;
+        int remainingLookahead26= remainingLookahead;
+        if (!(check$NewAwkParser_jjt$line_296$column_9())) {
+            currentLookaheadToken= token26;
+            remainingLookahead= remainingLookahead26;
+            if (!(check$NewAwkParser_jjt$line_297$column_11())) {
+                currentLookaheadToken= token26;
+                remainingLookahead= remainingLookahead26;
                 if (!(scanToken(BooleanLiteral))) {
-                    currentLookaheadToken= token32;
-                    remainingLookahead= remainingLookahead32;
+                    currentLookaheadToken= token26;
+                    remainingLookahead= remainingLookahead26;
                     if (!(scanToken(IntegerLiteral))) {
-                        currentLookaheadToken= token32;
-                        remainingLookahead= remainingLookahead32;
+                        currentLookaheadToken= token26;
+                        remainingLookahead= remainingLookahead26;
                         if (!(scanToken(DoubleLiteral))) {
-                            currentLookaheadToken= token32;
-                            remainingLookahead= remainingLookahead32;
+                            currentLookaheadToken= token26;
+                            remainingLookahead= remainingLookahead26;
                             if (!(scanToken(StringLiteral))) {
-                                currentLookaheadToken= token32;
-                                remainingLookahead= remainingLookahead32;
+                                currentLookaheadToken= token26;
+                                remainingLookahead= remainingLookahead26;
                                 if (!(scanToken(CharLiteral))) {
-                                    currentLookaheadToken= token32;
-                                    remainingLookahead= remainingLookahead32;
+                                    currentLookaheadToken= token26;
+                                    remainingLookahead= remainingLookahead26;
                                     if (!(scanToken(NullLiteral))) {
                                         return false;
                                     }
@@ -2262,49 +2301,23 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_284$column_9() {
+    private final boolean check$NewAwkParser_jjt$line_296$column_9() {
         if (remainingLookahead<=0) return true;
-        Token token33= currentLookaheadToken;
-        int remainingLookahead33= remainingLookahead;
-        if (!(check$NewAwkParser_jjt$line_284$column_10())) {
-            currentLookaheadToken= token33;
-            remainingLookahead= remainingLookahead33;
+        Token token27= currentLookaheadToken;
+        int remainingLookahead27= remainingLookahead;
+        if (!(check$NewAwkParser_jjt$line_296$column_10())) {
+            currentLookaheadToken= token27;
+            remainingLookahead= remainingLookahead27;
             if (!(scanToken(ID))) {
                 return false;
             }
         }
-        Token token34= currentLookaheadToken;
-        if (!(check$NewAwkParser_jjt$line_284$column_58())) currentLookaheadToken= token34;
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_285$column_11() {
+    private final boolean check$NewAwkParser_jjt$line_297$column_11() {
         if (remainingLookahead<=0) return true;
         if (!scanToken(KlammerAuf)) return false;
-        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 285, 24);
-        stopAtScanLimit= false;
-        if (!check$Expr()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_284$column_58() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 284, 58);
-        if (!check$ArrayAccess()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$ArrayAccess() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(ArrayAuf)) return false;
         return true;
     }
 
