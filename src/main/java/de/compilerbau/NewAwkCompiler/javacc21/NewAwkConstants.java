@@ -6,7 +6,7 @@ package de.compilerbau.NewAwkCompiler.javacc21;
  */
 public interface NewAwkConstants {
     public enum TokenType {
-        EOF, WHITESPACE, TAB, NEW_LINE, CARRIAGE_RETURN, PLUS, MINUS, MULTIPLICATION, DIVISION, MODULO, Zuweisung, EQUAL, NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER, Colon, ConditionalAnd, ConditionalOr, ConditionalNot, Exponentiation, RETURN, VOID, NullLiteral, IF, ELSE, THIS, INTEGER, DOUBLE, CHAR, BOOLEAN, KlammerAuf, KlammerZu, BlockAuf, BlockZu, ArrayAuf, ArrayZu, SEMICOLON, COMMA, DOT, Apostrophe, AT, IntType, DoubleType, CharType, BooleanType, StringType, LETTER, DIGIT, EXPO, TRUE, FALSE, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, STRING_CONTENT, PRINT_LINE, PRINT, LENGTH, INVALID
+        EOF, WHITESPACE, TAB, NEW_LINE, CARRIAGE_RETURN, PLUS, MINUS, MULTIPLICATION, DIVISION, MODULO, Zuweisung, EQUAL, NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER, Colon, ConditionalAnd, ConditionalOr, ConditionalNot, Exponentiation, RETURN, VOID, NullLiteral, IF, ELSE, THIS, INTEGER_CLASS, DOUBLE_CLASS, CHAR_CLASS, BOOLEAN_CLASS, KlammerAuf, KlammerZu, BlockAuf, BlockZu, ArrayAuf, ArrayZu, SEMICOLON, COMMA, DOT, Apostrophe, AT, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, LETTER, DIGIT, EXPO, TRUE, FALSE, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, STRING_CONTENT, PRINT_LINE, PRINT, LENGTH, INVALID
     }
     /**
    * Lexical States

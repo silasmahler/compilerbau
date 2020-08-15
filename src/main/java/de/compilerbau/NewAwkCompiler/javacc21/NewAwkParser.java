@@ -1457,25 +1457,25 @@ public class NewAwkParser implements NewAwkConstants {
         Token t;
         try {
             // Code for ExpansionChoice specified on line 313 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== IntType) {
+            if (resetScanAhead(1)&&nextTokenType== TypeInt) {
                 // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(IntType);
+                t= consumeToken(TypeInt);
             }
-            else if (resetScanAhead(1)&&nextTokenType== DoubleType) {
+            else if (resetScanAhead(1)&&nextTokenType== TypeDouble) {
                 // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(DoubleType);
+                t= consumeToken(TypeDouble);
             }
-            else if (resetScanAhead(1)&&nextTokenType== CharType) {
+            else if (resetScanAhead(1)&&nextTokenType== TypeChar) {
                 // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(CharType);
+                t= consumeToken(TypeChar);
             }
-            else if (resetScanAhead(1)&&nextTokenType== BooleanType) {
+            else if (resetScanAhead(1)&&nextTokenType== TypeBoolean) {
                 // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(BooleanType);
+                t= consumeToken(TypeBoolean);
             }
-            else if (resetScanAhead(1)&&nextTokenType== StringType) {
+            else if (resetScanAhead(1)&&nextTokenType== TypeString) {
                 // Code for RegexpRef specified on line 313 of NewAwkParser.jjt
-                t= consumeToken(StringType);
+                t= consumeToken(TypeString);
             }
             else {
                 pushOntoCallStack("Type", "NewAwkParser.jjt", 313, 4);
@@ -1661,25 +1661,25 @@ public class NewAwkParser implements NewAwkConstants {
             // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
             consumeToken(Colon);
             // Code for ExpansionChoice specified on line 332 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== INTEGER) {
+            if (resetScanAhead(1)&&nextTokenType== INTEGER_CLASS) {
                 // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(INTEGER);
+                consumeToken(INTEGER_CLASS);
             }
-            else if (resetScanAhead(1)&&nextTokenType== DOUBLE) {
+            else if (resetScanAhead(1)&&nextTokenType== DOUBLE_CLASS) {
                 // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(DOUBLE);
+                consumeToken(DOUBLE_CLASS);
             }
-            else if (resetScanAhead(1)&&nextTokenType== CHAR) {
+            else if (resetScanAhead(1)&&nextTokenType== CHAR_CLASS) {
                 // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(CHAR);
+                consumeToken(CHAR_CLASS);
             }
-            else if (resetScanAhead(1)&&nextTokenType== BOOLEAN) {
+            else if (resetScanAhead(1)&&nextTokenType== BOOLEAN_CLASS) {
                 // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(BOOLEAN);
+                consumeToken(BOOLEAN_CLASS);
             }
-            else if (resetScanAhead(1)&&nextTokenType== StringType) {
+            else if (resetScanAhead(1)&&nextTokenType== TypeString) {
                 // Code for RegexpRef specified on line 332 of NewAwkParser.jjt
-                consumeToken(StringType);
+                consumeToken(TypeString);
             }
             else {
                 pushOntoCallStack("KlammerAffeRegex", "NewAwkParser.jjt", 332, 33);
@@ -1842,15 +1842,15 @@ public class NewAwkParser implements NewAwkConstants {
         }
     }
 
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_202$column_6= EnumSet.of(VOID, IntType, DoubleType, CharType, BooleanType, StringType);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_202$column_36= EnumSet.of(VOID, IntType, DoubleType, CharType, BooleanType, StringType);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_202$column_6= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_202$column_36= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_208$column_7= EnumSet.of(PLUS, MINUS, ConditionalNot, RETURN, NullLiteral, IF, KlammerAuf, BlockAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, PRINT_LINE, PRINT);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_212$column_17$= EnumSet.of(PLUS, MINUS, ConditionalNot, RETURN, NullLiteral, IF, KlammerAuf, BlockAuf, IntType, DoubleType, CharType, BooleanType, StringType, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, PRINT_LINE, PRINT);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_212$column_17= EnumSet.of(IntType, DoubleType, CharType, BooleanType, StringType);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_212$column_17$= EnumSet.of(PLUS, MINUS, ConditionalNot, RETURN, NullLiteral, IF, KlammerAuf, BlockAuf, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, PRINT_LINE, PRINT);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_212$column_17= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_212$column_34= EnumSet.of(PLUS, MINUS, ConditionalNot, RETURN, NullLiteral, IF, KlammerAuf, BlockAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, PRINT_LINE, PRINT);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_226$column_6$= EnumSet.of(VOID, IntType, DoubleType, CharType, BooleanType, StringType);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_226$column_6= EnumSet.of(IntType, DoubleType, CharType, BooleanType, StringType);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_228$column_5= EnumSet.of(IntType, DoubleType, CharType, BooleanType, StringType);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_226$column_6$= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_226$column_6= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_228$column_5= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_261$column_11= EnumSet.of(NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_261$column_13= EnumSet.of(NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_265$column_17= EnumSet.of(PLUS, MINUS);
@@ -1860,8 +1860,8 @@ public class NewAwkParser implements NewAwkConstants {
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_284$column_9= EnumSet.of(NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_284$column_10= EnumSet.of(ID);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_296$column_5= EnumSet.of(PLUS, MINUS, ConditionalNot, NullLiteral, KlammerAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_313$column_4= EnumSet.of(IntType, DoubleType, CharType, BooleanType, StringType);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_332$column_33= EnumSet.of(INTEGER, DOUBLE, CHAR, BOOLEAN, StringType);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_313$column_4= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_332$column_33= EnumSet.of(INTEGER_CLASS, DOUBLE_CLASS, CHAR_CLASS, BOOLEAN_CLASS, TypeString);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_337$column_14= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_337$column_16= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_343$column_4= EnumSet.of(PRINT_LINE, PRINT);

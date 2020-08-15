@@ -150,10 +150,10 @@ TOKEN : /* KEYWORDS */
 | <IF: "if">
 | <ELSE: "else">
 | <THIS: "this">
-| <INTEGER: "Integer">
-| <DOUBLE: "Double">
-| <CHAR: "Char">
-| <BOOLEAN: "Boolean">
+| <INTEGER_CLASS: "Integer">
+| <DOUBLE_CLASS: "Double">
+| <CHAR_CLASS: "Char">
+| <BOOLEAN_CLASS: "Boolean">
 }
 TOKEN : /* SEPARATORS */
 { <KlammerAuf: "(">
@@ -169,11 +169,11 @@ TOKEN : /* SEPARATORS */
 | <AT: "@">
 }
 TOKEN : /* BASIC */
-{ <IntType: "int">
-| <DoubleType: "double">
-| <CharType: "char">
-| <BooleanType: "boolean">
-| <StringType: "String">
+{ <TypeInt: "int">
+| <TypeDouble: "double">
+| <TypeChar: "char">
+| <TypeBoolean: "boolean">
+| <TypeString: "String">
 | <#LETTER: ["_","a"-"z","A"-"Z"]>
 | <#DIGIT: ["0"-"9"]>
 | <#EXPO: ["e","E"]("+"|"-")?(<DIGIT>)+>
@@ -310,7 +310,7 @@ void Type() #Type : {
     Token t;
 }
 {
-  (t=<IntType> | t=<DoubleType> | t=<CharType> | t=<BooleanType> | t=<StringType>)
+  (t=<TypeInt> | t=<TypeDouble> | t=<TypeChar> | t=<TypeBoolean> | t=<TypeString>)
   {
        jjtThis.type = t.getImage(); //assign String-Value to Type
   }
@@ -329,7 +329,7 @@ void KlammerAffe() #KlammerAffe : {}
 }
 void KlammerAffeRegex() #KlammerAffeRegex : {}
 {
-    [<ConditionalNot>] <Colon> (<INTEGER> | <DOUBLE> | <CHAR> | <BOOLEAN> | <StringType> ) <Colon>
+    [<ConditionalNot>] <Colon> (<INTEGER_CLASS> | <DOUBLE_CLASS> | <CHAR_CLASS> | <BOOLEAN_CLASS> | <TypeString> ) <Colon>
 }
 void KlammerAffeAusdruck() #KlammerAffeAusdruck : {}
 {

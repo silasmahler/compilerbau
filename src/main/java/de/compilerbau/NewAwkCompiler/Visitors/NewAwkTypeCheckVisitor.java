@@ -77,8 +77,22 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
 
     @Override
     public Object visit(Atom node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.Expr");
+        System.out.println("Enter TypeCheckVisitor: visit.Atom with: " + node.toString());
         data = node.childrenAccept(this, data);
+
+        switch (node.getChildCount()) {
+            case 0:
+                throw new TypeCheckingException("Atom has no children");
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:    throw new TypeCheckingException("Unknown Typechecking-Error");
+        }
+
         return data;    }
 
 
