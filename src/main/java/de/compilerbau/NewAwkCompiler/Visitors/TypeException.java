@@ -1,4 +1,4 @@
-package de.compilerbau.NewAwkCompiler;
+package de.compilerbau.NewAwkCompiler.Visitors;
 
 public class TypeException extends RuntimeException {
 

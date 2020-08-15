@@ -4,7 +4,7 @@ import de.compilerbau.NewAwkCompiler.javacc21.*;
 
 import java.util.List;
 
-public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
+public class NewAwkTypeCheckVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(BaseNode node, Object data) {
@@ -69,12 +69,7 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
         return data;
     }
 
-    @Override
-    public Object visit(IfStmnt node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.IfStmnt");
-        data = node.childrenAccept(this, data);
-        return data;
-    }
+
 
     @Override
     public Object visit(Expr node, Object data) {
