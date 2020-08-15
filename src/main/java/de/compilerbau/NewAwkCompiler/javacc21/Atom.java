@@ -7,7 +7,6 @@ package de.compilerbau.NewAwkCompiler.javacc21;
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class Atom extends BaseNode {
-    public Token castType = null;
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
@@ -16,7 +15,6 @@ public class Atom extends BaseNode {
     @Override
     public String toString() {
         return "Atom{" +
-                ", castType=" + castType +
                 ", parent=" + parent +
                 ", children=" + children +
                 '}';

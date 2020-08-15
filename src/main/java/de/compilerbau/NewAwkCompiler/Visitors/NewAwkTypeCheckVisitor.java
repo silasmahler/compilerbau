@@ -2,6 +2,8 @@ package de.compilerbau.NewAwkCompiler.Visitors;
 
 import de.compilerbau.NewAwkCompiler.javacc21.*;
 
+import java.util.List;
+
 public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
 
     @Override
@@ -77,20 +79,29 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
 
     @Override
     public Object visit(Atom node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.Atom with: " + node.toString());
+        System.out.println("Enter TypeCheckVisitor: visit.Atom");
         data = node.childrenAccept(this, data);
 
-        switch (node.getChildCount()) {
-            case 0:
-                throw new TypeCheckingException("Atom has no children");
-            case 1:
-
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            default:    throw new TypeCheckingException("Unknown Typechecking-Error");
+        int childCount = node.getChildCount();
+        //Error
+        if (childCount == 0) {
+            throw new TypeCheckingException("Atom has no children");
+        }
+        //Expression Terminal, no typecheck
+        else if (childCount == 1) {
+            Node n = node.getFirstChild();
+            System.out.println("Atom with content: " + n.toString() + " and class: " + n.getClass());
+        }
+        // Expression not Terminal
+        else if (childCount > 1) {
+            List<Node> children = node.children();
+            for (int i = 0; i < children.size(); i++) {
+                System.out.println(" --- Atom with content: " + children.get(i).toString() + " and class: " + children.get(i).getClass());
+            }
+        }
+        //Error
+        else {
+            throw new TypeCheckingException("Unknown Typechecking-Error");
         }
 
         return data;    }

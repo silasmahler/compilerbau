@@ -279,7 +279,7 @@ void Atom() #Atom : {
     Token t;
 }
 {
-    [LOOKAHEAD(2) Cast()] //Optional cast
+    [LOOKAHEAD(2) Cast()]
     (
         (LOOKAHEAD(2) MethodCall() | LOOKAHEAD(2) <ID>) [ArrayAccess()]
         | <KlammerAuf> Expr() <KlammerZu>
