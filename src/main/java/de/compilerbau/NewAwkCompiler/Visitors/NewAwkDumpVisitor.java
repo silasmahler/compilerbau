@@ -91,15 +91,6 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(Parameter node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
     public Object visit(ExprStmnt node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
@@ -127,69 +118,6 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(LogicalOrExpr node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
-    public Object visit(LogicalAndExpr node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
-    public Object visit(LogicalNotExpr node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
-    public Object visit(CompExpr node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
-    public Object visit(Sum node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
-    public Object visit(Product node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
-    public Object visit(Sign node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
     public Object visit(Atom node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
@@ -204,7 +132,8 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
-        return data;    }
+        return data;
+    }
 
     @Override
     public Object visit(MethodCall node, Object data) {
@@ -226,14 +155,6 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
 
     @Override
     public Object visit(ArrayLength node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;    }
-
-    @Override
-    public Object visit(ArgumentList node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);

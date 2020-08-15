@@ -60,14 +60,6 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
         data = node.childrenAccept(this, data);
         return data;
     }
-
-    @Override
-    public Object visit(Parameter node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.Parameter");
-        data = node.childrenAccept(this, data);
-        return data;
-    }
-
     @Override
     public Object visit(ExprStmnt node, Object data) {
         System.out.println("Enter TypeCheckVisitor: visit.ExprStmnt");
@@ -90,34 +82,13 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(LogicalOrExpr node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.LogicalOrExpr");
+    public Object visit(Atom node, Object data) {
+        System.out.println("Enter TypeCheckVisitor: visit.Expr");
         data = node.childrenAccept(this, data);
-        return data;
-    }
+        return data;    }
 
-    @Override
-    public Object visit(LogicalAndExpr node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.LogicalAndExpr");
-        data = node.childrenAccept(this, data);
-        return data;
-    }
 
-    @Override
-    public Object visit(LogicalNotExpr node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.LogicalNotExpr");
-        data = node.childrenAccept(this, data);
-        return data;
-    }
-
-    @Override
-    public Object visit(CompExpr node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.CompExpr");
-        data = node.childrenAccept(this, data);
-        return data;
-    }
-
-    @Override
+    /**@Override
     public Object visit(Sum node, Object data) {
         System.out.println("Enter TypeCheckVisitor: visit.Sum " + node.getBeginLine() + " " + node.getBeginColumn());
         data = node.childrenAccept(this, data);
@@ -132,20 +103,6 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
             System.out.println("Sum with possible products detected: " + s.toString());
         }
 
-        return data;
-    }
-
-    @Override
-    public Object visit(Product node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.Product");
-        data = node.childrenAccept(this, data);
-        return data;
-    }
-
-    @Override
-    public Object visit(Sign node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.Sign");
-        data = node.childrenAccept(this, data);
         return data;
     }
 
@@ -165,7 +122,7 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
         if (node.children().isEmpty()) {
             throw new TypeCheckingException("Atom has no children token.");
         } else if (node.children().size() == 1) {
-            /*switch (node.getFirstChild()) {
+             switch (node.getFirstChild()) {
                 case (node.getFirstChild() instanceof BooleanLiteral):
                     break;
                 case(node.getFirstChild() instanceof IntegerLiteral):
@@ -183,13 +140,13 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
                 default:
                     throw new TypeCheckingException("No possible type was detected.");
                     break;
-            }*/
+            }
         } else if (node.children().size() > 1) {
 
         }
 
         return data;
-    }
+    }*/
 
     @Override
     public Object visit(Cast node, Object data) {
@@ -215,13 +172,6 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
     @Override
     public Object visit(ArrayLength node, Object data) {
         System.out.println("Enter TypeCheckVisitor: visit.ArrayLength");
-        data = node.childrenAccept(this, data);
-        return data;
-    }
-
-    @Override
-    public Object visit(ArgumentList node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.ArgumentList");
         data = node.childrenAccept(this, data);
         return data;
     }
