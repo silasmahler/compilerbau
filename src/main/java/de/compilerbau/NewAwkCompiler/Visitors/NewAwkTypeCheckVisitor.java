@@ -55,12 +55,6 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
     }
 
     @Override
-    public Object visit(ParameterList node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.ParameterList");
-        data = node.childrenAccept(this, data);
-        return data;
-    }
-    @Override
     public Object visit(ExprStmnt node, Object data) {
         System.out.println("Enter TypeCheckVisitor: visit.ExprStmnt");
         data = node.childrenAccept(this, data);

@@ -223,11 +223,11 @@ void Assignement() #Assignement: {}
 }
 void MethodDecl() #MethodDecl : {}
 {
-    (Type() | <VOID>) <ID> <KlammerAuf> ParameterList() <KlammerZu> Block()
-}
-void ParameterList() #ParameterList : {}
-{
-    [Type() <ID> (<COMMA> Type() <ID>)*]
+    (Type() | <VOID>) <ID>
+     <KlammerAuf>
+    [Type() <ID> {/*Possible Parameter*/}
+    (<COMMA> Type() <ID> {/*More Parameters*/})*]
+     <KlammerZu> Block()
 }
 void ExprStmnt() #ExprStmnt : {}
 {
