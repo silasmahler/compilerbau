@@ -15,4 +15,8 @@ public class TypeString extends Token {
         super(type, image, fileLineMap);
     }
 
+    public boolean equals(Object obj) {
+        return (obj instanceof TypeString);
+    }
+
 }
