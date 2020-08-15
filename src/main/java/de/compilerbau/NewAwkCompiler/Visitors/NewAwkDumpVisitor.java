@@ -199,6 +199,14 @@ public class NewAwkDumpVisitor implements NewAwkParserVisitor {
     }
 
     @Override
+    public Object visit(Cast node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;    }
+
+    @Override
     public Object visit(MethodCall node, Object data) {
         System.out.println(indentString() + node);
         ++indent;

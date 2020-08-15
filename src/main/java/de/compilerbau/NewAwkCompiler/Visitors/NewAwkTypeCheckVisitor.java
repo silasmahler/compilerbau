@@ -107,10 +107,6 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
     public Object visit(LogicalNotExpr node, Object data) {
         System.out.println("Enter TypeCheckVisitor: visit.LogicalNotExpr");
         data = node.childrenAccept(this, data);
-        if(!data.equals(LogicalNotExpr.class)){
-            return NewAwkConstants.TokenType.ConditionalNot;
-        }
-
         return data;
     }
 
@@ -123,7 +119,8 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
 
     @Override
     public Object visit(Sum node, Object data) {
-        System.out.println("Enter TypeCheckVisitor: visit.Sum " + node.getBeginLine() + " " +  node.getBeginColumn());
+        System.out.println("Enter TypeCheckVisitor: visit.Sum " + node.getBeginLine() + " " + node.getBeginColumn());
+        data = node.childrenAccept(this, data);
 
         if (!(node instanceof Sum)) {
             throw new TypeCheckingException("Sum ");
@@ -132,13 +129,9 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
         double sum = 0.0;
         System.out.println("Test123: " + node.getChild(0));
         for (Product s : node.childrenOfType(Product.class)) {
-            System.out.println("Sum with possible products detected: " + s.toString() + "\n 444 " + s.getAttributeNames());
-
-
-            sum += Double.valueOf(s.toString());
+            System.out.println("Sum with possible products detected: " + s.toString());
         }
 
-        data = node.childrenAccept(this, data);
         return data;
     }
 
@@ -159,6 +152,48 @@ public class NewAwkTypeCheckVisitor implements NewAwkParserVisitor {
     @Override
     public Object visit(Atom node, Object data) {
         System.out.println("Enter TypeCheckVisitor: visit.Atom");
+        data = node.childrenAccept(this, data);
+
+        System.out.println("Atom found on Line: " + node.getBeginLine() + " - " + node.getEndLine() +
+                " and Column: " + node.getBeginColumn() + " - " + node.getEndColumn() +
+                " \n with Content: " + node.toString());
+
+        if (node.getFirstChild() instanceof Cast) {
+            //check right side for possibility to cast (e.g. double to int "yes", String to int "no")
+
+        }
+        if (node.children().isEmpty()) {
+            throw new TypeCheckingException("Atom has no children token.");
+        } else if (node.children().size() == 1) {
+            /*switch (node.getFirstChild()) {
+                case (node.getFirstChild() instanceof BooleanLiteral):
+                    break;
+                case(node.getFirstChild() instanceof IntegerLiteral):
+                    break;
+                case(node.getFirstChild() instanceof DoubleLiteral):
+                    break;
+                case(node.getFirstChild() instanceof StringLiteral):
+                    break;
+                case(node.getFirstChild() instanceof CharLiteral):
+                    break;
+                case(node.getFirstChild() instanceof NullLiteral):
+                    break;
+                case(node.getFirstChild() instanceof CharLiteral):
+                    break;
+                default:
+                    throw new TypeCheckingException("No possible type was detected.");
+                    break;
+            }*/
+        } else if (node.children().size() > 1) {
+
+        }
+
+        return data;
+    }
+
+    @Override
+    public Object visit(Cast node, Object data) {
+        System.out.println("Enter TypeCheckVisitor: visit.Cast");
         data = node.childrenAccept(this, data);
         return data;
     }

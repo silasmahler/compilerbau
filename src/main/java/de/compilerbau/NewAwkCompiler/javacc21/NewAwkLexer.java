@@ -14,7 +14,7 @@ import java.util.*;
 @SuppressWarnings("unused")
 public class NewAwkLexer implements NewAwkConstants {
     private static final Logger LOGGER= Logger.getLogger("NewAwkParser");
-    private boolean trace_enabled= true;
+    private boolean trace_enabled= false;
     private void setTracingEnabled(boolean trace_enabled) {
         this.trace_enabled= trace_enabled;
     }
@@ -254,43 +254,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private void jjCheckNAddStates(int start) {
         jjCheckNAdd(jjnextStates[start]);
         jjCheckNAdd(jjnextStates[start+1]);
-    }
-
-    protected static final int[][][] statesForState= {{{0}, {1}, {2}, {3, 7, 8, 11, 16, 18, 21, }, {4}, {5}, {6}, {3, 7, 8, 11, 16, 18, 21, }, {3, 7, 8, 11, 16, 18, 21, }, {9}, {10}, {3, 7, 8, 11, 16, 18, 21, }, {12}, {13}, {14}, {15}, {3, 7, 8, 11, 16, 18, 21, }, {17}, {3, 7, 8, 11, 16, 18, 21, }, {19}, {20}, {3, 7, 8, 11, 16, 18, 21, }, {22}, {23}, {24}, {25}, {26}, {27}, {28}, {29}, }, };
-    protected static final int[][] kindForState= {{53, 53, 53, 53, 53, 53, 53, 53, 54, 54, 54, 56, 56, 56, 56, 56, 57, 57, 58, 58, 58, 55, 55, 56, 56, 56, 56, 56, 56, 56}};
-    int kindCnt= 0;
-    protected final String jjKindsForBitVector(int i, long vec) {
-        String retVal= "";
-        if (i== 0) kindCnt= 0;
-        for (int j= 0; j<64; j++) {
-            if ((vec&(1L<<j))!=0L) {
-                if (kindCnt++> 0) retVal+=", ";
-                if (kindCnt%5== 0) retVal+="\n     ";
-                retVal+=tokenImage[i*64+j];
-            }
-        }
-        return retVal;
-    }
-
-    protected final String jjKindsForStateVector(int lexState, int[] vec, int start, int end) {
-        boolean[] kindDone= new boolean[63];
-        String retVal= "";
-        int cnt= 0;
-        for (int i= start; i<end; i++) {
-            if (vec[i]== -1) continue;
-            int[] stateSet= statesForState[lexicalState.ordinal()][vec[i]];
-            for (int j= 0; j<stateSet.length; j++) {
-                int state= stateSet[j];
-                if (!kindDone[kindForState[lexState][state]]) {
-                    kindDone[kindForState[lexState][state]]= true;
-                    if (cnt++> 0) retVal+=", ";
-                    if (cnt%5== 0) retVal+="\n     ";
-                    retVal+=tokenImage[kindForState[lexState][state]];
-                }
-            }
-        }
-        if (cnt== 0) return"{  }";
-        else return"{ "+retVal+" }";
     }
 
     private int jjStopAtPos(int pos, int kind) {
@@ -580,10 +543,6 @@ public class NewAwkLexer implements NewAwkConstants {
     }
 
     private int jjMoveStringLiteralDfa1(long active0) {
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -638,10 +597,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa2(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(0, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -684,10 +639,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa3(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(1, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -737,10 +688,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa4(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(2, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -776,10 +723,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa5(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(3, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -819,10 +762,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa6(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(4, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -857,10 +796,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa7(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(5, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -889,10 +824,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa8(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(6, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -918,10 +849,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa9(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(7, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -947,10 +874,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa10(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(8, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -976,10 +899,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa11(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(9, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -1005,10 +924,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa12(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(10, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -1034,10 +949,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa13(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(11, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -1063,10 +974,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa14(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(12, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -1092,10 +999,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa15(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(13, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -1125,10 +1028,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa16(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(14, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -1154,10 +1053,6 @@ public class NewAwkLexer implements NewAwkConstants {
     private int jjMoveStringLiteralDfa17(long old0, long active0) {
         active0= active0&old0;
         if ((active0)== 0L) return jjStartNfa(15, old0);
-        if (trace_enabled&&jjmatchedKind!=0&&jjmatchedKind!=0x7fffffff) {
-            LOGGER.info("    Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
-        }
-        if (trace_enabled) LOGGER.info("   Possible string literal matches : { "+jjKindsForBitVector(0, active0)+" } ");
         int retval= input_stream.readChar();
         if (retval>=0) {
             curChar= (char) retval;
@@ -1186,8 +1081,6 @@ public class NewAwkLexer implements NewAwkConstants {
         jjnewStateCnt= 30;
         int i= 1;
         jjstateSet[0]= startState;
-        if (trace_enabled) LOGGER.info("   Starting NFA to match one of : "+jjKindsForStateVector(lexicalState.ordinal(), jjstateSet, 0, 1));
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") "+"at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         int kind= 0x7fffffff;
         while (true) {
             if (++jjround== 0x7fffffff) {
@@ -1375,7 +1268,6 @@ public class NewAwkLexer implements NewAwkConstants {
                 if (trace_enabled) LOGGER.info("   Currently matched the first "+(jjmatchedPos+1)+" characters as a "+tokenImage[jjmatchedKind]+" token.");
             }
             if ((i= jjnewStateCnt)== (startsAt= 30-(jjnewStateCnt= startsAt))) return curPos;
-            if (trace_enabled) LOGGER.info("   Possible kinds of longer matches : "+jjKindsForStateVector(lexicalState.ordinal(), jjstateSet, startsAt, i));
             int retval= input_stream.readChar();
             if (retval>=0) {
                 curChar= (char) retval;

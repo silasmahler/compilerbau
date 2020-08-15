@@ -22,6 +22,7 @@ public interface NewAwkParserVisitor {
     Object visit(Product node, Object data); 
     Object visit(Sign node, Object data); 
     Object visit(Atom node, Object data); 
+    Object visit(Cast node, Object data); 
     Object visit(MethodCall node, Object data); 
     Object visit(ArrayAccess node, Object data); 
     Object visit(ArrayLength node, Object data); 
