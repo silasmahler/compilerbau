@@ -219,7 +219,7 @@ void VariableDecl() #VariableDecl : {}
 }
 void Assignement() #Assignement: {}
 {
-      <Zuweisung> (<ID> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanLiteral> | <StringLiteral> | <NullLiteral> )
+      <Zuweisung> Expr()
 }
 void MethodDecl() #MethodDecl : {}
 {
@@ -245,6 +245,9 @@ void Expr() #Expr : {}
 {
     LogicalOrExpr() ( <Zuweisung> LogicalOrExpr())*
 }
+/**
+* OPERATORs (Nodes not in AST becuase precedence comes from nesting order)
+*/
 void LogicalOrExpr() #void : {}
 {
     LogicalAndExpr() (<ConditionalOr> LogicalAndExpr())*
@@ -273,7 +276,10 @@ void Sign() #void : {}
 {
     Atom() | (<PLUS> | <MINUS> ) Atom()
 }
-void Atom() #void : {
+/**
+* OPERATORs end -------------
+*/
+void Atom() #Atom : {
     Token t;
 }
 {
