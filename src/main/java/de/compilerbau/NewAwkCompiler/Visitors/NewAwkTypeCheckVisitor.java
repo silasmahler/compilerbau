@@ -69,8 +69,6 @@ public class NewAwkTypeCheckVisitor extends VisitorAdapter {
         return data;
     }
 
-
-
     @Override
     public Object visit(Expr node, Object data) {
         System.out.println("Enter TypeCheckVisitor: visit.Expr");

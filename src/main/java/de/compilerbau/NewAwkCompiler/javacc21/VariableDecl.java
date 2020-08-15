@@ -8,7 +8,7 @@ import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*
 @SuppressWarnings("unused")
 public class VariableDecl extends BaseNode {
 
-    public boolean andAssignement = false;
+    public String id = "";
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);

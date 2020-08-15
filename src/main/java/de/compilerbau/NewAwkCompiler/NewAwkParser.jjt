@@ -10,7 +10,7 @@ PARSER_BEGIN(NewAwkParser)
 
 import de.compilerbau.NewAwkCompiler.Visitors.NewAwkDumpVisitor;
 import de.compilerbau.NewAwkCompiler.Visitors.NewAwkTypeCheckVisitor;
-import de.compilerbau.NewAwkCompiler.javacc21.*;
+import de.compilerbau.NewAwkCompiler.Visitors.SymbolTableBuilderVisitor;import de.compilerbau.NewAwkCompiler.javacc21.*;
 import java.io.*;
 import java.util.*;
 
@@ -83,10 +83,12 @@ public class NewAwkParser {
                  Nodes.dump(root, ">");
                  NewAwkDumpVisitor newAwkDumpVisitor = new NewAwkDumpVisitor();
                  NewAwkTypeCheckVisitor newAwkTypeCheckVisitor = new NewAwkTypeCheckVisitor();
+                 SymbolTableBuilderVisitor symbolTableBuilderVisitor = new SymbolTableBuilderVisitor();
                  if(root instanceof CompilationUnit) {
                      System.out.println("Entering Visitors...");
                      //((CompilationUnit) root).jjtAccept(newAwkDumpVisitor, null);
-                     ((CompilationUnit) root).jjtAccept(newAwkTypeCheckVisitor, null);
+                     ((CompilationUnit) root).jjtAccept(symbolTableBuilderVisitor, null);
+                     //((CompilationUnit) root).jjtAccept(newAwkTypeCheckVisitor, null);
                  }
              }
         }
@@ -225,9 +227,12 @@ void Assignement() #Assignement: {}
 {
     <ID> <Zuweisung> ExprStmnt()
 }
-void VariableDecl() #VariableDecl : {}
+void VariableDecl() #VariableDecl : {
+ Token t;
+}
 {
-    Type() <ID> <SEMICOLON>
+    Type() t=<ID> <SEMICOLON>
+      { jjtThis.id = t.getImage();}
 }
 void VariableDeclAndAssignement() #VariableDeclAndAssignement : {}
 {
