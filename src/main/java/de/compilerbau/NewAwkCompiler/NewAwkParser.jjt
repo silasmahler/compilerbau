@@ -229,6 +229,7 @@ void Assignement() #Assignement: {}
 }
 void VariableDecl() #VariableDecl : {
  Token t;
+ Node n;
 }
 {
     Type() t=<ID> <SEMICOLON>
@@ -238,10 +239,10 @@ void VariableDeclAndAssignement() #VariableDeclAndAssignement : {}
 {
     Type() <ID> <Zuweisung> ExprStmnt()
 }
-void MethodDecl() #MethodDecl : {}
+void MethodDecl() #MethodDecl : { Token t; }
 {
     (Type() | <VOID>)
-    <ID>
+    t=<ID> {jjtThis.id = t.getImage();}
     <KlammerAuf>
     [Type() <ID> {/*Possible Parameter*/} (<COMMA> Type() <ID> {/*More Parameters*/})*]
     <KlammerZu> Block()
