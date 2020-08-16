@@ -2,6 +2,8 @@ package de.compilerbau.NewAwkCompiler.Visitors;
 
 import de.compilerbau.NewAwkCompiler.javacc21.*;
 
+import java.util.List;
+
 /**
  * Visitors which build a symbol table for a Mapl AST.
  */
@@ -25,12 +27,16 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return symbolTable;
     }
 
+    public void printEnter(Node node) {
+        System.out.println("Class: " + node.getClass().getSimpleName() + "\n" +
+                "Content: " + node.toString() + "\n");
+    }
+
+
     //VariableDecl() | Assignement() |  VariableDeclAndAssignement() | MethodDecl()
     @Override
     public Object visit(CompilationUnit node, Object data) {
-        System.out.println("Enter SymbolTableBuilderVisitor: visit.CompilationUnit \n" +
-                "     Class: " + node.getClass().getSimpleName() + "\n" +
-                "     Content: " + node.toString());
+        printEnter(node);
         data = node.childrenAccept(this, data);
 
         return data;
@@ -38,30 +44,34 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(VariableDecl node, Object data) {
-        System.out.println("Enter SymbolTableBuilderVisitor: visit.VariableDecl \n" +
-                "     Class: " + node.getClass().getSimpleName() + "\n" +
-                "     Content: " + node.toString());
+        printEnter(node);
 
-        System.out.println("First child: " + node.getFirstChild().getAttribute("type").toString());
+        System.out.println("First child: " + node.firstChildOfType(Type.class).type);
         System.out.println("First ID: " + node.getChild(1).toString());
-        System.out.println("First Last: " + node.getLastChild().toString());
+        System.out.println("First Last: " + node.getLastChild());
 
-            return data;
+        //Check syntax ok again (propably never reached parser checks this also)
+        if (!(node.getLastChild() instanceof SEMICOLON)) {
+            throw new TypeCheckingException("Missing semicolon after: "
+                    + node.firstChildOfType(ID.class).getEndLine() + ":" + node.firstChildOfType(ID.class).getEndColumn());
+        }
+        //
+
+
+        return data;
     }
 
     @Override
     public Object visit(Assignement node, Object data) {
-        System.out.println("Enter SymbolTableBuilderVisitor: visit.Assignement \n" +
-                "     Class: " + node.getClass().getSimpleName() + "\n" +
-                "     Content: " + node.toString());
-        return "42";
+        printEnter(node);
+        //TODO Store Assignement-Data
+
+        return data;
     }
 
     @Override
     public Object visit(VariableDeclAndAssignement node, Object data) {
-        System.out.println("Enter SymbolTableBuilderVisitor: visit.VariableDeclAndAssignement \n" +
-                "     Class: " + node.getClass().getSimpleName() + "\n" +
-                "     Content: " + node.toString());
+        printEnter(node);
         return data;
     }
 
@@ -72,9 +82,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
      */
     @Override
     public Object visit(MethodDecl node, Object data) {
-        System.out.println("Enter SymbolTableBuilderVisitor: visit.MethodDecl \n" +
-                "     Class: " + node.getClass().getSimpleName() + "\n" +
-                "     Content: " + node.toString());
+        printEnter(node);
 
         //Accept possible children, that are interesting for the table
         for (Node n : node.descendantsOfType(VariableDecl.class)) {
@@ -87,23 +95,30 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             Object s = n.jjtAccept(this, data);
             System.out.println("Data-Test (should be 42): " + s.toString());
         }
+        for (Node n : node.descendantsOfType(ParameterList.class)) {
+            node.parameterList = (List<ParameterEntry>) n.jjtAccept(this, data);
+            System.out.println("  - - - ParameterList: " + node.parameterList.toString());
+        }
         return data;
+    }
+
+    @Override
+    public List<ParameterEntry> visit(ParameterList node, Object data) {
+        printEnter(node);
+
+        return node.parameterList;
     }
 
     //Return type to methoddecl
     @Override
     public Object visit(Type node, Object data) {
-        System.out.println("Enter SymbolTableBuilderVisitor: visit.Type \n" +
-                "    Class: " + node.getClass().getSimpleName() + "\n" +
-                "    Content: " + node.toString());
+        printEnter(node);
         return data;
     }
 
     @Override
     public Object visit(Token node, Object data) {
-        System.out.println("Enter SymbolTableBuilderVisitor: visit.Token \n" +
-                "    Class: " + node.getClass().getSimpleName() + "\n" +
-                "    Content: " + node.toString());
+        printEnter(node);
         return data;
 
     }

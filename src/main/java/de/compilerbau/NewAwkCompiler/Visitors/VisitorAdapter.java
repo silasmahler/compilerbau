@@ -54,6 +54,11 @@ public class VisitorAdapter implements NewAwkParserVisitor {
                 "\n with content: " + node.toString());
     }
 
+    public Object visit(ParameterList node, Object data) {
+        throw new Error("Visitor called on unexpected AST node of class: " + node.getClass() +
+                "\n with content: " + node.toString());
+    }
+
 
     public Object visit(IfStmnt node, Object data) {
         throw new Error("Visitor called on unexpected AST node of class: " + node.getClass() + 

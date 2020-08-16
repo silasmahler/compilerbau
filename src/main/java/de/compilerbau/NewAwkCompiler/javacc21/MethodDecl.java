@@ -4,11 +4,21 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
-import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
+import java.util.List;
 @SuppressWarnings("unused")
 public class MethodDecl extends BaseNode {
 
+    // Method-return Type
+    public Type type;
+    //Method-ID/Name
     public String id;
+    //Parameters in Parameterlist
+    public List<ParameterEntry> parameterList;
+    //Statements in the Methodblock
+    public List<Stmnt> statements;
+
+
+
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);

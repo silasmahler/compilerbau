@@ -4,10 +4,10 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
-import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class VariableDecl extends BaseNode {
 
+    public Type type = null;
     public String id = "";
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
