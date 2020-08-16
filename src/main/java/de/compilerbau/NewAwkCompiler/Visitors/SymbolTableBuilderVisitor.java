@@ -42,13 +42,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
+    /**
+     * Checks if Variable Declarations are made correct
+     * @param node
+     * @param data
+     * @return
+     */
     @Override
     public Object visit(VariableDecl node, Object data) {
         printEnter(node);
-
-        System.out.println("First child: " + node.firstChildOfType(Type.class).toString());
-        System.out.println("First ID: " + node.getChild(1).toString());
-        System.out.println("First Last: " + node.getLastChild());
 
         //Check syntax ok again (propably never reached parser checks this also)
         if (!(node.getLastChild() instanceof SEMICOLON)) {
@@ -56,8 +58,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     + node.firstChildOfType(ID.class).getEndLine() + ":" + node.firstChildOfType(ID.class).getEndColumn());
         }
 
-
-        //TODO Add to symbol-table
         //1 Fill up VariableDecl-Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
@@ -87,8 +87,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         "it twice. Position: "  + node.firstChildOfType(ID.class).getEndLine() + ":"
                         + node.firstChildOfType(ID.class).getEndColumn());
             }        }
-
-
         return data;
     }
 
