@@ -227,12 +227,9 @@ void Assignement() #Assignement: {}
 {
     <ID> <Zuweisung> ExprStmnt()
 }
-void VariableDecl() #VariableDecl : {
- Token t;
-}
+void VariableDecl() #VariableDecl : {}
 {
-       Type() t=<ID> <SEMICOLON>
-      { jjtThis.id = t.getImage();}
+       Type() <ID> <SEMICOLON>
 }
 void VariableDeclAndAssignement() #VariableDeclAndAssignement : {}
 {

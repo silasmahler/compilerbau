@@ -7,6 +7,7 @@ package de.compilerbau.NewAwkCompiler.javacc21;
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class ID extends Token {
+
     public ID(TokenType type, String image, String inputSource) {
         super(type, image, inputSource);
     }
@@ -14,5 +15,6 @@ public class ID extends Token {
     public ID(TokenType type, String image, FileLineMap fileLineMap) {
         super(type, image, fileLineMap);
     }
+
 
 }

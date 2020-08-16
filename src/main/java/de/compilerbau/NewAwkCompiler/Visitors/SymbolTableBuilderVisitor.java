@@ -46,7 +46,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(VariableDecl node, Object data) {
         printEnter(node);
 
-        System.out.println("First child: " + node.firstChildOfType(Type.class).type);
+        System.out.println("First child: " + node.firstChildOfType(Type.class).toString());
         System.out.println("First ID: " + node.getChild(1).toString());
         System.out.println("First Last: " + node.getLastChild());
 
@@ -55,7 +55,38 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             throw new TypeCheckingException("Missing semicolon after: "
                     + node.firstChildOfType(ID.class).getEndLine() + ":" + node.firstChildOfType(ID.class).getEndColumn());
         }
-        //
+
+
+        //TODO Add to symbol-table
+        //1 Fill up VariableDecl-Object with needed subtypes
+        node.type = node.firstChildOfType(Type.class);
+        node.id = node.firstChildOfType(ID.class);
+        //2 Put it in the table
+        //  Important: Scope of Decl (which method or outside, and line-nr (provided by Base-Node))
+
+        //2.1   We arent in a method, so just declarations in order,
+        //      declarations only need to check if the variable already has been declared
+
+        //If we are in a Method
+        if(node.getParent() instanceof MethodDecl){
+            //TODO Insert (call Insert-Method on symboltable with boolean return if it was successfull)
+            if(symbolTable.insertVariableDecl(node, ((MethodDecl) node.getParent()).id)){
+                System.out.println("insertVariableDecl: Success in Method: Variable: " + node.toString());            }
+            else {
+                throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
+                        "it twice. Position: "  + node.firstChildOfType(ID.class).getEndLine() + ":"
+                        + node.firstChildOfType(ID.class).getEndColumn());
+            }
+        }
+        else {
+            if(symbolTable.insertVariableDecl(node, null)){
+                System.out.println("insertVariableDecl: Success: Variable: " + node.toString());
+            }
+            else {
+                throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
+                        "it twice. Position: "  + node.firstChildOfType(ID.class).getEndLine() + ":"
+                        + node.firstChildOfType(ID.class).getEndColumn());
+            }        }
 
 
         return data;
@@ -92,12 +123,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             n.jjtAccept(this, data);
         }
         for (Node n : node.descendantsOfType(Assignement.class)) {
-            Object s = n.jjtAccept(this, data);
-            System.out.println("Data-Test (should be 42): " + s.toString());
+            n.jjtAccept(this, data);
         }
         for (Node n : node.descendantsOfType(ParameterList.class)) {
-            node.parameterList = (List<ParameterEntry>) n.jjtAccept(this, data);
-            System.out.println("  - - - ParameterList: " + node.parameterList.toString());
+            n.jjtAccept(this, data);
         }
         return data;
     }

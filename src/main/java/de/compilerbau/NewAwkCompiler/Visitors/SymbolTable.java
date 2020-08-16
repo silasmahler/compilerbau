@@ -1,46 +1,69 @@
 package de.compilerbau.NewAwkCompiler.Visitors;
 
+import de.compilerbau.NewAwkCompiler.javacc21.MethodDecl;
 import de.compilerbau.NewAwkCompiler.javacc21.Type;
+import de.compilerbau.NewAwkCompiler.javacc21.VariableDecl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class SymbolTable {
 
-    private Map<String, MethodSignature> methodTable;
+    private Map<String, MethodDecl> methodDeclTable;
+    private HashMap<String, List<VariableDecl>> variableDeclTable;
 
     public SymbolTable() {
-        methodTable = new HashMap<String, MethodSignature>();
+        methodDeclTable = new HashMap<String, MethodDecl>();
+        variableDeclTable = new HashMap<String, List<VariableDecl>>();
+
     }
 
     /**
-     * Find a method signature in the symbol table.
+     * A Method to insert a VariableDeclaration into the symbol table
+     * <p>
+     * //TODO Checks if node can be inserted, if it can't, it is already declared
      *
-     * @param methodName the method name
-     * @return the method signature for the named method, or null if the named
-     * method does not exist
+     * @param node       the node to be inserted
+     * @param methodName name of the method (context) a variable is used in, leave empty string or null, if outside
+     *                   method/global context
+     * @return false if variable declared, true if success
      */
-    public MethodSignature getMethodSignature(String methodName) {
-        return methodTable.get(methodName);
-    }
+    public boolean insertVariableDecl(VariableDecl node, String methodName) {
+        // 1.   Check context
+        List<VariableDecl> decls;
 
-    /**
-     * Add a new method signature to the symbol table.
-     *
-     * @param methodName the method name
-     * @param type the method return type (null for procedures)
-     * @param formalTypes the list of parameter types
-     * @return true if the signature was added, false if a signature with the
-     * given name was already present
-     */
-    public boolean addMethod(String methodName, Type type, List<Type> formalTypes) {
-        if (methodTable.containsKey(methodName)) {
-            return false;
+        // 1.1  We are inside a method context
+        if (methodName != null && !methodName.equals("")) {
+            //Get list of declarations
+            decls = variableDeclTable.get(methodName);
+            for (VariableDecl v : decls) {
+                if(v.id == node.id){
+                    return false;
+                }
+            }
+            decls.add(node);
+            variableDeclTable.put(methodName, decls);
         }
-        MethodSignature sig = new MethodSignature(methodName, type, formalTypes);
-        methodTable.put(methodName, sig);
-        return true;
+        //1.2   We are inside global context
+        else {
+            decls = variableDeclTable.get("");
+            if(decls == null){
+                decls = new ArrayList<VariableDecl>();
+                decls.add(node);
+                variableDeclTable.put("", decls);
+                return true;
+            }
+            for (VariableDecl v : decls) {
+                if(v.id.getImage().equals(node.id.getImage())){
+                    return false;
+                }
+            }
+            decls.add(node);
+            variableDeclTable.put("", decls);
+            return true;
+        }
+        return false;
     }
-
 }

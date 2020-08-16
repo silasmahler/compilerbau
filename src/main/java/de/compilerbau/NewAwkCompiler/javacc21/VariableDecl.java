@@ -8,7 +8,7 @@ package de.compilerbau.NewAwkCompiler.javacc21;
 public class VariableDecl extends BaseNode {
 
     public Type type = null;
-    public String id = "";
+    public ID id = null;
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
