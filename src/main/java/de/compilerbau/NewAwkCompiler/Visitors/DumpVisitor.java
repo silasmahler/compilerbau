@@ -2,7 +2,7 @@ package de.compilerbau.NewAwkCompiler.Visitors;
 
 import de.compilerbau.NewAwkCompiler.javacc21.*;
 
-public class NewAwkDumpVisitor extends VisitorAdapter {
+public class DumpVisitor extends VisitorAdapter {
 
     private int indent = 0;
 

@@ -2,9 +2,7 @@
 package de.compilerbau.NewAwkCompiler.javacc21;
 
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
-import de.compilerbau.NewAwkCompiler.Visitors.NewAwkDumpVisitor;
-import de.compilerbau.NewAwkCompiler.Visitors.NewAwkTypeCheckVisitor;
-import de.compilerbau.NewAwkCompiler.Visitors.SymbolTableBuilderVisitor;
+import de.compilerbau.NewAwkCompiler.Visitors.*;
 import de.compilerbau.NewAwkCompiler.javacc21.*;
 import java.io.*;
 import java.util.*;
