@@ -8,6 +8,7 @@ package de.compilerbau.NewAwkCompiler.javacc21;
 public class Type extends BaseNode {
 
     public boolean isArray = false;
+    public int dimension = 0;
     public String type = "";
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
@@ -18,6 +19,7 @@ public class Type extends BaseNode {
     public String toString() {
         return "Type{" +
                 "isArray=" + isArray +
+                ", dimension=" + dimension +
                 ", type='" + type + '\'' +
                 '}';
     }

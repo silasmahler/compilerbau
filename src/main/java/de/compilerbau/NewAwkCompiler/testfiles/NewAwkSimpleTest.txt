@@ -17,5 +17,5 @@ int main(String[] args) {
     int x = 1 + 3;
     y = 2;
     int x;
-    String j;
+    String[][][] j;
 }
