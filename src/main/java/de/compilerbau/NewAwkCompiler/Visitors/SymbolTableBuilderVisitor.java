@@ -93,7 +93,49 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Assignement node, Object data) {
         printEnter(node);
-        //TODO Store Assignement-Data
+        //Check syntax ok again (propably never reached parser checks this also)
+        if (!(node.getLastChild() instanceof SEMICOLON)) {
+            throw new TypeCheckingException("Missing semicolon after: "
+                    + node.firstChildOfType(ID.class).getEndLine() + ":" + node.firstChildOfType(ID.class).getEndColumn());
+        }
+
+        //1 Fill up VariableDecl-Object with needed subtypes
+        node.id = node.firstChildOfType(ID.class);
+        node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
+
+        //2 Check if id has been declared
+
+            //If we are in a Method
+            if(node.getParent() instanceof MethodDecl){
+                MethodDecl methodDecl = (MethodDecl) node.getParent();
+                List<VariableDecl> decls = symbolTable.getVariableDeclTable().get(methodDecl.id);
+                if(!decls.contains(node.id)){
+                    throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
+                            "Position of use: "  + node.firstChildOfType(ID.class).getEndLine() + ":"
+                            + node.firstChildOfType(ID.class).getEndColumn());
+                }
+                else {
+                    
+                }
+            }
+            //If we are in global Context
+            else {
+                List<VariableDecl> decls = symbolTable.getVariableDeclTable().get("");
+                if (!decls.contains(node.id)) {
+                    throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
+                            "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
+                            + node.firstChildOfType(ID.class).getEndColumn());
+                }
+                else {
+
+                }
+
+            }
+
+
+
+        //3 Check if assignement is possible
+
 
         return data;
     }
@@ -101,6 +143,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(VariableDeclAndAssignement node, Object data) {
         printEnter(node);
+
+
+
+
         return data;
     }
 

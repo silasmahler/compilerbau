@@ -3,6 +3,7 @@ package de.compilerbau.NewAwkCompiler.Visitors;
 import de.compilerbau.NewAwkCompiler.javacc21.MethodDecl;
 import de.compilerbau.NewAwkCompiler.javacc21.Type;
 import de.compilerbau.NewAwkCompiler.javacc21.VariableDecl;
+import de.compilerbau.NewAwkCompiler.javacc21.VariableDeclAndAssignement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,5 +66,42 @@ public class SymbolTable {
             return true;
         }
         return false;
+    }
+
+    /**
+     *
+     * @param node the node to be inserted
+     * @param methodName name of the method (context) a variable is used in, leave empty string or null, if outside
+     *                   method/global context
+     * @return false if variable has been declared or if the assignement is not possible,
+     *         true if the variable could be declared and assignet correctly
+     */
+    public boolean insertVariableDeclAndAssignement(VariableDeclAndAssignement node, String methodName){
+
+
+        //Check if inserting the variable is possible
+
+
+
+        return false;
+    }
+
+
+    // Getters and Setters
+
+    public Map<String, MethodDecl> getMethodDeclTable() {
+        return methodDeclTable;
+    }
+
+    public void setMethodDeclTable(Map<String, MethodDecl> methodDeclTable) {
+        this.methodDeclTable = methodDeclTable;
+    }
+
+    public HashMap<String, List<VariableDecl>> getVariableDeclTable() {
+        return variableDeclTable;
+    }
+
+    public void setVariableDeclTable(HashMap<String, List<VariableDecl>> variableDeclTable) {
+        this.variableDeclTable = variableDeclTable;
     }
 }
