@@ -67,7 +67,7 @@ public class SymbolTable {
     /**
      * @return true if declared, false if not
      */
-    private boolean isVariableDeclared(VariableDecl node, String methodName) {
+    public boolean isVariableDeclared(VariableDecl node, String methodName) {
         List<VariableDecl> decls = getVariableDeclsForContext(methodName);
         if (decls != null) {
             if (decls.stream().filter(o -> o.id.getImage().equals(node.id.getImage())).findFirst().isPresent()) {

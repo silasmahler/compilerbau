@@ -10,6 +10,7 @@ import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*
 @SuppressWarnings("unused")
 public class VariableDeclAndAssignement extends BaseNode {
 
+    public Type type = null;
     public ID id = null;
     public ExprStmnt exprStmnt = null;
 

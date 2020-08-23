@@ -674,8 +674,6 @@ public class NewAwkParser implements NewAwkConstants {
             }
             // Code for RegexpRef specified on line 240 of NewAwkParser.jjt
             t= consumeToken(ID);
-            // Code for CodeBlock specified on line 240 of NewAwkParser.jjt
-            MethodDecl7.id= t.getImage();
             // Code for RegexpRef specified on line 241 of NewAwkParser.jjt
             consumeToken(KlammerAuf);
             // Code for NonTerminal specified on line 242 of NewAwkParser.jjt

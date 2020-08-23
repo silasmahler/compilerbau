@@ -14,4 +14,11 @@ public class VariableDecl extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    public VariableDecl() {
+    }
+
+    public VariableDecl(Type type, ID id) {
+        this.type = type;
+        this.id = id;
+    }
 }
