@@ -109,7 +109,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             if(node.getParent() instanceof MethodDecl){
                 MethodDecl methodDecl = (MethodDecl) node.getParent();
                 List<VariableDecl> decls = symbolTable.getVariableDeclTable().get(methodDecl.id);
-                if(!decls.contains(node.id)){
+                if (!decls.stream().filter(o -> o.id.getImage().equals(node.id.getImage())).findFirst().isPresent()) {
                     throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
                             "Position of use: "  + node.firstChildOfType(ID.class).getEndLine() + ":"
                             + node.firstChildOfType(ID.class).getEndColumn());
@@ -121,7 +121,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             //If we are in global Context
             else {
                 List<VariableDecl> decls = symbolTable.getVariableDeclTable().get("");
-                if (!decls.contains(node.id)) {
+                if (!decls.stream().filter(o -> o.id.getImage().equals(node.id.getImage())).findFirst().isPresent()) {
                     throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
                             "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                             + node.firstChildOfType(ID.class).getEndColumn());

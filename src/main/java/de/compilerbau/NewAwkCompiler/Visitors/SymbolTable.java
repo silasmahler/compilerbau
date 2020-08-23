@@ -26,51 +26,36 @@ public class SymbolTable {
      * @param node       the node to be inserted
      * @param methodName name of the method (context) a variable is used in, leave empty string or null, if outside
      *                   method/global context
-     * @return false if variable declared, true if success
+     * @return false if variable declared so method fails, true if variable not declared and method success
      */
     public boolean checkAndInsertVariableDecl(VariableDecl node, String methodName) {
         // 1.   Check context
         List<VariableDecl> decls = getVariableDeclsForContext(methodName);
-
-        // 1.1  We are inside a method context
-        if (methodName != null && !methodName.equals("")) {
-            //Get list of declarations
-            decls = variableDeclTable.get(methodName);
-            for (VariableDecl v : decls) {
-                if(v.id == node.id){
-                    return false;
-                }
-            }
-            decls.add(node);
-            variableDeclTable.put(methodName, decls);
+        if (decls == null) {
+            decls = new ArrayList<VariableDecl>();
         }
-        //1.2   We are inside global context
-        else {
-            decls = variableDeclTable.get("");
-            if(decls == null){
-                decls = new ArrayList<VariableDecl>();
-                decls.add(node);
-                variableDeclTable.put("", decls);
-                return true;
-            }
-            for (VariableDecl v : decls) {
-                if(v.id.getImage().equals(node.id.getImage())){
-                    return false;
-                }
-            }
+
+
+        if (isVariableDeclared(node, methodName)) {
+            return false;
+        } else {
             decls.add(node);
-            variableDeclTable.put("", decls);
+            if (methodName != null && !methodName.equals("")) {
+                variableDeclTable.put(methodName, decls);
+            } else {
+                variableDeclTable.put("", decls);
+            }
             return true;
         }
-        return false;
     }
 
     /**
      * Returns VariableDecls for method-context or global context
+     *
      * @param methodName context
      * @return the List of VariableDecls
      */
-    private List<VariableDecl> getVariableDeclsForContext(String methodName){
+    private List<VariableDecl> getVariableDeclsForContext(String methodName) {
         //1 We are inside a method context
         if (methodName != null && !methodName.equals("")) {
             return variableDeclTable.get(methodName);
@@ -80,44 +65,29 @@ public class SymbolTable {
     }
 
     /**
-     *
      * @return true if declared, false if not
      */
-    private boolean isVariableDeclared(Node node, String methodName){
-        List<VariableDecl> decls = variableDeclTable.get("");
-
-        // 1.1  We are inside a method context
-        if (methodName != null && !methodName.equals("")) {
-
+    private boolean isVariableDeclared(VariableDecl node, String methodName) {
+        List<VariableDecl> decls = getVariableDeclsForContext(methodName);
+        if (decls != null) {
+            if (decls.stream().filter(o -> o.id.getImage().equals(node.id.getImage())).findFirst().isPresent()) {
+                return true;
+            }
         }
-        //1.2   We are inside global context
-        else {
-
-        }
-
-
-            if(node instanceof VariableDecl){
-
-        }
-
-
-
         return false;
     }
 
     /**
-     *
-     * @param node the node to be inserted
+     * @param node       the node to be inserted
      * @param methodName name of the method (context) a variable is used in, leave empty string or null, if outside
      *                   method/global context
      * @return false if variable has been declared or if the assignement is not possible,
-     *         true if the variable could be declared and assignet correctly
+     * true if the variable could be declared and assignet correctly
      */
-    public boolean insertVariableDeclAndAssignement(VariableDeclAndAssignement node, String methodName){
+    public boolean insertVariableDeclAndAssignement(VariableDeclAndAssignement node, String methodName) {
 
 
         //Check if inserting the variable is possible
-
 
 
         return false;
