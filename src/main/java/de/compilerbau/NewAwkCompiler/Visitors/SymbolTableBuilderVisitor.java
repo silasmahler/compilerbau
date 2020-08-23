@@ -70,7 +70,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //If we are in a Method
         if(node.getParent() instanceof MethodDecl){
             //TODO Insert (call Insert-Method on symboltable with boolean return if it was successfull)
-            if(symbolTable.insertVariableDecl(node, ((MethodDecl) node.getParent()).id)){
+            if(symbolTable.checkAndInsertVariableDecl(node, ((MethodDecl) node.getParent()).id)){
                 System.out.println("insertVariableDecl: Success in Method: Variable: " + node.toString());            }
             else {
                 throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
@@ -79,7 +79,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
         }
         else {
-            if(symbolTable.insertVariableDecl(node, null)){
+            if(symbolTable.checkAndInsertVariableDecl(node, null)){
                 System.out.println("insertVariableDecl: Success: Variable: " + node.toString());
             }
             else {
@@ -94,7 +94,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Assignement node, Object data) {
         printEnter(node);
         //Check syntax ok again (propably never reached parser checks this also)
-        if (!(node.getLastChild() instanceof SEMICOLON)) {
+        if (!(node.getLastChild().getLastChild() instanceof SEMICOLON)) {
             throw new TypeCheckingException("Missing semicolon after: "
                     + node.firstChildOfType(ID.class).getEndLine() + ":" + node.firstChildOfType(ID.class).getEndColumn());
         }
@@ -115,7 +115,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                             + node.firstChildOfType(ID.class).getEndColumn());
                 }
                 else {
-                    
+
                 }
             }
             //If we are in global Context

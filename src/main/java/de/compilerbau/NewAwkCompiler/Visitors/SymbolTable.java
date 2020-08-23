@@ -1,9 +1,6 @@
 package de.compilerbau.NewAwkCompiler.Visitors;
 
-import de.compilerbau.NewAwkCompiler.javacc21.MethodDecl;
-import de.compilerbau.NewAwkCompiler.javacc21.Type;
-import de.compilerbau.NewAwkCompiler.javacc21.VariableDecl;
-import de.compilerbau.NewAwkCompiler.javacc21.VariableDeclAndAssignement;
+import de.compilerbau.NewAwkCompiler.javacc21.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,9 +28,9 @@ public class SymbolTable {
      *                   method/global context
      * @return false if variable declared, true if success
      */
-    public boolean insertVariableDecl(VariableDecl node, String methodName) {
+    public boolean checkAndInsertVariableDecl(VariableDecl node, String methodName) {
         // 1.   Check context
-        List<VariableDecl> decls;
+        List<VariableDecl> decls = getVariableDeclsForContext(methodName);
 
         // 1.1  We are inside a method context
         if (methodName != null && !methodName.equals("")) {
@@ -65,6 +62,46 @@ public class SymbolTable {
             variableDeclTable.put("", decls);
             return true;
         }
+        return false;
+    }
+
+    /**
+     * Returns VariableDecls for method-context or global context
+     * @param methodName context
+     * @return the List of VariableDecls
+     */
+    private List<VariableDecl> getVariableDeclsForContext(String methodName){
+        //1 We are inside a method context
+        if (methodName != null && !methodName.equals("")) {
+            return variableDeclTable.get(methodName);
+        }
+        //2  We are inside global context
+        return variableDeclTable.get("");
+    }
+
+    /**
+     *
+     * @return true if declared, false if not
+     */
+    private boolean isVariableDeclared(Node node, String methodName){
+        List<VariableDecl> decls = variableDeclTable.get("");
+
+        // 1.1  We are inside a method context
+        if (methodName != null && !methodName.equals("")) {
+
+        }
+        //1.2   We are inside global context
+        else {
+
+        }
+
+
+            if(node instanceof VariableDecl){
+
+        }
+
+
+
         return false;
     }
 
