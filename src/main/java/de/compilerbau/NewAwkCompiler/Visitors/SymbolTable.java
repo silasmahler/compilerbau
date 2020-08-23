@@ -31,11 +31,11 @@ public class SymbolTable {
     public boolean checkAndInsertVariableDecl(VariableDecl node, String methodName) {
         // 1.   Check context
         List<VariableDecl> decls = getVariableDeclsForContext(methodName);
+        //Check if VariableDecl-List for context exists, if not create it
         if (decls == null) {
             decls = new ArrayList<VariableDecl>();
         }
-
-
+        //If variable declared, you can't insert --> Error
         if (isVariableDeclared(node, methodName)) {
             return false;
         } else {
