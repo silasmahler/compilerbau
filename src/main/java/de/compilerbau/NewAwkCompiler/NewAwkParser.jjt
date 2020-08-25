@@ -81,13 +81,11 @@ public class NewAwkParser {
              if (dumpTree) {
                  Nodes.dump(root, ">");
                  DumpVisitor dumpVisitor = new DumpVisitor();
-                 ClassContentVisitor classContentVisitor = new ClassContentVisitor();
                  SymbolTableBuilderVisitor symbolTableBuilderVisitor = new SymbolTableBuilderVisitor();
                  if(root instanceof CompilationUnit) {
                      System.out.println("Entering Visitors...");
                      ((CompilationUnit) root).jjtAccept(dumpVisitor, null);
                      ((CompilationUnit) root).jjtAccept(symbolTableBuilderVisitor, null);
-                     //((CompilationUnit) root).jjtAccept(classContentVisitor, null);
                  }
              }
         }

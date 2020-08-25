@@ -40,14 +40,14 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     /**
      * Entrypoint, accepts all children
-     *
+     * <p>
      * Production:
-        (   VariableDecl() |
-            Assignement() |
-            VariableDeclAndAssignement() |
-            MethodDecl()
-        )+
-            <EOF>
+     * (   VariableDecl() |
+     * Assignement() |
+     * VariableDeclAndAssignement() |
+     * MethodDecl()
+     * )+
+     * <EOF>
      */
     @Override
     public Object visit(CompilationUnit node, Object data) {
@@ -98,7 +98,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(Assignement node, Object data) {
@@ -114,33 +114,22 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         node.id = node.firstChildOfType(ID.class);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
 
-        //If we are in a Method
+        //Init with global context && Check if Method-Context
+        String id = "";
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            String id = (node.firstAncestorOfType(MethodDecl.class)).id.getImage();
-            if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), id)) {
-                throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
-                        "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
-                        + node.firstChildOfType(ID.class).getEndColumn());
-            }
-            //Variable is declared, check if assignement is possible
-            else {
-
-            }
+            id = node.firstAncestorOfType(MethodDecl.class).id.getImage();
         }
-        //If we are in global Context
+
+        if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), id)) {
+            throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
+                    "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
+                    + node.firstChildOfType(ID.class).getEndColumn());
+        }
+        //TODO Variable is declared, check if assignement is possible
         else {
-            if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), "")) {
-                throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
-                        "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
-                        + node.firstChildOfType(ID.class).getEndColumn());
-            }
-            //Variable is declared, check if assignement is possible
-            else {
-
-            }
+            // TODO Check ExprStmnt von dort kommt die Info
 
         }
-
 
         //3 Check if assignement is possible
 
@@ -149,7 +138,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(VariableDeclAndAssignement node, Object data) {
@@ -166,30 +155,25 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         node.id = node.firstChildOfType(ID.class);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
 
-        //If we are in a Method
+
+        //Init with global context && Check if Method-Context
+        String id = "";
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            String id = (node.firstAncestorOfType(MethodDecl.class)).id.getImage();
-            if (symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), id)) {
-                log.info("insertVariableDecl: Success in Method: Variable: " + node.toString());
-            } else {
-                throw new TypeCheckingException("Variable has already been declared in the same method scope you cant declare " +
-                        "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
-                        + node.firstChildOfType(ID.class).getEndColumn());
-            }
+            id = node.firstAncestorOfType(MethodDecl.class).id.getImage();
+        }
+
+        if (symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), id)) {
+            log.info("insertVariableDecl: Success in Method: Variable: " + node.toString());
         } else {
-            if (symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), "")) {
-                log.info("insertVariableDecl: Success in Global: Variable: " + node.toString());
-            } else {
-                throw new TypeCheckingException("Variable has already been declared in the global scope you cant declare " +
-                        "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
-                        + node.firstChildOfType(ID.class).getEndColumn());
-            }
+            throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
+                    "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
+                    + node.firstChildOfType(ID.class).getEndColumn());
         }
         return data;
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(MethodDecl node, Object data) {
@@ -205,7 +189,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(ParameterList node, Object data) {
@@ -291,7 +275,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     * Not needed for NewAwk, maybe later
      */
     @Override
     public Object visit(IfStmnt node, Object data) {
@@ -300,16 +284,20 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     * Handles an expression
+     * Production: Expr() ;
      */
     @Override
     public Object visit(ExprStmnt node, Object data) {
         printEnter(node);
+        //TODO Type of Expr
+        // Value
+        // Wird verwendet bei Assignement und VariableDeclAndAssignement
+
         return data;
     }
 
     /**
-     *
      *
      */
     @Override
@@ -319,7 +307,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(Atom node, Object data) {
@@ -330,7 +318,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             Checking for .length
             wenn vorhanden, dann umwandlung zu Integertyp
          */
-        if(node.hasLength) {
+        if (node.hasLength) {
             log.info("Found Atom with \".length\" with " + node.children().size() + " children.");
             // id.lenght => Integer
             if (node.getFirstChild() instanceof ID) {
@@ -361,12 +349,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         }
 
 
-
         return data;
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(Cast node, Object data) {
@@ -375,7 +362,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(MethodCall node, Object data) {
@@ -384,7 +371,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(ArrayAccess node, Object data) {
@@ -394,7 +381,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(ReturnStatement node, Object data) {
@@ -405,7 +392,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public Object visit(KlammerAffe node, Object data) {
