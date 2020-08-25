@@ -42,9 +42,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
      * Entrypoint, accepts all children
      *
      * Production:
-        (   LOOKAHEAD(3) VariableDecl() |
-            LOOKAHEAD(3) Assignement() |
-            LOOKAHEAD(3) VariableDeclAndAssignement() |
+        (   VariableDecl() |
+            Assignement() |
+            VariableDeclAndAssignement() |
             MethodDecl()
         )+
             <EOF>
@@ -52,15 +52,14 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(CompilationUnit node, Object data) {
         printEnter(node);
+        //Accepts the productions children (all relevant for typechecking)
         data = node.childrenAccept(this, data);
         return data;
     }
 
     /**
      * Checks simple Variable Declarations
-     * @param node
-     * @param data
-     * @return
+     * doesn't need to accept children for this usecase
      */
     @Override
     public Object visit(VariableDecl node, Object data) {
@@ -99,9 +98,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(Assignement node, Object data) {
@@ -152,9 +149,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(VariableDeclAndAssignement node, Object data) {
@@ -194,43 +189,23 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(MethodDecl node, Object data) {
         printEnter(node);
-
 
         //Symboltable-entry for method
         node.type = node.firstChildOfType(Type.class);
         node.parameterList = node.firstChildOfType(ParameterList.class);
         node.block = node.firstChildOfType(Block.class);
 
-
         data = node.childrenAccept(this, data);
-        /*
-        //Accept children
-        for (Node n : node.descendantsOfType(VariableDecl.class)) {
-            n.jjtAccept(this, data);
-        }
-        for (Node n : node.descendantsOfType(VariableDeclAndAssignement.class)) {
-            n.jjtAccept(this, data);
-        }
-        for (Node n : node.descendantsOfType(Assignement.class)) {
-            n.jjtAccept(this, data);
-        }
-        for (Node n : node.descendantsOfType(ParameterList.class)) {
-            n.jjtAccept(this, data);
-        }*/
         return data;
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(ParameterList node, Object data) {
@@ -271,9 +246,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     /**
      * <BlockAuf> (Stmnt())+ <BlockZu>
      *
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(Block node, Object data) {
@@ -300,9 +273,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
      )
      */
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(Stmnt node, Object data) {
@@ -311,9 +282,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * BaseNode not relevant for visitors
      */
     @Override
     public Object visit(BaseNode node, Object data) {
@@ -322,9 +291,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(IfStmnt node, Object data) {
@@ -333,9 +300,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(ExprStmnt node, Object data) {
@@ -344,9 +309,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     *
+     *
      */
     @Override
     public Object visit(Expr node, Object data) {
@@ -355,9 +319,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(Atom node, Object data) {
@@ -366,9 +328,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(Cast node, Object data) {
@@ -377,9 +337,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(MethodCall node, Object data) {
@@ -388,9 +346,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(ArrayAccess node, Object data) {
@@ -399,9 +355,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(ArrayLength node, Object data) {
@@ -410,9 +364,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(ReturnStatement node, Object data) {
@@ -421,9 +373,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * @param node
-     * @param data
-     * @return
+     * 
      */
     @Override
     public Object visit(KlammerAffe node, Object data) {
@@ -433,14 +383,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     /**
      *
-     * @param node
-     * @param data
-     * @return
-     */
-    /**
-     * @param node
-     * @param data
-     * @return
      */
     @Override
     public Object visit(KlammerAffeRegex node, Object data) {
@@ -450,14 +392,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     /**
      *
-     * @param node
-     * @param data
-     * @return
-     */
-    /**
-     * @param node
-     * @param data
-     * @return
      */
     @Override
     public Object visit(KlammerAffeAusdruck node, Object data) {
@@ -467,14 +401,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     /**
      *
-     * @param node
-     * @param data
-     * @return
-     */
-    /**
-     * @param node
-     * @param data
-     * @return
      */
     @Override
     public Object visit(PrintStmnt node, Object data) {
@@ -485,14 +411,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     /**
      * Type has only terminals, so it cant have childs to accept.
-     * @param node
-     * @param data
-     * @return
-     */
-    /**
-     * @param node
-     * @param data
-     * @return
      */
     @Override
     public Object visit(Type node, Object data) {
@@ -501,16 +419,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * Only Terminal of Type "Token" we recognize is EOF, therefore no 
+     * Only Terminal of Type "Token" we recognize is EOF, therefore no
      * childs to accept as well
-     * @param node
-     * @param data
-     * @return
-     */
-    /**
-     * @param node
-     * @param data
-     * @return
      */
     @Override
     public Object visit(Token node, Object data) {
