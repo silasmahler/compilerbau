@@ -32,8 +32,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     public void printEnter(Node node) {
-        log.error("Entering Class: " + node.getClass().getSimpleName() + "\n" +
-                        "With Content:   " + node.toString() + "\n");
+        log.info("Entering Class: " + node.getClass().getSimpleName() + "\n" +
+                        "With Content:   " + node.toString());
     }
 
 
@@ -71,7 +71,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
             String id = (node.firstAncestorOfType(MethodDecl.class)).id.getImage();
             if (symbolTable.checkAndInsertVariableDecl(node, id)) {
-                System.out.println("insertVariableDecl: Success in Method: Variable: " + node.toString());
+                log.info("insertVariableDecl: Success in Method: Variable: " + node.toString());
             } else {
                 throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
                         "it twice. Position: " + node.firstChildOfType(ID.class).getEndLine() + ":"
@@ -79,7 +79,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
         } else {
             if (symbolTable.checkAndInsertVariableDecl(node, "")) {
-                System.out.println("insertVariableDecl: Success in Global: Variable: " + node.toString());
+                log.info("insertVariableDecl: Success in Global: Variable: " + node.toString());
             } else {
                 throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
                         "it twice. Position: " + node.firstChildOfType(ID.class).getEndLine() + ":"
@@ -156,7 +156,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
             String id = (node.firstAncestorOfType(MethodDecl.class)).id.getImage();
             if (symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), id)) {
-                System.out.println("insertVariableDecl: Success in Method: Variable: " + node.toString());
+                log.info("insertVariableDecl: Success in Method: Variable: " + node.toString());
             } else {
                 throw new TypeCheckingException("Variable has already been declared in the same method scope you cant declare " +
                         "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
@@ -164,7 +164,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
         } else {
             if (symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), "")) {
-                System.out.println("insertVariableDecl: Success in Global: Variable: " + node.toString());
+                log.info("insertVariableDecl: Success in Global: Variable: " + node.toString());
             } else {
                 throw new TypeCheckingException("Variable has already been declared in the global scope you cant declare " +
                         "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
@@ -214,14 +214,14 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
         //Empty Parameterlist return no action needed
         if (!node.hasChildNodes()) {
-            System.out.println("Detected 0 Parameters");
+            log.info("Detected 0 Parameters");
             return data;
         }
         //There are parameters
         else {
             //Check how many commata to determine how many parameters
             int parameterCount = node.childrenOfType(COMMA.class).size() + 1;
-            System.out.println("Detected " + parameterCount + " Parameters");
+            log.info("Detected " + parameterCount + " Parameters");
             //Get all Types
             List<Type> types = node.childrenOfType(Type.class);
             //Get all IDs
