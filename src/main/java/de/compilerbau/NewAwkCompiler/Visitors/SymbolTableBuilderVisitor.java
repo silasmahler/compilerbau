@@ -33,9 +33,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     public void printEnter(Node node) {
         log.info("Entering Class: " + node.getClass().getSimpleName() + "\n" +
-                        "With Content:   " + node.toString());
+                "With Content:   " + node.toString());
     }
-
 
     //VariableDecl() | Assignement() |  VariableDeclAndAssignement() | MethodDecl()
     @Override
@@ -245,7 +244,84 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Block node, Object data) {
         printEnter(node);
 
+        data = node.childrenAccept(this, data);
+
         return data;
+    }
+
+    @Override
+    public Object visit(BaseNode node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(Stmnt node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(IfStmnt node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(ExprStmnt node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(Expr node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(Atom node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(Cast node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(MethodCall node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(ArrayAccess node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(ArrayLength node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(ReturnStatement node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(KlammerAffe node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(KlammerAffeRegex node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(KlammerAffeAusdruck node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(PrintStmnt node, Object data) {
+        return super.visit(node, data);
     }
 
     //Return type to methoddecl
