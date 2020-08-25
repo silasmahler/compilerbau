@@ -21,6 +21,8 @@ public class ParameterList extends BaseNode {
 
     @Override
     public String toString() {
-        return "ParameterList{}";
+        return "ParameterList{" +
+                "parameterList=" + parameterList +
+                '}';
     }
 }

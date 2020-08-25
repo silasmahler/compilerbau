@@ -14,4 +14,12 @@ public class Parameter {
         this.type = type;
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Parameter{" +
+                "type=" + type +
+                ", id=" + id +
+                '}';
+    }
 }
