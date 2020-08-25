@@ -18,8 +18,7 @@ public interface NewAwkParserVisitor {
     Object visit(Cast node, Object data); 
     Object visit(MethodCall node, Object data); 
     Object visit(ArrayAccess node, Object data); 
-    Object visit(ArrayLength node, Object data); 
-    Object visit(Type node, Object data); 
+    Object visit(Type node, Object data);
     Object visit(ReturnStatement node, Object data); 
     Object visit(KlammerAffe node, Object data); 
     Object visit(KlammerAffeRegex node, Object data); 

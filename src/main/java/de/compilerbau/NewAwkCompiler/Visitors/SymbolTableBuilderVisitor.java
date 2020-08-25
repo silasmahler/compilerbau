@@ -245,8 +245,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     /**
      * <BlockAuf> (Stmnt())+ <BlockZu>
-     *
-     * 
+     * => Only needs to accept Stmnt Statements, ignore other Terminals like "{" "}"
      */
     @Override
     public Object visit(Block node, Object data) {
@@ -273,11 +272,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
      )
      */
     /**
-     * 
+     * => No direct influence cause it only redirects to other methods
      */
     @Override
     public Object visit(Stmnt node, Object data) {
         printEnter(node);
+        node.childrenAccept(this, data);
         return data;
     }
 
@@ -324,6 +324,44 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Atom node, Object data) {
         printEnter(node);
+
+
+        /*
+            Checking for .length
+            wenn vorhanden, dann umwandlung zu Integertyp
+         */
+        if(node.hasLength) {
+            log.info("Found Atom with \".length\" with " + node.children().size() + " children.");
+            // id.lenght => Integer
+            if (node.getFirstChild() instanceof ID) {
+
+                // Check if ID contains String or Array
+                // TODO Check symbol table for ID and if String or Array
+
+                //TODO if found = no exception
+
+                // TODO Get length from in symbol table stored assignements for ID
+
+            }
+            // "String".length => Integer
+            else if (node.getFirstChild() instanceof StringLiteral) {
+                //String has definitive length
+                int length = ((StringLiteral) node.getFirstChild()).getImage().length();
+                // Now we know the representation => remove children and put int in
+                node.clearChildren();
+                IntegerLiteral integerLiteral = new IntegerLiteral();
+                integerLiteral.setIntValue(length);
+                node.addChild(integerLiteral);
+            } else {
+                throw new TypeCheckingException("The type can't have \".length\" representation: " +
+                        "Error at: "
+                        + node.getFirstChild().getEndLine() + ":"
+                        + node.getFirstChild().getEndColumn());
+            }
+        }
+
+
+
         return data;
     }
 
@@ -354,14 +392,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     * 
-     */
-    @Override
-    public Object visit(ArrayLength node, Object data) {
-        printEnter(node);
-        return data;
-    }
 
     /**
      * 
@@ -369,6 +399,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(ReturnStatement node, Object data) {
         printEnter(node);
+        // TODO Get return-type from method context, if we are in global => error
+        // TODO Check if matches return value (can be expression, variable, plain value, etc...)
         return data;
     }
 

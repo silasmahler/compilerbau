@@ -7,6 +7,14 @@ package de.compilerbau.NewAwkCompiler.javacc21;
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class IntegerLiteral extends Token {
+
+    public int intValue = 0;
+
+
+    public IntegerLiteral(){
+
+    }
+
     public IntegerLiteral(TokenType type, String image, String inputSource) {
         super(type, image, inputSource);
     }
@@ -15,4 +23,12 @@ public class IntegerLiteral extends Token {
         super(type, image, fileLineMap);
     }
 
+
+    public int getIntValue() {
+        return intValue;
+    }
+
+    public void setIntValue(int intValue) {
+        this.intValue = intValue;
+    }
 }

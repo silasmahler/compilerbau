@@ -1,7 +1,8 @@
 int y;
 int h = 3;
 int z;
-int zx;
+int zx = a.length;
+int zy = "hallo".length;
 int main(String[] args) {
     int x = 5;
     return x;
