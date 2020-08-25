@@ -1,6 +1,8 @@
 package de.compilerbau.NewAwkCompiler.Visitors;
 
 import de.compilerbau.NewAwkCompiler.javacc21.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -8,6 +10,8 @@ import java.util.List;
  * Visitors which build a symbol table for a Mapl AST.
  */
 public class SymbolTableBuilderVisitor extends VisitorAdapter {
+
+    private static final Logger log = LoggerFactory.getLogger(SymbolTableBuilderVisitor.class);
 
     private SymbolTable symbolTable;
 
@@ -28,10 +32,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     public void printEnter(Node node) {
-        System.out.println("------------------------- \n" +
-                "Entering Class: " + node.getClass().getSimpleName() + "\n" +
-                "With Content:   " + node.toString() + "\n" +
-                "-------------------------");
+        log.error("Entering Class: " + node.getClass().getSimpleName() + "\n" +
+                        "With Content:   " + node.toString() + "\n");
     }
 
 
@@ -211,24 +213,26 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
 
         //Empty Parameterlist return no action needed
-        if(!node.hasChildNodes()){
+        if (!node.hasChildNodes()) {
+            System.out.println("Detected 0 Parameters");
             return data;
         }
         //There are parameters
         else {
             //Check how many commata to determine how many parameters
             int parameterCount = node.childrenOfType(COMMA.class).size() + 1;
+            System.out.println("Detected " + parameterCount + " Parameters");
             //Get all Types
             List<Type> types = node.childrenOfType(Type.class);
             //Get all IDs
             List<ID> ids = node.childrenOfType(ID.class);
             //Marry them
-                //Check if correct
-                if(!(types.size() == ids.size())){
-                    throw new TypeCheckingException("Something broke while checking Method Parameters." +
-                            "Please declare it like: TYPE ID COMMA TYPE ID ...");
-                }
-            for(int i = 0; i < types.size(); i++){
+            //Check if correct
+            if (!(types.size() == ids.size()) && (types.size() == parameterCount)) {
+                throw new TypeCheckingException("Something broke while checking Method Parameters." +
+                        "Please declare it like: TYPE ID COMMA TYPE ID ...");
+            }
+            for (int i = 0; i < types.size(); i++) {
                 node.parameterList.add(new Parameter(types.get(i), ids.get(i)));
             }
 
