@@ -20,6 +20,15 @@ public class Type extends BaseNode {
 
     private static  List<String> typelist = new ArrayList<String>(Arrays.asList("int", "double", "boolean", "char", "String"));
 
+    public Type() {
+    }
+
+    public Type(boolean isArray, int dimension, String type) {
+        this.isArray = isArray;
+        this.dimension = dimension;
+        this.type = type;
+    }
+
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }

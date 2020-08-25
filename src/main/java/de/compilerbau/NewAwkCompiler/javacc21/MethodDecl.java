@@ -11,6 +11,8 @@ public class MethodDecl extends BaseNode {
 
     // Method-return Type
     public Type type = null;
+    //is void-type?
+    public boolean isVoid = false;
     //Method-ID/Name
     public ID id = null;
     //Parameters in Parameterlist
@@ -23,4 +25,14 @@ public class MethodDecl extends BaseNode {
         return visitor.visit(this, data);
     }
 
+
+    @Override
+    public String toString() {
+        return "MethodDecl{" +
+                "type=" + type +
+                ", id=" + id +
+                ", parameterList=" + parameterList +
+                ", statements=" + statements +
+                '}';
+    }
 }

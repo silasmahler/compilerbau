@@ -234,10 +234,14 @@ void VariableDeclAndAssignement() #VariableDeclAndAssignement : {}
 {
     Type() <ID> <Zuweisung> ExprStmnt()
 }
-void MethodDecl() #MethodDecl : { Token t; }
+void MethodDecl() #MethodDecl : { Token t;}
 {
-    (Type() | <VOID>)
-    t=<ID>
+    (
+        Type()
+        |
+        <VOID>  {jjtThis.isVoid = true;}
+    )
+    t=<ID> {jjtThis.id = (ID) t;}
     <KlammerAuf>
     ParameterList()
     <KlammerZu> Block()

@@ -6,6 +6,9 @@ int main(String[] args) {
     int x = 5;
     return x;
     int a;
+
+    int x = 3;
+
     a = 4 + 2;
     b = 4 * 3 + 8 % -2;
     c = 123 + test() ;
