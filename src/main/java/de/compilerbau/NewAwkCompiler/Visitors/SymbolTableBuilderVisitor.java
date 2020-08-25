@@ -66,7 +66,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         node.id = node.firstChildOfType(ID.class);
 
         //If we are in a Method
-        if (node.firstAncestorOfType(MethodDecl.class) instanceof MethodDecl) {
+        if (node.firstAncestorOfType(MethodDecl.class) != null) {
             String id = (node.firstAncestorOfType(MethodDecl.class)).id.getImage();
             if (symbolTable.checkAndInsertVariableDecl(node, id)) {
                 System.out.println("insertVariableDecl: Success in Method: Variable: " + node.toString());
@@ -102,7 +102,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
 
         //If we are in a Method
-        if (node.firstAncestorOfType(MethodDecl.class) instanceof MethodDecl) {
+        if (node.firstAncestorOfType(MethodDecl.class) != null) {
             String id = (node.firstAncestorOfType(MethodDecl.class)).id.getImage();
             if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), id)) {
                 throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
@@ -151,7 +151,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
 
         //If we are in a Method
-        if (node.firstAncestorOfType(MethodDecl.class) instanceof MethodDecl) {
+        if (node.firstAncestorOfType(MethodDecl.class) != null) {
             String id = (node.firstAncestorOfType(MethodDecl.class)).id.getImage();
             if (symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), id)) {
                 System.out.println("insertVariableDecl: Success in Method: Variable: " + node.toString());
