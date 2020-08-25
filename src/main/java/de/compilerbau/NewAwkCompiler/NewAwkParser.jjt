@@ -247,7 +247,7 @@ void MethodDecl() #MethodDecl : { Token t;}
     <KlammerZu> Block()
 }
 void ParameterList() #ParameterList : {} {
-    [Type() <ID> {/*Possible Parameter*/} (<COMMA> Type() <ID> {/*More Parameters*/})*]
+    [Type() <ID>] (<COMMA> Type() <ID>)*
 }
 void IfStmnt() #IfStmnt : {}
 {

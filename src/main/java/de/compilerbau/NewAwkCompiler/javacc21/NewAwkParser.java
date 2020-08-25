@@ -745,25 +745,21 @@ public class NewAwkParser implements NewAwkConstants {
                 }
                 // Code for RegexpRef specified on line 250 of NewAwkParser.jjt
                 consumeToken(ID);
-                // Code for CodeBlock specified on line 250 of NewAwkParser.jjt
-                /*Possible Parameter*/
-                // Code for ZeroOrMore specified on line 250 of NewAwkParser.jjt
-                while (resetScanAhead(1)&&nextTokenType== COMMA) {
-                    // Code for RegexpRef specified on line 250 of NewAwkParser.jjt
-                    consumeToken(COMMA);
-                    // Code for NonTerminal specified on line 250 of NewAwkParser.jjt
-                    pushOntoCallStack("ParameterList", "NewAwkParser.jjt", 250, 52);
-                    try {
-                        Type();
-                    }
-                    finally {
-                        popCallStack();
-                    }
-                    // Code for RegexpRef specified on line 250 of NewAwkParser.jjt
-                    consumeToken(ID);
-                    // Code for CodeBlock specified on line 250 of NewAwkParser.jjt
-                    /*More Parameters*/
+            }
+            // Code for ZeroOrMore specified on line 250 of NewAwkParser.jjt
+            while (resetScanAhead(1)&&nextTokenType== COMMA) {
+                // Code for RegexpRef specified on line 250 of NewAwkParser.jjt
+                consumeToken(COMMA);
+                // Code for NonTerminal specified on line 250 of NewAwkParser.jjt
+                pushOntoCallStack("ParameterList", "NewAwkParser.jjt", 250, 28);
+                try {
+                    Type();
                 }
+                finally {
+                    popCallStack();
+                }
+                // Code for RegexpRef specified on line 250 of NewAwkParser.jjt
+                consumeToken(ID);
             }
             if (trace_enabled) LOGGER.info("Exiting normally from ParameterList");
         }

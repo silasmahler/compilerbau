@@ -28,7 +28,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     public void printEnter(Node node) {
-        System.out.println("------------------------- \n " +
+        System.out.println("------------------------- \n" +
                 "Entering Class: " + node.getClass().getSimpleName() + "\n" +
                 "With Content:   " + node.toString() + "\n" +
                 "-------------------------");
@@ -181,6 +181,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(MethodDecl node, Object data) {
         printEnter(node);
 
+
+        //Symboltable-entry for method
+        node.type = node.firstChildOfType(Type.class);
+        node.parameterList = node.firstChildOfType(ParameterList.class);
+        node.block = node.firstChildOfType(Block.class);
+
+
+        data = node.childrenAccept(this, data);
+        /*
         //Accept possible children, that are interesting for the table
         for (Node n : node.descendantsOfType(VariableDecl.class)) {
             n.jjtAccept(this, data);
@@ -193,15 +202,46 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         }
         for (Node n : node.descendantsOfType(ParameterList.class)) {
             n.jjtAccept(this, data);
-        }
+        }*/
         return data;
     }
 
     @Override
-    public List<ParameterEntry> visit(ParameterList node, Object data) {
+    public Object visit(ParameterList node, Object data) {
         printEnter(node);
 
-        return node.parameterList;
+        //Empty Parameterlist return no action needed
+        if(!node.hasChildNodes()){
+            return data;
+        }
+        //There are parameters
+        else {
+            //Check how many commata to determine how many parameters
+            int parameterCount = node.childrenOfType(COMMA.class).size() + 1;
+            //Get all Types
+            List<Type> types = node.childrenOfType(Type.class);
+            //Get all IDs
+            List<ID> ids = node.childrenOfType(ID.class);
+            //Marry them
+                //Check if correct
+                if(!(types.size() == ids.size())){
+                    throw new TypeCheckingException("Something broke while checking Method Parameters." +
+                            "Please declare it like: TYPE ID COMMA TYPE ID ...");
+                }
+            for(int i = 0; i < types.size(); i++){
+                node.parameterList.add(new Parameter(types.get(i), ids.get(i)));
+            }
+
+        }
+
+        return data;
+    }
+
+    @Override
+    public Object visit(Block node, Object data) {
+        printEnter(node);
+
+        return data;
     }
 
     //Return type to methoddecl

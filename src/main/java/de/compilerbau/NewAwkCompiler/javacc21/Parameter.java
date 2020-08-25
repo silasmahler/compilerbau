@@ -4,12 +4,14 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
-import java.util.List;
-
 @SuppressWarnings("unused")
-public class ParameterEntry {
+public class Parameter {
 
     public Type type;
     public ID id;
 
+    public Parameter(Type type, ID id) {
+        this.type = type;
+        this.id = id;
+    }
 }

@@ -16,9 +16,9 @@ public class MethodDecl extends BaseNode {
     //Method-ID/Name
     public ID id = null;
     //Parameters in Parameterlist
-    public List<ParameterEntry> parameterList = null;
-    //Statements in the Methodblock
-    public List<Stmnt> statements = null;
+    public ParameterList parameterList = null;
+    //Method-Block
+    public Block block = null;
 
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
@@ -30,9 +30,10 @@ public class MethodDecl extends BaseNode {
     public String toString() {
         return "MethodDecl{" +
                 "type=" + type +
+                ", isVoid=" + isVoid +
                 ", id=" + id +
                 ", parameterList=" + parameterList +
-                ", statements=" + statements +
+                ", block=" + block +
                 '}';
     }
 }

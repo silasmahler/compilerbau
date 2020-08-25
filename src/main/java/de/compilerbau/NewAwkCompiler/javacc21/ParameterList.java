@@ -4,21 +4,23 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class ParameterList extends BaseNode {
 
-    public List<ParameterEntry> parameterList;
-
-    public void addParameterEntry(){
-
-    }
+    public List<Parameter> parameterList;
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }
 
+    public ParameterList() {
+        this.parameterList = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "ParameterList{}";
+    }
 }
