@@ -161,15 +161,6 @@ public class DumpVisitor extends VisitorAdapter {
     }
 
     @Override
-    public Object visit(ArrayLength node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
     public Object visit(Type node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
