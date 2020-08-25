@@ -302,17 +302,40 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     *
+     *    [LOOKAHEAD(2) Cast()]
+     *     (
+     *         (
+     *             LOOKAHEAD(2) MethodCall()
+     *             | LOOKAHEAD(3) t=<ID>
+     *             [".length"
+     *             {jjtThis.hasLength = true;
+     *              jjtThis.atomLength = t.getImage().length();}
+     *             ]
+     *         ) [ArrayAccess()]
+     *         | <KlammerAuf> Expr() <KlammerZu>
+     *         | t=<BooleanLiteral>
+     *         | t=<IntegerLiteral>
+     *         | t=<DoubleLiteral>
+     *         | t=<CharLiteral>
+     *         | t=<NullLiteral>
+     *         | LOOKAHEAD(3) t=<StringLiteral>
+     *             [".length"
+     *                {jjtThis.hasLength = true;
+     *                jjtThis.atomLength = t.getImage().length();}
+     *             ]
+     *     )
      */
     @Override
     public Object visit(Atom node, Object data) {
         printEnter(node);
 
+        // TODO Check if Cast
+        if(node.getFirstChild() instanceof Cast){
+            Type castType = node.getFirstChild().firstChildOfType(Type.class);
+        }
 
-        /*
-            Checking for .length
-            wenn vorhanden, dann umwandlung zu Integertyp
-         */
+
+        // TODO Checking for .length, wenn vorhanden, dann umwandlung zu Integertyp
         if (node.hasLength) {
             log.info("Found Atom with \".length\" with " + node.children().size() + " children.");
             // id.lenght => Integer
@@ -321,7 +344,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 // Check if ID contains String or Array
                 // TODO Check symbol table for ID and if String or Array
 
-                //TODO if found = no exception
+                // TODO if found = no exception
 
                 // TODO Get length from in symbol table stored assignements for ID
 
