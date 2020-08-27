@@ -344,16 +344,97 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         int childsCount = node.childrenOfType(PLUS.class).size() + node.childrenOfType(MINUS.class).size() + 1;
 
         // If 1 no operation required, just hand it up with type and value
+        // Type is not important here
         if (childsCount == 1) {
             node.type = node.childrenOfType(Product.class).get(0).type;
             node.value = node.childrenOfType(Product.class).get(0).value;
             data = node.childrenAccept(this, data);
             return data;
         }
-        // TODO MORE
+
+        // If more, do the operation
+        // First check types, then values later (symboltable not needed (Arrays = Atoms :))
+        List<Node> childs = node.children();
+        int stepsToOperate = node.children().size();
+        //Init with first value
+        Sum sum = new Sum();
+        sum.type = ((Product) childs.get(0)).type;
+        sum.value = ((Product) childs.get(0)).value;
+        //Start operation at 2nd value (Token + Token - Token + ...)
+        for (int i = 2; i < stepsToOperate; i += 2) {
+            // 1. Check Types of next 2 operands
+            // If same type, operate, same result type (no change)
+            // Exception: char + char = int
+            if (sum.type.type.equals("double")) {
+                if (childs.get(i - 1) instanceof PLUS) {
+                    sum.value = "" +
+                            (Double.parseDouble(sum.value)
+                                    + Double.parseDouble(((Product) childs.get(i)).value)
+                            );
+                } else if (childs.get(i - 1) instanceof MINUS) {
+                    sum.value = "" +
+                            (Double.parseDouble((sum.value))
+                                    - Double.parseDouble(((Product) childs.get(i)).value)
+                            );
+                } else {
+                    throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                }
+                if (sum.type.type.equals(((Product) childs.get(i)).type.type)) {
+                    if (sum.type.type.equals("int")) {
+                        if (childs.get(i - 1) instanceof PLUS) {
+                            sum.value = "" +
+                                    (Integer.parseInt(sum.value)
+                                            + Integer.parseInt(((Product) childs.get(i)).value)
+                                    );
+                        } else if (childs.get(i - 1) instanceof MINUS) {
+                            sum.value = "" +
+                                    (Integer.parseInt(sum.value)
+                                            - Integer.parseInt(((Product) childs.get(i)).value)
+                                    );
+                        } else {
+                            throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                        }
+                    }
+                    if (sum.type.type.equals("double")) {
+                        if (childs.get(i - 1) instanceof PLUS) {
+                            sum.value = "" +
+                                    (Double.parseDouble(sum.value)
+                                            + Double.parseDouble(((Product) childs.get(i)).value)
+                                    );
+                        } else if (childs.get(i - 1) instanceof MINUS) {
+                            sum.value = "" +
+                                    (Double.parseDouble((sum.value))
+                                            - Double.parseDouble(((Product) childs.get(i)).value)
+                                    );
+                        } else {
+                            throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                        }
+                    }
+
+                    if (sum.type.type.equals("char")) {
+                        if (childs.get(i - 1) instanceof PLUS) {
+                            sum.value = "" +
+                                    (
+                                            sum.value.charAt(0)
+                                                    + ((Product) childs.get(i)).value.charAt(0)
+                                    );
+                            sum.type = new Type("int");
+                        } else if (childs.get(i - 1) instanceof MINUS) {
+                            sum.value = "" +
+                                    (
+                                            sum.value.charAt(0)
+                                                    - ((Product) childs.get(i)).value.charAt(0)
+                                    );
+                            sum.type = new Type("int");
+                        } else {
+                            throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                        }
+                    }
+                }
+            }
+        }
 
         // 2. Check childs types => try to calculate a return type
-        List<Product> childs = node.childrenOfType(Product.class);
         // e.g. for 1 + 2 + 3
         //      int int int = int;
         //      int double int = double

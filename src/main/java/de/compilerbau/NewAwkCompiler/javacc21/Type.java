@@ -23,6 +23,10 @@ public class Type extends BaseNode {
     public Type() {
     }
 
+    public Type(String type) {
+        this.type = type;
+    }
+
     public Type(boolean isArray, int dimension, String type) {
         this.isArray = isArray;
         this.dimension = dimension;
