@@ -8,7 +8,9 @@ import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*
 @SuppressWarnings("unused")
 public class ExprStmnt extends BaseNode {
 
-    public Type type;
+    /* TODO Remove Testdata, atm always int */
+    public Type type = new Type(false, 0, "int");;
+
     public String value; //Ok for int, double, char, boolean, String
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {

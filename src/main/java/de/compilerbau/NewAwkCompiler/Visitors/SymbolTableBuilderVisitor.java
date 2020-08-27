@@ -123,9 +123,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             if (decls != null) {
                 variableDecl = decls.stream().filter(o -> o.id.getImage().equals(node.id.getImage())).findFirst();
             }
-            /* TODO Remove Testdata */
-            Type testType = new Type(false, 0, "int");
-            if (utils.checkTypeIsEqual(variableDecl.get().type, testType /*node.exprStmnt.type*/)) {
+
+            if (utils.checkTypeIsEqual(variableDecl.get().type, node.exprStmnt.type)) {
                 log.info("Assignement-Types are equal!");
             }
         }

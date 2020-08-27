@@ -1,6 +1,5 @@
 package de.compilerbau.NewAwkCompiler.Visitors;
 
-import de.compilerbau.NewAwkCompiler.javacc21.Node;
 import de.compilerbau.NewAwkCompiler.javacc21.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +9,14 @@ public class Utils {
 
 
     public boolean checkTypeIsEqual(Type type1, Type type2) {
-        log.info("Type1: " + type1.type + " Type2: " + type2.type);
-        if (type1.type.equals(type2)) {
-            return true;
+        if (type1 == null) {
+            throw new TypeCheckingException("Input/Origin-Type is not declared, please check beforehand");
         }
-        return false;
+        if (type2 == null) {
+            throw new TypeCheckingException("Rssult-Type is not declared, please check beforehand");
+        }
+        log.info("Type1: " + type1.type + " Type2: " + type2.type);
+        return type1.type.equals(type2) ? true : false;
     }
 
     /**
