@@ -306,6 +306,42 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
+
+    @Override
+    public Object visit(LogicalOrExpr node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(LogicalAndExpr node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(LogicalNotExpr node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(CompExpr node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(Sum node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(Product node, Object data) {
+        return super.visit(node, data);
+    }
+
+    @Override
+    public Object visit(Sign node, Object data) {
+        return super.visit(node, data);
+    }
+
     /**
      * [LOOKAHEAD(2) Cast()]
      * (
