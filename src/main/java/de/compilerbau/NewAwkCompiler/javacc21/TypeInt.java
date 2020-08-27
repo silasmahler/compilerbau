@@ -15,7 +15,4 @@ public class TypeInt extends Token {
         super(type, image, fileLineMap);
     }
 
-    public boolean equals(Object obj) {
-        return (obj instanceof TypeInt);
-    }
 }

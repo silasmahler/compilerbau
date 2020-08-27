@@ -261,7 +261,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Stmnt node, Object data) {
         printEnter(node);
-        node.childrenAccept(this, data);
+        data = node.childrenAccept(this, data);
         return data;
     }
 
@@ -309,44 +309,58 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(LogicalOrExpr node, Object data) {
+        // Operatoren auf boolean: &&, ||, !
         return super.visit(node, data);
     }
 
     @Override
     public Object visit(LogicalAndExpr node, Object data) {
+        // Operatoren auf boolean: &&, ||, !
         return super.visit(node, data);
     }
 
     @Override
     public Object visit(LogicalNotExpr node, Object data) {
+        // Operatoren auf boolean: &&, ||, !
+        // Check if childs only boolean
+        // Do operation
+        //Save result in node
         return super.visit(node, data);
     }
 
     @Override
     public Object visit(CompExpr node, Object data) {
+        // Vergleichsoperationen: ==, >=, !=, <=, <, >
+        // Alle Datentypen
         return super.visit(node, data);
     }
 
     @Override
     public Object visit(Sum node, Object data) {
         printEnter(node);
-        //TODO Impl
+        // Operatoren auf int, double, char: +, -,
+
         // 1. Check how many childs
-        int childsCount = node.childrenOfType(PLUS.class).size() + 1;
+        int childsCount = node.childrenOfType(PLUS.class).size() + node.childrenOfType(MINUS.class).size() + 1;
+
+        // If 1 no operation required, just hand it up with type and value
+        if (childsCount == 1) {
+            node.type = node.childrenOfType(Product.class).get(0).type;
+            node.value = node.childrenOfType(Product.class).get(0).value;
+            data = node.childrenAccept(this, data);
+            return data;
+        }
+        // TODO MORE
+
         // 2. Check childs types => try to calculate a return type
         List<Product> childs = node.childrenOfType(Product.class);
-
-
         // e.g. for 1 + 2 + 3
         //      int int int = int;
         //      int double int = double
-        //      boolean int int = ERROR (Boolean has no sum)
-        //      String int int = (String + int = String) + String = String
-        //      int int String = (intResult) + String
         //      char + int = char
         //      char + double = Error
-        //      char + String = String
         // 3. Try left to right sum (e.g. 1+2+3 => 1+2=3; 3+3=6;
+        // Immer eine Auswertung links nach rechts dann die nächste
 
 
         return super.visit(node, data);
@@ -354,6 +368,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(Product node, Object data) {
+        // Operatoren auf int, double, char: *, /, %
+        // Diese Node deckt ab: *, /, %
         return super.visit(node, data);
     }
 
@@ -503,7 +519,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(PrintStmnt node, Object data) {
         printEnter(node);
-        node.childrenAccept(this, data);
+        data = node.childrenAccept(this, data);
         return data;
     }
 
