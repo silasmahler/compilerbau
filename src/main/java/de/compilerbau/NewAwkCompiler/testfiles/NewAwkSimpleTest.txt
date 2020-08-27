@@ -1,3 +1,6 @@
+int sum = 1 + 2 + 3;
+
+
 int y;
 y = a;
 int z;

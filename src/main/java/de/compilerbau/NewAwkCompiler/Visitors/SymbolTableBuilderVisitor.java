@@ -329,6 +329,26 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(Sum node, Object data) {
+        printEnter(node);
+        //TODO Impl
+        // 1. Check how many childs
+        int childsCount = node.childrenOfType(PLUS.class).size() + 1;
+        // 2. Check childs types => try to calculate a return type
+        List<Product> childs = node.childrenOfType(Product.class);
+
+
+        // e.g. for 1 + 2 + 3
+        //      int int int = int;
+        //      int double int = double
+        //      boolean int int = ERROR (Boolean has no sum)
+        //      String int int = (String + int = String) + String = String
+        //      int int String = (intResult) + String
+        //      char + int = char
+        //      char + double = Error
+        //      char + String = String
+        // 3. Try left to right sum (e.g. 1+2+3 => 1+2=3; 3+3=6;
+
+
         return super.visit(node, data);
     }
 
