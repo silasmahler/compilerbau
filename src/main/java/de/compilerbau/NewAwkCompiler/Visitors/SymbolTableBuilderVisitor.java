@@ -14,12 +14,14 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     private static final Logger log = LoggerFactory.getLogger(SymbolTableBuilderVisitor.class);
 
     private SymbolTable symbolTable;
+    private Utils utils;
 
     /**
      * Initialise a new symbol table builder.
      */
     public SymbolTableBuilderVisitor() {
         symbolTable = new SymbolTable();
+        utils = new Utils();
     }
 
     /**
@@ -114,13 +116,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
             id = node.firstAncestorOfType(MethodDecl.class).id.getImage();
         }
-
+        //Check if declaration possible, if not, throw error
         if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), id)) {
             throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
                     "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         }
         //TODO Variable is declared, check if assignement is possible
+        // We know Variable could be declared
+        //
         else {
             // TODO Check ExprStmnt von dort kommt die Info
 
@@ -157,12 +161,20 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             id = node.firstAncestorOfType(MethodDecl.class).id.getImage();
         }
 
-        if (symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), id)) {
-            log.info("SUCCESS: insertVariableDecl: Variable: " + node.toString());
-        } else {
+        if (!symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), id)) {
             throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
                     "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
+        } else {
+            log.info("SUCCESS: insertVariableDecl: Variable: " + node.toString());
+            // Now check if Assignement possible
+
+            // TODO check types and assignement
+            if (utils.checkTypeIsEqual(node.type, node.exprStmnt.type)) {
+
+            }
+
+
         }
         return data;
     }
@@ -302,35 +314,35 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     *    [LOOKAHEAD(2) Cast()]
-     *     (
-     *         (
-     *             LOOKAHEAD(2) MethodCall()
-     *             | LOOKAHEAD(3) t=<ID>
-     *             [".length"
-     *             {jjtThis.hasLength = true;
-     *              jjtThis.atomLength = t.getImage().length();}
-     *             ]
-     *         ) [ArrayAccess()]
-     *         | <KlammerAuf> Expr() <KlammerZu>
-     *         | t=<BooleanLiteral>
-     *         | t=<IntegerLiteral>
-     *         | t=<DoubleLiteral>
-     *         | t=<CharLiteral>
-     *         | t=<NullLiteral>
-     *         | LOOKAHEAD(3) t=<StringLiteral>
-     *             [".length"
-     *                {jjtThis.hasLength = true;
-     *                jjtThis.atomLength = t.getImage().length();}
-     *             ]
-     *     )
+     * [LOOKAHEAD(2) Cast()]
+     * (
+     * (
+     * LOOKAHEAD(2) MethodCall()
+     * | LOOKAHEAD(3) t=<ID>
+     * [".length"
+     * {jjtThis.hasLength = true;
+     * jjtThis.atomLength = t.getImage().length();}
+     * ]
+     * ) [ArrayAccess()]
+     * | <KlammerAuf> Expr() <KlammerZu>
+     * | t=<BooleanLiteral>
+     * | t=<IntegerLiteral>
+     * | t=<DoubleLiteral>
+     * | t=<CharLiteral>
+     * | t=<NullLiteral>
+     * | LOOKAHEAD(3) t=<StringLiteral>
+     * [".length"
+     * {jjtThis.hasLength = true;
+     * jjtThis.atomLength = t.getImage().length();}
+     * ]
+     * )
      */
     @Override
     public Object visit(Atom node, Object data) {
         printEnter(node);
 
         // TODO Check if Cast
-        if(node.getFirstChild() instanceof Cast){
+        if (node.getFirstChild() instanceof Cast) {
             Type castType = node.getFirstChild().firstChildOfType(Type.class);
         }
 

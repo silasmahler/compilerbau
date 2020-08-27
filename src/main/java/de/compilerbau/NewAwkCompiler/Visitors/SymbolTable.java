@@ -15,7 +15,6 @@ public class SymbolTable {
     public SymbolTable() {
         methodDeclTable = new HashMap<String, MethodDecl>();
         variableDeclTable = new HashMap<String, List<VariableDecl>>();
-
     }
 
     /**
