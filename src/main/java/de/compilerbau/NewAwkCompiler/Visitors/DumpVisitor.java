@@ -78,7 +78,8 @@ public class DumpVisitor extends VisitorAdapter {
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
-        return data;    }
+        return data;
+    }
 
     @Override
     public Object visit(MethodDecl node, Object data) {
@@ -95,7 +96,8 @@ public class DumpVisitor extends VisitorAdapter {
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
-        return data;    }
+        return data;
+    }
 
     @Override
     public Object visit(ExprStmnt node, Object data) {
@@ -207,11 +209,78 @@ public class DumpVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(PrintStmnt node, Object data) {
-        return null;
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
     }
 
     @Override
     public Object visit(Token node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+    }
+
+    @Override
+    public Object visit(LogicalOrExpr node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+    }
+
+    @Override
+    public Object visit(LogicalAndExpr node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+    }
+
+    @Override
+    public Object visit(LogicalNotExpr node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+    }
+
+    @Override
+    public Object visit(CompExpr node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+    }
+
+    @Override
+    public Object visit(Sum node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+    }
+
+    @Override
+    public Object visit(Product node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+    }
+
+    @Override
+    public Object visit(Sign node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
