@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Visitors which build a symbol table for a Mapl AST.
@@ -67,23 +68,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(VariableDecl node, Object data) {
         printEnter(node);
 
-        //Check syntax ok again (propably never reached parser checks this also)
-        if (!(node.getLastChild() instanceof SEMICOLON)) {
-            throw new TypeCheckingException("Missing semicolon after: "
-                    + node.firstChildOfType(ID.class).getEndLine() + ":" + node.firstChildOfType(ID.class).getEndColumn());
-        }
-
-        //1 Fill up VariableDecl-Object with needed subtypes
+        //1 Fill Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
 
         //Init with global context && Check if Method-Context
-        String id = "";
+        String contextId = "";
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            id = node.firstAncestorOfType(MethodDecl.class).id.getImage();
+            contextId = node.firstAncestorOfType(MethodDecl.class).id.getImage();
         }
 
-        if (symbolTable.checkAndInsertVariableDecl(node, id)) {
+        if (symbolTable.checkAndInsertVariableDecl(node, contextId)) {
             log.info("SUCCESS: insertVariableDecl: Variable: " + node.toString());
         } else {
             throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
@@ -101,23 +96,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Assignement node, Object data) {
         printEnter(node);
 
-        //Check syntax ok again (propably never reached parser checks this also)
-        if (!(node.getLastChild().getLastChild() instanceof SEMICOLON)) {
-            throw new TypeCheckingException("Missing semicolon after: "
-                    + node.firstChildOfType(ID.class).getEndLine() + ":" + node.firstChildOfType(ID.class).getEndColumn());
-        }
-
-        //1 Fill up VariableDecl-Object with needed subtypes
+        //1 Fill up Object with needed subtypes
         node.id = node.firstChildOfType(ID.class);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
 
         //Init with global context && Check if Method-Context
-        String id = "";
+        String contextId = "";
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            id = node.firstAncestorOfType(MethodDecl.class).id.getImage();
+            contextId = node.firstAncestorOfType(MethodDecl.class).id.getImage();
         }
         //Check if declaration possible, if not, throw error
-        if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), id)) {
+        if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), contextId)) {
             throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
                     "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
@@ -126,8 +115,19 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // We know Variable could be declared
         //
         else {
+            log.info("Variable is declared, checking assignement possible");
             // TODO Check ExprStmnt von dort kommt die Info
 
+            List<VariableDecl> decls = symbolTable.getVariableDeclsForContext(contextId);
+            Optional<VariableDecl> variableDecl = null;
+            if (decls != null) {
+                variableDecl = decls.stream().filter(o -> o.id.getImage().equals(node.id.getImage())).findFirst();
+            }
+            /* TODO Remove Testdata */
+            Type testType = new Type(false, 0, "int");
+            if (utils.checkTypeIsEqual(variableDecl.get().type, testType /*node.exprStmnt.type*/)) {
+                log.info("Assignement-Types are equal!");
+            }
         }
 
         //3 Check if assignement is possible
@@ -143,25 +143,19 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(VariableDeclAndAssignement node, Object data) {
         printEnter(node);
 
-        //Check syntax ok again (propably never reached parser checks this also)
-        if (!(node.getLastChild().getLastChild() instanceof SEMICOLON)) {
-            throw new TypeCheckingException("Missing semicolon after: "
-                    + node.firstChildOfType(ID.class).getEndLine() + ":" + node.firstChildOfType(ID.class).getEndColumn());
-        }
-
-        //1 Fill up VariableDecl-Object with needed subtypes
+        //1 Fill up Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
 
 
         //Init with global context && Check if Method-Context
-        String id = "";
+        String contextId = "";
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            id = node.firstAncestorOfType(MethodDecl.class).id.getImage();
+            contextId = node.firstAncestorOfType(MethodDecl.class).id.getImage();
         }
 
-        if (!symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), id)) {
+        if (!symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), contextId)) {
             throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
                     "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());

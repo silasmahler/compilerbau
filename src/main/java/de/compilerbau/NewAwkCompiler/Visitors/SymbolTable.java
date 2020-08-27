@@ -54,7 +54,7 @@ public class SymbolTable {
      * @param methodName context
      * @return the List of VariableDecls
      */
-    private List<VariableDecl> getVariableDeclsForContext(String methodName) {
+    public List<VariableDecl> getVariableDeclsForContext(String methodName) {
         //1 We are inside a method context
         if (methodName != null && !methodName.equals("")) {
             return variableDeclTable.get(methodName);

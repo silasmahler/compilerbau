@@ -9,8 +9,9 @@ public class Utils {
     private static final Logger log = LoggerFactory.getLogger(Utils.class);
 
 
-    public boolean checkTypeIsEqual(Type type1, Type type2){
-        if(type1.type.equals(type2)){
+    public boolean checkTypeIsEqual(Type type1, Type type2) {
+        log.info("Type1: " + type1.type + " Type2: " + type2.type);
+        if (type1.type.equals(type2)) {
             return true;
         }
         return false;
@@ -18,7 +19,7 @@ public class Utils {
 
     /**
      * Possible casts
-     *
+     * <p>
      * int, double, char, boolean => String
      * int => double
      *
@@ -26,15 +27,15 @@ public class Utils {
      * @param type2 Result-Type
      * @return true if possible
      */
-    public boolean checkTypeIsCastable(Type type1, Type type2){
+    public boolean checkTypeIsCastable(Type type1, Type type2) {
         //If type is equal
-        if(checkTypeIsEqual(type1, type2)){
+        if (checkTypeIsEqual(type1, type2)) {
             log.warn("Types are equal, no cast is needed at lines " + type1.getBeginLine() +
                     "till " + type2.getEndLine());
             return true;
         }
         // int => double
-        if(type1.type.equals("int") && type2.type.equals("double")){
+        if (type1.type.equals("int") && type2.type.equals("double")) {
             return true;
         }
         // int, double, char, boolean => String
@@ -42,7 +43,7 @@ public class Utils {
                 || type1.type.equals("double")
                 || type1.type.equals("char")
                 || type1.type.equals("boolean")
-                )
+        )
                 && type2.type.equals("String")) {
             return true;
         }

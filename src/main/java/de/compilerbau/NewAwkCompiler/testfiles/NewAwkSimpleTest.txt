@@ -1,6 +1,7 @@
 int y;
 int h = 3;
 int z;
+z = 3+4 ;
 int zx = a.length;
 int zy = "hallo".length;
 int main(String[] args) {
