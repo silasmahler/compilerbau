@@ -262,31 +262,31 @@ void Expr() #Expr : {}
 /**
 * OPERATORs (Nodes not in AST becuase precedence comes from nesting order)
 */
-void LogicalOrExpr() #void : {}
+void LogicalOrExpr() #LogicalOrExpr : {}
 {
     LogicalAndExpr() (<ConditionalOr> LogicalAndExpr())*
 }
-void LogicalAndExpr() #void : {}
+void LogicalAndExpr() #LogicalAndExpr : {}
 {
     LogicalNotExpr() (<ConditionalAnd> LogicalNotExpr())*
 }
-void LogicalNotExpr() #void : {}
+void LogicalNotExpr() #LogicalNotExpr : {}
 {
     [<ConditionalNot>] CompExpr()
 }
-void CompExpr() #void : {}
+void CompExpr() #CompExpr : {}
 {
     Sum() ((<GREATER> | <SMALLER>  | <S_OR_EQUAL> | <G_OR_EQUAL> | <NOT_EQUAL>) Sum())*
 }
-void Sum() #void : {}
+void Sum() #Sum : {}
 {
     Product() ((<PLUS> | <MINUS> ) Product())*
 }
-void Product() #void : {}
+void Product() #Product : {}
 {
     Sign() ((<MULTIPLICATION> | <DIVISION> | <MODULO>) Sign() )*
 }
-void Sign() #void : {}
+void Sign() #Sign : {}
 {
     Atom() | (<PLUS> | <MINUS> ) Atom()
 }
