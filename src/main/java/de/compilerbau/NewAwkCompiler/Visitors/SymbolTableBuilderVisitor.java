@@ -424,6 +424,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             // 2. NOT EQUAL TYPES
             else {
                 // TODO 1st Type is precedence, second needs to follow
+                // int + double => double; double + int => double
+                // char + int = int; int + char => int
+                // double + char => double; char + double => double
             }
         }
 
