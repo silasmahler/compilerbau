@@ -18,4 +18,12 @@ public class VariableDeclAndAssignement extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "VariableDeclAndAssignement{" +
+                "type=" + type +
+                ", id=" + id +
+                ", exprStmnt=" + exprStmnt +
+                '}';
+    }
 }

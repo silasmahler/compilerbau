@@ -15,4 +15,11 @@ public class LogicalOrExpr extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "LogicalOrExpr{" +
+                "type=" + type +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

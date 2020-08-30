@@ -11,4 +11,8 @@ public class ArrayAccess extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "ArrayAccess{}";
+    }
 }

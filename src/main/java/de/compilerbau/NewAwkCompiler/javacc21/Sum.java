@@ -15,4 +15,11 @@ public class Sum extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "Sum{" +
+                "type=" + type +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

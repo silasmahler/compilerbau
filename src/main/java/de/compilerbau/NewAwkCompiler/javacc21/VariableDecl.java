@@ -21,4 +21,12 @@ public class VariableDecl extends BaseNode {
         this.type = type;
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "VariableDecl{" +
+                "type=" + type +
+                ", id=" + id +
+                '}';
+    }
 }

@@ -76,7 +76,7 @@ public class NewAwkParser implements NewAwkConstants {
             SymbolTableBuilderVisitor symbolTableBuilderVisitor= new SymbolTableBuilderVisitor();
             if (root instanceof CompilationUnit) {
                 System.out.println("Entering Visitors...");
-                //((CompilationUnit) root).jjtAccept(dumpVisitor, null);
+                ((CompilationUnit) root).jjtAccept(dumpVisitor, null);
                 ((CompilationUnit) root).jjtAccept(symbolTableBuilderVisitor, null);
             }
         }

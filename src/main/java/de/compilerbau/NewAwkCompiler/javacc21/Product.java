@@ -15,4 +15,11 @@ public class Product extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "type=" + type +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

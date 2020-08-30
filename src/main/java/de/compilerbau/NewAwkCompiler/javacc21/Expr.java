@@ -15,4 +15,11 @@ public class Expr extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "Expr{" +
+                "type=" + type +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

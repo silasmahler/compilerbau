@@ -15,4 +15,12 @@ public class LogicalAndExpr extends BaseNode {
         return visitor.visit(this, data);
     }
 
+
+    @Override
+    public String toString() {
+        return "LogicalAndExpr{" +
+                "type=" + type +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

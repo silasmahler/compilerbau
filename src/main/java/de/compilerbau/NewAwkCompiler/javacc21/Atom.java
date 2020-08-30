@@ -30,8 +30,16 @@ public class Atom extends BaseNode {
     @Override
     public String toString() {
         return "Atom{" +
-                "hasLength=" + hasLength +
+                "isArrayAccess=" + isArrayAccess +
+                ", hasLength=" + hasLength +
                 ", atomLength=" + atomLength +
+                ", isExpression=" + isExpression +
+                ", isInt=" + isInt +
+                ", isDouble=" + isDouble +
+                ", toInt=" + toInt +
+                ", toDouble=" + toDouble +
+                ", type=" + type +
+                ", value='" + value + '\'' +
                 '}';
     }
 }

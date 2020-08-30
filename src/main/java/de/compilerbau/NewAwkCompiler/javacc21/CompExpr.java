@@ -11,4 +11,8 @@ public class CompExpr extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "CompExpr{}";
+    }
 }
