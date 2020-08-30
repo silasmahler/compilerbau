@@ -1,6 +1,6 @@
-int ss = ("true" || "true");
-
 int sum = 1 + 2 + 3;
+
+int ss = ("true" || "true");
 
 int y;
 y = a;

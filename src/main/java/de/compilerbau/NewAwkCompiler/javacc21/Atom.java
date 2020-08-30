@@ -8,8 +8,20 @@ import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*
 @SuppressWarnings("unused")
 public class Atom extends BaseNode {
 
+    public boolean isArrayAccess = false;
+
     public boolean hasLength = false;
     public int atomLength = 0;
+
+    public boolean isExpression = false;
+
+    public boolean isInt = false;
+    public boolean isDouble = false;
+    public boolean toInt = false;
+    public boolean toDouble = false;
+
+    public Type type = null;
+    public String value = null;
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);

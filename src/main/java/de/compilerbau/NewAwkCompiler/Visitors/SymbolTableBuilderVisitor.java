@@ -535,6 +535,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         data = node.childrenAccept(this, data);
 
+        //TODO Check Method call
+        if(node.getFirstChild() instanceof MethodCall){
+            // Check if returntype and then get Value
+        }
+
         // TODO Check if Cast
         if (node.getFirstChild() instanceof Cast) {
             Type castType = node.getFirstChild().firstChildOfType(Type.class);

@@ -302,25 +302,53 @@ void Atom() #Atom : {
 {
     [LOOKAHEAD(2) Cast()]
     (
-        (
-            LOOKAHEAD(2) MethodCall()
-            | LOOKAHEAD(3) t=<ID>
+        (LOOKAHEAD(3) t=<ID>
             [".length"
             {jjtThis.hasLength = true;
              jjtThis.atomLength = t.getImage().length();}
             ]
-        ) [ArrayAccess()]
-        | <KlammerAuf> Expr() <KlammerZu>
+        ) [ArrayAccess()
+            {jjtThis.isArrayAccess = true;}
+          ]
+        | <KlammerAuf> t=Expr() <KlammerZu>
+            {jjtThis.isExpression = true;
+             jjtThis.type = t.type;
+             jjtThis.value = t.value;
+            }
         | t=<BooleanLiteral>
+            {jjtThis.type = new Type("boolean");
+             jjtThis.value = t.getImage();
+             }
         | t=<IntegerLiteral>
+            {jjtThis.type = new Type("int");
+             jjtThis.value = t.getImage();
+             }
         | t=<DoubleLiteral>
+            {jjtThis.type = new Type("double");
+             jjtThis.value = t.getImage();
+             }
         | t=<CharLiteral>
+            {jjtThis.type = new Type("char");
+             jjtThis.value = t.getImage();
+             }
         | t=<NullLiteral>
         | LOOKAHEAD(3) t=<StringLiteral>
-            [".length"
+            [(".length"
                {jjtThis.hasLength = true;
                jjtThis.atomLength = t.getImage().length();}
-            ]
+
+            |".isInt()"
+                {jjtThis.isInt = true;}
+
+            |".isDouble()"
+                {jjtThis.isDouble = true;}
+
+            |".toInt()"
+                {jjtThis.toInt = true;}
+
+            |".toDouble()"
+                {jjtThis.toDouble = true;}
+            )]
     )
 }
 void Cast() #Cast : {} {
