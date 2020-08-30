@@ -1,4 +1,4 @@
-int ss = "true" || "true";
+int ss = ("true" || "true");
 
 int sum = 1 + 2 + 3;
 
@@ -12,14 +12,4 @@ int main(String[] args) {
     return x;
     int a;
     a = 4 + 2;
-    b = 4 * 3 + 8 % -2;
-    c = 123 + test() ;
-    d = x[4];
-    e = y[true];
-    f = (int) 5;
-    g = 7 * 2 + 3;
-    h = 7 * (2 + 3);
-    i = 7 * true || ((2 + 3) % 2);
-    y = 2;
-    String[][][] j;
 }

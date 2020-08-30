@@ -198,35 +198,20 @@ TOKEN : /* LITERALS */
 */
 Node CompilationUnit() #CompilationUnit : {}
 {
-    (LOOKAHEAD(3) VariableDecl() | LOOKAHEAD(3) Assignement() | LOOKAHEAD(3) VariableDeclAndAssignement() | MethodDecl())+
+    (LOOKAHEAD(3) VariableDecl() |
+     LOOKAHEAD(3) Assignement() |
+     LOOKAHEAD(3) VariableDeclAndAssignement() |
+     MethodDecl())+
     <EOF>
     {return jjtThis;}
-}
-void Stmnt() #Stmnt : {}
-{
-     (
-     //LOOKAHEAD(3) ExprStmnt() |
-       Block()
-     | IfStmnt()
-     | ReturnStmnt()
-     | LOOKAHEAD(3) VariableDecl()
-     | LOOKAHEAD(3) Assignement()
-     | LOOKAHEAD(3) VariableDeclAndAssignement()
-     | PrintStmnt()
-     | LOOKAHEAD(3) KlammerAffe()
-      )
-}
-void Block() #Block : {}
-{
-    <BlockAuf> (Stmnt())+ <BlockZu>
-}
-void Assignement() #Assignement: {}
-{
-    <ID> <Zuweisung> ExprStmnt()
 }
 void VariableDecl() #VariableDecl : {}
 {
        Type() <ID> <SEMICOLON>
+}
+void Assignement() #Assignement: {}
+{
+    <ID> <Zuweisung> ExprStmnt()
 }
 void VariableDeclAndAssignement() #VariableDeclAndAssignement : {}
 {
@@ -246,6 +231,24 @@ void MethodDecl() #MethodDecl : { Token t;}
 }
 void ParameterList() #ParameterList : {} {
     [Type() <ID>] (<COMMA> Type() <ID>)*
+}
+void Stmnt() #Stmnt : {}
+{
+     (
+     //LOOKAHEAD(3) ExprStmnt() |
+       Block()
+     | IfStmnt()
+     | ReturnStmnt()
+     | LOOKAHEAD(3) VariableDecl()
+     | LOOKAHEAD(3) Assignement()
+     | LOOKAHEAD(3) VariableDeclAndAssignement()
+     | PrintStmnt()
+     | LOOKAHEAD(3) KlammerAffe()
+      )
+}
+void Block() #Block : {}
+{
+    <BlockAuf> (Stmnt())+ <BlockZu>
 }
 void IfStmnt() #IfStmnt : {}
 {

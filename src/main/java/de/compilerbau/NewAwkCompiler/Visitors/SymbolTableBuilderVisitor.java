@@ -141,6 +141,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(VariableDeclAndAssignement node, Object data) {
         printEnter(node);
+        node.childrenAccept(this,data);
 
         //1 Fill up Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
@@ -234,10 +235,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Block node, Object data) {
         printEnter(node);
-        //Accept children
-        for (Node n : node.descendantsOfType(Stmnt.class)) {
-            n.jjtAccept(this, data);
-        }
+        node.childrenAccept(this, data);
+
         return data;
     }
 
@@ -304,6 +303,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Expr node, Object data) {
         printEnter(node);
+        node.childrenAccept(this, data);
+
         return data;
     }
 
@@ -356,15 +357,18 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(LogicalAndExpr node, Object data) {
         // Operatoren auf boolean: &&, ||, !
-        return super.visit(node, data);
+        data = node.childrenAccept(this, data);
+
+        return data;
     }
 
     @Override
     public Object visit(LogicalNotExpr node, Object data) {
         // Operatoren auf boolean: &&, ||, !
-        // Check if childs only boolean
-        // Do operation
-        //Save result in node
+        // Check if childs boolean -> turn around bool and save
+        // else just pass up values
+        data = node.childrenAccept(this, data);
+
         return super.visit(node, data);
     }
 
