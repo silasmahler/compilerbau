@@ -302,7 +302,7 @@ void Atom() #Atom : {
 {
     [LOOKAHEAD(2) Cast()]
     (
-        (LOOKAHEAD(3) t=<ID>
+        (t=<ID>
             [".length"
             {jjtThis.hasLength = true;
              jjtThis.atomLength = t.getImage().length();}
@@ -310,10 +310,8 @@ void Atom() #Atom : {
         ) [ArrayAccess()
             {jjtThis.isArrayAccess = true;}
           ]
-        | <KlammerAuf> t=Expr() <KlammerZu>
+        | <KlammerAuf> Expr() <KlammerZu>
             {jjtThis.isExpression = true;
-             jjtThis.type = t.type;
-             jjtThis.value = t.value;
             }
         | t=<BooleanLiteral>
             {jjtThis.type = new Type("boolean");
