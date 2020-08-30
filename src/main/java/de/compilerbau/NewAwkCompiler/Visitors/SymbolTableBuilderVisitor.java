@@ -141,7 +141,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(VariableDeclAndAssignement node, Object data) {
         printEnter(node);
-        node.childrenAccept(this,data);
+        data = node.childrenAccept(this,data);
 
         //1 Fill up Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
@@ -235,7 +235,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Block node, Object data) {
         printEnter(node);
-        node.childrenAccept(this, data);
+        data = node.childrenAccept(this, data);
 
         return data;
     }
@@ -289,7 +289,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(ExprStmnt node, Object data) {
         printEnter(node);
-        node.childrenAccept(this, data);
+        data = node.childrenAccept(this, data);
         //TODO Type of Expr
         // Value
         // Wird verwendet bei Assignement und VariableDeclAndAssignement
@@ -369,19 +369,22 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // else just pass up values
         data = node.childrenAccept(this, data);
 
-        return super.visit(node, data);
+        return data;
     }
 
     @Override
     public Object visit(CompExpr node, Object data) {
         // Vergleichsoperationen: ==, >=, !=, <=, <, >
         // Alle Datentypen
-        return super.visit(node, data);
+        data = node.childrenAccept(this, data);
+
+        return data;
     }
 
     @Override
     public Object visit(Sum node, Object data) {
         printEnter(node);
+        data = node.childrenAccept(this, data);
         // Operatoren auf int, double, char: +, -,
 
         // 1. Check how many childs
@@ -491,12 +494,16 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Product node, Object data) {
         // Operatoren auf int, double, char: *, /, %
         // Diese Node deckt ab: *, /, %
-        return super.visit(node, data);
+        data = node.childrenAccept(this, data);
+
+        return data;
     }
 
     @Override
     public Object visit(Sign node, Object data) {
-        return super.visit(node, data);
+        data = node.childrenAccept(this, data);
+
+        return data;
     }
 
     /**
@@ -526,6 +533,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Atom node, Object data) {
         printEnter(node);
+        data = node.childrenAccept(this, data);
 
         // TODO Check if Cast
         if (node.getFirstChild() instanceof Cast) {
