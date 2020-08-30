@@ -290,6 +290,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(ExprStmnt node, Object data) {
         printEnter(node);
+        node.childrenAccept(this, data);
         //TODO Type of Expr
         // Value
         // Wird verwendet bei Assignement und VariableDeclAndAssignement
@@ -309,8 +310,47 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(LogicalOrExpr node, Object data) {
+        printEnter(node);
+        data = node.childrenAccept(this, data);
         // Operatoren auf boolean: &&, ||, !
-        return super.visit(node, data);
+        int childsCount = node.children().size();
+        //If 1 child: pass this
+        if (childsCount == 1) {
+            node.type = ((LogicalAndExpr) node.getFirstChild()).type;
+            node.value = ((LogicalAndExpr) node.getFirstChild()).value;
+            return data;
+        } else {
+
+
+            //Start operation with (Token || Token || Token ...)
+            for (int i = 0; i < childsCount; i++) {
+                //if any == true return true else false
+                List<LogicalAndExpr> logicalAndExprs = node.childrenOfType(LogicalAndExpr.class);
+                // Check if any none boolean Type -> then it should be only 1 value -> pass it up or throw diff
+                if (logicalAndExprs.stream().filter(child -> !child.type.type.equals("boolean")).findAny().isPresent()
+                ) {
+                    throw new TypeCheckingException("Inconsistent Types in LogicalOrExpression.  Please only use boolean.");
+                }
+                //All boolean
+                else {
+                    //Any of the boolean = true, pass true up
+                    if (logicalAndExprs.stream().filter(child -> (child.value.equals("true"))
+                    ).findAny().isPresent()) {
+                        node.type = new Type("boolean");
+                        node.value = "true";
+                        return data;
+                    }
+                    //All of the boolean = false, pass false up
+                    else {
+                        node.type = new Type("boolean");
+                        node.value = "false";
+                        return data;
+                    }
+                }
+
+            }
+        }
+        return data;
     }
 
     @Override

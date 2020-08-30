@@ -6,8 +6,8 @@ import java.util.concurrent.CancellationException;
 import java.util.logging.*;
 import java.io.*;
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
-import de.compilerbau.NewAwkCompiler.javacc21.*;
 import de.compilerbau.NewAwkCompiler.Visitors.*;
+import de.compilerbau.NewAwkCompiler.javacc21.*;
 @SuppressWarnings("unused")
 public class NewAwkParser implements NewAwkConstants {
     static public ArrayList<Node> roots= new ArrayList<> ();
