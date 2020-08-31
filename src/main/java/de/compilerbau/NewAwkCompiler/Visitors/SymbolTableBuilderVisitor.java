@@ -36,8 +36,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     public void printEnter(Node node) {
-        log.info("<---Entering Class: " + node.getClass().getSimpleName() + "\n" +
-                "<---With Content:   " + node.toString());
+        //log.info("<---Entering Class: " + node.getClass().getSimpleName() + "\n" +
+        //        "<---With Content:   " + node.toString());
     }
 
     public void printExit(Node node) {
@@ -600,7 +600,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             if (node.hasLength) {
                 log.info("Found Atom with \".length\" with " + node.children().size() + " children.");
                 node.type = new Type("int");
-                node.value = String.valueOf(node.firstAncestorOfType(ID.class).getImage().length());
+                //TODO Search for ID and value
+                //TODO node.value = ? <- value of ID-Content.length
             }
             // ArrayAccess ID: x[5]
             else if (node.isArrayAccess) {
@@ -614,13 +615,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
             // Normal ID: x
             else {
-                //TODO What to do?
+                //TODO What to do
+                // node.type = ?
+                // node.value = ?
             }
         } else if (node.getFirstChild() instanceof KlammerAuf &&
                 node.getChild(1) instanceof Expr &&
                 node.getChild(2) instanceof KlammerZu) {
-                node.type = node.firstChildOfType(Expr.class).type;
-                node.value = node.firstChildOfType(Expr.class).value;
+            node.type = node.firstChildOfType(Expr.class).type;
+            node.value = node.firstChildOfType(Expr.class).value;
         } else if (node.getFirstChild() instanceof BooleanLiteral) {
             node.type = new Type("boolean");
             node.value = node.firstChildOfType(BooleanLiteral.class).getImage();
@@ -644,20 +647,28 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 node.value = String.valueOf(node.atomLength);
             } else if (node.isInt) {
                 node.type = new Type("boolean");
-                try {
-                    int num = Integer.parseInt(node.firstChildOfType(StringLiteral.class).getImage());
-                    node.value = "true"; // is an integer!
-                } catch (NumberFormatException e) {
-                    node.value = "false"; // not an integer!
-                }
+                String str = node.firstChildOfType(StringLiteral.class).getImage();
+                str = str.substring(1, str.length() - 1);
+                boolean isInt = str.chars().allMatch(Character::isDigit);
+                node.value = String.valueOf(isInt);
+                log.warn("Int: Str.: " + str + "Node.value: " + node.value);
             } else if (node.isDouble) {
                 node.type = new Type("boolean");
-                try {
-                    double num = Double.parseDouble(node.firstChildOfType(StringLiteral.class).getImage());
-                    node.value = "true"; // is a double!
-                } catch (NumberFormatException e) {
-                    node.value = "false"; // not a double!
+                String str = node.firstChildOfType(StringLiteral.class).getImage();
+                str = str.substring(1, str.length() - 1);
+                boolean isDouble = false;
+                if (str == null || str.length() == 0) {
+                    isDouble = false;
+                } else {
+                    try {
+                        Integer.parseInt(str);
+                        isDouble = true;
+                    } catch (NumberFormatException e) {
+                        isDouble = false;
+                    }
                 }
+                node.value = String.valueOf(isDouble);
+                log.warn("Double: Str.: " + str + "Node.value: " + node.value);
             } else if (node.toInt) {
             } else if (node.toDouble) {
             }

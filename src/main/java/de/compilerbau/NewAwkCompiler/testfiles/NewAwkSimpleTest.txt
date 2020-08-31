@@ -1,9 +1,10 @@
-boolean isint = "test".isInt();
+String s = "123a";
+
+boolean isint = "1".isInt();
 
 int sum = 1 + 2 + 3;
 
 int ss = ("true" || "true");
-
 int y;
 y = a;
 int z;
