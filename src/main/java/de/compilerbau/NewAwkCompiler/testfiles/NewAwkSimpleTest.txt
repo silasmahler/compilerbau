@@ -1,6 +1,6 @@
 String s = "123a";
 
-boolean isint = "1".isInt();
+boolean isint = "20.09".isDouble();
 
 int sum = 1 + 2 + 3;
 

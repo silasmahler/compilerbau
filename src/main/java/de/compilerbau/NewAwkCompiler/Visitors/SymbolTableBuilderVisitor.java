@@ -651,7 +651,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 str = str.substring(1, str.length() - 1);
                 boolean isInt = str.chars().allMatch(Character::isDigit);
                 node.value = String.valueOf(isInt);
-                log.warn("Int: Str.: " + str + "Node.value: " + node.value);
+                log.warn("Int: Str.: " + str + " Node.value: " + node.value);
             } else if (node.isDouble) {
                 node.type = new Type("boolean");
                 String str = node.firstChildOfType(StringLiteral.class).getImage();
@@ -661,14 +661,14 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     isDouble = false;
                 } else {
                     try {
-                        Integer.parseInt(str);
+                        Double.parseDouble(str);
                         isDouble = true;
                     } catch (NumberFormatException e) {
                         isDouble = false;
                     }
                 }
                 node.value = String.valueOf(isDouble);
-                log.warn("Double: Str.: " + str + "Node.value: " + node.value);
+                log.warn("Double: Str.: " + str + " Node.value: " + node.value);
             } else if (node.toInt) {
             } else if (node.toDouble) {
             }

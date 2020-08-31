@@ -186,7 +186,7 @@ TOKEN : /* LITERALS */
 | <DoubleLiteral: ((<DIGIT>)+<DOT>(<DIGIT>)*(<EXPO>)?) | ((<DIGIT>)*<DOT> (<DIGIT>)+(<EXPO> )?)>
 | <ID: <LETTER>(<DIGIT>|<LETTER>)*>
 | <StringLiteral: "\"" <STRING_CONTENT> "\"">
-| <#STRING_CONTENT: (<LETTER>|<DIGIT>| (" ") )* >
+| <#STRING_CONTENT: (<LETTER>|<DIGIT>|<DoubleLiteral>|(" ") )* >
 | <PRINT_LINE: "System.out.println">
 | <PRINT: "System.out.print">
 | <LENGTH: "length()">
