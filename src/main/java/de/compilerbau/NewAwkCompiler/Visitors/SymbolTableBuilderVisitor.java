@@ -412,14 +412,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
         // If more, do the operation
         // First check types, then values later (symboltable not needed (Arrays = Atoms :))
-        List<Node> childs = node.children();;
+        List<Node> childs = node.children();
+        ;
         //Init with first value
         Sum sum = new Sum();
         sum.type = node.firstChildOfType(Product.class).type;
         sum.value = node.firstChildOfType(Product.class).value;
         //Start operation at 2nd value (Token + Token - Token + ...)
         log.warn("Sum-Type: " + sum.type.toString() +
-                "Sum-Value: " + sum.value + "\n"+
+                "Sum-Value: " + sum.value + "\n" +
                 String.valueOf(node.children().size()));
         for (int i = 2; i < node.children().size(); i += 2) {
             // 1. Check Types of next 2 operands
@@ -586,11 +587,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         data = node.childrenAccept(this, data);
 
-        //TODO Check Method call
-        if (node.getFirstChild() instanceof MethodCall) {
-            // Check if returntype and then get Value
-        }
-
         // TODO Check if Cast
         if (node.getFirstChild() instanceof Cast) {
             Type castType = node.getFirstChild().firstChildOfType(Type.class);
@@ -600,19 +596,31 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // TODO Checking for .length, wenn vorhanden, dann umwandlung zu Integertyp
 
         if (node.getFirstChild() instanceof ID) {
-
+            //Length ID: x.length
             if (node.hasLength) {
                 log.info("Found Atom with \".length\" with " + node.children().size() + " children.");
-                // id.lenght => Integer
+                node.type = new Type("int");
+                node.value = String.valueOf(node.firstAncestorOfType(ID.class).getImage().length());
             }
-
-            // Check if ID contains String or Array
-            // TODO Check symbol table for ID and if String or Array
-
-            // TODO if found = no exception
-
-            // TODO Get length from in symbol table stored assignements for ID
-
+            // ArrayAccess ID: x[5]
+            else if (node.isArrayAccess) {
+                Expr expr = node.firstChildOfType(ArrayAccess.class).firstChildOfType(Expr.class);
+                //Iterate over Array and store value and type in expr
+                ID id = node.firstChildOfType(ID.class); //Use to find array
+                // expr.type => needs to be int for array index access
+                // expr.value => value to pass to found array and access data
+                node.type = new Type("myType"); //TODO Return-Type-From-Array;
+                node.value = "1"; // TODO Return-Value-From-Array;
+            }
+            // Normal ID: x
+            else {
+                //TODO What to do?
+            }
+        } else if (node.getFirstChild() instanceof KlammerAuf &&
+                node.getChild(1) instanceof Expr &&
+                node.getChild(2) instanceof KlammerZu) {
+                node.type = node.firstChildOfType(Expr.class).type;
+                node.value = node.firstChildOfType(Expr.class).value;
         } else if (node.getFirstChild() instanceof BooleanLiteral) {
             node.type = new Type("boolean");
             node.value = node.firstChildOfType(BooleanLiteral.class).getImage();
@@ -658,11 +666,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
             }
         }/** else {
-            throw new TypeCheckingException("The type can't have \".length\" representation: " +
-                    "Error at: "
-                    + node.getFirstChild().getEndLine() + ":"
-                    + node.getFirstChild().getEndColumn());
-        }*/
+         throw new TypeCheckingException("The type can't have \".length\" representation: " +
+         "Error at: "
+         + node.getFirstChild().getEndLine() + ":"
+         + node.getFirstChild().getEndColumn());
+         }*/
         printExit(node);
         return data;
     }

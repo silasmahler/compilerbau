@@ -303,15 +303,16 @@ void Atom() #Atom : {
     [LOOKAHEAD(2) Cast()]
     (
         (t=<ID>
-            [".length"
-            {jjtThis.hasLength = true;
-             //Length needs to be determined by id value
-             //See Symboltable
-             }
+            ([ArrayAccess()
+                {jjtThis.isArrayAccess = true;}
             ]
-        ) [ArrayAccess()
-            {jjtThis.isArrayAccess = true;}
-          ]
+            [".length"
+                {jjtThis.hasLength = true;
+                //Length needs to be determined by id value
+                //See Symboltable
+                }
+            ])
+        )
         | <KlammerAuf> Expr() <KlammerZu>
             {jjtThis.isExpression = true;
             }
