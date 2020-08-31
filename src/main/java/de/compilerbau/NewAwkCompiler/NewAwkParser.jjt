@@ -305,7 +305,9 @@ void Atom() #Atom : {
         (t=<ID>
             [".length"
             {jjtThis.hasLength = true;
-             jjtThis.atomLength = t.getImage().length();}
+             //Length needs to be determined by id value
+             //See Symboltable
+             }
             ]
         ) [ArrayAccess()
             {jjtThis.isArrayAccess = true;}

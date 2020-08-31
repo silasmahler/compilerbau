@@ -24,6 +24,8 @@ public class Type extends BaseNode {
     }
 
     public Type(String type) {
+        this.isArray = false;
+        this.dimension = 0;
         this.type = type;
     }
 
@@ -42,7 +44,7 @@ public class Type extends BaseNode {
         return "Type{" +
                 "isArray=" + isArray +
                 ", dimension=" + dimension +
-                ", type='" + type + '\'' +
+                ", type=" + type +
                 '}';
     }
 

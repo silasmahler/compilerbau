@@ -3,6 +3,7 @@ package de.compilerbau.NewAwkCompiler.Visitors;
 import de.compilerbau.NewAwkCompiler.javacc21.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +36,13 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     public void printEnter(Node node) {
-        log.info("Entering Class: " + node.getClass().getSimpleName() + "\n" +
-                "With Content:   " + node.toString());
+        log.info("<---Entering Class: " + node.getClass().getSimpleName() + "\n" +
+                "<---With Content:   " + node.toString());
+    }
+
+    public void printExit(Node node) {
+        log.info("--->Exiting Class: " + node.getClass().getSimpleName() + "\n" +
+                "--->With Content:   " + node.toString());
     }
 
     //VariableDecl() | Assignement() |  VariableDeclAndAssignement() | MethodDecl()
@@ -57,6 +63,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         //Accepts the productions children (all relevant for typechecking)
         data = node.childrenAccept(this, data);
+        printExit(node);
         return data;
     }
 
@@ -85,7 +92,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     "it twice. Position: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         }
-
+        printExit(node);
         return data;
     }
 
@@ -131,7 +138,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
         //3 Check if assignement is possible
 
-
+        printExit(node);
         return data;
     }
 
@@ -141,7 +148,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(VariableDeclAndAssignement node, Object data) {
         printEnter(node);
-        data = node.childrenAccept(this,data);
+        data = node.childrenAccept(this, data);
 
         //1 Fill up Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
@@ -170,6 +177,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
 
         }
+        printExit(node);
         return data;
     }
 
@@ -186,6 +194,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         node.block = node.firstChildOfType(Block.class);
 
         data = node.childrenAccept(this, data);
+        printExit(node);
         return data;
     }
 
@@ -223,7 +232,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
 
         }
-
+        printExit(node);
         return data;
     }
 
@@ -236,7 +245,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Block node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
-
+        printExit(node);
         return data;
     }
 
@@ -261,6 +270,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Stmnt node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
+        printExit(node);
         return data;
     }
 
@@ -270,6 +280,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(BaseNode node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -279,6 +290,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(IfStmnt node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -293,7 +305,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //TODO Type of Expr
         // Value
         // Wird verwendet bei Assignement und VariableDeclAndAssignement
-
+        printExit(node);
         return data;
     }
 
@@ -304,7 +316,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Expr node, Object data) {
         printEnter(node);
         node.childrenAccept(this, data);
-
+        printExit(node);
         return data;
     }
 
@@ -319,7 +331,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (childsCount == 1) {
             node.type = ((LogicalAndExpr) node.getFirstChild()).type;
             node.value = ((LogicalAndExpr) node.getFirstChild()).value;
-            return data;
         } else {
 
 
@@ -339,18 +350,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     ).findAny().isPresent()) {
                         node.type = new Type("boolean");
                         node.value = "true";
-                        return data;
                     }
                     //All of the boolean = false, pass false up
                     else {
                         node.type = new Type("boolean");
                         node.value = "false";
-                        return data;
                     }
                 }
 
             }
         }
+        printExit(node);
         return data;
     }
 
@@ -358,7 +368,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(LogicalAndExpr node, Object data) {
         // Operatoren auf boolean: &&, ||, !
         data = node.childrenAccept(this, data);
-
+        printExit(node);
         return data;
     }
 
@@ -368,7 +378,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // Check if childs boolean -> turn around bool and save
         // else just pass up values
         data = node.childrenAccept(this, data);
-
+        printExit(node);
         return data;
     }
 
@@ -377,7 +387,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // Vergleichsoperationen: ==, >=, !=, <=, <, >
         // Alle Datentypen
         data = node.childrenAccept(this, data);
-
+        printExit(node);
         return data;
     }
 
@@ -396,19 +406,22 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.type = node.childrenOfType(Product.class).get(0).type;
             node.value = node.childrenOfType(Product.class).get(0).value;
             data = node.childrenAccept(this, data);
+            printExit(node);
             return data;
         }
 
         // If more, do the operation
         // First check types, then values later (symboltable not needed (Arrays = Atoms :))
-        List<Node> childs = node.children();
-        int stepsToOperate = node.children().size();
+        List<Node> childs = node.children();;
         //Init with first value
         Sum sum = new Sum();
-        sum.type = ((Product) childs.get(0)).type;
-        sum.value = ((Product) childs.get(0)).value;
+        sum.type = node.firstChildOfType(Product.class).type;
+        sum.value = node.firstChildOfType(Product.class).value;
         //Start operation at 2nd value (Token + Token - Token + ...)
-        for (int i = 2; i < stepsToOperate; i += 2) {
+        log.warn("Sum-Type: " + sum.type.toString() +
+                "Sum-Value: " + sum.value + "\n"+
+                String.valueOf(node.children().size()));
+        for (int i = 2; i < node.children().size(); i += 2) {
             // 1. Check Types of next 2 operands
             // If same type, operate, same result type (no change)
             // Exception: char + char = int
@@ -486,23 +499,61 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // 3. Try left to right sum (e.g. 1+2+3 => 1+2=3; 3+3=6;
         // Immer eine Auswertung links nach rechts dann die nächste
 
-
-        return super.visit(node, data);
+        printExit(node);
+        return data;
     }
 
     @Override
     public Object visit(Product node, Object data) {
         // Operatoren auf int, double, char: *, /, %
-        // Diese Node deckt ab: *, /, %
         data = node.childrenAccept(this, data);
 
+        // If 1 no operation required, just pass it up
+        if (node.children().size() == 1) {
+            node.type = node.firstChildOfType(Sign.class).type;
+            node.value = node.firstChildOfType(Sign.class).value;
+            data = node.childrenAccept(this, data);
+            printExit(node);
+            return data;
+        }
+
+        //TODO Implement Products-Ops
+        node.type = new Type("int");
+        node.value = "test";
+
+        printExit(node);
         return data;
     }
 
     @Override
     public Object visit(Sign node, Object data) {
+        printEnter(node);
         data = node.childrenAccept(this, data);
 
+        if (node.children().size() == 1) {
+            node.type = node.firstChildOfType(Atom.class).type;
+            node.value = node.firstChildOfType(Atom.class).value;
+        } else if (node.getFirstChild() instanceof MINUS) {
+            node.type = node.firstChildOfType(Atom.class).type;
+            switch (node.firstChildOfType(Atom.class).type.type) {
+                case "int":
+                    node.value = String.valueOf(
+                            -Integer.parseInt(node.firstChildOfType(Atom.class).value)
+                    );
+                case "double":
+                    node.value = String.valueOf(
+                            -Double.parseDouble(node.firstChildOfType(Atom.class).value)
+                    );
+                case "char": //Do Nothing, just pass Exception
+                case "boolean": //Do Nothing, just pass Exception
+                case "String": //Do Nothing, just pass Exception
+                default:
+                    throw new TypeCheckingException("Sign is used in front of type not applicable at: " +
+                            node.getBeginColumn() + ":" + node.getBeginLine());
+            }
+        }
+
+        printExit(node);
         return data;
     }
 
@@ -536,7 +587,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
 
         //TODO Check Method call
-        if(node.getFirstChild() instanceof MethodCall){
+        if (node.getFirstChild() instanceof MethodCall) {
             // Check if returntype and then get Value
         }
 
@@ -547,37 +598,72 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
 
         // TODO Checking for .length, wenn vorhanden, dann umwandlung zu Integertyp
-        if (node.hasLength) {
-            log.info("Found Atom with \".length\" with " + node.children().size() + " children.");
-            // id.lenght => Integer
-            if (node.getFirstChild() instanceof ID) {
 
-                // Check if ID contains String or Array
-                // TODO Check symbol table for ID and if String or Array
+        if (node.getFirstChild() instanceof ID) {
 
-                // TODO if found = no exception
-
-                // TODO Get length from in symbol table stored assignements for ID
-
+            if (node.hasLength) {
+                log.info("Found Atom with \".length\" with " + node.children().size() + " children.");
+                // id.lenght => Integer
             }
-            // "String".length => Integer
-            else if (node.getFirstChild() instanceof StringLiteral) {
-                //String has definitive length
-                int length = ((StringLiteral) node.getFirstChild()).getImage().length();
-                // Now we know the representation => remove children and put int in
-                node.clearChildren();
-                IntegerLiteral integerLiteral = new IntegerLiteral();
-                integerLiteral.setIntValue(length);
-                node.addChild(integerLiteral);
-            } else {
-                throw new TypeCheckingException("The type can't have \".length\" representation: " +
-                        "Error at: "
-                        + node.getFirstChild().getEndLine() + ":"
-                        + node.getFirstChild().getEndColumn());
-            }
+
+            // Check if ID contains String or Array
+            // TODO Check symbol table for ID and if String or Array
+
+            // TODO if found = no exception
+
+            // TODO Get length from in symbol table stored assignements for ID
+
+        } else if (node.getFirstChild() instanceof BooleanLiteral) {
+            node.type = new Type("boolean");
+            node.value = node.firstChildOfType(BooleanLiteral.class).getImage();
+        } else if (node.getFirstChild() instanceof IntegerLiteral) {
+            node.type = new Type("int");
+            node.value = node.firstChildOfType(IntegerLiteral.class).getImage();
+        } else if (node.getFirstChild() instanceof DoubleLiteral) {
+            node.type = new Type("double");
+            node.value = node.firstChildOfType(DoubleLiteral.class).getImage();
+        } else if (node.getFirstChild() instanceof CharLiteral) {
+            node.type = new Type("char");
+            node.value = node.firstChildOfType(CharLiteral.class).getImage();
+        } else if (node.getFirstChild() instanceof NullLiteral) {
+            node.type = new Type("null");
+            node.value = node.firstChildOfType(NullLiteral.class).getImage();
         }
+        // "String".length => Integer
+        else if (node.getFirstChild() instanceof StringLiteral) {
+            if (node.hasLength) { //String has definitive length
+                node.type = new Type("int");
+                node.value = String.valueOf(node.atomLength);
+            } else if (node.isInt) {
+                node.type = new Type("boolean");
+                try {
+                    int num = Integer.parseInt(node.firstChildOfType(StringLiteral.class).getImage());
+                    node.value = "true"; // is an integer!
+                } catch (NumberFormatException e) {
+                    node.value = "false"; // not an integer!
+                }
+            } else if (node.isDouble) {
+                node.type = new Type("boolean");
+                try {
+                    double num = Double.parseDouble(node.firstChildOfType(StringLiteral.class).getImage());
+                    node.value = "true"; // is a double!
+                } catch (NumberFormatException e) {
+                    node.value = "false"; // not a double!
+                }
+            } else if (node.toInt) {
+            } else if (node.toDouble) {
+            }
+            //Normal String
+            else {
 
-
+            }
+        }/** else {
+            throw new TypeCheckingException("The type can't have \".length\" representation: " +
+                    "Error at: "
+                    + node.getFirstChild().getEndLine() + ":"
+                    + node.getFirstChild().getEndColumn());
+        }*/
+        printExit(node);
         return data;
     }
 
@@ -587,6 +673,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Cast node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -596,6 +683,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(MethodCall node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -605,6 +693,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(ArrayAccess node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -617,6 +706,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         // TODO Get return-type from method context, if we are in global => error
         // TODO Check if matches return value (can be expression, variable, plain value, etc...)
+        printExit(node);
         return data;
     }
 
@@ -626,6 +716,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(KlammerAffe node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -635,6 +726,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(KlammerAffeRegex node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -644,6 +736,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(KlammerAffeAusdruck node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -654,6 +747,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(PrintStmnt node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
+        printExit(node);
         return data;
     }
 
@@ -663,6 +757,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Type node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
     }
 
@@ -673,6 +768,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Token node, Object data) {
         printEnter(node);
+        printExit(node);
         return data;
 
     }
