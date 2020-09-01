@@ -312,6 +312,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //TODO Type of Expr
         // Value
         // Wird verwendet bei Assignement und VariableDeclAndAssignement
+
+        node.type = node.firstChildOfType(Expr.class).type;
+        node.value = node.firstChildOfType(Expr.class).value;
+
         printExit(node);
         return data;
     }
@@ -323,6 +327,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Expr node, Object data) {
         printEnter(node);
         node.childrenAccept(this, data);
+
+        if (node.children().size() == 1) {
+            node.type = node.firstChildOfType(LogicalOrExpr.class).type;
+            node.value = node.firstChildOfType(LogicalOrExpr.class).value;
+            printExit(node);
+            return data;
+        }
+        //TODO Else
+
         printExit(node);
         return data;
     }
@@ -333,16 +346,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         data = node.childrenAccept(this, data);
         // Operatoren auf boolean: &&, ||, !
-        int childsCount = node.children().size();
         //If 1 child: pass this
-        if (childsCount == 1) {
-            node.type = ((LogicalAndExpr) node.getFirstChild()).type;
-            node.value = ((LogicalAndExpr) node.getFirstChild()).value;
+        if (node.children().size() == 1) {
+            node.type = node.firstChildOfType(LogicalAndExpr.class).type;
+            node.value = node.firstChildOfType(LogicalAndExpr.class).value;
+            printExit(node);
+            return data;
         } else {
-
-
             //Start operation with (Token || Token || Token ...)
-            for (int i = 0; i < childsCount; i++) {
+            for (int i = 0; i < node.children().size(); i++) {
                 //if any == true return true else false
                 List<LogicalAndExpr> logicalAndExprs = node.childrenOfType(LogicalAndExpr.class);
                 // Check if any none boolean Type -> then it should be only 1 value -> pass it up or throw diff
@@ -364,7 +376,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         node.value = "false";
                     }
                 }
-
             }
         }
         printExit(node);
@@ -375,6 +386,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(LogicalAndExpr node, Object data) {
         // Operatoren auf boolean: &&, ||, !
         data = node.childrenAccept(this, data);
+
+        if (node.children().size() == 1) {
+            node.type = node.firstChildOfType(LogicalNotExpr.class).type;
+            node.value = node.firstChildOfType(LogicalNotExpr.class).value;
+            printExit(node);
+            return data;
+        }
+        //TODO ELSE
+
         printExit(node);
         return data;
     }
@@ -386,6 +406,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // Check if childs boolean -> turn around bool and save
         // else just pass up values
         data = node.childrenAccept(this, data);
+
+        if (node.children().size() == 1) {
+            node.type = node.firstChildOfType(CompExpr.class).type;
+            node.value = node.firstChildOfType(CompExpr.class).value;
+            printExit(node);
+            return data;
+        }
+        //TODO ELSE
+
         printExit(node);
         return data;
     }
@@ -396,6 +425,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // Vergleichsoperationen: ==, >=, !=, <=, <, >
         // Alle Datentypen
         data = node.childrenAccept(this, data);
+
+        if (node.children().size() == 1) {
+            node.type = node.firstChildOfType(Sum.class).type;
+            node.value = node.firstChildOfType(Sum.class).value;
+            printExit(node);
+            return data;
+        }
+        //TODO ELSE
+
         printExit(node);
         return data;
     }
@@ -414,7 +452,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (childsCount == 1) {
             node.type = node.childrenOfType(Product.class).get(0).type;
             node.value = node.childrenOfType(Product.class).get(0).value;
-            data = node.childrenAccept(this, data);
             printExit(node);
             return data;
         }
@@ -519,7 +556,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (node.children().size() == 1) {
             node.type = node.firstChildOfType(Sign.class).type;
             node.value = node.firstChildOfType(Sign.class).value;
-            data = node.childrenAccept(this, data);
             printExit(node);
             return data;
         }
@@ -560,13 +596,13 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     childValue = (double) child.value.charAt(0);
                 }
                 //Operate
-                if(node.getChild(i-1) instanceof MULTIPLICATION){
+                if (node.getChild(i - 1) instanceof MULTIPLICATION) {
                     result *= childValue;
                 }
-                if(node.getChild(i-1) instanceof DIVISION) {
+                if (node.getChild(i - 1) instanceof DIVISION) {
                     result /= childValue;
                 }
-                if(node.getChild(i-1) instanceof MODULO) {
+                if (node.getChild(i - 1) instanceof MODULO) {
                     result %= childValue;
                 }
             }
