@@ -684,7 +684,23 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 node.value = String.valueOf(isDouble);
                 log.warn("Double: Str.: " + str + " Node.value: " + node.value);
             } else if (node.toInt) {
+                node.type = new Type("int");
+                String str = node.firstChildOfType(StringLiteral.class).getImage();
+                str = str.substring(1, str.length() - 1);
+                try {
+                    node.value = String.valueOf(Integer.parseInt(str));
+                } catch (NumberFormatException e) {
+                    throw new TypeCheckingException("Could not convert String value to integer!");
+                }
             } else if (node.toDouble) {
+                node.type = new Type("double");
+                String str = node.firstChildOfType(StringLiteral.class).getImage();
+                str = str.substring(1, str.length() - 1);
+                try {
+                    node.value = String.valueOf(Double.parseDouble(str));
+                } catch (NumberFormatException e) {
+                    throw new TypeCheckingException("Could not convert String value to double!");
+                }
             }
             //Normal String
             else {
