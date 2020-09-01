@@ -300,7 +300,6 @@ void Atom() #Atom : {
     Token t;
 }
 {
-    [LOOKAHEAD(2) Cast()]
     (
         (t=<ID>
             ([ArrayAccess()
@@ -351,9 +350,6 @@ void Atom() #Atom : {
                 {jjtThis.toDouble = true;}
             )]
     )
-}
-void Cast() #Cast : {} {
-    <KlammerAuf> Type() <KlammerZu>
 }
 void MethodCall() #MethodCall : {}
 {
