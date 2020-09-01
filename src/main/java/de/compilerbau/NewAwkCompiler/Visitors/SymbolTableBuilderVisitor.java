@@ -7,6 +7,8 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Visitors which build a symbol table for a Mapl AST.
@@ -47,10 +49,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     /**
      * Returns the context of a node (in a method or outside)
+     *
      * @param node
      * @return
      */
-    public String getContext(Node node){
+    public String getContext(Node node) {
         String context = "";
         if (node.firstAncestorOfType(MethodDecl.class) != null) {
             context = node.firstAncestorOfType(MethodDecl.class).id.getImage();
@@ -429,10 +432,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 "Sum-Value: " + sum.value + "\n" +
                 String.valueOf(node.children().size()));
         for (int i = 2; i < node.children().size(); i += 2) {
-            // 1. Check Types of next 2 operands
-            // If same type, operate, same result type (no change)
-            // Exception: char + char = int
-
             // 1. EQUAL TYPES?
             if (sum.type.type.equals(((Product) childs.get(i)).type.type)) {
                 // 1.1 INT
@@ -512,8 +511,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(Product node, Object data) {
-        printEnter(node);
         // Operatoren auf int, double, char: *, /, %
+        printEnter(node);
         data = node.childrenAccept(this, data);
 
         // If 1 no operation required, just pass it up
@@ -524,6 +523,57 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             printExit(node);
             return data;
         }
+        // Check if only types are int, double and char
+        // Then just let them operate to a double result with java this is possible
+        //double test = 2 * 5.3 / 'a' % 'f' % 2 / 4.32
+        if (node.childrenOfType(Sign.class).stream()
+                .filter(child -> !child.type.type.equals("int"))
+                .filter(child -> !child.type.type.equals("double"))
+                .filter(child -> !child.type.type.equals("char"))
+                .collect(Collectors.toList()).size() > 0
+        ) {
+            throw new TypeCheckingException("There are other types than int, double or char" +
+                    "in an operation which uses * / and %");
+        } else {
+            //Algo: 1) Get 2 operands, 2) parse both 3) operate with them 4) result save double
+            Sign firstChild = node.firstChildOfType(Sign.class);
+            double result = 0;
+            if (firstChild.type.type.equals("int")) {
+                result = (double) Integer.parseInt(firstChild.value);
+            }
+            if (firstChild.type.type.equals("double")) {
+                result = Double.parseDouble(firstChild.value);
+            }
+            if (firstChild.type.type.equals("char")) {
+                result = (double) firstChild.value.charAt(0);
+            }
+            for (int i = 2; i < node.children().size(); i += 2) {
+                Sign child = (Sign) node.getChild(i);
+                double childValue = 0;
+                if (child.type.type.equals("int")) {
+                    childValue = (double) Integer.parseInt(child.value);
+                }
+                if (child.type.type.equals("double")) {
+                    childValue = Double.parseDouble(child.value);
+                }
+                if (child.type.type.equals("char")) {
+                    childValue = (double) child.value.charAt(0);
+                }
+                //Operate
+                if(node.getChild(i-1) instanceof MULTIPLICATION){
+                    result *= childValue;
+                }
+                if(node.getChild(i-1) instanceof DIVISION) {
+                    result /= childValue;
+                }
+                if(node.getChild(i-1) instanceof MODULO) {
+                    result %= childValue;
+                }
+            }
+            node.type = new Type("double");
+            node.value = String.valueOf(result);
+        }
+
 
         //TODO Implement Products-Ops
         node.type = new Type("int");
@@ -609,7 +659,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     context = ""; //Global context
                 }
                 VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.firstChildOfType(ID.class), context);
-                if (variableDecl != null ) {
+                if (variableDecl != null) {
                     log.warn("TEST: " + variableDecl.value.length());
                     variableDecl.value.length();
                 } else {
