@@ -541,6 +541,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (node.children().size() == 1) {
             node.type = node.firstChildOfType(Atom.class).type;
             node.value = node.firstChildOfType(Atom.class).value;
+            printExit(node);
+            return data;
         } else if (node.getFirstChild() instanceof MINUS) {
             node.type = node.firstChildOfType(Atom.class).type;
             switch (node.firstChildOfType(Atom.class).type.type) {
