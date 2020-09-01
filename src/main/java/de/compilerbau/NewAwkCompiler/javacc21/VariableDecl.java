@@ -4,11 +4,20 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("unused")
 public class VariableDecl extends BaseNode {
 
     public Type type = null;
     public ID id = null;
+    /**
+     * Value is not assigned at the init of a new {@link VariableDecl}-Object
+     * its assigned when a {@link Assignement} is done,
+     * or if {@link VariableDeclAndAssignement} is called
+     */
+    public String value = null;
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
@@ -27,6 +36,7 @@ public class VariableDecl extends BaseNode {
         return "VariableDecl{" +
                 "type=" + type +
                 ", id=" + id +
+                ", value='" + value + '\'' +
                 '}';
     }
 }

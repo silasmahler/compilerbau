@@ -803,8 +803,7 @@ public class NewAwkLexer implements NewAwkConstants {
             case 98:
             return jjMoveStringLiteralDfa7(active0, 0x0L, active1, 0xaL);
             case 104:
-            if ((active0&0x8000000000000000L)!=0L) return jjStopAtPos(6, 63);
-            break;
+            return jjMoveStringLiteralDfa7(active0, 0x8000000000000000L, active1, 0x0L);
             case 110:
             if ((active0&0x80000000L)!=0L) return jjStartNfaWithStates(6, 31, 17);
             else if ((active0&0x400000000000L)!=0L) return jjStartNfaWithStates(6, 46, 17);
@@ -836,6 +835,8 @@ public class NewAwkLexer implements NewAwkConstants {
         }
         if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
+            case 40:
+            return jjMoveStringLiteralDfa8(active0, 0x8000000000000000L, active1, 0x0L);
             case 41:
             if ((active0&0x4000000000000000L)!=0L) return jjStopAtPos(7, 62);
             else if ((active1&0x1L)!=0L) return jjStopAtPos(7, 64);
@@ -869,6 +870,9 @@ public class NewAwkLexer implements NewAwkConstants {
         }
         if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
+            case 41:
+            if ((active0&0x8000000000000000L)!=0L) return jjStopAtPos(8, 63);
+            break;
             case 101:
             return jjMoveStringLiteralDfa9(active0, 0x0L, active1, 0xaL);
             case 117:

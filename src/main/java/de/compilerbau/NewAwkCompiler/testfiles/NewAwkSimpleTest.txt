@@ -1,18 +1,5 @@
-String s = "123a";
 
-boolean isint = "20.09".isDouble();
-
-int sum = 1 + 2 + 3;
-
-int ss = ("true" || "true");
-int y;
-y = a;
-int z;
-int zx = a.length;
-int zy = "hallo".length;
+int zy = "hallo".length();
 int main(String[] args) {
-    int x = 5;
-    return x;
-    int a;
-    a = 4 + 2;
+    int f = dd.length();
 }

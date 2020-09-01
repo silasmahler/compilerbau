@@ -305,7 +305,7 @@ void Atom() #Atom : {
             ([ArrayAccess()
                 {jjtThis.isArrayAccess = true;}
             ]
-            [".length"
+            [".length()"
                 {jjtThis.hasLength = true;
                 //Length needs to be determined by id value
                 //See Symboltable
@@ -333,7 +333,7 @@ void Atom() #Atom : {
              }
         | t=<NullLiteral>
         | LOOKAHEAD(3) t=<StringLiteral>
-            [(".length"
+            [(".length()"
                {jjtThis.hasLength = true;
                jjtThis.atomLength = t.getImage().length();}
 

@@ -76,6 +76,18 @@ public class SymbolTable {
     }
 
     /**
+     * Method that searches for an Id value in symboltable
+     * and gives back the {@link VariableDecl}
+     * @param id ID to search
+     * @param methodName context
+     */
+    public VariableDecl findVariableDeclFromID(ID id, String methodName) {
+        return getVariableDeclsForContext(methodName).stream().filter(
+                variableDecl -> variableDecl.id.getImage().equals(id.getImage())
+                ).findFirst().get();
+    }
+
+    /**
      * @param node       the node to be inserted
      * @param methodName name of the method (context) a variable is used in, leave empty string or null, if outside
      *                   method/global context

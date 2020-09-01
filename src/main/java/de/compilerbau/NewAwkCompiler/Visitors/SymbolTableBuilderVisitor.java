@@ -78,6 +78,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //1 Fill Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
+        node.value = null;
 
         //Init with global context && Check if Method-Context
         String contextId = "";
@@ -559,14 +560,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * [LOOKAHEAD(2) Cast()]
-     * (
-     * (
-     * LOOKAHEAD(2) MethodCall()
      * | LOOKAHEAD(3) t=<ID>
      * [".length"
      * {jjtThis.hasLength = true;
-     * jjtThis.atomLength = t.getImage().length();}
      * ]
      * ) [ArrayAccess()]
      * | <KlammerAuf> Expr() <KlammerZu>
@@ -596,6 +592,18 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 node.type = new Type("int");
                 //TODO Search for ID and value
                 //TODO node.value = ? <- value of ID-Content.length
+
+                //TODO Geben: ID, Gesucht: Exists, value, type
+                String context = "";
+                if(node.firstAncestorOfType(MethodDecl.class) != null){
+                    MethodDecl methodDecl = node.firstAncestorOfType(MethodDecl.class);
+                    log.warn("TEST: " + methodDecl.id.getImage());
+                    context = methodDecl.id.getImage();
+                }
+                else {
+                    context = ""; //Global context
+                }
+                symbolTable.findVariableDeclFromID(node.firstChildOfType(ID.class), context);
             }
             // ArrayAccess ID: x[5]
             else if (node.isArrayAccess) {
