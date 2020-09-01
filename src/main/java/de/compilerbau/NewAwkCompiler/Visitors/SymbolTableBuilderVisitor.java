@@ -38,8 +38,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     public void printEnter(Node node) {
-        //log.info("<---Entering Class: " + node.getClass().getSimpleName() + "\n" +
-        //        "<---With Content:   " + node.toString());
+        log.info("<---Entering Class: " + node.getClass().getSimpleName() + "\n" +
+                "<---With Content:   " + node.toString());
     }
 
     public void printExit(Node node) {
@@ -55,8 +55,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
      */
     public String getContext(Node node) {
         String context = "";
-        if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            context = node.firstAncestorOfType(MethodDecl.class).id.getImage();
+        MethodDecl m = node.firstAncestorOfType(MethodDecl.class);
+        if (m != null) {
+            log.warn("TEST2: " + m);
+            context = m.id.getImage();
         }
         return context;
     }
@@ -164,6 +166,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //1 Fill up Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
+        log.warn("TEST: " + node.id.getImage());
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
         String contextId = getContext(node); //Init with global context && Check if Method-Context
 

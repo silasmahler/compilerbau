@@ -1,6 +1,6 @@
 
 String a = "hallo";
-int zy = "hallo".length();
+
 int main(String[] args) {
     int dd = 2;
     int f = dd.length();
