@@ -560,7 +560,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                             node.getBeginColumn() + ":" + node.getBeginLine());
             }
         }
-
         printExit(node);
         return data;
     }
