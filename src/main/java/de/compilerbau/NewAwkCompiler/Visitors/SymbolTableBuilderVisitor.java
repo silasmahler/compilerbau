@@ -45,6 +45,19 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 "--->With Content:   " + node.toString());
     }
 
+    /**
+     * Returns the context of a node (in a method or outside)
+     * @param node
+     * @return
+     */
+    public String getContext(Node node){
+        String context = "";
+        if (node.firstAncestorOfType(MethodDecl.class) != null) {
+            context = node.firstAncestorOfType(MethodDecl.class).id.getImage();
+        }
+        return context;
+    }
+
     //VariableDecl() | Assignement() |  VariableDeclAndAssignement() | MethodDecl()
 
     /**
@@ -61,7 +74,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(CompilationUnit node, Object data) {
         printEnter(node);
-        //Accepts the productions children (all relevant for typechecking)
         data = node.childrenAccept(this, data);
         printExit(node);
         return data;
@@ -74,17 +86,13 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(VariableDecl node, Object data) {
         printEnter(node);
+        data = node.childrenAccept(this, data);
 
         //1 Fill Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
         node.value = null;
-
-        //Init with global context && Check if Method-Context
-        String contextId = "";
-        if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            contextId = node.firstAncestorOfType(MethodDecl.class).id.getImage();
-        }
+        String contextId = getContext(node); //Init with global context && Check if Method-Context
 
         if (symbolTable.checkAndInsertVariableDecl(node, contextId)) {
             log.info("SUCCESS: insertVariableDecl: Variable: " + node.toString());
@@ -103,42 +111,41 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(Assignement node, Object data) {
         printEnter(node);
+        data = node.childrenAccept(this, data);
 
-        //1 Fill up Object with needed subtypes
+        //Subtypes
         node.id = node.firstChildOfType(ID.class);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
+        String contextId = getContext(node); //Init with global context && Check if Method-Context
 
-        //Init with global context && Check if Method-Context
-        String contextId = "";
-        if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            contextId = node.firstAncestorOfType(MethodDecl.class).id.getImage();
-        }
-        //Check if declaration possible, if not, throw error
+        //Is the assignement-variable declared? If not -> error
         if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), contextId)) {
-            throw new TypeCheckingException("Used variable hasn't been declared in the same scope. Please declare it. " +
+            throw new TypeCheckingException("Variable to assign to hasn't been declared in the same scope. Please declare it. " +
                     "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         }
         //TODO Variable is declared, check if assignement is possible
-        // We know Variable could be declared
-        //
         else {
             log.info("Variable is declared, checking assignement possible");
             // TODO Check ExprStmnt von dort kommt die Info
+            // Vergleiche node.id (type, value) und exprStmnt (node, value)
 
-            List<VariableDecl> decls = symbolTable.getVariableDeclsForContext(contextId);
-            Optional<VariableDecl> variableDecl = null;
-            if (decls != null) {
-                variableDecl = decls.stream().filter(o -> o.id.getImage().equals(node.id.getImage())).findFirst();
-            }
+            ExprStmnt exprStmnt = node.exprStmnt;
+            VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
 
-            if (utils.checkTypeIsEqual(variableDecl.get().type, node.exprStmnt.type)) {
-                log.info("Assignement-Types are equal!");
+            //Types need to be equal for assignement or boxable (int -> double, all -> String)
+            if (variableDecl.type.equals(exprStmnt.type.type)) {
+                variableDecl.value = exprStmnt.value;
+            } else if (variableDecl.type.equals("double") && exprStmnt.type.type.equals("int")) {
+                variableDecl.value = exprStmnt.value;
+            } else if (variableDecl.type.equals("String")) {
+                variableDecl.value = exprStmnt.value;
+            } else {
+                throw new TypeCheckingException("Assignement-Types are not equal or boxable");
             }
+            // Save the assignement Data to the Variable-Decl in the Table
+            symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
         }
-
-        //3 Check if assignement is possible
-
         printExit(node);
         return data;
     }
@@ -155,13 +162,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
-
-
-        //Init with global context && Check if Method-Context
-        String contextId = "";
-        if (node.firstAncestorOfType(MethodDecl.class) != null) {
-            contextId = node.firstAncestorOfType(MethodDecl.class).id.getImage();
-        }
+        String contextId = getContext(node); //Init with global context && Check if Method-Context
 
         if (!symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), contextId)) {
             throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
@@ -188,13 +189,14 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(MethodDecl node, Object data) {
         printEnter(node);
+        data = node.childrenAccept(this, data);
 
         //Symboltable-entry for method
         node.type = node.firstChildOfType(Type.class);
+        node.id = node.firstAncestorOfType(ID.class);
         node.parameterList = node.firstChildOfType(ParameterList.class);
         node.block = node.firstChildOfType(Block.class);
 
-        data = node.childrenAccept(this, data);
         printExit(node);
         return data;
     }
@@ -205,6 +207,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(ParameterList node, Object data) {
         printEnter(node);
+        data = node.childrenAccept(this, data);
 
         //Empty Parameterlist return no action needed
         if (!node.hasChildNodes()) {
@@ -375,6 +378,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(LogicalNotExpr node, Object data) {
+        printEnter(node);
         // Operatoren auf boolean: &&, ||, !
         // Check if childs boolean -> turn around bool and save
         // else just pass up values
@@ -385,6 +389,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(CompExpr node, Object data) {
+        printEnter(node);
         // Vergleichsoperationen: ==, >=, !=, <=, <, >
         // Alle Datentypen
         data = node.childrenAccept(this, data);
@@ -507,6 +512,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(Product node, Object data) {
+        printEnter(node);
         // Operatoren auf int, double, char: *, /, %
         data = node.childrenAccept(this, data);
 
@@ -595,15 +601,20 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
                 //TODO Geben: ID, Gesucht: Exists, value, type
                 String context = "";
-                if(node.firstAncestorOfType(MethodDecl.class) != null){
+                if (node.firstAncestorOfType(MethodDecl.class) != null) {
                     MethodDecl methodDecl = node.firstAncestorOfType(MethodDecl.class);
-                    log.warn("TEST: " + methodDecl.id.getImage());
                     context = methodDecl.id.getImage();
-                }
-                else {
+                } else {
                     context = ""; //Global context
                 }
-                symbolTable.findVariableDeclFromID(node.firstChildOfType(ID.class), context);
+                VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.firstChildOfType(ID.class), context);
+                if (variableDecl != null ) {
+                    log.warn("TEST: " + variableDecl.value.length());
+                    variableDecl.value.length();
+                } else {
+                    throw new TypeCheckingException("Variable: " + node.firstChildOfType(ID.class).getImage()
+                            + " with .length() hasn't been defined, it wasn't found in the SymbolTable.");
+                }
             }
             // ArrayAccess ID: x[5]
             else if (node.isArrayAccess) {
@@ -620,6 +631,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 //TODO What to do
                 // node.type = ?
                 // node.value = ?
+                log.warn("Normal String found!" + node.firstChildOfType(ID.class));
             }
         } else if (node.getFirstChild() instanceof KlammerAuf &&
                 node.getChild(1) instanceof Expr &&
@@ -676,14 +688,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
             //Normal String
             else {
-
+                node.type = new Type("String");
+                node.value = node.firstChildOfType(StringLiteral.class).getImage();
             }
-        }/** else {
-         throw new TypeCheckingException("The type can't have \".length\" representation: " +
-         "Error at: "
-         + node.getFirstChild().getEndLine() + ":"
-         + node.getFirstChild().getEndColumn());
-         }*/
+        }
         printExit(node);
         return data;
     }
@@ -714,6 +722,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(ArrayAccess node, Object data) {
         printEnter(node);
+        data = node.childrenAccept(this, data);
         printExit(node);
         return data;
     }

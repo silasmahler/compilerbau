@@ -20,7 +20,7 @@ public class ID extends Token {
     @Override
     public String toString() {
         return ("ID{"
-                + getImage() +
+                + super.getImage() +
                 "}");
     }
 }

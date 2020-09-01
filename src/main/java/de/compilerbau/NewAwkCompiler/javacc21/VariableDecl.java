@@ -4,9 +4,6 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SuppressWarnings("unused")
 public class VariableDecl extends BaseNode {
 
@@ -29,6 +26,13 @@ public class VariableDecl extends BaseNode {
     public VariableDecl(Type type, ID id) {
         this.type = type;
         this.id = id;
+        this.value = null;
+    }
+
+    public VariableDecl(Type type, ID id, String value) {
+        this.type = type;
+        this.id = id;
+        this.value = value;
     }
 
     @Override

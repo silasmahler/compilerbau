@@ -68,23 +68,56 @@ public class SymbolTable {
     public boolean isVariableDeclared(VariableDecl node, String methodName) {
         List<VariableDecl> decls = getVariableDeclsForContext(methodName);
         if (decls != null) {
-            if (decls.stream().filter(o -> o.id.getImage().equals(node.id.getImage())).findFirst().isPresent()) {
-                return true;
-            }
+            return decls.stream().filter(
+                    o -> o.id.getImage().equals(node.id.getImage())).findFirst().isPresent();
         }
         return false;
     }
 
     /**
+     * @param id
+     * @param value
+     * @param methodName
+     */
+    public void updateVariableDeclValue(Type type, ID id, String value, String methodName) {
+        //Check if list for context
+        List<VariableDecl> decls = getVariableDeclsForContext(methodName);
+        //If no List for context, create and add element, then done
+        if (decls == null) {
+            decls = new ArrayList<>();
+            decls.add(new VariableDecl(type, id, value));
+        }
+        //Get element to update and udate it
+        else {
+            for (VariableDecl decl : decls) {
+                if (decl.id.getImage().equals(id.getImage()) &&
+                        decl.type.type.equals(type.type)
+                ) {
+                    decl.value = value;
+                }
+            }
+        }
+        if (methodName != null && !methodName.equals("")) {
+            variableDeclTable.put(methodName, decls);
+        } else {
+            variableDeclTable.put("", decls);
+        }
+    }
+
+    /**
      * Method that searches for an Id value in symboltable
      * and gives back the {@link VariableDecl}
-     * @param id ID to search
+     *
+     * @param id         ID to search
      * @param methodName context
+     * @return
      */
     public VariableDecl findVariableDeclFromID(ID id, String methodName) {
         return getVariableDeclsForContext(methodName).stream().filter(
-                variableDecl -> variableDecl.id.getImage().equals(id.getImage())
-                ).findFirst().get();
+                o -> o.id.getImage().equals(id.getImage()))
+                .findFirst()
+                .orElseThrow(() -> new TypeCheckingException("Variable: " + id.getImage()
+                        + " with .length() hasn't been defined, it wasn't found in the SymbolTable."));
     }
 
     /**
