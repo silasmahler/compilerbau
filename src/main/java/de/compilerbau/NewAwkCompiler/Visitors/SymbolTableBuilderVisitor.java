@@ -662,25 +662,23 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         data = node.childrenAccept(this, data);
 
+        Atom child = node.firstChildOfType(Atom.class);
         if (node.children().size() == 1 || node.getFirstChild() instanceof PLUS) {
-            node.type = node.firstChildOfType(Atom.class).type;
-            node.value = node.firstChildOfType(Atom.class).value;
+            node.type = child.type;
+            node.value = child.value;
             printExit(node);
             return data;
         } else if (node.getFirstChild() instanceof MINUS) {
-            node.type = node.firstChildOfType(Atom.class).type;
-            switch (node.firstChildOfType(Atom.class).type.type) {
+            node.type = child.type;
+            switch (child.type.type) {
                 case "int":
-                    node.value = String.valueOf(
-                            -Integer.parseInt(node.firstChildOfType(Atom.class).value)
+                    node.value = String.valueOf(-Integer.parseInt(child.value)
                     );
                 case "double":
-                    node.value = String.valueOf(
-                            -Double.parseDouble(node.firstChildOfType(Atom.class).value)
+                    node.value = String.valueOf(-Double.parseDouble(child.value)
                     );
                 case "char":
-                    node.value = String.valueOf(
-                            -node.firstChildOfType(Atom.class).value.charAt(0));
+                    node.value = String.valueOf(-child.value.charAt(0));
                 default:
                     throw new TypeCheckingException("Sign is used in front of type not applicable " +
                             "(Type != int, double or char) at: " +
