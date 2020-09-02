@@ -156,12 +156,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         }
-        //TODO Variable is declared, check if assignement of value is possible
+        // Variable is declared, check if assignement of value is possible
         else {
             log.info("Variable is declared, checking assignement possible");
-            // TODO Check ExprStmnt von dort kommt die Info
-            // Vergleiche node.id (type, value) und exprStmnt (node, value)
-
             ExprStmnt exprStmnt = node.exprStmnt;
             VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
 
