@@ -195,14 +195,18 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(MethodDecl node, Object data) {
         printEnter(node);
+        node.type = node.firstChildOfType(Type.class);
+        //node.id = node.firstChildOfType((ID.class)); needs to be put in before
+        // we need it to define the context
+        node.id = node.firstChildOfType(ID.class);
+        node.id.setImage(node.idValue);
+
         data = node.childrenAccept(this, data);
 
-        //Symboltable-entry for method
-        node.type = node.firstChildOfType(Type.class);
-        node.id = node.firstChildOfType((ID.class));
         node.parameterList = node.firstChildOfType(ParameterList.class);
         node.block = node.firstChildOfType(Block.class);
 
+        //TODO Symboltable-entry for method
         printExit(node);
         return data;
     }
@@ -684,7 +688,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (node.getFirstChild() instanceof ID) {
             //Length ID: x.length
             if (node.hasLength) {
-                log.info("Found Atom with \".length\" with " + node.children().size() + " children.");
+                log.info("Found Atom with \".length()\" with " + node.children().size() + " children.");
                 node.type = new Type("int");
                 //TODO Search for ID and value
                 //TODO node.value = ? <- value of ID-Content.length

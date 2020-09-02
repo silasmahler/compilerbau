@@ -15,6 +15,8 @@ public class MethodDecl extends BaseNode {
     public boolean isVoid = false;
     //Method-ID/Name
     public ID id = null;
+    public String idValue = null;
+
     //Parameters in Parameterlist
     public ParameterList parameterList = null;
     //Method-Block
@@ -32,6 +34,7 @@ public class MethodDecl extends BaseNode {
                 "type=" + type +
                 ", isVoid=" + isVoid +
                 ", id=" + id +
+                ", idValue='" + idValue + '\'' +
                 ", parameterList=" + parameterList +
                 ", block=" + block +
                 '}';
