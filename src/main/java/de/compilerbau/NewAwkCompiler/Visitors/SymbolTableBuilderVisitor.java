@@ -589,7 +589,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // Operatoren auf int, double, char: *, /, %
         printEnter(node);
         data = node.childrenAccept(this, data);
-
         // If 1 no operation required, just pass it up
         if (node.children().size() == 1) {
             node.type = node.firstChildOfType(Sign.class).type;
@@ -624,35 +623,32 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             for (int i = 2; i < node.children().size(); i += 2) {
                 Sign child = (Sign) node.getChild(i);
                 double childValue = 0;
-                if (child.type.type.equals("int")) {
+                String childType = child.type.type;
+                if (childType.equals("int")) {
                     childValue = (double) Integer.parseInt(child.value);
                 }
-                if (child.type.type.equals("double")) {
+                else if (childType.equals("double")) {
                     childValue = Double.parseDouble(child.value);
                 }
-                if (child.type.type.equals("char")) {
+                else if (childType.equals("char")) {
                     childValue = (double) child.value.charAt(0);
                 }
                 //Operate
-                if (node.getChild(i - 1) instanceof MULTIPLICATION) {
+                Node n = node.getChild(i - 1);
+                if (n instanceof MULTIPLICATION) {
                     result *= childValue;
                 }
-                if (node.getChild(i - 1) instanceof DIVISION) {
+                else if (n instanceof DIVISION) {
                     result /= childValue;
                 }
-                if (node.getChild(i - 1) instanceof MODULO) {
+                else if (n instanceof MODULO) {
                     result %= childValue;
                 }
             }
+            //double can hold any ops on the 3 datatypes with the 3 operands, so we return it
             node.type = new Type("double");
             node.value = String.valueOf(result);
         }
-
-
-        //TODO Implement Products-Ops
-        node.type = new Type("int");
-        node.value = "test";
-
         printExit(node);
         return data;
     }
