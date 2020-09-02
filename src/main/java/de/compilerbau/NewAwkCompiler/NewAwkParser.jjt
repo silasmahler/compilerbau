@@ -198,10 +198,11 @@ TOKEN : /* LITERALS */
 */
 Node CompilationUnit() #CompilationUnit : {}
 {
-    (LOOKAHEAD(3) VariableDecl() |
-     LOOKAHEAD(3) Assignement() |
-     LOOKAHEAD(3) VariableDeclAndAssignement() |
-     MethodDecl())+
+    (LOOKAHEAD(8) VariableDecl() |
+     LOOKAHEAD(4) Assignement() |
+     LOOKAHEAD(8) VariableDeclAndAssignement() |
+     MethodDecl()
+     )+
     <EOF>
     {return jjtThis;}
 }
