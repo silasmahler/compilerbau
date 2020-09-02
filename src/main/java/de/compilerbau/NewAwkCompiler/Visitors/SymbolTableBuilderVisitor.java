@@ -512,15 +512,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             if (sum.type.type.equals(((Product) childs.get(i)).type.type)) {
                 if (sum.type.type.equals("int")) {
                     if (childs.get(i - 1) instanceof PLUS) {
-                        sum.value = "" +
-                                (Integer.parseInt(sum.value)
-                                        + Integer.parseInt(((Product) childs.get(i)).value)
-                                );
+                        sum.value = "" + (Integer.parseInt(sum.value)
+                                + Integer.parseInt(((Product) childs.get(i)).value));
                     } else if (childs.get(i - 1) instanceof MINUS) {
-                        sum.value = "" +
-                                (Integer.parseInt(sum.value)
-                                        - Integer.parseInt(((Product) childs.get(i)).value)
-                                );
+                        sum.value = "" + (Integer.parseInt(sum.value)
+                                - Integer.parseInt(((Product) childs.get(i)).value));
                     } else {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
                     }
@@ -528,15 +524,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 // 1.2 DOUBLE
                 if (sum.type.type.equals("double")) {
                     if (childs.get(i - 1) instanceof PLUS) {
-                        sum.value = "" +
-                                (Double.parseDouble(sum.value)
-                                        + Double.parseDouble(((Product) childs.get(i)).value)
-                                );
+                        sum.value = "" + (Double.parseDouble(sum.value)
+                                + Double.parseDouble(((Product) childs.get(i)).value));
                     } else if (childs.get(i - 1) instanceof MINUS) {
-                        sum.value = "" +
-                                (Double.parseDouble((sum.value))
-                                        - Double.parseDouble(((Product) childs.get(i)).value)
-                                );
+                        sum.value = "" + (Double.parseDouble((sum.value))
+                                - Double.parseDouble(((Product) childs.get(i)).value));
                     } else {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
                     }
@@ -544,18 +536,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 // 1.3 CHAR
                 if (sum.type.type.equals("char")) {
                     if (childs.get(i - 1) instanceof PLUS) {
-                        sum.value = "" +
-                                (
-                                        sum.value.charAt(0)
-                                                + ((Product) childs.get(i)).value.charAt(0)
-                                );
+                        sum.value = "" + (sum.value.charAt(0) + ((Product) childs.get(i)).value.charAt(0));
                         sum.type = new Type("int");
                     } else if (childs.get(i - 1) instanceof MINUS) {
-                        sum.value = "" +
-                                (
-                                        sum.value.charAt(0)
-                                                - ((Product) childs.get(i)).value.charAt(0)
-                                );
+                        sum.value = "" + (sum.value.charAt(0) - ((Product) childs.get(i)).value.charAt(0));
                         sum.type = new Type("int");
                     } else {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
@@ -626,22 +610,18 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 String childType = child.type.type;
                 if (childType.equals("int")) {
                     childValue = (double) Integer.parseInt(child.value);
-                }
-                else if (childType.equals("double")) {
+                } else if (childType.equals("double")) {
                     childValue = Double.parseDouble(child.value);
-                }
-                else if (childType.equals("char")) {
+                } else if (childType.equals("char")) {
                     childValue = (double) child.value.charAt(0);
                 }
                 //Operate
                 Node n = node.getChild(i - 1);
                 if (n instanceof MULTIPLICATION) {
                     result *= childValue;
-                }
-                else if (n instanceof DIVISION) {
+                } else if (n instanceof DIVISION) {
                     result /= childValue;
-                }
-                else if (n instanceof MODULO) {
+                } else if (n instanceof MODULO) {
                     result %= childValue;
                 }
             }
