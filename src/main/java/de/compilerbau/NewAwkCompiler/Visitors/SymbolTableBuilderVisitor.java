@@ -80,10 +80,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     * Returns the context of a node (in a method or outside)
-     *
-     * @param node
-     * @return
+     * Returns the context of a node (in a method (methodID) or outside (""))
      */
     public String getContext(Node node) {
         String context = "";
