@@ -1,18 +1,58 @@
 package de.compilerbau.NewAwkCompiler.Visitors;
 
-import de.compilerbau.NewAwkCompiler.javacc21.*;
+import de.compilerbau.NewAwkCompiler.javacc21.ArrayAccess;
+import de.compilerbau.NewAwkCompiler.javacc21.Assignement;
+import de.compilerbau.NewAwkCompiler.javacc21.Atom;
+import de.compilerbau.NewAwkCompiler.javacc21.BaseNode;
+import de.compilerbau.NewAwkCompiler.javacc21.Block;
+import de.compilerbau.NewAwkCompiler.javacc21.BooleanLiteral;
+import de.compilerbau.NewAwkCompiler.javacc21.COMMA;
+import de.compilerbau.NewAwkCompiler.javacc21.Cast;
+import de.compilerbau.NewAwkCompiler.javacc21.CharLiteral;
+import de.compilerbau.NewAwkCompiler.javacc21.CompExpr;
+import de.compilerbau.NewAwkCompiler.javacc21.CompilationUnit;
+import de.compilerbau.NewAwkCompiler.javacc21.DIVISION;
+import de.compilerbau.NewAwkCompiler.javacc21.DoubleLiteral;
+import de.compilerbau.NewAwkCompiler.javacc21.Expr;
+import de.compilerbau.NewAwkCompiler.javacc21.ExprStmnt;
+import de.compilerbau.NewAwkCompiler.javacc21.ID;
+import de.compilerbau.NewAwkCompiler.javacc21.IfStmnt;
+import de.compilerbau.NewAwkCompiler.javacc21.IntegerLiteral;
+import de.compilerbau.NewAwkCompiler.javacc21.KlammerAffe;
+import de.compilerbau.NewAwkCompiler.javacc21.KlammerAffeAusdruck;
+import de.compilerbau.NewAwkCompiler.javacc21.KlammerAffeRegex;
+import de.compilerbau.NewAwkCompiler.javacc21.KlammerAuf;
+import de.compilerbau.NewAwkCompiler.javacc21.KlammerZu;
+import de.compilerbau.NewAwkCompiler.javacc21.LogicalAndExpr;
+import de.compilerbau.NewAwkCompiler.javacc21.LogicalNotExpr;
+import de.compilerbau.NewAwkCompiler.javacc21.LogicalOrExpr;
+import de.compilerbau.NewAwkCompiler.javacc21.MINUS;
+import de.compilerbau.NewAwkCompiler.javacc21.MODULO;
+import de.compilerbau.NewAwkCompiler.javacc21.MULTIPLICATION;
+import de.compilerbau.NewAwkCompiler.javacc21.MethodCall;
+import de.compilerbau.NewAwkCompiler.javacc21.MethodDecl;
+import de.compilerbau.NewAwkCompiler.javacc21.Node;
+import de.compilerbau.NewAwkCompiler.javacc21.NullLiteral;
+import de.compilerbau.NewAwkCompiler.javacc21.PLUS;
+import de.compilerbau.NewAwkCompiler.javacc21.Parameter;
+import de.compilerbau.NewAwkCompiler.javacc21.ParameterList;
+import de.compilerbau.NewAwkCompiler.javacc21.PrintStmnt;
+import de.compilerbau.NewAwkCompiler.javacc21.Product;
+import de.compilerbau.NewAwkCompiler.javacc21.ReturnStatement;
+import de.compilerbau.NewAwkCompiler.javacc21.Sign;
+import de.compilerbau.NewAwkCompiler.javacc21.Stmnt;
+import de.compilerbau.NewAwkCompiler.javacc21.StringLiteral;
+import de.compilerbau.NewAwkCompiler.javacc21.Sum;
+import de.compilerbau.NewAwkCompiler.javacc21.Token;
+import de.compilerbau.NewAwkCompiler.javacc21.Type;
+import de.compilerbau.NewAwkCompiler.javacc21.VariableDecl;
+import de.compilerbau.NewAwkCompiler.javacc21.VariableDeclAndAssignement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-/**
- * Visitors which build a symbol table for a Mapl AST.
- */
 public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(SymbolTableBuilderVisitor.class);
@@ -20,19 +60,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     private SymbolTable symbolTable;
     private Utils utils;
 
-    /**
-     * Initialise a new symbol table builder.
-     */
     public SymbolTableBuilderVisitor() {
         symbolTable = new SymbolTable();
         utils = new Utils();
     }
 
-    /**
-     * The symbol table which has been built so far.
-     *
-     * @return the symbol table
-     */
     public SymbolTable getSymTab() {
         return symbolTable;
     }
@@ -62,8 +94,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         }
         return context;
     }
-
-    //VariableDecl() | Assignement() |  VariableDeclAndAssignement() | MethodDecl()
 
     /**
      * Entrypoint, accepts all children
@@ -190,7 +220,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     *-
+     * -
      */
     @Override
     public Object visit(MethodDecl node, Object data) {
@@ -690,19 +720,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             if (node.hasLength) {
                 log.info("Found Atom with \".length()\" with " + node.children().size() + " children.");
                 node.type = new Type("int");
-                //TODO Search for ID and value
-                //TODO node.value = ? <- value of ID-Content.length
-
                 //TODO Geben: ID, Gesucht: Exists, value, type
-                String context = "";
-                if (node.firstAncestorOfType(MethodDecl.class) != null) {
-                    MethodDecl methodDecl = node.firstAncestorOfType(MethodDecl.class);
-                    context = methodDecl.id.getImage();
-                } else {
-                    context = ""; //Global context
-                }
+                String context = getContext(node);
                 VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.firstChildOfType(ID.class), context);
-                if (variableDecl != null) {
+                if (variableDecl != null && variableDecl.value != null) {
                     log.warn("TEST: " + variableDecl.value.length());
                     variableDecl.value.length();
                 } else {
