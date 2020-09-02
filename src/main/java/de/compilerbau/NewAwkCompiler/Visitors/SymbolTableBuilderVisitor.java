@@ -508,38 +508,38 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         log.warn("Sum-Type: " + sum.type.toString() +
                 "Sum-Value: " + sum.value + "\n" + node.children().size());
         for (int i = 2; i < node.children().size(); i += 2) {
+            String childType = ((Product) childs.get(i)).type.type;
+            String childValue = ((Product) childs.get(i)).value;
+            String sumType = sum.type.type;
+            Node op = childs.get(i - 1);
             // 1. EQUAL TYPES?
-            if (sum.type.type.equals(((Product) childs.get(i)).type.type)) {
-                if (sum.type.type.equals("int")) {
-                    if (childs.get(i - 1) instanceof PLUS) {
-                        sum.value = "" + (Integer.parseInt(sum.value)
-                                + Integer.parseInt(((Product) childs.get(i)).value));
-                    } else if (childs.get(i - 1) instanceof MINUS) {
-                        sum.value = "" + (Integer.parseInt(sum.value)
-                                - Integer.parseInt(((Product) childs.get(i)).value));
+            if (sumType.equals(childType)) {
+                if (sumType.equals("int")) {
+                    if (op instanceof PLUS) {
+                        sum.value = "" + (Integer.parseInt(sum.value) + Integer.parseInt(childValue));
+                    } else if (op instanceof MINUS) {
+                        sum.value = "" + (Integer.parseInt(sum.value) - Integer.parseInt(childValue));
                     } else {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
                     }
                 }
                 // 1.2 DOUBLE
-                if (sum.type.type.equals("double")) {
-                    if (childs.get(i - 1) instanceof PLUS) {
-                        sum.value = "" + (Double.parseDouble(sum.value)
-                                + Double.parseDouble(((Product) childs.get(i)).value));
-                    } else if (childs.get(i - 1) instanceof MINUS) {
-                        sum.value = "" + (Double.parseDouble((sum.value))
-                                - Double.parseDouble(((Product) childs.get(i)).value));
+                if (sumType.equals("double")) {
+                    if (op instanceof PLUS) {
+                        sum.value = "" + (Double.parseDouble(sum.value) + Double.parseDouble(childValue));
+                    } else if (op instanceof MINUS) {
+                        sum.value = "" + (Double.parseDouble(sum.value) - Double.parseDouble(childValue));
                     } else {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
                     }
                 }
                 // 1.3 CHAR
-                if (sum.type.type.equals("char")) {
-                    if (childs.get(i - 1) instanceof PLUS) {
-                        sum.value = "" + (sum.value.charAt(0) + ((Product) childs.get(i)).value.charAt(0));
+                if (sumType.equals("char")) {
+                    if (op instanceof PLUS) {
+                        sum.value = "" + (sum.value.charAt(0) + childValue.charAt(0));
                         sum.type = new Type("int");
-                    } else if (childs.get(i - 1) instanceof MINUS) {
-                        sum.value = "" + (sum.value.charAt(0) - ((Product) childs.get(i)).value.charAt(0));
+                    } else if (op instanceof MINUS) {
+                        sum.value = "" + (sum.value.charAt(0) - childValue.charAt(0));
                         sum.type = new Type("int");
                     } else {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
@@ -547,23 +547,75 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 }
             }
             // 2. NOT EQUAL TYPES
+            // TODO 1st Type is precedence, second needs to follow
+            // int + double => double; double + int => double
+            // char + int = int; int + char => int
+            // double + char => double; char + double => double
+            // sum.type needs to be adjusted
             else {
-                // TODO 1st Type is precedence, second needs to follow
-                // int + double => double; double + int => double
-                // char + int = int; int + char => int
-                // double + char => double; char + double => double
+                //Sum is inited, typechange depending on op
+                if (sumType.equals("int") && childType.equals("double")) {
+                    sum.type = new Type("double");
+                    if (op instanceof PLUS) {
+                        //TODO
+                    } else if (op instanceof MINUS) {
+                        //TODO
+                    } else {
+                        //TODO
+                    }
+                }
+                if (sumType.equals("double") && childType.equals("int")) {
+                    sum.type = new Type("double");
+                    if (op instanceof PLUS) {
+                        //TODO
+                    } else if (op instanceof MINUS) {
+                        //TODO
+                    } else {
+                        //TODO
+                    }
+                }
+                if (sumType.equals("char") && childType.equals("int")) {
+                    sum.type = new Type("int");
+                    if (op instanceof PLUS) {
+                        //TODO
+                    } else if (op instanceof MINUS) {
+                        //TODO
+                    } else {
+                        //TODO
+                    }
+                }
+                if (sumType.equals("int") && childType.equals("char")) {
+                    sum.type = new Type("int");
+                    if (op instanceof PLUS) {
+                        //TODO
+                    } else if (op instanceof MINUS) {
+                        //TODO
+                    } else {
+                        //TODO
+                    }
+                }
+                if (sumType.equals("double") && childType.equals("char")) {
+                    sum.type = new Type("double");
+                    if (op instanceof PLUS) {
+                        //TODO
+                    } else if (op instanceof MINUS) {
+                        //TODO
+                    } else {
+                        //TODO
+                    }
+                }
+                if (sumType.equals("char") && childType.equals("double")) {
+                    sum.type = new Type("double");
+                    if (op instanceof PLUS) {
+                        //TODO
+                    } else if (op instanceof MINUS) {
+                        //TODO
+                    } else {
+                        //TODO
+                    }
+                }
             }
         }
-
-        // 2. Check childs types => try to calculate a return type
-        // e.g. for 1 + 2 + 3
-        //      int int int = int;
-        //      int double int = double
-        //      char + int = char
-        //      char + double = Error
-        // 3. Try left to right sum (e.g. 1+2+3 => 1+2=3; 3+3=6;
-        // Immer eine Auswertung links nach rechts dann die nächste
-
         printExit(node);
         return data;
     }
