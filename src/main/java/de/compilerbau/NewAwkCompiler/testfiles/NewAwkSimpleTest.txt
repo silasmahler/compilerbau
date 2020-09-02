@@ -1,5 +1,6 @@
 
-String a = "hallo";
+String a;
+a = "hallo";
 
 int main(String[] args) {
     int dd = 2;

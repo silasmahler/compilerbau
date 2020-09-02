@@ -156,7 +156,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         }
-        //TODO Variable is declared, check if assignement is possible
+        //TODO Variable is declared, check if assignement of value is possible
         else {
             log.info("Variable is declared, checking assignement possible");
             // TODO Check ExprStmnt von dort kommt die Info
@@ -166,17 +166,23 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
 
             //Types need to be equal for assignement or boxable (int -> double, all -> String)
-            if (variableDecl.type.equals(exprStmnt.type.type)) {
+            // if ok: Save the assignement Data to the Variable-Decl in the Table
+            if (variableDecl.type.type.equals(exprStmnt.type.type)) {
                 variableDecl.value = exprStmnt.value;
-            } else if (variableDecl.type.equals("double") && exprStmnt.type.type.equals("int")) {
+                log.info("Update Variable with value: VariableDecl: " + variableDecl);
+                symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
+            } else if (variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")) {
                 variableDecl.value = exprStmnt.value;
-            } else if (variableDecl.type.equals("String")) {
+                log.info("Update Variable with value: VariableDecl: " + variableDecl);
+                symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
+            } else if (variableDecl.type.type.equals("String")) {
                 variableDecl.value = exprStmnt.value;
+                log.info("Update Variable with value: VariableDecl: " + variableDecl);
+                symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
             } else {
-                throw new TypeCheckingException("Assignement-Types are not equal or boxable");
+                throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
+                        " please correct that.");
             }
-            // Save the assignement Data to the Variable-Decl in the Table
-            symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
         }
         printExit(node);
         return data;
