@@ -164,15 +164,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
             //Types need to be equal for assignement or boxable (int -> double, all -> String)
             // if ok: Save the assignement Data to the Variable-Decl in the Table
-            if (variableDecl.type.type.equals(exprStmnt.type.type)) {
-                variableDecl.value = exprStmnt.value;
-                log.info("Update Variable with value: VariableDecl: " + variableDecl);
-                symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
-            } else if (variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")) {
-                variableDecl.value = exprStmnt.value;
-                log.info("Update Variable with value: VariableDecl: " + variableDecl);
-                symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
-            } else if (variableDecl.type.type.equals("String")) {
+            if (variableDecl.type.type.equals(exprStmnt.type.type)
+                    || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
+                    || variableDecl.type.type.equals("String")) {
                 variableDecl.value = exprStmnt.value;
                 log.info("Update Variable with value: VariableDecl: " + variableDecl);
                 symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
