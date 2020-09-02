@@ -144,12 +144,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Assignement node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
-
         //Subtypes
         node.id = node.firstChildOfType(ID.class);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
         String contextId = getContext(node); //Init with global context && Check if Method-Context
-
         //Is the assignement-variable declared? If not -> error
         if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), contextId)) {
             throw new TypeCheckingException("Variable to assign to hasn't been declared in the same scope. Please declare it. " +
@@ -161,7 +159,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             log.info("Variable is declared, checking assignement possible");
             ExprStmnt exprStmnt = node.exprStmnt;
             VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
-
             //Types need to be equal for assignement or boxable (int -> double, all -> String)
             // if ok: Save the assignement Data to the Variable-Decl in the Table
             if (variableDecl.type.type.equals(exprStmnt.type.type)
@@ -201,10 +198,31 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         } else {
             log.info("SUCCESS: insertVariableDecl: Variable: " + node.toString());
             // Now check if Assignement possible
-
-            // TODO check types and assignement
-            if (utils.checkTypeIsEqual(node.type, node.exprStmnt.type)) {
-
+            node.id = node.firstChildOfType(ID.class);
+            node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
+            //Is the assignement-variable declared? If not -> error
+            if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), contextId)) {
+                throw new TypeCheckingException("Variable to assign to hasn't been declared in the same scope. Please declare it. " +
+                        "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
+                        + node.firstChildOfType(ID.class).getEndColumn());
+            }
+            // Variable is declared, check if assignement of value is possible
+            else {
+                log.info("Variable is declared, checking assignement possible");
+                ExprStmnt exprStmnt = node.exprStmnt;
+                VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
+                //Types need to be equal for assignement or boxable (int -> double, all -> String)
+                // if ok: Save the assignement Data to the Variable-Decl in the Table
+                if (variableDecl.type.type.equals(exprStmnt.type.type)
+                        || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
+                        || variableDecl.type.type.equals("String")) {
+                    variableDecl.value = exprStmnt.value;
+                    log.info("Update Variable with value: VariableDecl: " + variableDecl);
+                    symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
+                } else {
+                    throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
+                            " please correct that.");
+                }
             }
 
 
