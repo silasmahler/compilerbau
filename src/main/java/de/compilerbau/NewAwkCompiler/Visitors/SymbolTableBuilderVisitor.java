@@ -489,38 +489,27 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
     @Override
     public Object visit(Sum node, Object data) {
+        // Operatoren auf int, double, char: +, -,
         printEnter(node);
         data = node.childrenAccept(this, data);
-        // Operatoren auf int, double, char: +, -,
-
-        // 1. Check how many childs
-        int childsCount = node.childrenOfType(PLUS.class).size() + node.childrenOfType(MINUS.class).size() + 1;
-
-        // If 1 no operation required, just hand it up with type and value
-        // Type is not important here
-        if (childsCount == 1) {
+        if (node.children().size() == 1) {
             node.type = node.childrenOfType(Product.class).get(0).type;
             node.value = node.childrenOfType(Product.class).get(0).value;
             printExit(node);
             return data;
         }
-
-        // If more, do the operation
-        // First check types, then values later (symboltable not needed (Arrays = Atoms :))
+        // If more, do the operation, first check types, values later (symboltable not needed (Arrays = Atoms :))
         List<Node> childs = node.children();
-        ;
         //Init with first value
         Sum sum = new Sum();
         sum.type = node.firstChildOfType(Product.class).type;
         sum.value = node.firstChildOfType(Product.class).value;
         //Start operation at 2nd value (Token + Token - Token + ...)
         log.warn("Sum-Type: " + sum.type.toString() +
-                "Sum-Value: " + sum.value + "\n" +
-                String.valueOf(node.children().size()));
+                "Sum-Value: " + sum.value + "\n" + node.children().size());
         for (int i = 2; i < node.children().size(); i += 2) {
             // 1. EQUAL TYPES?
             if (sum.type.type.equals(((Product) childs.get(i)).type.type)) {
-                // 1.1 INT
                 if (sum.type.type.equals("int")) {
                     if (childs.get(i - 1) instanceof PLUS) {
                         sum.value = "" +
@@ -673,7 +662,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         data = node.childrenAccept(this, data);
 
-        if (node.children().size() == 1) {
+        if (node.children().size() == 1 || node.getFirstChild() instanceof PLUS) {
             node.type = node.firstChildOfType(Atom.class).type;
             node.value = node.firstChildOfType(Atom.class).value;
             printExit(node);
@@ -689,11 +678,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     node.value = String.valueOf(
                             -Double.parseDouble(node.firstChildOfType(Atom.class).value)
                     );
-                case "char": //Do Nothing, just pass Exception
-                case "boolean": //Do Nothing, just pass Exception
-                case "String": //Do Nothing, just pass Exception
+                case "char":
+                    node.value = String.valueOf(
+                            -node.firstChildOfType(Atom.class).value.charAt(0));
                 default:
-                    throw new TypeCheckingException("Sign is used in front of type not applicable at: " +
+                    throw new TypeCheckingException("Sign is used in front of type not applicable " +
+                            "(Type != int, double or char) at: " +
                             node.getBeginColumn() + ":" + node.getBeginLine());
             }
         }
