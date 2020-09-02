@@ -166,7 +166,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //1 Fill up Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
-        log.warn("TEST: " + node.id.getImage());
+        log.warn("TEST: " + node);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
         String contextId = getContext(node); //Init with global context && Check if Method-Context
 
@@ -190,7 +190,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     *
+     *-
      */
     @Override
     public Object visit(MethodDecl node, Object data) {
@@ -199,7 +199,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
         //Symboltable-entry for method
         node.type = node.firstChildOfType(Type.class);
-        node.id = node.firstAncestorOfType(ID.class);
+        node.id = node.firstChildOfType((ID.class));
         node.parameterList = node.firstChildOfType(ParameterList.class);
         node.block = node.firstChildOfType(Block.class);
 
