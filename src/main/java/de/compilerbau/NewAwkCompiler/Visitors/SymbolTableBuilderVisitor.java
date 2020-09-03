@@ -501,10 +501,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("boolean"))) {
             // Alle children zu boolean parsen für einfachere ops
             List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
-            log.info("CompExpr: BooleanList for only-bool Expr: " + bools);
             //Get Operands List
             List<Node> operands = node.children().stream().filter(child ->
                     (child instanceof EQUAL) || (child instanceof NOT_EQUAL)).collect(Collectors.toList());
+            log.info("CompExpr: BooleanList for only-bool Expr: " + bools + "\n" +
+                    "and Operands: " + operands);
             if ((operands.size() + 1) != bools.size()) {
                 throw new TypeCheckingException("There are operators other than == and != " +
                         "applied to a boolean CompExpr. Please correct this at: "
@@ -538,8 +539,19 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 }
                 return value;
             }).collect(Collectors.toList());
-            log.info("CompExpr: List for int, double, char Expr: " + doubles);
-
+            //Get Operands List
+            List<Node> operands = node.children().stream().filter(child ->
+                    (child instanceof GREATER) || (child instanceof SMALLER) || (child instanceof G_OR_EQUAL) ||
+                            (child instanceof S_OR_EQUAL) || (child instanceof EQUAL) || (child instanceof NOT_EQUAL))
+                    .collect(Collectors.toList());
+            log.info("CompExpr: List for int, double, char Expr: " + doubles + "\n" +
+                    "and Operands: " + operands);
+            if ((operands.size() + 1) != doubles.size()) {
+                throw new TypeCheckingException("There are Operations with a comparator-operator (==, !=, >=, <=, <, >)" +
+                        " and more than 2 doubles or uncompatible types (e.g. boolean, double) " +
+                        "applied to a boolean CompExpr. Please use int, double and char correct this at: "
+                        + node.getBeginLine() + ":" + node.getBeginColumn());
+            }
             Node op = node.getChild(1);
             boolean result = false;
             if (op instanceof GREATER) {
