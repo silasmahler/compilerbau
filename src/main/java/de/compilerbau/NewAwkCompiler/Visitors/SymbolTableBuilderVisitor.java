@@ -13,6 +13,7 @@ import de.compilerbau.NewAwkCompiler.javacc21.CompExpr;
 import de.compilerbau.NewAwkCompiler.javacc21.CompilationUnit;
 import de.compilerbau.NewAwkCompiler.javacc21.DIVISION;
 import de.compilerbau.NewAwkCompiler.javacc21.DoubleLiteral;
+import de.compilerbau.NewAwkCompiler.javacc21.EQUAL;
 import de.compilerbau.NewAwkCompiler.javacc21.Expr;
 import de.compilerbau.NewAwkCompiler.javacc21.ExprStmnt;
 import de.compilerbau.NewAwkCompiler.javacc21.ID;
@@ -31,6 +32,7 @@ import de.compilerbau.NewAwkCompiler.javacc21.MODULO;
 import de.compilerbau.NewAwkCompiler.javacc21.MULTIPLICATION;
 import de.compilerbau.NewAwkCompiler.javacc21.MethodCall;
 import de.compilerbau.NewAwkCompiler.javacc21.MethodDecl;
+import de.compilerbau.NewAwkCompiler.javacc21.NOT_EQUAL;
 import de.compilerbau.NewAwkCompiler.javacc21.Node;
 import de.compilerbau.NewAwkCompiler.javacc21.NullLiteral;
 import de.compilerbau.NewAwkCompiler.javacc21.PLUS;
@@ -70,13 +72,13 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     public void printEnter(Node node) {
-        log.info("<---Entering Class: " + node.getClass().getSimpleName() + "\n" +
-                "<---With Content:   " + node.toString());
+        log.info("Enter: " + node.getClass().getSimpleName() + "\n" +
+                "Content: " + node.toString());
     }
 
     public void printExit(Node node) {
-        log.info("--->Exiting Class: " + node.getClass().getSimpleName() + "\n" +
-                "--->With Content:   " + node.toString());
+        log.info("Exit: " + node.getClass().getSimpleName() + "\n" +
+                "Content: " + node.toString());
     }
 
     /**
@@ -241,7 +243,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //node.id = node.firstChildOfType((ID.class)); needs to be put in before
         // we need it to define the context
         node.id = node.firstChildOfType(ID.class);
-        node.id.setImage(node.idValue);
+        if (node.isVoid) {
+            node.id.setImage("void");
+        }
+        //node.id.setImage(node.idValue);
 
         data = node.childrenAccept(this, data);
 
@@ -263,20 +268,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
 
         //Empty Parameterlist return no action needed
         if (!node.hasChildNodes()) {
-            log.info("Detected 0 Parameters");
+            log.info("Detected 0 Parameters in ParamaterList");
             return data;
         }
         //There are parameters
         else {
             //Check how many commata to determine how many parameters
             int parameterCount = node.childrenOfType(COMMA.class).size() + 1;
-            log.info("Detected " + parameterCount + " Parameters");
-            //Get all Types
-            List<Type> types = node.childrenOfType(Type.class);
-            //Get all IDs
-            List<ID> ids = node.childrenOfType(ID.class);
+            log.info("Detected " + parameterCount + " Parameters in ParamaterList");
+            List<Type> types = node.childrenOfType(Type.class); //Get all Types
+            List<ID> ids = node.childrenOfType(ID.class); //Get all IDs
             //Marry them
-            //Check if correct
             if (!(types.size() == ids.size()) && (types.size() == parameterCount)) {
                 throw new TypeCheckingException("Something broke while checking Method Parameters." +
                         "Please declare it like: TYPE ID COMMA TYPE ID ...");
@@ -285,6 +287,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 Parameter p = new Parameter(types.get(i), ids.get(i));
                 log.info("Add Parameter to ParameterList: " + p.toString());
                 node.parameterList.add(p);
+                //TODO Insert VariableDecl for Method
             }
 
         }
@@ -378,6 +381,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         node.childrenAccept(this, data);
 
         if (node.children().size() == 1) {
+            log.info("Node has only 1 child, pass up data value and type.");
             node.type = node.firstChildOfType(LogicalOrExpr.class).type;
             node.value = node.firstChildOfType(LogicalOrExpr.class).value;
             printExit(node);
@@ -397,6 +401,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // Operatoren auf boolean: &&, ||, !
         //If 1 child: pass this
         if (node.children().size() == 1) {
+            log.info("Node has only 1 child, pass up data value and type.");
             node.type = node.firstChildOfType(LogicalAndExpr.class).type;
             node.value = node.firstChildOfType(LogicalAndExpr.class).value;
             printExit(node);
@@ -437,6 +442,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
 
         if (node.children().size() == 1) {
+            log.info("Node has only 1 child, pass up data value and type.");
             node.type = node.firstChildOfType(LogicalNotExpr.class).type;
             node.value = node.firstChildOfType(LogicalNotExpr.class).value;
             printExit(node);
@@ -457,6 +463,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
 
         if (node.children().size() == 1) {
+            log.info("Node has only 1 child, pass up data value and type.");
             node.type = node.firstChildOfType(CompExpr.class).type;
             node.value = node.firstChildOfType(CompExpr.class).value;
             printExit(node);
@@ -471,15 +478,83 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(CompExpr node, Object data) {
         printEnter(node);
-        // Vergleichsoperationen: ==, >=, !=, <=, <, >
-        // Alle Datentypen
+        // Vergleichsoperationen:
+        // ==, !=           Datentypen: int, double, char, boolean
+        // >=, <=, <, >     Datentypen: int, double, char
         data = node.childrenAccept(this, data);
 
         if (node.children().size() == 1) {
+            log.info("Node has only 1 child, pass up data value and type.");
             node.type = node.firstChildOfType(Sum.class).type;
             node.value = node.firstChildOfType(Sum.class).value;
             printExit(node);
             return data;
+        } else {
+            node.type = new Type("boolean"); //for children, result boolean
+            boolean result = false;
+            List<Node> childs = node.children();
+            List<Node> operands 
+
+                //Handle ==, != for all Boolean
+            if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("boolean"))) {
+                // Alle children zu boolean parsen für einfachere ops
+                List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
+                log.info("CompExpr: BooleanList for only-bool Expr: " + bools);
+
+
+                for (int i = 0; i + 2 < node.children().size(); i += 2) {
+
+                }
+
+                if (node.getChild(i + 1) instanceof EQUAL) {
+                    //TODO Immer 2 Werte = result, Beginnend erste 2, danach result und nächster
+                    if (i == 0) {
+                        result =
+                    } else {
+                        result = result;
+                    }
+
+                } else if (node.getChild(i + 1) instanceof NOT_EQUAL) {
+
+                }
+            }
+            //Wenn int, double & char, >=, <=, <, > und ==, !=
+
+
+            for (int i = 0; i + 2 < node.children().size(); i += 2) {
+                if (node.childrenOfType(Sum.class).stream()
+                        .allMatch(child -> child.type.type.equals("boolean"))) {
+                    // Alle zu boolean parsen für einfachere ops
+                    List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(
+                            child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
+                    log.info("CompExpr: BooleanList for only-bool Expr: " + bools);
+
+                    if (node.getChild(i + 1) instanceof EQUAL) {
+                        //TODO Immer 2 Werte = result, Beginnend erste 2, danach result und nächster
+                        if (i == 0) {
+                            result =
+                        } else {
+                            result = result;
+                        }
+
+                    } else if (node.getChild(i + 1) instanceof NOT_EQUAL) {
+
+                    }
+                }
+                //Wenn int, double & char, >=, <=, <, > und ==, !=
+                else if (node.childrenOfType(Sum.class).stream()
+                        .allMatch(child -> (child.type.type.equals("int") ||
+                                child.type.type.equals("double") ||
+                                child.type.type.equals("char")
+                        ))) {
+
+                } else {
+                    //TODO
+                    throw new TypeCheckingException("");
+                }
+            }
+
+
         }
         //TODO ELSE
 
@@ -493,6 +568,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         data = node.childrenAccept(this, data);
         if (node.children().size() == 1) {
+            log.info("Sum: Only 1 child, pass up data and type.");
             node.type = node.childrenOfType(Product.class).get(0).type;
             node.value = node.childrenOfType(Product.class).get(0).value;
             printExit(node);
@@ -557,9 +633,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 if (sumType.equals("int") && childType.equals("double")) {
                     sum.type = new Type("double");
                     if (op instanceof PLUS) {
-                        //TODO
+                        sum.value = String.valueOf(Integer.parseInt(sum.value) + Double.parseDouble(childValue));
                     } else if (op instanceof MINUS) {
-                        //TODO
+                        sum.value = String.valueOf(Integer.parseInt(sum.value) - Double.parseDouble(childValue));
                     } else {
                         //TODO
                     }
@@ -567,9 +643,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 if (sumType.equals("double") && childType.equals("int")) {
                     sum.type = new Type("double");
                     if (op instanceof PLUS) {
-                        //TODO
+                        sum.value = String.valueOf(Double.parseDouble(sum.value) + Integer.parseInt(childValue));
                     } else if (op instanceof MINUS) {
-                        //TODO
+                        sum.value = String.valueOf(Double.parseDouble(sum.value) - Integer.parseInt(childValue));
                     } else {
                         //TODO
                     }
@@ -577,9 +653,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 if (sumType.equals("char") && childType.equals("int")) {
                     sum.type = new Type("int");
                     if (op instanceof PLUS) {
-                        //TODO
+                        sum.value = String.valueOf(sum.value.charAt(0) + Integer.parseInt(childValue));
                     } else if (op instanceof MINUS) {
-                        //TODO
+                        sum.value = String.valueOf(sum.value.charAt(0) - Integer.parseInt(childValue));
                     } else {
                         //TODO
                     }
@@ -587,9 +663,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 if (sumType.equals("int") && childType.equals("char")) {
                     sum.type = new Type("int");
                     if (op instanceof PLUS) {
-                        //TODO
+                        sum.value = String.valueOf(Integer.parseInt(sum.value) + childValue.charAt(0));
                     } else if (op instanceof MINUS) {
-                        //TODO
+                        sum.value = String.valueOf(Integer.parseInt(sum.value) - childValue.charAt(0));
                     } else {
                         //TODO
                     }
@@ -597,9 +673,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 if (sumType.equals("double") && childType.equals("char")) {
                     sum.type = new Type("double");
                     if (op instanceof PLUS) {
-                        //TODO
+                        sum.value = String.valueOf(Double.parseDouble(sum.value) + childValue.charAt(0));
                     } else if (op instanceof MINUS) {
-                        //TODO
+                        sum.value = String.valueOf(Double.parseDouble(sum.value) - childValue.charAt(0));
                     } else {
                         //TODO
                     }
@@ -607,9 +683,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 if (sumType.equals("char") && childType.equals("double")) {
                     sum.type = new Type("double");
                     if (op instanceof PLUS) {
-                        //TODO
+                        sum.value = String.valueOf(sum.value.charAt(0) + Double.parseDouble(childValue));
                     } else if (op instanceof MINUS) {
-                        //TODO
+                        sum.value = String.valueOf(sum.value.charAt(0) - Double.parseDouble(childValue));
                     } else {
                         //TODO
                     }
@@ -627,6 +703,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
         // If 1 no operation required, just pass it up
         if (node.children().size() == 1) {
+            log.info("Node has only 1 child, pass up data value and type.");
             node.type = node.firstChildOfType(Sign.class).type;
             node.value = node.firstChildOfType(Sign.class).value;
             printExit(node);
@@ -646,15 +723,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         } else {
             //Algo: 1) Get 2 operands, 2) parse both 3) operate with them 4) result save double
             Sign firstChild = node.firstChildOfType(Sign.class);
+            String firstChildType = firstChild.type.type;
+            String firstChildValue = firstChild.value;
             double result = 0;
-            if (firstChild.type.type.equals("int")) {
-                result = (double) Integer.parseInt(firstChild.value);
-            }
-            if (firstChild.type.type.equals("double")) {
-                result = Double.parseDouble(firstChild.value);
-            }
-            if (firstChild.type.type.equals("char")) {
-                result = (double) firstChild.value.charAt(0);
+            if (firstChildType.equals("int")) {
+                result = (double) Integer.parseInt(firstChildValue);
+            } else if (firstChildType.equals("double")) {
+                result = Double.parseDouble(firstChildValue);
+            } else if (firstChildType.equals("char")) {
+                result = (double) firstChildValue.charAt(0);
             }
             for (int i = 2; i < node.children().size(); i += 2) {
                 Sign child = (Sign) node.getChild(i);
@@ -667,7 +744,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 } else if (childType.equals("char")) {
                     childValue = (double) child.value.charAt(0);
                 }
-                //Operate
+                //Operation
                 Node n = node.getChild(i - 1);
                 if (n instanceof MULTIPLICATION) {
                     result *= childValue;

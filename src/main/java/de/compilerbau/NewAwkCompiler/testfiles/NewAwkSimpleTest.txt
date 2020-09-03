@@ -1,8 +1,10 @@
 
+boolean a = (true == false == true);
+
 String a;
 a = "hallo";
 
-int[] main(String[] args) {
+int[] main(String[] args, int i, char b) {
     int dd = 2;
     int f = dd.length();
 

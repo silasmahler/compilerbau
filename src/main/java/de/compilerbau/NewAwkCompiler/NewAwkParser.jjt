@@ -221,8 +221,7 @@ void VariableDeclAndAssignement() #VariableDeclAndAssignement : {}
 void MethodDecl() #MethodDecl : { Token t;}
 {
     (Type()| <VOID>  {jjtThis.isVoid = true;})
-    t=<ID> {jjtThis.idValue = t.getImage();}
-     <KlammerAuf> ParameterList() <KlammerZu> Block()
+    <ID> <KlammerAuf> ParameterList() <KlammerZu> Block()
 }
 void ParameterList() #ParameterList : {} {
     [Type() <ID>] (<COMMA> Type() <ID>)*
@@ -274,7 +273,7 @@ void LogicalNotExpr() #LogicalNotExpr : {}
 }
 void CompExpr() #CompExpr : {}
 {
-    Sum() ((<GREATER> | <SMALLER>  | <S_OR_EQUAL> | <G_OR_EQUAL> | <NOT_EQUAL>) Sum())*
+    Sum() ((<GREATER> | <SMALLER>  | <S_OR_EQUAL> | <G_OR_EQUAL> | <EQUAL> |<NOT_EQUAL>) Sum())*
 }
 void Sum() #Sum : {}
 {
