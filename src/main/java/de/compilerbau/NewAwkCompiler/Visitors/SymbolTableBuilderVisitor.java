@@ -491,56 +491,35 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             return data;
         } else {
             node.type = new Type("boolean"); //for children, result boolean
-            boolean result = false;
             List<Node> childs = node.children();
-            List<Node> operands 
 
-                //Handle ==, != for all Boolean
+            //Handle ==, != for all Boolean
             if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("boolean"))) {
                 // Alle children zu boolean parsen für einfachere ops
                 List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
                 log.info("CompExpr: BooleanList for only-bool Expr: " + bools);
-
-
-                for (int i = 0; i + 2 < node.children().size(); i += 2) {
-
+                //Get Operands List
+                List<Node> operands = node.children().stream().filter(child ->
+                        (child instanceof EQUAL) || (child instanceof NOT_EQUAL)).collect(Collectors.toList());
+                if ((operands.size() + 1) != childs.size()) {
+                    throw new TypeCheckingException("There are operators other than == and != " +
+                            "applied to a boolean CompExpr. Please correct this at: "
+                            + node.getBeginLine() + ":" + node.getBeginColumn());
                 }
-
-                if (node.getChild(i + 1) instanceof EQUAL) {
-                    //TODO Immer 2 Werte = result, Beginnend erste 2, danach result und nächster
-                    if (i == 0) {
-                        result =
-                    } else {
-                        result = result;
+                //Iterate over lists and operate
+                boolean result = bools.get(0).booleanValue();
+                for (int i = 1; i < node.children().size(); i++) {
+                    if(operands.get(i-1) instanceof EQUAL){
+                        result = result == bools.get(i);
+                    } else if(operands.get(i-1) instanceof NOT_EQUAL){
+                        result = result != bools.get(i);
                     }
-
-                } else if (node.getChild(i + 1) instanceof NOT_EQUAL) {
-
                 }
+                node.value = result ? "true" : "false";
+
             }
             //Wenn int, double & char, >=, <=, <, > und ==, !=
-
-
             for (int i = 0; i + 2 < node.children().size(); i += 2) {
-                if (node.childrenOfType(Sum.class).stream()
-                        .allMatch(child -> child.type.type.equals("boolean"))) {
-                    // Alle zu boolean parsen für einfachere ops
-                    List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(
-                            child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
-                    log.info("CompExpr: BooleanList for only-bool Expr: " + bools);
-
-                    if (node.getChild(i + 1) instanceof EQUAL) {
-                        //TODO Immer 2 Werte = result, Beginnend erste 2, danach result und nächster
-                        if (i == 0) {
-                            result =
-                        } else {
-                            result = result;
-                        }
-
-                    } else if (node.getChild(i + 1) instanceof NOT_EQUAL) {
-
-                    }
-                }
                 //Wenn int, double & char, >=, <=, <, > und ==, !=
                 else if (node.childrenOfType(Sum.class).stream()
                         .allMatch(child -> (child.type.type.equals("int") ||

@@ -1,5 +1,5 @@
 
-boolean a = (true == false == true);
+boolean a = (true == false != true);
 
 String a;
 a = "hallo";
