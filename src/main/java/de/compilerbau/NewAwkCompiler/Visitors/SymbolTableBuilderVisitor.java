@@ -92,7 +92,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         String context = "";
         MethodDecl m = node.firstAncestorOfType(MethodDecl.class);
         if (m != null) {
-            log.warn("TEST2: " + m);
+            log.info("getContext for MethodDecl: " + m);
             context = m.id.getImage();
         }
         return context;
@@ -193,7 +193,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //1 Fill up Object with needed subtypes
         node.type = node.firstChildOfType(Type.class);
         node.id = node.firstChildOfType(ID.class);
-        log.warn("TEST: " + node);
         node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
         String contextId = getContext(node); //Init with global context && Check if Method-Context
 
@@ -898,7 +897,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 str = str.substring(1, str.length() - 1);
                 boolean isInt = str.chars().allMatch(Character::isDigit);
                 node.value = String.valueOf(isInt);
-                log.warn("Int: Str.: " + str + " Node.value: " + node.value);
+                log.info("Atom: Int: Str.: " + str + " Node.value: " + node.value);
             } else if (node.isDouble) {
                 node.type = new Type("boolean");
                 String str = node.firstChildOfType(StringLiteral.class).getImage();
@@ -915,7 +914,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     }
                 }
                 node.value = String.valueOf(isDouble);
-                log.warn("Double: Str.: " + str + " Node.value: " + node.value);
+                log.info("Atom: Double: Str.: " + str + " Node.value: " + node.value);
             } else if (node.toInt) {
                 node.type = new Type("int");
                 String str = node.firstChildOfType(StringLiteral.class).getImage();
