@@ -16,6 +16,8 @@ import de.compilerbau.NewAwkCompiler.javacc21.DoubleLiteral;
 import de.compilerbau.NewAwkCompiler.javacc21.EQUAL;
 import de.compilerbau.NewAwkCompiler.javacc21.Expr;
 import de.compilerbau.NewAwkCompiler.javacc21.ExprStmnt;
+import de.compilerbau.NewAwkCompiler.javacc21.GREATER;
+import de.compilerbau.NewAwkCompiler.javacc21.G_OR_EQUAL;
 import de.compilerbau.NewAwkCompiler.javacc21.ID;
 import de.compilerbau.NewAwkCompiler.javacc21.IfStmnt;
 import de.compilerbau.NewAwkCompiler.javacc21.IntegerLiteral;
@@ -41,6 +43,8 @@ import de.compilerbau.NewAwkCompiler.javacc21.ParameterList;
 import de.compilerbau.NewAwkCompiler.javacc21.PrintStmnt;
 import de.compilerbau.NewAwkCompiler.javacc21.Product;
 import de.compilerbau.NewAwkCompiler.javacc21.ReturnStatement;
+import de.compilerbau.NewAwkCompiler.javacc21.SMALLER;
+import de.compilerbau.NewAwkCompiler.javacc21.S_OR_EQUAL;
 import de.compilerbau.NewAwkCompiler.javacc21.Sign;
 import de.compilerbau.NewAwkCompiler.javacc21.Stmnt;
 import de.compilerbau.NewAwkCompiler.javacc21.StringLiteral;
@@ -489,54 +493,72 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.value = node.firstChildOfType(Sum.class).value;
             printExit(node);
             return data;
-        } else {
-            node.type = new Type("boolean"); //for children, result boolean
-            List<Node> childs = node.children();
-
-            //Handle ==, != for all Boolean
-            if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("boolean"))) {
-                // Alle children zu boolean parsen für einfachere ops
-                List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
-                log.info("CompExpr: BooleanList for only-bool Expr: " + bools);
-                //Get Operands List
-                List<Node> operands = node.children().stream().filter(child ->
-                        (child instanceof EQUAL) || (child instanceof NOT_EQUAL)).collect(Collectors.toList());
-                if ((operands.size() + 1) != childs.size()) {
-                    throw new TypeCheckingException("There are operators other than == and != " +
-                            "applied to a boolean CompExpr. Please correct this at: "
-                            + node.getBeginLine() + ":" + node.getBeginColumn());
-                }
-                //Iterate over lists and operate
-                boolean result = bools.get(0).booleanValue();
-                for (int i = 1; i < node.children().size(); i++) {
-                    if(operands.get(i-1) instanceof EQUAL){
-                        result = result == bools.get(i);
-                    } else if(operands.get(i-1) instanceof NOT_EQUAL){
-                        result = result != bools.get(i);
-                    }
-                }
-                node.value = result ? "true" : "false";
-
-            }
-            //Wenn int, double & char, >=, <=, <, > und ==, !=
-            for (int i = 0; i + 2 < node.children().size(); i += 2) {
-                //Wenn int, double & char, >=, <=, <, > und ==, !=
-                else if (node.childrenOfType(Sum.class).stream()
-                        .allMatch(child -> (child.type.type.equals("int") ||
-                                child.type.type.equals("double") ||
-                                child.type.type.equals("char")
-                        ))) {
-
-                } else {
-                    //TODO
-                    throw new TypeCheckingException("");
-                }
-            }
-
-
         }
-        //TODO ELSE
 
+        node.type = new Type("boolean"); //for all children, result is boolean
+
+        //1) Handle ==, != for all Boolean
+        if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("boolean"))) {
+            // Alle children zu boolean parsen für einfachere ops
+            List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
+            log.info("CompExpr: BooleanList for only-bool Expr: " + bools);
+            //Get Operands List
+            List<Node> operands = node.children().stream().filter(child ->
+                    (child instanceof EQUAL) || (child instanceof NOT_EQUAL)).collect(Collectors.toList());
+            if ((operands.size() + 1) != bools.size()) {
+                throw new TypeCheckingException("There are operators other than == and != " +
+                        "applied to a boolean CompExpr. Please correct this at: "
+                        + node.getBeginLine() + ":" + node.getBeginColumn());
+            }
+            //Iterate over lists and operate
+            boolean result = bools.get(0).booleanValue();
+            for (int i = 1; i < bools.size(); i++) {
+                if (operands.get(i - 1) instanceof EQUAL) {
+                    result = result == bools.get(i);
+                } else if (operands.get(i - 1) instanceof NOT_EQUAL) {
+                    result = result != bools.get(i);
+                }
+            }
+            node.value = result ? "true" : "false";
+            printExit(node);
+            return data;
+        }
+
+        //2) Handle ==, !=, >=, <=, <, > for int, double & char
+        if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("int") ||
+                child.type.type.equals("double") || child.type.type.equals("char"))) {
+
+            //Maximum of 2 doubles possible
+            List<Double> doubles = node.childrenOfType(Sum.class).stream().map(child -> {
+                Double value = 0.0;
+                if (child.type.type.equals("int") || child.type.type.equals("double")) {
+                    value = Double.parseDouble(child.value);
+                } else if (child.type.type.equals("char")) {
+                    value = (double) child.value.charAt(0);
+                }
+                return value;
+            }).collect(Collectors.toList());
+            log.info("CompExpr: List for int, double, char Expr: " + doubles);
+
+            Node op = node.getChild(1);
+            boolean result = false;
+            if (op instanceof GREATER) {
+                result = doubles.get(0) > doubles.get(1);
+            } else if (op instanceof GREATER) {
+                result = doubles.get(0) > doubles.get(1);
+            } else if (op instanceof SMALLER) {
+                result = doubles.get(0) < doubles.get(1);
+            } else if (op instanceof S_OR_EQUAL) {
+                result = doubles.get(0) <= doubles.get(1);
+            } else if (op instanceof G_OR_EQUAL) {
+                result = doubles.get(0) >= doubles.get(1);
+            } else if (op instanceof EQUAL) {
+                result = doubles.get(0) == doubles.get(1);
+            } else if (op instanceof NOT_EQUAL) {
+                result = doubles.get(0) != doubles.get(1);
+            }
+            node.value = result ? "true" : "false";
+        }
         printExit(node);
         return data;
     }
