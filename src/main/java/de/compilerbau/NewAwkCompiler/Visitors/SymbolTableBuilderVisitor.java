@@ -521,12 +521,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 }
             }
             node.value = result ? "true" : "false";
-            printExit(node);
-            return data;
         }
-
         //2) Handle ==, !=, >=, <=, <, > for int, double & char
-        if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("int") ||
+        else if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("int") ||
                 child.type.type.equals("double") || child.type.type.equals("char"))) {
 
             //Maximum of 2 doubles possible
@@ -546,7 +543,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     .collect(Collectors.toList());
             log.info("CompExpr: List for int, double, char Expr: " + doubles + "\n" +
                     "and Operands: " + operands);
-            if ((operands.size() + 1) != doubles.size()) {
+            if ((operands.size() + 1) != doubles.size() || doubles.size() != 2) {
                 throw new TypeCheckingException("There are Operations with a comparator-operator (==, !=, >=, <=, <, >)" +
                         " and more than 2 doubles or uncompatible types (e.g. boolean, double) " +
                         "applied to a boolean CompExpr. Please use int, double and char correct this at: "
