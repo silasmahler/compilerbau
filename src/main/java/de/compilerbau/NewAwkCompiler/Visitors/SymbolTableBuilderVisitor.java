@@ -493,7 +493,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             printExit(node);
             return data;
         }
-        log.info("CompExpr: Node has more than 1 child, begin computing...");
+        log.warn("CompExpr: Node has more than 1 child, begin computing...");
 
         //1) Handle ==, != for all Boolean
         if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("boolean"))) {
@@ -568,6 +568,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
             node.type = new Type("boolean");
             node.value = result ? "true" : "false";
+        }
+        else {
+            throw new TypeCheckingException("There are incompatible types in an Comparable-Expression beginning at:" +
+                    + node.getBeginLine() + ":" + node.getBeginColumn() +
+                    " Please use only boolean or int, double and char or adjust the paranthesis.");
         }
         printExit(node);
         return data;
