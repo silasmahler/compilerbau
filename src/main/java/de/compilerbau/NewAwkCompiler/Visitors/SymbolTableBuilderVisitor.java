@@ -488,17 +488,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
 
         if (node.children().size() == 1) {
-            log.info("Node has only 1 child, pass up data value and type.");
+            log.info("CompExpr: Node has only 1 child, pass up data value and type.");
             node.type = node.firstChildOfType(Sum.class).type;
             node.value = node.firstChildOfType(Sum.class).value;
             printExit(node);
             return data;
         }
-
-        node.type = new Type("boolean"); //for all children, result is boolean
+        log.info("CompExpr: Node has more than 1 child, begin computing...");
 
         //1) Handle ==, != for all Boolean
         if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("boolean"))) {
+            log.warn("CompExpr: All Types are boolean.");
             // Alle children zu boolean parsen für einfachere ops
             List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
             //Get Operands List
@@ -520,12 +520,13 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     result = result != bools.get(i);
                 }
             }
+            node.type = new Type("boolean");
             node.value = result ? "true" : "false";
         }
         //2) Handle ==, !=, >=, <=, <, > for int, double & char
         else if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("int") ||
                 child.type.type.equals("double") || child.type.type.equals("char"))) {
-
+            log.warn("CompExpr: All types are int, double or char");
             //Maximum of 2 doubles possible
             List<Double> doubles = node.childrenOfType(Sum.class).stream().map(child -> {
                 Double value = 0.0;
@@ -566,6 +567,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             } else if (op instanceof NOT_EQUAL) {
                 result = doubles.get(0) != doubles.get(1);
             }
+            node.type = new Type("boolean");
             node.value = result ? "true" : "false";
         }
         printExit(node);
@@ -591,7 +593,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         sum.type = node.firstChildOfType(Product.class).type;
         sum.value = node.firstChildOfType(Product.class).value;
         //Start operation at 2nd value (Token + Token - Token + ...)
-        log.warn("Sum-Type: " + sum.type.toString() +
+        log.info("Sum-Type: " + sum.type.toString() +
                 "Sum-Value: " + sum.value + "\n" + node.children().size());
         for (int i = 2; i < node.children().size(); i += 2) {
             String childType = ((Product) childs.get(i)).type.type;
@@ -839,8 +841,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 String context = getContext(node);
                 VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.firstChildOfType(ID.class), context);
                 if (variableDecl != null && variableDecl.value != null) {
-                    log.warn("TEST: " + variableDecl.value.length());
-                    variableDecl.value.length();
+                    log.info("Atom: VariableDecl-Value-Length: " + variableDecl.value.length());
+                    //TODO Find length zu ID in symboltable
+
                 } else {
                     throw new TypeCheckingException("Variable: " + node.firstChildOfType(ID.class).getImage()
                             + " with .length() hasn't been defined, it wasn't found in the SymbolTable.");
@@ -853,15 +856,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 ID id = node.firstChildOfType(ID.class); //Use to find array
                 // expr.type => needs to be int for array index access
                 // expr.value => value to pass to found array and access data
+                //TODO finde Wert aus Arrayabfrage
                 node.type = new Type("myType"); //TODO Return-Type-From-Array;
                 node.value = "1"; // TODO Return-Value-From-Array;
             }
             // Normal ID: x
             else {
-                //TODO What to do
-                // node.type = ?
-                // node.value = ?
-                log.warn("Normal String found!" + node.firstChildOfType(ID.class));
+                log.warn("Atom: Normal String detected!" + node.firstChildOfType(ID.class));
+                node.type = new Type("String");
+                node.value = node.firstChildOfType(StringLiteral.class).getImage();
             }
         } else if (node.getFirstChild() instanceof KlammerAuf &&
                 node.getChild(1) instanceof Expr &&
