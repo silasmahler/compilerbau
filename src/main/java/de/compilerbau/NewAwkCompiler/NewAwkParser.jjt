@@ -188,8 +188,14 @@ TOKEN : /* LITERALS */
 | <StringLiteral: "\"" <STRING_CONTENT> "\"">
 | <#STRING_CONTENT: (<LETTER>|<DIGIT>|<DoubleLiteral>|(" ") )* >
 | <PRINT_LINE: "System.out.println">
-| <PRINT: "System.out.print">
 | <LENGTH: "length()">
+| <PRINT: "System.out.print">
+| <NEXT: "System.next">
+| <NEXT_INT: "System.nextInt">
+| <NEXT_DOUBLE: "System.nextDouble">
+| <NEXT_CHAR: "System.nextChar">
+| <NEXT_BOOLEAN: "System.nextBoolean">
+| <NEXT_STRING: "System.nextString">
 }
 /*
     ==============================================================================================
@@ -294,57 +300,59 @@ void Atom() #Atom : {
     Token t;
 }
 {
-    (
-        (t=<ID>
-            (ArrayAccess()
-                {jjtThis.isArrayAccess = true;
-                jjtThis.arrayAccessDimension++;}
-            )*
-            [".length()"
-                {jjtThis.hasLength = true;
-                //Length needs to be determined by id value
-                //See Symboltable
-                }
-            ]
-        )
-        | <KlammerAuf> Expr() <KlammerZu>
-            {jjtThis.isExpression = true;
+    PrintStmnt()
+    |
+    NextStmnt()
+    |
+    (t=<ID>
+        (ArrayAccess()
+            {jjtThis.isArrayAccess = true;
+            jjtThis.arrayAccessDimension++;}
+        )*
+        [".length()"
+            {jjtThis.hasLength = true;
+            //Length needs to be determined by id value
+            //See Symboltable
             }
-        | t=<BooleanLiteral>
-            {jjtThis.type = new Type("boolean");
-             jjtThis.value = t.getImage();
-             }
-        | t=<IntegerLiteral>
-            {jjtThis.type = new Type("int");
-             jjtThis.value = t.getImage();
-             }
-        | t=<DoubleLiteral>
-            {jjtThis.type = new Type("double");
-             jjtThis.value = t.getImage();
-             }
-        | t=<CharLiteral>
-            {jjtThis.type = new Type("char");
-             jjtThis.value = t.getImage();
-             }
-        | t=<NullLiteral>
-        | LOOKAHEAD(3) t=<StringLiteral>
-            [(".length()"
-               {jjtThis.hasLength = true;
-               jjtThis.atomLength = t.getImage().length();}
-
-            |".isInt()"
-                {jjtThis.isInt = true;}
-
-            |".isDouble()"
-                {jjtThis.isDouble = true;}
-
-            |".toInt()"
-                {jjtThis.toInt = true;}
-
-            |".toDouble()"
-                {jjtThis.toDouble = true;}
-            )]
+        ]
     )
+    | <KlammerAuf> Expr() <KlammerZu>
+        {jjtThis.isExpression = true;
+        }
+    | t=<BooleanLiteral>
+        {jjtThis.type = new Type("boolean");
+         jjtThis.value = t.getImage();
+         }
+    | t=<IntegerLiteral>
+        {jjtThis.type = new Type("int");
+         jjtThis.value = t.getImage();
+         }
+    | t=<DoubleLiteral>
+        {jjtThis.type = new Type("double");
+         jjtThis.value = t.getImage();
+         }
+    | t=<CharLiteral>
+        {jjtThis.type = new Type("char");
+         jjtThis.value = t.getImage();
+         }
+    | t=<NullLiteral>
+    | LOOKAHEAD(3) t=<StringLiteral>
+        [(".length()"
+           {jjtThis.hasLength = true;
+           jjtThis.atomLength = t.getImage().length();}
+
+        |".isInt()"
+            {jjtThis.isInt = true;}
+
+        |".isDouble()"
+            {jjtThis.isDouble = true;}
+
+        |".toInt()"
+            {jjtThis.toInt = true;}
+
+        |".toDouble()"
+            {jjtThis.toDouble = true;}
+        )]
 }
 void MethodCall() #MethodCall : {}
 {
@@ -396,6 +404,16 @@ void KlammerAffeAusdruck() #KlammerAffeAusdruck : {}
 }
 void PrintStmnt() #PrintStmnt :
 {}
-{
-  (<PRINT_LINE> | <PRINT> ) <KlammerAuf> Expr() <KlammerZu> <SEMICOLON>
+{ (<PRINT_LINE> | <PRINT> ) <KlammerAuf> Expr() <KlammerZu> <SEMICOLON>
+}
+
+void NextStmnt() #NextStmnt :
+{}
+{(<NEXT>
+ | <NEXT_INT>
+ | <NEXT_DOUBLE>
+ | <NEXT_CHAR>
+ | <NEXT_BOOLEAN>
+ | <NEXT_STRING>
+ ) <KlammerAuf> Expr() <KlammerZu> <SEMICOLON>
 }
