@@ -269,7 +269,7 @@ void LogicalAndExpr() #LogicalAndExpr : {}
 }
 void LogicalNotExpr() #LogicalNotExpr : {}
 {
-    [<ConditionalNot>] CompExpr()
+    (<ConditionalNot>)* CompExpr()
 }
 void CompExpr() #CompExpr : {}
 {

@@ -470,21 +470,27 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             printExit(node);
             return data;
         }
-        CompExpr ce = node.firstChildOfType(CompExpr.class);
-        if (ce.type.type.equals("boolean")) {
-            if (ce.value.equals("true")) {
-                node.type = ce.type;
-                node.value = "false";
-            } else if (ce.value.equals("false")) {
-                node.type = ce.type;
-                node.value = "true";
+        else if(node.children().size() == 2) {
+            CompExpr ce = node.firstChildOfType(CompExpr.class);
+            if (ce.type.type.equals("boolean")) {
+                if (ce.value.equals("true")) {
+                    node.type = ce.type;
+                    node.value = "false";
+                } else if (ce.value.equals("false")) {
+                    node.type = ce.type;
+                    node.value = "true";
+                } else {
+                    throw new TypeCheckingException("LogicalNot: boolean type CompExpr-Type has a non-bool-value at:" +
+                            ce.getBeginLine() + ":" + ce.getBeginColumn());
+                }
             } else {
-                throw new TypeCheckingException("LogicalNot: boolean type CompExpr-Type has a non-bool-value at:" +
+                throw new TypeCheckingException("LogicalNot: is used on a non-boolean expression at: " +
                         ce.getBeginLine() + ":" + ce.getBeginColumn());
             }
-        } else {
-            throw new TypeCheckingException("LogicalNot: is used on a non-boolean expression at: " +
-                    ce.getBeginLine() + ":" + ce.getBeginColumn());
+        }
+        else {
+            throw new TypeCheckingException("LogicalNot: Please don't use multiple \"!\" together at: " +
+                    node.getBeginLine() + ":" + node.getBeginColumn());
         }
 
         printExit(node);

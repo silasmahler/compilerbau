@@ -1080,13 +1080,13 @@ public class NewAwkParser implements NewAwkConstants {
         ParseException parseException14= null;
         int callStackSize14= parsingStack.size();
         try {
-            // Code for ZeroOrOne specified on line 272 of NewAwkParser.jjt
-            if (resetScanAhead(1)&&nextTokenType== ConditionalNot) {
+            // Code for ZeroOrMore specified on line 272 of NewAwkParser.jjt
+            while (resetScanAhead(1)&&nextTokenType== ConditionalNot) {
                 // Code for RegexpRef specified on line 272 of NewAwkParser.jjt
                 consumeToken(ConditionalNot);
             }
             // Code for NonTerminal specified on line 272 of NewAwkParser.jjt
-            pushOntoCallStack("LogicalNotExpr", "NewAwkParser.jjt", 272, 24);
+            pushOntoCallStack("LogicalNotExpr", "NewAwkParser.jjt", 272, 25);
             try {
                 CompExpr();
             }
@@ -2395,9 +2395,14 @@ public class NewAwkParser implements NewAwkConstants {
 
     private final boolean check$LogicalNotExpr() {
         if (remainingLookahead<=0) return true;
-        Token token33= currentLookaheadToken;
-        if (!(scanToken(ConditionalNot))) currentLookaheadToken= token33;
-        pushOntoLookaheadStack("LogicalNotExpr", "NewAwkParser.jjt", 272, 24);
+        while (remainingLookahead> 0) {
+            Token token33= currentLookaheadToken;
+            if (!(scanToken(ConditionalNot))) {
+                currentLookaheadToken= token33;
+                break;
+            }
+        }
+        pushOntoLookaheadStack("LogicalNotExpr", "NewAwkParser.jjt", 272, 25);
         if (!check$CompExpr()) {
             popLookaheadStack();
             return false;

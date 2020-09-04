@@ -3,4 +3,4 @@
 boolean a = !true;
 boolean b = !(false == false);
 
-boolean c = !1;
+boolean c = !!true;
