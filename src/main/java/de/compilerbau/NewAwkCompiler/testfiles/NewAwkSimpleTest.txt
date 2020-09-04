@@ -1,6 +1,3 @@
 
 
-boolean a = !true;
-boolean b = !(false == false);
-
-boolean c = !!true;
+boolean a = true || (false && true);

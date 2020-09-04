@@ -409,31 +409,21 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.value = node.firstChildOfType(LogicalAndExpr.class).value;
             printExit(node);
             return data;
-        } else {
-            //Start operation with (Token || Token || Token ...)
-            for (int i = 0; i < node.children().size(); i++) {
-                //if any == true return true else false
-                List<LogicalAndExpr> logicalAndExprs = node.childrenOfType(LogicalAndExpr.class);
-                // Check if any none boolean Type -> then it should be only 1 value -> pass it up or throw diff
-                if (logicalAndExprs.stream().filter(child -> !child.type.type.equals("boolean")).findAny().isPresent()
-                ) {
-                    throw new TypeCheckingException("Inconsistent Types in LogicalOrExpression.  Please only use boolean.");
-                }
-                //All boolean
-                else {
-                    //Any of the boolean = true, pass true up
-                    if (logicalAndExprs.stream().filter(child -> (child.value.equals("true"))
-                    ).findAny().isPresent()) {
-                        node.type = new Type("boolean");
-                        node.value = "true";
-                    }
-                    //All of the boolean = false, pass false up
-                    else {
-                        node.type = new Type("boolean");
-                        node.value = "false";
-                    }
-                }
+        } else if (node.childrenOfType(LogicalAndExpr.class).stream().allMatch(
+                child -> child.type.type.equals("boolean"))) {
+            List<Boolean> bools = node.childrenOfType(LogicalAndExpr.class).stream().map(child
+                    -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
+            if (bools.stream().filter(b -> b.booleanValue() == true).findAny().isPresent()) {
+                node.type = new Type("boolean");
+                node.value = "true";
+            } else {
+                node.type = new Type("boolean");
+                node.value = "false";
             }
+
+        } else {
+            throw new TypeCheckingException("LogicalOrExpr: Not all operands boolean at: " +
+                    node.getBeginLine() + ":" + node.getBeginColumn());
         }
         printExit(node);
         return data;
@@ -450,9 +440,22 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.value = node.firstChildOfType(LogicalNotExpr.class).value;
             printExit(node);
             return data;
-        }
-        //TODO ELSE
+        } else if (node.childrenOfType(LogicalNotExpr.class).stream().allMatch(
+                child -> child.type.type.equals("boolean"))) {
+            List<Boolean> bools = node.childrenOfType(LogicalNotExpr.class).stream().map(child
+                    -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
+            if (bools.stream().filter(b -> b.booleanValue() == false).findAny().isPresent()) {
+                node.type = new Type("boolean");
+                node.value = "false";
+            } else {
+                node.type = new Type("boolean");
+                node.value = "true";
+            }
 
+        } else {
+            throw new TypeCheckingException("LogicalAndExpr: Not all operands boolean at: " +
+                    node.getBeginLine() + ":" + node.getBeginColumn());
+        }
         printExit(node);
         return data;
     }
@@ -469,8 +472,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.value = node.firstChildOfType(CompExpr.class).value;
             printExit(node);
             return data;
-        }
-        else if(node.children().size() == 2) {
+        } else if (node.children().size() == 2) {
             CompExpr ce = node.firstChildOfType(CompExpr.class);
             if (ce.type.type.equals("boolean")) {
                 if (ce.value.equals("true")) {
@@ -487,8 +489,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 throw new TypeCheckingException("LogicalNot: is used on a non-boolean expression at: " +
                         ce.getBeginLine() + ":" + ce.getBeginColumn());
             }
-        }
-        else {
+        } else {
             throw new TypeCheckingException("LogicalNot: Please don't use multiple \"!\" together at: " +
                     node.getBeginLine() + ":" + node.getBeginColumn());
         }

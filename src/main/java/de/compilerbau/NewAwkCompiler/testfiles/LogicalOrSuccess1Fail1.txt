@@ -1,0 +1,5 @@
+
+
+boolean a = true || false;
+
+boolean b = false || 1;
