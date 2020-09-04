@@ -1,5 +1,11 @@
 
-int[] c;
+int[] c = {1,2,3};
+
+//TODO Assignement and VariableAssignement
+//TODO variableDecl mit value befüllen
+//TODO aber vorher typengleichheit und ob es zu
+ //TODO VariableDecl passt, checken
+
 int x = c[0];
 
 

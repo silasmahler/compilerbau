@@ -316,6 +316,9 @@ void Atom() #Atom : {
             }
         ]
     )
+    | <BlockAuf> Expr() (<COMMA> Expr())* <BlockZu>
+        {jjtThis.isArrayInit = true;
+        }
     | <KlammerAuf> Expr() <KlammerZu>
         {jjtThis.isExpression = true;
         }

@@ -10,6 +10,8 @@ public class Atom extends BaseNode {
 
     public boolean isArrayAccess = false;
     public int arrayAccessDimension = 0;
+    public boolean isArrayInit = false;
+
 
     public boolean hasLength = false;
     public int atomLength = 0;
@@ -33,6 +35,7 @@ public class Atom extends BaseNode {
         return "Atom{" +
                 "isArrayAccess=" + isArrayAccess +
                 ", arrayAccessDimension=" + arrayAccessDimension +
+                ", isArrayInit=" + isArrayInit +
                 ", hasLength=" + hasLength +
                 ", atomLength=" + atomLength +
                 ", isExpression=" + isExpression +
