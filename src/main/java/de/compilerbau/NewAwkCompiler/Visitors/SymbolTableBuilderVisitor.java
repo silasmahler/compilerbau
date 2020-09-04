@@ -880,16 +880,26 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 ArrayAccess arrayAccess = node.firstChildOfType(ArrayAccess.class);
                 ID id = node.firstChildOfType(ID.class); //Use to find array
                 // 2. get type and value id
-                VariableDecl v = symbolTable.findVariableDeclFromID(id, getContext(node));
-                log.info("Atom: ArrayAccess found VariableDecl: " + v);
+                VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
+                log.info("Atom: ArrayAccess found VariableDecl: " + decl);
                 // 3. check type == int || boolean
                 // 3.1 int => Return Single Value
                 if (arrayAccess.type.type.equals("int") && node.arrayAccessDimension == 1) {
                     log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
-                    node.type = v.type;
-                    node.value = symbolTable.getArrayValForIDAndInt(id,
+                     ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
                             Integer.parseInt(arrayAccess.value));
 
+                    //TODO 1. getArray-Type and Value from symboltable
+
+                    //Wenn rückgabetyp  mit decl passt
+                    if(decl.type.type.equals(arrayAccess.type.type)){
+                        node.type = arrayAccess.type;
+                        node.value = arrayAccess.value;
+                    }
+                    else {
+                        throw new TypeCheckingException("VariableDecl and return-type of " +
+                                "one-dimensional arrayAccess not equal.");
+                    }
                 } // 3.2 boolean => Return field for truthy condition
                 else if (arrayAccess.type.type.equals("boolean")) {
                     log.info("Atom: ArrayAccess detected with Type boolean.");

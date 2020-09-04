@@ -160,7 +160,7 @@ public class SymbolTable {
         this.variableDeclTable = variableDeclTable;
     }
 
-    public String getArrayValForIDAndInt(ID id, int AccessIndex) {
+    public ArrayTypeAndValue getArrayValAndTypeForIDAndIntAccess(ID id, int AccessIndex) {
         log.warn("getArrayValForIDAndInt: Try to get value from Array");
 
         //Save
@@ -175,6 +175,8 @@ public class SymbolTable {
             log.warn(s);
         }
 
-        return null;
+
+        ArrayTypeAndValue a = new ArrayTypeAndValue();
+        return a;
     }
 }
