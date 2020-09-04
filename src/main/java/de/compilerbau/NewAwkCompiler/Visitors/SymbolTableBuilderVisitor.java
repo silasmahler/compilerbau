@@ -197,35 +197,37 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         String contextId = getContext(node); //Init with global context && Check if Method-Context
 
         if (!symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), contextId)) {
-            throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
+            throw new TypeCheckingException("VariableDeclAndAssignement: Variable has already been declared in the same scope you cant declare " +
                     "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         } else {
-            log.info("SUCCESS: insertVariableDecl: Variable: " + node.toString());
+            log.info("VariableDeclAndAssignement: SUCCESS: insertVariableDecl: " + node.toString());
             // Now check if Assignement possible
             node.id = node.firstChildOfType(ID.class);
             node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
             //Is the assignement-variable declared? If not -> error
             if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), contextId)) {
-                throw new TypeCheckingException("Variable to assign to hasn't been declared in the same scope. Please declare it. " +
+                throw new TypeCheckingException("VariableDeclAndAssignement: Variable to assign to hasn't been declared in the same scope. Please declare it. " +
                         "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                         + node.firstChildOfType(ID.class).getEndColumn());
             }
             // Variable is declared, check if assignement of value is possible
             else {
-                log.info("Variable is declared, checking assignement possible");
+                log.info("VariableDeclAndAssignement: Variable is declared, checking assignement possible");
                 ExprStmnt exprStmnt = node.exprStmnt;
                 VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
+                log.warn("VariableDeclAndAssignement: Found VariableDecl in the symboltable: " + variableDecl +"\n" +
+                        "Comparing it with ExprStmt by type next: " +exprStmnt);
                 //Types need to be equal for assignement or boxable (int -> double, all -> String)
                 // if ok: Save the assignement Data to the Variable-Decl in the Table
                 if (variableDecl.type.type.equals(exprStmnt.type.type)
                         || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
                         || variableDecl.type.type.equals("String")) {
                     variableDecl.value = exprStmnt.value;
-                    log.info("Update Variable with value: VariableDecl: " + variableDecl);
+                    log.info("VariableDeclAndAssignement: Update Variable with value: VariableDecl: " + variableDecl);
                     symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
                 } else {
-                    throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
+                    throw new TypeCheckingException("VariableDeclAndAssignement: Assignement-Types are not equal or boxable," +
                             " please correct that.");
                 }
             }
@@ -882,6 +884,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 //TODO finde Wert aus Arrayabfrage
                 node.type = new Type("myType"); //TODO Return-Type-From-Array;
                 node.value = "1"; // TODO Return-Value-From-Array;
+
+
+                //search value of type
+                // 1. get id
+                // 2. get type and value from arrayaccess.
+                // 3. check type == int
+                // 4. lookup id[value]
+
+
             }
             // Normal ID: x
             else {
@@ -988,13 +999,23 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     *
-     */
     @Override
     public Object visit(ArrayAccess node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
+        Expr e = node.firstChildOfType(Expr.class);
+        // If 1 no operation required, just pass it up
+        if (node.children().size() == 1) {
+            if (!(e.type.type.equals("int") || e.type.type.equals("boolean"))) {
+                throw new TypeCheckingException("Value-Type of Array-Access is not int or boolean at: " +
+                        node.getBeginLine() + ":" + node.getBeginColumn());
+            }
+            log.info("Node has only 1 child, pass up data value and type.");
+            node.type = e.type;
+            node.value = e.value;
+            printExit(node);
+            return data;
+        }
         printExit(node);
         return data;
     }
