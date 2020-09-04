@@ -4,14 +4,11 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
-import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class ExprStmnt extends BaseNode {
 
-    /* TODO Remove Testdata, atm always int */
-    public Type type = new Type(false, 0, "int");;
-
-    public String value; //Ok for int, double, char, boolean, String
+    public Type type = null;;
+    public String value;
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
