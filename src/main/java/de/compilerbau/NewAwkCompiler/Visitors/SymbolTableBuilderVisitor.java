@@ -461,8 +461,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(LogicalNotExpr node, Object data) {
         printEnter(node);
         // Operatoren auf boolean: &&, ||, !
-        // Check if childs boolean -> turn around bool and save
-        // else just pass up values
         data = node.childrenAccept(this, data);
 
         if (node.children().size() == 1) {
@@ -472,7 +470,22 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             printExit(node);
             return data;
         }
-        //TODO ELSE
+        CompExpr ce = node.firstChildOfType(CompExpr.class);
+        if (ce.type.type.equals("boolean")) {
+            if (ce.value.equals("true")) {
+                node.type = ce.type;
+                node.value = "false";
+            } else if (ce.value.equals("false")) {
+                node.type = ce.type;
+                node.value = "true";
+            } else {
+                throw new TypeCheckingException("LogicalNot: boolean type CompExpr-Type has a non-bool-value at:" +
+                        ce.getBeginLine() + ":" + ce.getBeginColumn());
+            }
+        } else {
+            throw new TypeCheckingException("LogicalNot: is used on a non-boolean expression at: " +
+                    ce.getBeginLine() + ":" + ce.getBeginColumn());
+        }
 
         printExit(node);
         return data;
@@ -568,10 +581,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
             node.type = new Type("boolean");
             node.value = result ? "true" : "false";
-        }
-        else {
+        } else {
             throw new TypeCheckingException("There are incompatible types in an Comparable-Expression beginning at:" +
-                    + node.getBeginLine() + ":" + node.getBeginColumn() +
+                    +node.getBeginLine() + ":" + node.getBeginColumn() +
                     " Please use only boolean or int, double and char or adjust the paranthesis.");
         }
         printExit(node);

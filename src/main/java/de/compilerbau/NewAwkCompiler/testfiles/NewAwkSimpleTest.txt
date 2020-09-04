@@ -1,2 +1,6 @@
-boolean b = (1 != 3.0) != (4 == 'a') != false;
-boolean c = (1 != 3.0) != (4 == 'a') != false >= 1;
+
+
+boolean a = !true;
+boolean b = !(false == false);
+
+boolean c = !1;
