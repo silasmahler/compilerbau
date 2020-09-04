@@ -1,13 +1,18 @@
 package de.compilerbau.NewAwkCompiler.Visitors;
 
 import de.compilerbau.NewAwkCompiler.javacc21.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class SymbolTable {
+
+    private static final Logger log = LoggerFactory.getLogger(SymbolTable.class);
 
     private Map<String, MethodDecl> methodDeclTable;
     private HashMap<String, List<VariableDecl>> variableDeclTable;
@@ -153,5 +158,23 @@ public class SymbolTable {
 
     public void setVariableDeclTable(HashMap<String, List<VariableDecl>> variableDeclTable) {
         this.variableDeclTable = variableDeclTable;
+    }
+
+    public String getArrayValForIDAndInt(ID id, int AccessIndex) {
+        log.warn("getArrayValForIDAndInt: Try to get value from Array");
+
+        //Save
+        int[] test = {1,2,3,5};
+        double[] test2 = {1.1,2.2,3.3,5};
+        String value = Arrays.toString(test);
+        String value2 = Arrays.toString(test2);
+        log.warn(value + " " + value2);
+        //int [] test2 = value;
+        String[] strings = value.substring(1, value.length()-1).replaceAll("\\s","").split(",");
+        for(String s: strings) {
+            log.warn(s);
+        }
+
+        return null;
     }
 }

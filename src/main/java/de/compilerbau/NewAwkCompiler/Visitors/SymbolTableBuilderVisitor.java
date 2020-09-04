@@ -884,8 +884,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 log.info("Atom: ArrayAccess found VariableDecl: " + v);
                 // 3. check type == int || boolean
                 // 3.1 int => Return Single Value
-                if (arrayAccess.type.type.equals("int")) {
-                    log.info("Atom: ArrayAccess detected with Type int.");
+                if (arrayAccess.type.type.equals("int") && node.arrayAccessDimension == 1) {
+                    log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
+                    node.type = v.type;
+                    node.value = symbolTable.getArrayValForIDAndInt(id,
+                            Integer.parseInt(arrayAccess.value));
 
                 } // 3.2 boolean => Return field for truthy condition
                 else if (arrayAccess.type.type.equals("boolean")) {
