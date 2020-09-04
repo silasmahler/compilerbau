@@ -1,4 +1,9 @@
 
+int[] c;
+int x = c[0];
+
+
+int y = c[i[0] == 2];
 
 int a = b[5];
 

@@ -6,7 +6,6 @@ package de.compilerbau.NewAwkCompiler.javacc21;
 
 import de.compilerbau.NewAwkCompiler.Visitors.TypeCheckingException;
 
-import javax.lang.model.type.PrimitiveType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,37 +14,37 @@ import java.util.List;
 public class Type extends BaseNode {
 
     public boolean isArray = false;
-    public int dimension = 0;
+    public int arrayTypeDimension = 0;
     public String type = "";
 
     private static  List<String> typelist = new ArrayList<String>(Arrays.asList("int", "double", "boolean", "char", "String"));
+
+    @Override
+    public String toString() {
+        return "Type{" +
+                "isArray=" + isArray +
+                ", arrayTypeDimension=" + arrayTypeDimension +
+                ", type='" + type + '\'' +
+                '}';
+    }
 
     public Type() {
     }
 
     public Type(String type) {
         this.isArray = false;
-        this.dimension = 0;
+        this.arrayTypeDimension = 0;
         this.type = type;
     }
 
-    public Type(boolean isArray, int dimension, String type) {
+    public Type(boolean isArray, int arrayTypeDimension, String type) {
         this.isArray = isArray;
-        this.dimension = dimension;
+        this.arrayTypeDimension = arrayTypeDimension;
         this.type = type;
     }
 
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
-    }
-
-    @Override
-    public String toString() {
-        return "Type{" +
-                "isArray=" + isArray +
-                ", dimension=" + dimension +
-                ", type=" + type +
-                '}';
     }
 
     static void typeCastCheck(final Type from, final Type to) {

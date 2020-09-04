@@ -84,7 +84,7 @@ public class NewAwkParser {
                  SymbolTableBuilderVisitor symbolTableBuilderVisitor = new SymbolTableBuilderVisitor();
                  if(root instanceof CompilationUnit) {
                      System.out.println("Entering Visitors...");
-                     ((CompilationUnit) root).jjtAccept(dumpVisitor, null);
+                     //((CompilationUnit) root).jjtAccept(dumpVisitor, null);
                      ((CompilationUnit) root).jjtAccept(symbolTableBuilderVisitor, null);
                  }
              }
@@ -296,15 +296,16 @@ void Atom() #Atom : {
 {
     (
         (t=<ID>
-            ([ArrayAccess()
-                {jjtThis.isArrayAccess = true;}
-            ]
+            (ArrayAccess()
+                {jjtThis.isArrayAccess = true;
+                jjtThis.arrayAccessDimension++;}
+            )*
             [".length()"
                 {jjtThis.hasLength = true;
                 //Length needs to be determined by id value
                 //See Symboltable
                 }
-            ])
+            ]
         )
         | <KlammerAuf> Expr() <KlammerZu>
             {jjtThis.isExpression = true;
@@ -368,7 +369,7 @@ void Type() #Type : {
   <ArrayAuf> <ArrayZu>
       {
           jjtThis.isArray = true;
-          jjtThis.dimension++;
+          jjtThis.arrayTypeDimension++;
       }
   )*
 }

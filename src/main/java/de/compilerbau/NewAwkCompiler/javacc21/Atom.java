@@ -9,6 +9,7 @@ import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*
 public class Atom extends BaseNode {
 
     public boolean isArrayAccess = false;
+    public int arrayAccessDimension = 0;
 
     public boolean hasLength = false;
     public int atomLength = 0;
@@ -31,6 +32,7 @@ public class Atom extends BaseNode {
     public String toString() {
         return "Atom{" +
                 "isArrayAccess=" + isArrayAccess +
+                ", arrayAccessDimension=" + arrayAccessDimension +
                 ", hasLength=" + hasLength +
                 ", atomLength=" + atomLength +
                 ", isExpression=" + isExpression +

@@ -117,7 +117,7 @@ public class SymbolTable {
                 o -> o.id.getImage().equals(id.getImage()))
                 .findFirst()
                 .orElseThrow(() -> new TypeCheckingException("Variable: " + id.getImage()
-                        + " with .length() hasn't been defined, it wasn't found in the SymbolTable."));
+                        + " hasn't been defined, it wasn't found in the SymbolTable."));
     }
 
     /**

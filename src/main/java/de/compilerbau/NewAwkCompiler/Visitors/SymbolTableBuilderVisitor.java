@@ -216,8 +216,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 log.info("VariableDeclAndAssignement: Variable is declared, checking assignement possible");
                 ExprStmnt exprStmnt = node.exprStmnt;
                 VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
-                log.warn("VariableDeclAndAssignement: Found VariableDecl in the symboltable: " + variableDecl +"\n" +
-                        "Comparing it with ExprStmt by type next: " +exprStmnt);
+                log.warn("VariableDeclAndAssignement: Found VariableDecl in the symboltable: " + variableDecl + "\n" +
+                        "Comparing it with ExprStmt by type next: " + exprStmnt);
                 //Types need to be equal for assignement or boxable (int -> double, all -> String)
                 // if ok: Save the assignement Data to the Variable-Decl in the Table
                 if (variableDecl.type.type.equals(exprStmnt.type.type)
@@ -228,7 +228,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
                 } else {
                     throw new TypeCheckingException("VariableDeclAndAssignement: Assignement-Types are not equal or boxable," +
-                            " please correct that.");
+                            " please correct that at: " + node.getBeginLine() + ":" + node.getBeginColumn());
                 }
             }
 
@@ -876,23 +876,26 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
             // ArrayAccess ID: x[5]
             else if (node.isArrayAccess) {
-                Expr expr = node.firstChildOfType(ArrayAccess.class).firstChildOfType(Expr.class);
-                //Iterate over Array and store value and type in expr
+                //Get 1. ArrayAccess and ID
+                ArrayAccess arrayAccess = node.firstChildOfType(ArrayAccess.class);
                 ID id = node.firstChildOfType(ID.class); //Use to find array
-                // expr.type => needs to be int for array index access
-                // expr.value => value to pass to found array and access data
-                //TODO finde Wert aus Arrayabfrage
-                node.type = new Type("myType"); //TODO Return-Type-From-Array;
-                node.value = "1"; // TODO Return-Value-From-Array;
+                // 2. get type and value id
+                VariableDecl v = symbolTable.findVariableDeclFromID(id, getContext(node));
+                log.info("Atom: ArrayAccess found VariableDecl: " + v);
+                // 3. check type == int || boolean
+                // 3.1 int => Return Single Value
+                if (arrayAccess.type.type.equals("int")) {
+                    log.info("Atom: ArrayAccess detected with Type int.");
 
+                } // 3.2 boolean => Return field for truthy condition
+                else if (arrayAccess.type.type.equals("boolean")) {
+                    log.info("Atom: ArrayAccess detected with Type boolean.");
 
-                //search value of type
-                // 1. get id
-                // 2. get type and value from arrayaccess.
-                // 3. check type == int
+                }
                 // 4. lookup id[value]
 
-
+                node.type = new Type("test");
+                node.value = "test";
             }
             // Normal ID: x
             else {
@@ -1004,18 +1007,13 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         data = node.childrenAccept(this, data);
         Expr e = node.firstChildOfType(Expr.class);
-        // If 1 no operation required, just pass it up
-        if (node.children().size() == 1) {
-            if (!(e.type.type.equals("int") || e.type.type.equals("boolean"))) {
-                throw new TypeCheckingException("Value-Type of Array-Access is not int or boolean at: " +
-                        node.getBeginLine() + ":" + node.getBeginColumn());
-            }
-            log.info("Node has only 1 child, pass up data value and type.");
-            node.type = e.type;
-            node.value = e.value;
-            printExit(node);
-            return data;
+        if (!(e.type.type.equals("int") || e.type.type.equals("boolean"))) {
+            throw new TypeCheckingException("Value-Type of Array-Access is not int or boolean at: " +
+                    node.getBeginLine() + ":" + node.getBeginColumn());
         }
+        log.info("Node has only 1 child, pass up data value and type.");
+        node.type = e.type;
+        node.value = e.value;
         printExit(node);
         return data;
     }
