@@ -887,7 +887,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 if (arrayAccess.type.type.equals("int") && node.arrayAccessDimension == 1) {
                     log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
                      ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
-                            Integer.parseInt(arrayAccess.value));
+                            Integer.parseInt(arrayAccess.value), getContext(node));
 
                     //TODO 1. getArray-Type and Value from symboltable
 

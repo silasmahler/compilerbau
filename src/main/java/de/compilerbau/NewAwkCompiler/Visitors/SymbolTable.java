@@ -160,23 +160,43 @@ public class SymbolTable {
         this.variableDeclTable = variableDeclTable;
     }
 
-    public ArrayTypeAndValue getArrayValAndTypeForIDAndIntAccess(ID id, int AccessIndex) {
+    public ArrayTypeAndValue getArrayValAndTypeForIDAndIntAccess(ID id, int accessIndex, String context) {
         log.warn("getArrayValForIDAndInt: Try to get value from Array");
-
-        //Save
-        int[] test = {1,2,3,5};
-        double[] test2 = {1.1,2.2,3.3,5};
-        String value = Arrays.toString(test);
-        String value2 = Arrays.toString(test2);
-        log.warn(value + " " + value2);
-        //int [] test2 = value;
-        String[] strings = value.substring(1, value.length()-1).replaceAll("\\s","").split(",");
-        for(String s: strings) {
-            log.warn(s);
+        VariableDecl variableDecl = findVariableDeclFromID(id, context);
+        if(variableDecl.value == null){
+            throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: The Array hasnt been " +
+                    "initialized or assigned a value and it can't be accessed.");
         }
-
-
-        ArrayTypeAndValue a = new ArrayTypeAndValue();
-        return a;
+        String[] values = variableDecl.value.substring(1, variableDecl.value.length() - 1)
+                .replaceAll("\\s", "").split(",");
+        ArrayTypeAndValue typeAndValue = new ArrayTypeAndValue();
+        if (variableDecl.type.type.equals("int")) {
+            typeAndValue.type = new Type("int");
+            typeAndValue.value = values[accessIndex];
+        } else if (variableDecl.type.type.equals("double")) {
+            typeAndValue.type = new Type("double");
+            typeAndValue.value = values[accessIndex];
+        } else if (variableDecl.type.type.equals("char")) {
+            typeAndValue.type = new Type("char");
+            typeAndValue.value = values[accessIndex];
+        } else if (variableDecl.type.type.equals("boolean")) {
+            typeAndValue.type = new Type("boolean");
+            typeAndValue.value = values[accessIndex];
+        } else if (variableDecl.type.type.equals("String")) {
+            typeAndValue.type = new Type("String");
+            typeAndValue.value = values[accessIndex];
+        } else {
+            throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: Invalid Type!");
+        }
+        return typeAndValue;
+        /**
+         //Save
+         int[] test = {1,2,3,5};
+         String value = Arrays.toString(test);
+         // Unsave
+         String[] strings = value.substring(1, value.length()-1).replaceAll("\\s","").split(",");
+         for(String s: strings) {
+         log.warn(s);
+         }*/
     }
 }
