@@ -57,6 +57,7 @@ import de.compilerbau.NewAwkCompiler.javacc21.VariableDeclAndAssignement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -905,9 +906,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 } // 3.2 boolean => Return field for truthy condition
                 else if (arrayAccess.type.type.equals("boolean")) {
                     log.info("Atom: ArrayAccess detected with Type boolean.");
-
+                        //TODO Impl
                 }
-                // 4. lookup id[value]
+                // 4. lookup id[value] ??? relevant?
 
                 node.type = new Type("test");
                 node.value = "test";
@@ -929,19 +930,33 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 throw new TypeCheckingException("Not all value types are equal in Array init at: " +
                         node.getBeginLine() + ":" + node.getBeginColumn());
             }
-            // 2.
+            // 2. Check dim > 1
+            boolean dimMoreThanOne = node.getChild(1) instanceof BlockAuf ? true : false;
+            // 3. Build Value
             String valueString = "";
+            // If 1 Child no iteration
             if (node.childrenOfType(Expr.class).size() == 1) {
                 valueString = node.firstChildOfType(Expr.class).value;
-            } else {
+            } //more childs, make comma-list
+            else {
                 for (Expr e : node.childrenOfType(Expr.class)) {
                     valueString += e.value + ", ";
                 }
                 valueString = valueString.substring(0, valueString.length() - 2);
             }
+            // Add outer Parenthesis
             valueString = "[" + valueString + "]";
-            log.info("Atom: ValueString for ArrayInit: " + valueString);
+
             node.value = valueString;
+
+            int[][] a = {{1,2,3},{4,5,6},{7,8,9}};
+            if(dimMoreThanOne){
+                log.warn(Arrays.deepToString(a));
+            } else {
+                log.info("Atom: ValueString for ArrayInit: " + valueString);
+            }
+
+
         }
         else if (node.getFirstChild() instanceof KlammerAuf &&
                 node.getChild(1) instanceof Expr &&
