@@ -167,19 +167,26 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             log.info("Assignement: Variable is declared, checking assignement possible");
             ExprStmnt exprStmnt = node.exprStmnt;
             VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
-            log.warn("Assignement: Found VariableDecl in the symboltable: " + variableDecl + "\n" +
+            log.warn("Assignement: Found VariableDecl in the Symboltable: " + variableDecl + "\n" +
                     "Comparing it with ExprStmt by type next: " + exprStmnt);
             //Types need to be equal for assignement or boxable (int -> double, all -> String)
-            // If Decl == Assignement
-            if (variableDecl.type.type.equals(exprStmnt.type.type)
-                    || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
-                    || variableDecl.type.type.equals("String")) {
-                variableDecl.value = exprStmnt.value;
-                log.info("Assignement: Update Variable with value: VariableDecl: " + variableDecl);
-                symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
-            } else {
-                throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
-                        " please correct that.");
+            //Check Dimension equal
+            //TODO How to get Init-Stmnt Dimension? (Check how many braces would be possible)
+            if(variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension) {
+                // If Decl == Assignement
+                if (variableDecl.type.type.equals(exprStmnt.type.type)
+                        || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
+                        || variableDecl.type.type.equals("String")) {
+                    variableDecl.value = exprStmnt.value;
+                    log.info("Assignement: Update Variable with value: VariableDecl: " + variableDecl);
+                    symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
+                } else {
+                    throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
+                            " please correct that.");
+                }
+            }
+            else {
+                throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
             }
         }
         printExit(node);
@@ -931,6 +938,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         node.getBeginLine() + ":" + node.getBeginColumn());
             }
             // 2. Check dim > 1
+            //TODO Macht das Sinn?
             boolean dimMoreThanOne = node.getChild(1) instanceof BlockAuf ? true : false;
             // 3. Build Value
             String valueString = "";
