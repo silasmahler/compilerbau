@@ -5,6 +5,7 @@ import de.compilerbau.NewAwkCompiler.javacc21.Assignement;
 import de.compilerbau.NewAwkCompiler.javacc21.Atom;
 import de.compilerbau.NewAwkCompiler.javacc21.BaseNode;
 import de.compilerbau.NewAwkCompiler.javacc21.Block;
+import de.compilerbau.NewAwkCompiler.javacc21.BlockAuf;
 import de.compilerbau.NewAwkCompiler.javacc21.BooleanLiteral;
 import de.compilerbau.NewAwkCompiler.javacc21.COMMA;
 import de.compilerbau.NewAwkCompiler.javacc21.Cast;
@@ -162,16 +163,18 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         }
         // Variable is declared, check if assignement of value is possible
         else {
-            log.info("Variable is declared, checking assignement possible");
+            log.info("Assignement: Variable is declared, checking assignement possible");
             ExprStmnt exprStmnt = node.exprStmnt;
             VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
+            log.warn("Assignement: Found VariableDecl in the symboltable: " + variableDecl + "\n" +
+                    "Comparing it with ExprStmt by type next: " + exprStmnt);
             //Types need to be equal for assignement or boxable (int -> double, all -> String)
-            // if ok: Save the assignement Data to the Variable-Decl in the Table
+            // If Decl == Assignement
             if (variableDecl.type.type.equals(exprStmnt.type.type)
                     || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
                     || variableDecl.type.type.equals("String")) {
                 variableDecl.value = exprStmnt.value;
-                log.info("Update Variable with value: VariableDecl: " + variableDecl);
+                log.info("Assignement: Update Variable with value: VariableDecl: " + variableDecl);
                 symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
             } else {
                 throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
@@ -886,17 +889,16 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 // 3.1 int => Return Single Value
                 if (arrayAccess.type.type.equals("int") && node.arrayAccessDimension == 1) {
                     log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
-                     ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
+                    ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
                             Integer.parseInt(arrayAccess.value), getContext(node));
 
                     //TODO 1. getArray-Type and Value from symboltable
 
                     //Wenn rückgabetyp  mit decl passt
-                    if(decl.type.type.equals(arrayAccess.type.type)){
+                    if (decl.type.type.equals(arrayAccess.type.type)) {
                         node.type = arrayAccess.type;
                         node.value = arrayAccess.value;
-                    }
-                    else {
+                    } else {
                         throw new TypeCheckingException("VariableDecl and return-type of " +
                                 "one-dimensional arrayAccess not equal.");
                     }
@@ -916,7 +918,32 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 node.type = new Type("String");
                 node.value = node.firstChildOfType(StringLiteral.class).getImage();
             }
-        } else if (node.getFirstChild() instanceof KlammerAuf &&
+        }else if (node.isArrayInit && node.getFirstChild() instanceof BlockAuf) {
+            log.info("Atom: is arrayInit");
+            //Build initial Array Data
+            // 1. Check all Subtypes equal, easy way, no boxing considered
+            if (node.childrenOfType(Expr.class).stream().allMatch(e ->
+                    e.type.type.equals(node.firstChildOfType(Expr.class).type.type))) {
+                node.type = node.firstChildOfType(Expr.class).type;
+            } else {
+                throw new TypeCheckingException("Not all value types are equal in Array init at: " +
+                        node.getBeginLine() + ":" + node.getBeginColumn());
+            }
+            // 2.
+            String valueString = "";
+            if (node.childrenOfType(Expr.class).size() == 1) {
+                valueString = node.firstChildOfType(Expr.class).value;
+            } else {
+                for (Expr e : node.childrenOfType(Expr.class)) {
+                    valueString += e.value + ", ";
+                }
+                valueString = valueString.substring(0, valueString.length() - 2);
+            }
+            valueString = "[" + valueString + "]";
+            log.info("Atom: ValueString for ArrayInit: " + valueString);
+            node.value = valueString;
+        }
+        else if (node.getFirstChild() instanceof KlammerAuf &&
                 node.getChild(1) instanceof Expr &&
                 node.getChild(2) instanceof KlammerZu) {
             node.type = node.firstChildOfType(Expr.class).type;

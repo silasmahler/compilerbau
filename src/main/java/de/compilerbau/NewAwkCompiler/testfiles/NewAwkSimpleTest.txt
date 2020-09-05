@@ -1,15 +1,4 @@
 
-int[] c = {1,2,3};
-
-//TODO Assignement and VariableAssignement
-//TODO variableDecl mit value befüllen
-//TODO aber vorher typengleichheit und ob es zu
- //TODO VariableDecl passt, checken
-
-int x = c[0];
-
-
-int y = c[i[0] == 2];
-
-int a = b[5];
+int[] c;
+c = {1,2,3};
 
