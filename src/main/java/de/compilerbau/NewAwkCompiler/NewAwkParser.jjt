@@ -316,8 +316,15 @@ void Atom() #Atom : {
             }
         ]
     )
-    | <BlockAuf> Expr() (<COMMA> Expr())* <BlockZu>
+    | <BlockAuf> Expr()
+        (<COMMA> Expr()
         {jjtThis.isArrayInit = true;
+         // jjtThis.type.arrayTypeDimension++; NPE wg Type
+        }
+        )*
+      <BlockZu>
+        {jjtThis.isArrayInit = true;
+         //jjtThis.type.arrayTypeDimension++; NPE wg Type
         }
     | <KlammerAuf> Expr() <KlammerZu>
         {jjtThis.isExpression = true;

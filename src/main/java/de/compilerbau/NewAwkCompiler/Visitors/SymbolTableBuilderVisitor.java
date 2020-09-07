@@ -167,15 +167,16 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             log.info("Assignement: Variable is declared, checking assignement possible");
             ExprStmnt exprStmnt = node.exprStmnt;
             VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
-            log.warn("Assignement: Found VariableDecl in the Symboltable: " + variableDecl + "\n" +
+            log.info("Assignement: Found VariableDecl in the Symboltable: " + variableDecl + "\n" +
                     "Comparing it with ExprStmt by type next: " + exprStmnt);
             //Types need to be equal for assignement or boxable (int -> double, all -> String)
             //Check Dimension equal
             //TODO How to get Init-Stmnt Dimension? (Check how many braces would be possible)
-            if(variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension) {
-                // If Decl == Assignement
+            if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension) {
+                // If Decl Type == Assignement Type or boxable
                 if (variableDecl.type.type.equals(exprStmnt.type.type)
                         || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
+                        || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("char")
                         || variableDecl.type.type.equals("String")) {
                     variableDecl.value = exprStmnt.value;
                     log.info("Assignement: Update Variable with value: VariableDecl: " + variableDecl);
@@ -184,8 +185,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
                             " please correct that.");
                 }
-            }
-            else {
+            } else {
                 throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
             }
         }
@@ -913,7 +913,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 } // 3.2 boolean => Return field for truthy condition
                 else if (arrayAccess.type.type.equals("boolean")) {
                     log.info("Atom: ArrayAccess detected with Type boolean.");
-                        //TODO Impl
+                    //TODO Impl
                 }
                 // 4. lookup id[value] ??? relevant?
 
@@ -926,10 +926,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 node.type = new Type("String");
                 node.value = node.firstChildOfType(StringLiteral.class).getImage();
             }
-        }else if (node.isArrayInit && node.getFirstChild() instanceof BlockAuf) {
-            log.info("Atom: is arrayInit");
-            //Build initial Array Data
-            // 1. Check all Subtypes equal, easy way, no boxing considered
+        } else if (node.isArrayInit) {
+            log.info("Atom: is arrayInit #1");
+            // 1. Build initial Array Data, check all Subtypes equal, easy way, no boxing considered
             if (node.childrenOfType(Expr.class).stream().allMatch(e ->
                     e.type.type.equals(node.firstChildOfType(Expr.class).type.type))) {
                 node.type = node.firstChildOfType(Expr.class).type;
@@ -937,8 +936,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 throw new TypeCheckingException("Not all value types are equal in Array init at: " +
                         node.getBeginLine() + ":" + node.getBeginColumn());
             }
+            log.info("Atom: is arrayInit #2");
+
             // 2. Check dim > 1
-            //TODO Macht das Sinn?
+            //TODO Macht das Sinn? --> Nope
             boolean dimMoreThanOne = node.getChild(1) instanceof BlockAuf ? true : false;
             // 3. Build Value
             String valueString = "";
@@ -952,21 +953,25 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 }
                 valueString = valueString.substring(0, valueString.length() - 2);
             }
+            log.info("Atom: is arrayInit #3");
+
             // Add outer Parenthesis
             valueString = "[" + valueString + "]";
-
             node.value = valueString;
 
-            int[][] a = {{1,2,3},{4,5,6},{7,8,9}};
-            if(dimMoreThanOne){
-                log.warn(Arrays.deepToString(a));
-            } else {
-                log.info("Atom: ValueString for ArrayInit: " + valueString);
+            boolean stopped = false;
+            int dimCounter = 0;
+            for (int i = 0; i < valueString.length(); i++) {
+                if (valueString.charAt(i) == '[' && !stopped) {
+                    dimCounter++;
+                } else {
+                    stopped = true;
+                }
             }
+            node.type.arrayTypeDimension = dimCounter;
+            log.info("Atom: .isArrayInit: Passed up Atom-Node: " + node);
 
-
-        }
-        else if (node.getFirstChild() instanceof KlammerAuf &&
+        } else if (node.getFirstChild() instanceof KlammerAuf &&
                 node.getChild(1) instanceof Expr &&
                 node.getChild(2) instanceof KlammerZu) {
             node.type = node.firstChildOfType(Expr.class).type;
