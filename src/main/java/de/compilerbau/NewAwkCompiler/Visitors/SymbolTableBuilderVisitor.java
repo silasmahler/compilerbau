@@ -229,17 +229,23 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
                 log.warn("VariableDeclAndAssignement: Found VariableDecl in the symboltable: " + variableDecl + "\n" +
                         "Comparing it with ExprStmt by type next: " + exprStmnt);
-                //Types need to be equal for assignement or boxable (int -> double, all -> String)
-                // if ok: Save the assignement Data to the Variable-Decl in the Table
-                if (variableDecl.type.type.equals(exprStmnt.type.type)
-                        || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
-                        || variableDecl.type.type.equals("String")) {
-                    variableDecl.value = exprStmnt.value;
-                    log.info("VariableDeclAndAssignement: Update Variable with value: VariableDecl: " + variableDecl);
-                    symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
+                //Check Dimension equal
+                if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension) {
+
+                    //Types need to be equal for assignement or boxable (int -> double, all -> String)
+                    // if ok: Save the assignement Data to the Variable-Decl in the Table
+                    if (variableDecl.type.type.equals(exprStmnt.type.type)
+                            || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
+                            || variableDecl.type.type.equals("String")) {
+                        variableDecl.value = exprStmnt.value;
+                        log.info("VariableDeclAndAssignement: Update Variable with value: VariableDecl: " + variableDecl);
+                        symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
+                    } else {
+                        throw new TypeCheckingException("VariableDeclAndAssignement: Assignement-Types are not equal or boxable," +
+                                " please correct that at: " + node.getBeginLine() + ":" + node.getBeginColumn());
+                    }
                 } else {
-                    throw new TypeCheckingException("VariableDeclAndAssignement: Assignement-Types are not equal or boxable," +
-                            " please correct that at: " + node.getBeginLine() + ":" + node.getBeginColumn());
+                    throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
                 }
             }
 
