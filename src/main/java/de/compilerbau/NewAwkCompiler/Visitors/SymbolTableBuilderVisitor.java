@@ -169,11 +169,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
             log.info("Assignement: Found VariableDecl in the Symboltable: " + variableDecl + "\n" +
                     "Comparing it with ExprStmt by type next: " + exprStmnt);
-            //Types need to be equal for assignement or boxable (int -> double, all -> String)
-            //Check Dimension equal
             //TODO How to get Init-Stmnt Dimension? (Check how many braces would be possible)
+            //Check Dimension equal
             if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension) {
-                // If Decl Type == Assignement Type or boxable
+                // Decl Type == Assignement Type or boxable
                 if (variableDecl.type.type.equals(exprStmnt.type.type)
                         || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
                         || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("char")
@@ -183,7 +182,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
                 } else {
                     throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
-                            " please correct that.");
+                            " please correct thatat: " + node.getBeginLine() + ":" + node.getBeginColumn());
                 }
             } else {
                 throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
@@ -227,15 +226,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 log.info("VariableDeclAndAssignement: Variable is declared, checking assignement possible");
                 ExprStmnt exprStmnt = node.exprStmnt;
                 VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
-                log.warn("VariableDeclAndAssignement: Found VariableDecl in the symboltable: " + variableDecl + "\n" +
+                log.info("VariableDeclAndAssignement: Found VariableDecl in the Symboltable: " + variableDecl + "\n" +
                         "Comparing it with ExprStmt by type next: " + exprStmnt);
                 //Check Dimension equal
+                //TODO Fix NPE from not handing up multiple Array Accesses
                 if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension) {
-
-                    //Types need to be equal for assignement or boxable (int -> double, all -> String)
-                    // if ok: Save the assignement Data to the Variable-Decl in the Table
+                    // Decl Type == Assignement Type or boxable
                     if (variableDecl.type.type.equals(exprStmnt.type.type)
                             || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
+                            || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("char")
                             || variableDecl.type.type.equals("String")) {
                         variableDecl.value = exprStmnt.value;
                         log.info("VariableDeclAndAssignement: Update Variable with value: VariableDecl: " + variableDecl);
@@ -248,8 +247,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
                 }
             }
-
-
         }
         printExit(node);
         return data;
@@ -677,7 +674,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 }
             }
             // 2. NOT EQUAL TYPES
-            // TODO 1st Type is precedence, second needs to follow
+            // 1st Type is precedence, second needs to follow
             // int + double => double; double + int => double
             // char + int = int; int + char => int
             // double + char => double; char + double => double
@@ -895,36 +892,46 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             else if (node.isArrayAccess) {
                 //Get 1. ArrayAccess and ID
                 ArrayAccess arrayAccess = node.firstChildOfType(ArrayAccess.class);
+                //TODO use it
+                int childrenSize = node.childrenOfType(ArrayAccess.class).size();
                 ID id = node.firstChildOfType(ID.class); //Use to find array
+
+
                 // 2. get type and value id
                 VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
                 log.info("Atom: ArrayAccess found VariableDecl: " + decl);
-                // 3. check type == int || boolean
-                // 3.1 int => Return Single Value
-                if (arrayAccess.type.type.equals("int") && node.arrayAccessDimension == 1) {
-                    log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
-                    ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
-                            Integer.parseInt(arrayAccess.value), getContext(node));
 
-                    //TODO 1. getArray-Type and Value from symboltable
+                // 3. check type == int || boolean, int => Return Single Value
+                if (arrayAccess.type.type.equals("int")) {
+                    if (node.arrayAccessDimension == 1) { // Single Dim
+                        log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
 
-                    //Wenn rückgabetyp  mit decl passt
-                    if (decl.type.type.equals(arrayAccess.type.type)) {
-                        node.type = arrayAccess.type;
-                        node.value = arrayAccess.value;
+                        ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
+                                Integer.parseInt(arrayAccess.value), getContext(node));
+                        //TODO 1. getArray-Type and Value from symboltable
+                        //Wenn rückgabetyp  mit decl passt
+                        if (decl.type.type.equals(a.type.type)) {
+                            node.type = arrayAccess.type;
+                            node.value = arrayAccess.value;
+                        } else {
+                            throw new TypeCheckingException("VariableDecl and return-type of " +
+                                    "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");
+                        }
                     } else {
-                        throw new TypeCheckingException("VariableDecl and return-type of " +
-                                "one-dimensional arrayAccess not equal.");
+                        log.info("Atom: ArrayAccess detected with Type int and dimension > 1.");
+
+                        //TODO
                     }
-                } // 3.2 boolean => Return field for truthy condition
+                }
+
+                // 3.2 boolean => Return field for truthy condition
                 else if (arrayAccess.type.type.equals("boolean")) {
                     log.info("Atom: ArrayAccess detected with Type boolean.");
                     //TODO Impl
+                } else {
+                    throw new TypeCheckingException("Array-Access has a non-boolean or non-int Type at: "
+                            + node.getBeginLine() + ":" + node.getBeginColumn());
                 }
-                // 4. lookup id[value] ??? relevant?
-
-                node.type = new Type("test");
-                node.value = "test";
             }
             // Normal ID: x
             else {
@@ -1082,7 +1089,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
         Expr e = node.firstChildOfType(Expr.class);
         if (!(e.type.type.equals("int") || e.type.type.equals("boolean"))) {
-            throw new TypeCheckingException("Value-Type of Array-Access is not int or boolean at: " +
+            throw new TypeCheckingException("Value-Type of Array-Accessor is not int or boolean at: " +
                     node.getBeginLine() + ":" + node.getBeginColumn());
         }
         log.info("Node has only 1 child, pass up data value and type.");
