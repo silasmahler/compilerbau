@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SymbolTable {
 
@@ -223,16 +224,69 @@ public class SymbolTable {
                 finished = true;
             }
         }
-        log.warn("Dimension: " + dimension);
-        int[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        int[] b = a[1];
+        log.warn("Dimension: " + dimension + " AccessIndexCount: " + accessIndexes.size());
+        //int[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        //int[] b = a[1];
+        //int c = a[1][0];
 
         int accessIndexCount = accessIndexes.size();
         //TODO for every dimension:
         // 1. Check accessIndexCount
         // If both = e.g. 3 then return value inside array-leaf
         if (dimension == accessIndexCount) {
-            //TODO
+            log.warn("1. SomeString: Input " + someString);
+            //TODO 1. Leerzeichen entfernen, Trim
+            someString = someString.replaceAll("\\s", "");
+            log.warn("2. SomeString: No spaces" + someString);
+            String regexBrackets = "";
+            String regexBrackets2 = "";
+            for (int i = 0; i < dimension; i++) {
+                regexBrackets += "\\[";
+                regexBrackets2 += "]";
+            }
+            someString = someString.replaceAll(regexBrackets, "");
+            someString = someString.replaceAll(regexBrackets2, "");
+            log.warn("3. SomeString: Trimmed " + someString);
+
+            //2.  TODO Split -> select object -> split --> rootvalue
+            //split dim -1 x => 2
+            // last split ","
+            //3 return
+            //Objectsplit: Works with multiple or one objects
+            // 3x Zugriff
+            for (int i = 0; i < accessIndexCount; i++) {
+                log.warn("Runde: " + (i + 1));
+                // If nicht letzte Runde
+                if (i != accessIndexCount - 1) {
+                    log.warn("Nicht letzte Runde!");
+                    // Finde Element
+                    String splitString = ",";
+                    for (int j = 1; j < (dimension - i); j++) {
+                        splitString = "]" + splitString + "\\[";
+                    }
+                    log.warn("SplitString: " + splitString);
+                    List<String> objects = Arrays.stream(someString.split(splitString)).collect(Collectors.toList());
+                    log.warn("Objects: " + objects);
+                    String element = objects.get(accessIndexes.get(i));
+                    log.warn("Element: " + element);
+                    someString = element;
+                }
+                //If letzte Runde
+                else {
+                    log.warn("Letzte Runde!");
+                    String[] objects = someString.split(",");
+                    String element = objects[accessIndexes.get(i)];
+                    log.warn("Element: " + element);
+                    someString = element;
+                }
+            }
+
+          /*  if (objects.length == 1) {
+
+            } else {
+
+            }*/
+
         }
         // else if less accessors, then build array on Ebene and return it
         else if (dimension > accessIndexCount) {
@@ -244,14 +298,14 @@ public class SymbolTable {
         // TODO 2.
 
 
-        String[] values = variableDecl.value.substring(1, variableDecl.value.length() - 1)
+        /*String[] values = variableDecl.value.substring(1, variableDecl.value.length() - 1)
                 .replaceAll("\\s", "")
                 .replaceAll("\\[", "")
                 .replaceAll("\\]", "")
                 .split(",");
         for (String s : values) {
             log.warn(s);
-        }
+        }*/
 
         ArrayTypeAndValue typeAndValue = new ArrayTypeAndValue();
        /* if (variableDecl.type.type.equals("int")) {
