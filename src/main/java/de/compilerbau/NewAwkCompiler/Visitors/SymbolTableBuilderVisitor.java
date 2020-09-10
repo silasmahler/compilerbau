@@ -891,10 +891,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             // ArrayAccess ID: x[5]
             else if (node.isArrayAccess) {
                 //Get 1. ArrayAccess and ID
-                ArrayAccess arrayAccess = node.firstChildOfType(ArrayAccess.class);
-                //TODO use it
-                int childrenSize = node.childrenOfType(ArrayAccess.class).size();
                 ID id = node.firstChildOfType(ID.class); //Use to find array
+
+                List<ArrayAccess> arrayAccesses = node.childrenOfType(ArrayAccess.class);
+                ArrayAccess arrayAccess = arrayAccesses.get(0);
 
 
                 // 2. get type and value id
@@ -905,11 +905,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 if (arrayAccess.type.type.equals("int")) {
                     if (node.arrayAccessDimension == 1) { // Single Dim
                         log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
-
+                        // Get Array-Type and Value from symboltable
                         ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
                                 Integer.parseInt(arrayAccess.value), getContext(node));
-                        //TODO 1. getArray-Type and Value from symboltable
-                        //Wenn rückgabetyp  mit decl passt
                         if (decl.type.type.equals(a.type.type)) {
                             node.type = arrayAccess.type;
                             node.value = arrayAccess.value;
@@ -919,7 +917,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         }
                     } else {
                         log.info("Atom: ArrayAccess detected with Type int and dimension > 1.");
-
+                        ArrayTypeAndValue atv = symbolTable.getArrayAccessValAndTypeForIDAndInts(id,
+                                arrayAccesses.stream().map(a -> Integer.parseInt(a.value))
+                                        .collect(Collectors.toList()), getContext(node));
                         //TODO
                     }
                 }

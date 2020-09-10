@@ -163,7 +163,7 @@ public class SymbolTable {
     public ArrayTypeAndValue getArrayValAndTypeForIDAndIntAccess(ID id, int accessIndex, String context) {
         log.warn("getArrayValForIDAndInt: Try to get value from Array");
         VariableDecl variableDecl = findVariableDeclFromID(id, context);
-        if(variableDecl.value == null){
+        if (variableDecl.value == null) {
             throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: The Array hasnt been " +
                     "initialized or assigned a value and it can't be accessed.");
         }
@@ -198,5 +198,80 @@ public class SymbolTable {
          for(String s: strings) {
          log.warn(s);
          }*/
+    }
+
+    public ArrayTypeAndValue getArrayAccessValAndTypeForIDAndInts(ID id, List<Integer> accessIndexes, String context) {
+        log.warn("getArrayAccessValAndTypeForIDAndInts: Try to get value from Array");
+        VariableDecl variableDecl = findVariableDeclFromID(id, context);
+        if (variableDecl.value == null) {
+            throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: The Array hasnt been " +
+                    "initialized or assigned a value and it can't be accessed.");
+        }
+        log.warn("Params: ID:" + id + " AccessIndexes: " + accessIndexes + " Context: " + context);
+        log.warn("VariableDeclValue: " + variableDecl.value);
+
+        //Detect dimension
+        String someString = variableDecl.value;
+        char someChar = '[';
+        int dimension = 0;
+        boolean finished = false;
+
+        for (int i = 0; (i < someString.length() && !finished); i++) {
+            if (someString.charAt(i) == someChar) {
+                dimension++;
+            } else {
+                finished = true;
+            }
+        }
+        log.warn("Dimension: " + dimension);
+        int[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        int[] b = a[1];
+
+        int accessIndexCount = accessIndexes.size();
+        //TODO for every dimension:
+        // 1. Check accessIndexCount
+        // If both = e.g. 3 then return value inside array-leaf
+        if (dimension == accessIndexCount) {
+            //TODO
+        }
+        // else if less accessors, then build array on Ebene and return it
+        else if (dimension > accessIndexCount) {
+            //TODO
+        } else { // if more => Error
+            throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: ArrayAccess has more Accesses than" +
+                    "there are dimensions! Please reduce accessors.");
+        }
+        // TODO 2.
+
+
+        String[] values = variableDecl.value.substring(1, variableDecl.value.length() - 1)
+                .replaceAll("\\s", "")
+                .replaceAll("\\[", "")
+                .replaceAll("\\]", "")
+                .split(",");
+        for (String s : values) {
+            log.warn(s);
+        }
+
+        ArrayTypeAndValue typeAndValue = new ArrayTypeAndValue();
+       /* if (variableDecl.type.type.equals("int")) {
+            typeAndValue.type = new Type("int");
+            typeAndValue.value = values[accessIndex];
+        } else if (variableDecl.type.type.equals("double")) {
+            typeAndValue.type = new Type("double");
+            typeAndValue.value = values[accessIndex];
+        } else if (variableDecl.type.type.equals("char")) {
+            typeAndValue.type = new Type("char");
+            typeAndValue.value = values[accessIndex];
+        } else if (variableDecl.type.type.equals("boolean")) {
+            typeAndValue.type = new Type("boolean");
+            typeAndValue.value = values[accessIndex];
+        } else if (variableDecl.type.type.equals("String")) {
+            typeAndValue.type = new Type("String");
+            typeAndValue.value = values[accessIndex];
+        } else {
+            throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: Invalid Type!");
+        }*/
+        return typeAndValue;
     }
 }
