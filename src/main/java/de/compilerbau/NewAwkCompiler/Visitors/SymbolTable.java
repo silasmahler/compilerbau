@@ -209,7 +209,7 @@ public class SymbolTable {
                     "initialized or assigned a value and it can't be accessed.");
         }
         log.warn("Params: ID:" + id + " AccessIndexes: " + accessIndexes + " Context: " + context);
-        log.warn("VariableDeclValue: " + variableDecl.value);
+        log.warn("VariableDecl: " + variableDecl);
 
         //Detect dimension
         String someString = variableDecl.value;
@@ -278,6 +278,12 @@ public class SymbolTable {
                     String element = objects[accessIndexes.get(i)];
                     log.warn("Element: " + element);
                     someString = element;
+                    Type t = variableDecl.type;
+                    t.isArray = false;
+                    t.arrayTypeDimension = 0; //TODO Gucken ob korrekt
+                    ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
+                    log.warn("Returning ArrayTypeAndValue: " +  value);
+                    return value;
                 }
             }
 
