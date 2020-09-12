@@ -242,9 +242,9 @@ public class NewAwkParser implements NewAwkConstants {
             boolean inFirst0= true;
             do {
                 // Code for ExpansionChoice specified on line 207 of NewAwkParser.jjt
-                if (resetScanAhead(8)&&check$NewAwkParser_jjt$line_207$column_6()) {
+                if (resetScanAhead(14)&&check$NewAwkParser_jjt$line_207$column_6()) {
                     // Code for NonTerminal specified on line 207 of NewAwkParser.jjt
-                    pushOntoCallStack("CompilationUnit", "NewAwkParser.jjt", 207, 19);
+                    pushOntoCallStack("CompilationUnit", "NewAwkParser.jjt", 207, 20);
                     try {
                         VariableDecl();
                     }
@@ -2278,7 +2278,7 @@ public class NewAwkParser implements NewAwkConstants {
     //====================================
     private final boolean check$NewAwkParser_jjt$line_207$column_6() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 207, 19);
+        pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 207, 20);
         if (!check$VariableDecl()) {
             popLookaheadStack();
             return false;

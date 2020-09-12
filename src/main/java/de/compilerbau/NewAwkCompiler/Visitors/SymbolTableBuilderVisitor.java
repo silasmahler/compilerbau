@@ -939,11 +939,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                             + node.getBeginLine() + ":" + node.getBeginColumn());
                 }
             }
-            // Normal ID: x
+            // Normal ID: x -> Check if it is an array access!
             else {
-                log.warn("Atom: Normal String detected!" + node.firstChildOfType(ID.class));
-                node.type = new Type("String");
-                node.value = node.firstChildOfType(StringLiteral.class).getImage();
+                // Check if variable in Symboltable and if yes then return it
+                // TODO Remove "normal String" -> its wrong!!!
+                ID id = node.firstChildOfType(ID.class);
+                VariableDecl v = symbolTable.findVariableDeclFromID(id, getContext(node));
+                log.warn("Atom: Normal ID detected!" + node.firstChildOfType(ID.class));
+                node.type = v.type;
+                node.value = v.value;
             }
         } else if (node.isArrayInit) {
             log.info("Atom: is arrayInit #1");
@@ -988,6 +992,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 }
             }
             node.type.arrayTypeDimension = dimCounter;
+            node.type.isArray = true;
             log.info("Atom: .isArrayInit: Passed up Atom-Node: " + node);
 
         } else if (node.getFirstChild() instanceof KlammerAuf &&

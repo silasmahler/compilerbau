@@ -230,8 +230,9 @@ public class SymbolTable {
         //int c = a[1][0];
 
         int accessIndexCount = accessIndexes.size();
-        //TODO for every dimension:
-        // 1. Check accessIndexCount
+
+        //No need to Check accessIndexCount == 0, because Visitor Takes care of it,
+        // Its technically no access, just passing the value
         // If both = e.g. 3 then return value inside array-leaf
         if (dimension == accessIndexCount) {
             log.warn("1. SomeString: Input " + someString);
@@ -286,17 +287,68 @@ public class SymbolTable {
                     return value;
                 }
             }
-
-          /*  if (objects.length == 1) {
-
-            } else {
-
-            }*/
-
         }
         // else if less accessors, then build array on Ebene and return it
         else if (dimension > accessIndexCount) {
-            //TODO
+            log.warn("1. SomeString: Input " + someString);
+            //TODO 1. Leerzeichen entfernen, Trim
+            someString = someString.replaceAll("\\s", "");
+            log.warn("2. SomeString: No spaces" + someString);
+            String regexBrackets = "";
+            String regexBrackets2 = "";
+            for (int i = 0; i < dimension; i++) {
+                regexBrackets += "\\[";
+                regexBrackets2 += "]";
+            }
+            someString = someString.replaceAll(regexBrackets, "");
+            someString = someString.replaceAll(regexBrackets2, "");
+            log.warn("3. SomeString: Trimmed " + someString);
+
+            //2.  TODO Split -> select object -> split --> rootvalue
+            //split dim -1 x => 2
+            // last split ","
+            //3 return
+            //Objectsplit: Works with multiple or one objects
+            // 3x Zugriff
+            for (int i = 0; i < accessIndexCount; i++) {
+                log.warn("Runde: " + (i + 1));
+                // If nicht letzte Runde
+                if (i != accessIndexCount - 1) {
+                    log.warn("Nicht letzte Runde!");
+                    // Finde Element
+                    String splitString = ",";
+                    for (int j = 1; j < (dimension - i); j++) {
+                        splitString = "]" + splitString + "\\[";
+                    }
+                    log.warn("SplitString: " + splitString);
+                    List<String> objects = Arrays.stream(someString.split(splitString)).collect(Collectors.toList());
+                    log.warn("Objects: " + objects);
+                    String element = objects.get(accessIndexes.get(i));
+                    log.warn("Element: " + element);
+                    someString = element;
+                }
+                //If letzte Runde
+                else {
+                    log.warn("Letzte Runde!");
+                    String[] objects = someString.split(",");
+                    String element = objects[accessIndexes.get(i)];
+                    log.warn("Element: " + element);
+                    someString = element;
+                    Type t = variableDecl.type;
+                    t.isArray = false;
+                    t.arrayTypeDimension = 0; //TODO Gucken ob korrekt
+                    ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
+                    log.warn("Returning ArrayTypeAndValue: " +  value);
+                    return value;
+                }
+            }
+
+
+
+
+
+
+
         } else { // if more => Error
             throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: ArrayAccess has more Accesses than" +
                     "there are dimensions! Please reduce accessors.");

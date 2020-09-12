@@ -204,7 +204,7 @@ TOKEN : /* LITERALS */
 */
 Node CompilationUnit() #CompilationUnit : {}
 {
-    (LOOKAHEAD(8) VariableDecl() |
+    (LOOKAHEAD(14) VariableDecl() | // 14 = up to arrays with 5 dimensions
      LOOKAHEAD(4) Assignement() |
      LOOKAHEAD(8) VariableDeclAndAssignement() |
      MethodDecl()
