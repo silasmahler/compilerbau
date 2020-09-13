@@ -944,8 +944,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 // Check if variable in Symboltable and if yes then return it
                 // TODO Remove "normal String" -> its wrong!!!
                 ID id = node.firstChildOfType(ID.class);
-                VariableDecl v = symbolTable.findVariableDeclFromID(id, getContext(node));
                 log.warn("Atom: Normal ID detected!" + node.firstChildOfType(ID.class));
+                VariableDecl v = symbolTable.findVariableDeclFromID(id, getContext(node));
+                log.warn("Atom: Found VariableDecl to ID: " + v);
                 node.type = v.type;
                 node.value = v.value;
             }

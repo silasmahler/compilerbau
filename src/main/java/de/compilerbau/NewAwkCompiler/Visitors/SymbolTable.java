@@ -294,96 +294,60 @@ public class SymbolTable {
             //TODO 1. Leerzeichen entfernen, Trim
             someString = someString.replaceAll("\\s", "");
             log.warn("2. SomeString: No spaces" + someString);
-            String regexBrackets = "";
-            String regexBrackets2 = "";
-            for (int i = 0; i < dimension; i++) {
-                regexBrackets += "\\[";
-                regexBrackets2 += "]";
-            }
-            someString = someString.replaceAll(regexBrackets, "");
-            someString = someString.replaceAll(regexBrackets2, "");
-            log.warn("3. SomeString: Trimmed " + someString);
 
-            //2.  TODO Split -> select object -> split --> rootvalue
-            //split dim -1 x => 2
-            // last split ","
-            //3 return
-            //Objectsplit: Works with multiple or one objects
-            // 3x Zugriff
+            //TODO Enternen je iteration (ab hier Schleife)
             for (int i = 0; i < accessIndexCount; i++) {
-                log.warn("Runde: " + (i + 1));
-                // If nicht letzte Runde
-                if (i != accessIndexCount - 1) {
-                    log.warn("Nicht letzte Runde!");
-                    // Finde Element
-                    String splitString = ",";
-                    for (int j = 1; j < (dimension - i); j++) {
-                        splitString = "]" + splitString + "\\[";
-                    }
-                    log.warn("SplitString: " + splitString);
-                    List<String> objects = Arrays.stream(someString.split(splitString)).collect(Collectors.toList());
-                    log.warn("Objects: " + objects);
-                    String element = objects.get(accessIndexes.get(i));
-                    log.warn("Element: " + element);
-                    someString = element;
+
+                // Dim = 3
+                // Access = 1 [[[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]]
+                // Entferne außen (jew. 1 Klammer trimmen),
+                someString = someString.substring(1, someString.length() - 1);
+                log.warn("3. SomeString: Trimmed for iteration " + someString);
+
+                //Ermittle Replacer: ]],[[ (Ebene 2) oder ],[ (Ebene 1) -> Schleife von accessIndexCount bis 1
+                String replacerString = ",";
+                String splitterString = "@";
+                for (int j = accessIndexCount; j > 0; j--) {
+                    replacerString =  "]" + replacerString + "[";
                 }
-                //If letzte Runde
-                else {
-                    log.warn("Letzte Runde!");
-                    String[] objects = someString.split(",");
-                    String element = objects[accessIndexes.get(i)];
-                    log.warn("Element: " + element);
-                    someString = element;
-                    Type t = variableDecl.type;
-                    t.isArray = false;
-                    t.arrayTypeDimension = 0; //TODO Gucken ob korrekt
-                    ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
-                    log.warn("Returning ArrayTypeAndValue: " +  value);
-                    return value;
+                for (int j = accessIndexCount; j > 1; j--) {
+                    splitterString =  "]" + splitterString + "\\["; //TODO String adjust for split
                 }
+                log.warn("4. ReplacerString: " + replacerString + " SplitterString: " + splitterString);
+                // Replace: ]],[[  mit ]@[    [[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]
+                someString = someString.replace(replacerString, splitterString);
+                log.warn("5. SomeString: Replaced " + someString);
+                // Split: an @  [[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]
+
+                List<String> objects = Arrays.stream(someString.split(splitterString)).collect(Collectors.toList());
+                log.warn("6. SomeString: Splitted " + objects.get(0));
+                // Access = 2 [[[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]]
+                // Access = 2 [[[1,2,3]],[[1,2,3]],[[1,2,3]]]
+                log.warn("Objects: " + objects);
+                String element = objects.get(accessIndexes.get(i));
+                log.warn("Element: " + element);
+                someString = element;
+
+
+            //TODO SCHLEIFE IMPL für mehrfaches "entpacken" der Array Schichten/Dimensions
             }
 
+            Type t = variableDecl.type;
+            t.isArray = true;
+            t.arrayTypeDimension = 0; //TODO BERECHNEN!
+            ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
+            log.warn("Returning ArrayTypeAndValue: " +  value);
+            return value;
 
-
-
-
-
-
+            
         } else { // if more => Error
             throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: ArrayAccess has more Accesses than" +
                     "there are dimensions! Please reduce accessors.");
         }
         // TODO 2.
 
-
-        /*String[] values = variableDecl.value.substring(1, variableDecl.value.length() - 1)
-                .replaceAll("\\s", "")
-                .replaceAll("\\[", "")
-                .replaceAll("\\]", "")
-                .split(",");
-        for (String s : values) {
-            log.warn(s);
-        }*/
-
         ArrayTypeAndValue typeAndValue = new ArrayTypeAndValue();
-       /* if (variableDecl.type.type.equals("int")) {
-            typeAndValue.type = new Type("int");
-            typeAndValue.value = values[accessIndex];
-        } else if (variableDecl.type.type.equals("double")) {
-            typeAndValue.type = new Type("double");
-            typeAndValue.value = values[accessIndex];
-        } else if (variableDecl.type.type.equals("char")) {
-            typeAndValue.type = new Type("char");
-            typeAndValue.value = values[accessIndex];
-        } else if (variableDecl.type.type.equals("boolean")) {
-            typeAndValue.type = new Type("boolean");
-            typeAndValue.value = values[accessIndex];
-        } else if (variableDecl.type.type.equals("String")) {
-            typeAndValue.type = new Type("String");
-            typeAndValue.value = values[accessIndex];
-        } else {
-            throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: Invalid Type!");
-        }*/
+
         return typeAndValue;
     }
 }
