@@ -171,7 +171,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     "Comparing it with ExprStmt by type next: " + exprStmnt);
             //TODO How to get Init-Stmnt Dimension? (Check how many braces would be possible)
             //Check Dimension equal
-            if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension) {
+            if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension ||
+                    exprStmnt.type.isArray) {
                 // Decl Type == Assignement Type or boxable
                 if (variableDecl.type.type.equals(exprStmnt.type.type)
                         || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
@@ -230,7 +231,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         "Comparing it with ExprStmt by type next: " + exprStmnt);
                 //Check Dimension equal
                 //TODO Fix NPE from not handing up multiple Array Accesses
-                if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension) {
+                if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension ||
+                        exprStmnt.type.isArray
+                ) {
                     // Decl Type == Assignement Type or boxable
                     if (variableDecl.type.type.equals(exprStmnt.type.type)
                             || variableDecl.type.type.equals("double") && exprStmnt.type.type.equals("int")
@@ -921,8 +924,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                                 arrayAccesses.stream().map(a -> Integer.parseInt(a.value))
                                         .collect(Collectors.toList()), getContext(node));
                         if (decl.type.type.equals(atv.type.type)) {
-                            node.type = arrayAccess.type;
-                            node.value = arrayAccess.value;
+                            node.type = atv.type;
+                            node.value = atv.value;
                         } else {
                             throw new TypeCheckingException("VariableDecl and return-type of " +
                                     "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");

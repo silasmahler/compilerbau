@@ -9,7 +9,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SymbolTable {
 
@@ -162,7 +164,7 @@ public class SymbolTable {
     }
 
     public ArrayTypeAndValue getArrayValAndTypeForIDAndIntAccess(ID id, int accessIndex, String context) {
-        log.warn("getArrayValForIDAndInt: Try to get value from Array");
+        log.warn("getArrayValAndTypeForIDAndIntAccess: Try to get value from Array");
         VariableDecl variableDecl = findVariableDeclFromID(id, context);
         if (variableDecl.value == null) {
             throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: The Array hasnt been " +
@@ -299,7 +301,7 @@ public class SymbolTable {
             for (int i = 0; i < accessIndexCount; i++) {
 
                 // Dim = 3
-                // Access = 1 [[[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]]
+                // Access = 2 [[[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]]
                 // Entferne außen (jew. 1 Klammer trimmen),
                 someString = someString.substring(1, someString.length() - 1);
                 log.warn("3. SomeString: Trimmed for iteration " + someString);
@@ -307,19 +309,22 @@ public class SymbolTable {
                 //Ermittle Replacer: ]],[[ (Ebene 2) oder ],[ (Ebene 1) -> Schleife von accessIndexCount bis 1
                 String replacerString = ",";
                 String splitterString = "@";
-                for (int j = accessIndexCount; j > 0; j--) {
+                for (int j = accessIndexCount - i; 0 < j; j--) {
                     replacerString =  "]" + replacerString + "[";
+                    splitterString =  "]" + splitterString + "[";
                 }
-                for (int j = accessIndexCount; j > 1; j--) {
-                    splitterString =  "]" + splitterString + "\\["; //TODO String adjust for split
-                }
+                splitterString = splitterString.replaceAll("\\[", "[");
                 log.warn("4. ReplacerString: " + replacerString + " SplitterString: " + splitterString);
                 // Replace: ]],[[  mit ]@[    [[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]
                 someString = someString.replace(replacerString, splitterString);
                 log.warn("5. SomeString: Replaced " + someString);
-                // Split: an @  [[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]
+                someString = someString.replace("@\\", "@");
+                // Split: an @  [[1,2,3],[4,5,6],[7,8,9]]@[[1,2,3],[5,5,5],[7,8,9]]
+                log.warn("6. SomeString: Replaced @ fix " + someString);
 
-                List<String> objects = Arrays.stream(someString.split(splitterString)).collect(Collectors.toList());
+                List<String> objects = Pattern.compile("@").splitAsStream(someString)
+                        .collect(Collectors.toList());
+                //List<String> objects = Arrays.stream(someString.split(splitterString)).collect(Collectors.toList());
                 log.warn("6. SomeString: Splitted " + objects.get(0));
                 // Access = 2 [[[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]]
                 // Access = 2 [[[1,2,3]],[[1,2,3]],[[1,2,3]]]
