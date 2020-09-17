@@ -1,59 +1,6 @@
 package de.compilerbau.NewAwkCompiler.Visitors;
 
-import de.compilerbau.NewAwkCompiler.javacc21.ArrayAccess;
-import de.compilerbau.NewAwkCompiler.javacc21.Assignement;
-import de.compilerbau.NewAwkCompiler.javacc21.Atom;
-import de.compilerbau.NewAwkCompiler.javacc21.BaseNode;
-import de.compilerbau.NewAwkCompiler.javacc21.Block;
-import de.compilerbau.NewAwkCompiler.javacc21.BlockAuf;
-import de.compilerbau.NewAwkCompiler.javacc21.BooleanLiteral;
-import de.compilerbau.NewAwkCompiler.javacc21.COMMA;
-import de.compilerbau.NewAwkCompiler.javacc21.Cast;
-import de.compilerbau.NewAwkCompiler.javacc21.CharLiteral;
-import de.compilerbau.NewAwkCompiler.javacc21.CompExpr;
-import de.compilerbau.NewAwkCompiler.javacc21.CompilationUnit;
-import de.compilerbau.NewAwkCompiler.javacc21.DIVISION;
-import de.compilerbau.NewAwkCompiler.javacc21.DoubleLiteral;
-import de.compilerbau.NewAwkCompiler.javacc21.EQUAL;
-import de.compilerbau.NewAwkCompiler.javacc21.Expr;
-import de.compilerbau.NewAwkCompiler.javacc21.ExprStmnt;
-import de.compilerbau.NewAwkCompiler.javacc21.GREATER;
-import de.compilerbau.NewAwkCompiler.javacc21.G_OR_EQUAL;
-import de.compilerbau.NewAwkCompiler.javacc21.ID;
-import de.compilerbau.NewAwkCompiler.javacc21.IfStmnt;
-import de.compilerbau.NewAwkCompiler.javacc21.IntegerLiteral;
-import de.compilerbau.NewAwkCompiler.javacc21.KlammerAffe;
-import de.compilerbau.NewAwkCompiler.javacc21.KlammerAffeAusdruck;
-import de.compilerbau.NewAwkCompiler.javacc21.KlammerAffeRegex;
-import de.compilerbau.NewAwkCompiler.javacc21.KlammerAuf;
-import de.compilerbau.NewAwkCompiler.javacc21.KlammerZu;
-import de.compilerbau.NewAwkCompiler.javacc21.LogicalAndExpr;
-import de.compilerbau.NewAwkCompiler.javacc21.LogicalNotExpr;
-import de.compilerbau.NewAwkCompiler.javacc21.LogicalOrExpr;
-import de.compilerbau.NewAwkCompiler.javacc21.MINUS;
-import de.compilerbau.NewAwkCompiler.javacc21.MODULO;
-import de.compilerbau.NewAwkCompiler.javacc21.MULTIPLICATION;
-import de.compilerbau.NewAwkCompiler.javacc21.MethodCall;
-import de.compilerbau.NewAwkCompiler.javacc21.MethodDecl;
-import de.compilerbau.NewAwkCompiler.javacc21.NOT_EQUAL;
-import de.compilerbau.NewAwkCompiler.javacc21.Node;
-import de.compilerbau.NewAwkCompiler.javacc21.NullLiteral;
-import de.compilerbau.NewAwkCompiler.javacc21.PLUS;
-import de.compilerbau.NewAwkCompiler.javacc21.Parameter;
-import de.compilerbau.NewAwkCompiler.javacc21.ParameterList;
-import de.compilerbau.NewAwkCompiler.javacc21.PrintStmnt;
-import de.compilerbau.NewAwkCompiler.javacc21.Product;
-import de.compilerbau.NewAwkCompiler.javacc21.ReturnStatement;
-import de.compilerbau.NewAwkCompiler.javacc21.SMALLER;
-import de.compilerbau.NewAwkCompiler.javacc21.S_OR_EQUAL;
-import de.compilerbau.NewAwkCompiler.javacc21.Sign;
-import de.compilerbau.NewAwkCompiler.javacc21.Stmnt;
-import de.compilerbau.NewAwkCompiler.javacc21.StringLiteral;
-import de.compilerbau.NewAwkCompiler.javacc21.Sum;
-import de.compilerbau.NewAwkCompiler.javacc21.Token;
-import de.compilerbau.NewAwkCompiler.javacc21.Type;
-import de.compilerbau.NewAwkCompiler.javacc21.VariableDecl;
-import de.compilerbau.NewAwkCompiler.javacc21.VariableDeclAndAssignement;
+import de.compilerbau.NewAwkCompiler.javacc21.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -638,6 +585,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         log.info("Sum-Type: " + sum.type.toString() +
                 "Sum-Value: " + sum.value + "\n" + node.children().size());
         for (int i = 2; i < node.children().size(); i += 2) {
+            log.warn("INFO: i: " + i + " childs: " + childs);
             String childType = ((Product) childs.get(i)).type.type;
             String childValue = ((Product) childs.get(i)).value;
             String sumType = sum.type.type;
@@ -690,8 +638,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = String.valueOf(Integer.parseInt(sum.value) + Double.parseDouble(childValue));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(Integer.parseInt(sum.value) - Double.parseDouble(childValue));
-                    } else {
-                        //TODO
                     }
                 }
                 if (sumType.equals("double") && childType.equals("int")) {
@@ -700,8 +646,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = String.valueOf(Double.parseDouble(sum.value) + Integer.parseInt(childValue));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(Double.parseDouble(sum.value) - Integer.parseInt(childValue));
-                    } else {
-                        //TODO
                     }
                 }
                 if (sumType.equals("char") && childType.equals("int")) {
@@ -710,8 +654,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = String.valueOf(sum.value.charAt(0) + Integer.parseInt(childValue));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(sum.value.charAt(0) - Integer.parseInt(childValue));
-                    } else {
-                        //TODO
                     }
                 }
                 if (sumType.equals("int") && childType.equals("char")) {
@@ -720,8 +662,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = String.valueOf(Integer.parseInt(sum.value) + childValue.charAt(0));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(Integer.parseInt(sum.value) - childValue.charAt(0));
-                    } else {
-                        //TODO
                     }
                 }
                 if (sumType.equals("double") && childType.equals("char")) {
@@ -730,8 +670,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = String.valueOf(Double.parseDouble(sum.value) + childValue.charAt(0));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(Double.parseDouble(sum.value) - childValue.charAt(0));
-                    } else {
-                        //TODO
                     }
                 }
                 if (sumType.equals("char") && childType.equals("double")) {
@@ -740,11 +678,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = String.valueOf(sum.value.charAt(0) + Double.parseDouble(childValue));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(sum.value.charAt(0) - Double.parseDouble(childValue));
-                    } else {
-                        //TODO
                     }
                 }
             }
+            node.type = sum.type;
+            node.value = sum.value;
         }
         printExit(node);
         return data;
@@ -897,11 +835,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 ID id = node.firstChildOfType(ID.class); //Use to find array
                 List<ArrayAccess> arrayAccesses = node.childrenOfType(ArrayAccess.class);
                 ArrayAccess arrayAccess = arrayAccesses.get(0);
-                // 2. get type and value id
-                VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
-                log.info("Atom: ArrayAccess found VariableDecl: " + decl);
-                // 3. check type == int || boolean, int => Return Single Value
+
+                // 2. check type == int || boolean, int => Return Single Value
                 if (arrayAccess.type.type.equals("int")) {
+                    // 3. get type and value id
+                    VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
+                    log.info("Atom: ArrayAccess found VariableDecl: " + decl);
                     if (node.arrayAccessDimension == 1) { // Single Dim
                         log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
                         // Get Array-Type and Value from symboltable
@@ -929,9 +868,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     }
                 }
                 // 3.2 boolean => Return field for truthy condition
+                // Always return field of same dim but delete all values that arent truthy by condition
                 else if (arrayAccess.type.type.equals("boolean")) {
                     log.info("Atom: ArrayAccess detected with Type boolean.");
+                    // 3.3. get type and value id
+                    VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
+                    log.info("Atom: ArrayAccess found VariableDecl: " + decl);
+
                     //TODO Impl
+                    //arrayAccesses.stream().map(a -> )
+                    //Table.getSubArrayTruthyBoolean();
+
                 } else {
                     throw new TypeCheckingException("Array-Access has a non-boolean or non-int Type at: "
                             + node.getBeginLine() + ":" + node.getBeginColumn());
@@ -1159,6 +1106,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(PrintStmnt node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
+
+        Expr e = node.firstChildOfType(Expr.class);
+        if(node.getFirstChild() instanceof PRINT_LINE){
+            System.out.println(e.value);
+        }
+        if(node.getFirstChild() instanceof PRINT){
+            System.out.print(e.value);
+        }
+
         printExit(node);
         return data;
     }
