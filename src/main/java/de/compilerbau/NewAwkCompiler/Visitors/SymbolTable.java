@@ -164,8 +164,8 @@ public class SymbolTable {
     }
 
     public ArrayTypeAndValue getArrayValAndTypeForIDAndIntAccess(ID id, int accessIndex, String context) {
-        log.warn("getArrayValAndTypeForIDAndIntAccess: Try to get value from Array");
-        log.warn("Symboltable: VariableDecls: " + variableDeclTable);
+        log.info("getArrayValAndTypeForIDAndIntAccess: Try to get value from Array");
+        log.info("Symboltable: VariableDecls: " + variableDeclTable);
         VariableDecl variableDecl = findVariableDeclFromID(id, context);
         if (variableDecl.value == null) {
             throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: The Array hasnt been " +
@@ -182,7 +182,7 @@ public class SymbolTable {
         } else {
             throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: Invalid Type!");
         }
-        log.warn("Returning ArrayTypeAndValue: " + typeAndValue);
+        log.info("Returning ArrayTypeAndValue: " + typeAndValue);
         return typeAndValue;
         /**
          //Save
@@ -191,19 +191,19 @@ public class SymbolTable {
          // Unsave
          String[] strings = value.substring(1, value.length()-1).replaceAll("\\s","").split(",");
          for(String s: strings) {
-         log.warn(s);
+         log.info(s);
          }*/
     }
 
     public ArrayTypeAndValue getArrayAccessValAndTypeForIDAndInts(ID id, List<Integer> accessIndexes, String context) {
-        log.warn("getArrayAccessValAndTypeForIDAndInts: Try to get value from Array");
+        log.info("getArrayAccessValAndTypeForIDAndInts: Try to get value from Array");
         VariableDecl variableDecl = findVariableDeclFromID(id, context);
         if (variableDecl.value == null) {
             throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: The Array hasnt been " +
                     "initialized or assigned a value and it can't be accessed.");
         }
-        log.warn("Params: ID:" + id + " AccessIndexes: " + accessIndexes + " Context: " + context);
-        log.warn("VariableDecl: " + variableDecl);
+        log.info("Params: ID:" + id + " AccessIndexes: " + accessIndexes + " Context: " + context);
+        log.info("VariableDecl: " + variableDecl);
 
         //Detect dimension
         String someString = variableDecl.value;
@@ -218,21 +218,20 @@ public class SymbolTable {
                 finished = true;
             }
         }
-        log.warn("Dimension: " + dimension + " AccessIndexCount: " + accessIndexes.size());
+        log.info("Dimension: " + dimension + " AccessIndexCount: " + accessIndexes.size());
         //int[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         //int[] b = a[1];
         //int c = a[1][0];
 
         int accessIndexCount = accessIndexes.size();
-
         //No need to Check accessIndexCount == 0, because Visitor Takes care of it,
         // Its technically no access, just passing the value
         // If both = e.g. 3 then return value inside array-leaf
         if (dimension == accessIndexCount) {
-            log.warn("1. SomeString: Input " + someString);
-            //TODO 1. Leerzeichen entfernen, Trim
+            log.info("1. SomeString: Input " + someString);
+            //1. Leerzeichen entfernen, Trim
             someString = someString.replaceAll("\\s", "");
-            log.warn("2. SomeString: No spaces" + someString);
+            log.info("2. SomeString: No spaces" + someString);
             String regexBrackets = "";
             String regexBrackets2 = "";
             for (int i = 0; i < dimension; i++) {
@@ -241,63 +240,55 @@ public class SymbolTable {
             }
             someString = someString.replaceAll(regexBrackets, "");
             someString = someString.replaceAll(regexBrackets2, "");
-            log.warn("3. SomeString: Trimmed " + someString);
+            log.info("3. SomeString: Trimmed " + someString);
 
-            //2.  TODO Split -> select object -> split --> rootvalue
-            //split dim -1 x => 2
-            // last split ","
-            //3 return
-            //Objectsplit: Works with multiple or one objects
-            // 3x Zugriff
+            //2. Split -> select object -> split --> rootvalue; split dim -1 x => 2; last split ","
+            //3 return; Objectsplit: Works with multiple or one objects
             for (int i = 0; i < accessIndexCount; i++) {
-                log.warn("Runde: " + (i + 1));
+                log.info("Runde: " + (i + 1));
                 // If nicht letzte Runde
                 if (i != accessIndexCount - 1) {
-                    log.warn("Nicht letzte Runde!");
+                    log.info("Nicht letzte Runde!");
                     // Finde Element
                     String splitString = ",";
                     for (int j = 1; j < (dimension - i); j++) {
                         splitString = "]" + splitString + "\\[";
                     }
-                    log.warn("SplitString: " + splitString);
+                    log.info("SplitString: " + splitString);
                     List<String> objects = Arrays.stream(someString.split(splitString)).collect(Collectors.toList());
-                    log.warn("Objects: " + objects);
+                    log.info("Objects: " + objects);
                     String element = objects.get(accessIndexes.get(i));
-                    log.warn("Element: " + element);
+                    log.info("Element: " + element);
                     someString = element;
                 }
                 //If letzte Runde
                 else {
-                    log.warn("Letzte Runde!");
+                    log.info("Letzte Runde!");
                     String[] objects = someString.split(",");
                     String element = objects[accessIndexes.get(i)];
-                    log.warn("Element: " + element);
+                    log.info("Element: " + element);
                     someString = element;
                     Type t = variableDecl.type;
                     t.isArray = false;
                     t.arrayTypeDimension = 0; //TODO Gucken ob korrekt
                     ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
-                    log.warn("Returning ArrayTypeAndValue: " + value);
+                    log.info("Returning ArrayTypeAndValue: " + value);
                     return value;
                 }
             }
         }
         // else if less accessors, then build array on Ebene and return it
         else if (dimension > accessIndexCount) {
-            log.warn("1. SomeString: Input " + someString);
-            //TODO 1. Leerzeichen entfernen, Trim
+            log.info("1. SomeString: Input " + someString);
+            //1. Leerzeichen entfernen, Trim
             someString = someString.replaceAll("\\s", "");
-            log.warn("2. SomeString: No spaces" + someString);
-
-            //TODO Enternen je iteration (ab hier Schleife)
+            log.info("2. SomeString: No spaces" + someString);
             for (int i = 0; i < accessIndexCount; i++) {
-
                 // Dim = 3
                 // Access = 2 [[[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]]
                 // Entferne außen (jew. 1 Klammer trimmen),
                 someString = someString.substring(1, someString.length() - 1);
-                log.warn("3. SomeString: Trimmed for iteration " + someString);
-
+                log.info("3. SomeString: Trimmed for iteration " + someString);
                 //Ermittle Replacer: ]],[[ (Ebene 2) oder ],[ (Ebene 1) -> Schleife von accessIndexCount bis 1
                 String replacerString = ",";
                 String splitterString = "@";
@@ -306,42 +297,34 @@ public class SymbolTable {
                     splitterString = "]" + splitterString + "[";
                 }
                 splitterString = splitterString.replaceAll("\\[", "[");
-                log.warn("4. ReplacerString: " + replacerString + " SplitterString: " + splitterString);
+                log.info("4. ReplacerString: " + replacerString + " SplitterString: " + splitterString);
                 // Replace: ]],[[  mit ]@[    [[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]
                 someString = someString.replace(replacerString, splitterString);
-                log.warn("5. SomeString: Replaced " + someString);
+                log.info("5. SomeString: Replaced " + someString);
                 someString = someString.replace("@\\", "@");
                 // Split: an @  [[1,2,3],[4,5,6],[7,8,9]]@[[1,2,3],[5,5,5],[7,8,9]]
-                log.warn("6. SomeString: Replaced @ fix " + someString);
-
+                log.info("6. SomeString: Replaced @ fix " + someString);
                 List<String> objects = Pattern.compile("@").splitAsStream(someString)
                         .collect(Collectors.toList());
                 //List<String> objects = Arrays.stream(someString.split(splitterString)).collect(Collectors.toList());
-                log.warn("6. SomeString: Splitted " + objects.get(0));
+                log.info("6. SomeString: Splitted " + objects.get(0));
                 // Access = 2 [[[1,2,3],[4,5,6],[7,8,9]],[[1,2,3],[5,5,5],[7,8,9]]]
                 // Access = 2 [[[1,2,3]],[[1,2,3]],[[1,2,3]]]
-                log.warn("Objects: " + objects);
+                log.info("Objects: " + objects);
                 String element = objects.get(accessIndexes.get(i));
-                log.warn("Element: " + element);
+                log.info("Element: " + element);
                 someString = element;
             }
-
             Type t = variableDecl.type;
             t.isArray = true;
             t.arrayTypeDimension = 0; //TODO BERECHNEN!
             ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
-            log.warn("Returning ArrayTypeAndValue: " + value);
+            log.info("Returning ArrayTypeAndValue: " + value);
             return value;
-
-
         } else { // if more => Error
             throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: ArrayAccess has more Accesses than" +
                     "there are dimensions! Please reduce accessors.");
         }
-        // TODO 2.
-
-        ArrayTypeAndValue typeAndValue = new ArrayTypeAndValue();
-
-        return typeAndValue;
+        return null;
     }
 }

@@ -895,15 +895,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             else if (node.isArrayAccess) {
                 //Get 1. ArrayAccess and ID
                 ID id = node.firstChildOfType(ID.class); //Use to find array
-
                 List<ArrayAccess> arrayAccesses = node.childrenOfType(ArrayAccess.class);
                 ArrayAccess arrayAccess = arrayAccesses.get(0);
-
-
                 // 2. get type and value id
                 VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
                 log.info("Atom: ArrayAccess found VariableDecl: " + decl);
-
                 // 3. check type == int || boolean, int => Return Single Value
                 if (arrayAccess.type.type.equals("int")) {
                     if (node.arrayAccessDimension == 1) { // Single Dim
@@ -932,7 +928,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         }
                     }
                 }
-
                 // 3.2 boolean => Return field for truthy condition
                 else if (arrayAccess.type.type.equals("boolean")) {
                     log.info("Atom: ArrayAccess detected with Type boolean.");
