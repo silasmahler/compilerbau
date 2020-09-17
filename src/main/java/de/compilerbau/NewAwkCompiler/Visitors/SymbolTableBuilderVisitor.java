@@ -603,7 +603,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     }
                 }
                 // 1.2 DOUBLE x2
-                if (sumType.equals("double")) {
+                else if (sumType.equals("double")) {
                     if (op instanceof PLUS) {
                         sum.value = "" + (Double.parseDouble(sum.value) + Double.parseDouble(childValue));
                     } else if (op instanceof MINUS) {
@@ -613,7 +613,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     }
                 }
                 // 1.3 CHAR x2
-                if (sumType.equals("char")) {
+                else if (sumType.equals("char")) {
                     if (op instanceof PLUS) {
                         sum.value = "" + (sum.value.charAt(0) + childValue.charAt(0));
                         sum.type = new Type("int");
@@ -625,7 +625,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     }
                 }
                 //1.4 Strings x2
-                if (sumType.equals("String")) {
+                else if (sumType.equals("String")) {
                     if (op instanceof PLUS) {
                         sum.value = sum.value + childValue;
                         sum.type = sum.type; // Dont change it
@@ -651,46 +651,49 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(Integer.parseInt(sum.value) - Double.parseDouble(childValue));
                     }
-                }
-                if (sumType.equals("double") && childType.equals("int")) {
+                } else if (sumType.equals("double") && childType.equals("int")) {
                     sum.type = new Type("double");
                     if (op instanceof PLUS) {
                         sum.value = String.valueOf(Double.parseDouble(sum.value) + Integer.parseInt(childValue));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(Double.parseDouble(sum.value) - Integer.parseInt(childValue));
                     }
-                }
-                if (sumType.equals("char") && childType.equals("int")) {
+                } else if (sumType.equals("char") && childType.equals("int")) {
                     sum.type = new Type("int");
                     if (op instanceof PLUS) {
                         sum.value = String.valueOf(sum.value.charAt(0) + Integer.parseInt(childValue));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(sum.value.charAt(0) - Integer.parseInt(childValue));
                     }
-                }
-                if (sumType.equals("int") && childType.equals("char")) {
+                } else if (sumType.equals("int") && childType.equals("char")) {
                     sum.type = new Type("int");
                     if (op instanceof PLUS) {
                         sum.value = String.valueOf(Integer.parseInt(sum.value) + childValue.charAt(0));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(Integer.parseInt(sum.value) - childValue.charAt(0));
                     }
-                }
-                if (sumType.equals("double") && childType.equals("char")) {
+                } else if (sumType.equals("double") && childType.equals("char")) {
                     sum.type = new Type("double");
                     if (op instanceof PLUS) {
                         sum.value = String.valueOf(Double.parseDouble(sum.value) + childValue.charAt(0));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(Double.parseDouble(sum.value) - childValue.charAt(0));
                     }
-                }
-                if (sumType.equals("char") && childType.equals("double")) {
+                } else if (sumType.equals("char") && childType.equals("double")) {
                     sum.type = new Type("double");
                     if (op instanceof PLUS) {
                         sum.value = String.valueOf(sum.value.charAt(0) + Double.parseDouble(childValue));
                     } else if (op instanceof MINUS) {
                         sum.value = String.valueOf(sum.value.charAt(0) - Double.parseDouble(childValue));
                     }
+                } else if (sumType.equals("String") && !childType.equals("String") ||
+                        !sumType.equals("String") && childType.equals("String")) {
+                    if (op instanceof PLUS) {
+                        sum.type = new Type("String");
+                        sum.value = sum.value + childValue;
+                    }
+                } else if (op instanceof MINUS) {
+                    throw new TypeCheckingException("You can not operate with MINUS on strings.");
                 }
             }
             node.type = sum.type;
@@ -723,7 +726,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 .collect(Collectors.toList()).size() > 0
         ) {
             throw new TypeCheckingException("There are other types than int, double or char" +
-                    "in an operation which uses * / and %");
+                    " in an operation which uses * / and %");
         } else {
             //Algo: 1) Get 2 operands, 2) parse both 3) operate with them 4) result save double
             Sign firstChild = node.firstChildOfType(Sign.class);
