@@ -592,6 +592,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             Node op = childs.get(i - 1);
             // 1. EQUAL TYPES?
             if (sumType.equals(childType)) {
+                // 1.1 INT x2
                 if (sumType.equals("int")) {
                     if (op instanceof PLUS) {
                         sum.value = "" + (Integer.parseInt(sum.value) + Integer.parseInt(childValue));
@@ -601,7 +602,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
                     }
                 }
-                // 1.2 DOUBLE
+                // 1.2 DOUBLE x2
                 if (sumType.equals("double")) {
                     if (op instanceof PLUS) {
                         sum.value = "" + (Double.parseDouble(sum.value) + Double.parseDouble(childValue));
@@ -611,7 +612,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
                     }
                 }
-                // 1.3 CHAR
+                // 1.3 CHAR x2
                 if (sumType.equals("char")) {
                     if (op instanceof PLUS) {
                         sum.value = "" + (sum.value.charAt(0) + childValue.charAt(0));
@@ -619,6 +620,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     } else if (op instanceof MINUS) {
                         sum.value = "" + (sum.value.charAt(0) - childValue.charAt(0));
                         sum.type = new Type("int");
+                    } else {
+                        throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                    }
+                }
+                //1.4 Strings x2
+                if (sumType.equals("String")) {
+                    if (op instanceof PLUS) {
+                        sum.value = sum.value + childValue;
+                        sum.type = sum.type; // Dont change it
+                    } else if (op instanceof MINUS) {
+                        throw new TypeCheckingException("You can not operate with MINUS on 2 strings.");
                     } else {
                         throw new TypeCheckingException("Operation on sum with same types went wrong.");
                     }
@@ -961,9 +973,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         } else if (node.getFirstChild() instanceof NullLiteral) {
             node.type = new Type("null");
             node.value = node.firstChildOfType(NullLiteral.class).getImage();
-        }
-        // "String".length => Integer
-        else if (node.getFirstChild() instanceof StringLiteral) {
+        } else if (node.getFirstChild() instanceof StringLiteral) {
             if (node.hasLength) { //String has definitive length
                 node.type = new Type("int");
                 node.value = String.valueOf(node.atomLength);
@@ -1013,7 +1023,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             //Normal String
             else {
                 node.type = new Type("String");
-                node.value = node.firstChildOfType(StringLiteral.class).getImage();
+                String imageString = node.firstChildOfType(StringLiteral.class).getImage();
+                node.value = imageString.substring(1, imageString.length() - 1); // Trim "
+                log.info("Normal String detected: " + node.value);
             }
         }
         printExit(node);
@@ -1108,10 +1120,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
 
         Expr e = node.firstChildOfType(Expr.class);
-        if(node.getFirstChild() instanceof PRINT_LINE){
+        if (node.getFirstChild() instanceof PRINT_LINE) {
             System.out.println(e.value);
         }
-        if(node.getFirstChild() instanceof PRINT){
+        if (node.getFirstChild() instanceof PRINT) {
             System.out.print(e.value);
         }
 
