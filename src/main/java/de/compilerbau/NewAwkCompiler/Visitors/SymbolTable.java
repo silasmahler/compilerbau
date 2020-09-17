@@ -165,6 +165,7 @@ public class SymbolTable {
 
     public ArrayTypeAndValue getArrayValAndTypeForIDAndIntAccess(ID id, int accessIndex, String context) {
         log.warn("getArrayValAndTypeForIDAndIntAccess: Try to get value from Array");
+        log.warn("Symboltable: VariableDecls: " + variableDeclTable);
         VariableDecl variableDecl = findVariableDeclFromID(id, context);
         if (variableDecl.value == null) {
             throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: The Array hasnt been " +
@@ -173,24 +174,15 @@ public class SymbolTable {
         String[] values = variableDecl.value.substring(1, variableDecl.value.length() - 1)
                 .replaceAll("\\s", "").split(",");
         ArrayTypeAndValue typeAndValue = new ArrayTypeAndValue();
-        if (variableDecl.type.type.equals("int")) {
-            typeAndValue.type = new Type("int");
-            typeAndValue.value = values[accessIndex];
-        } else if (variableDecl.type.type.equals("double")) {
-            typeAndValue.type = new Type("double");
-            typeAndValue.value = values[accessIndex];
-        } else if (variableDecl.type.type.equals("char")) {
-            typeAndValue.type = new Type("char");
-            typeAndValue.value = values[accessIndex];
-        } else if (variableDecl.type.type.equals("boolean")) {
-            typeAndValue.type = new Type("boolean");
-            typeAndValue.value = values[accessIndex];
-        } else if (variableDecl.type.type.equals("String")) {
-            typeAndValue.type = new Type("String");
+        Type t = variableDecl.type;
+        if (t.type.equals("int") || t.type.equals("double") || t.type.equals("char") ||
+                t.type.equals("boolean") || t.type.equals("String")) {
+            typeAndValue.type = variableDecl.type;
             typeAndValue.value = values[accessIndex];
         } else {
             throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: Invalid Type!");
         }
+        log.warn("Returning ArrayTypeAndValue: " + typeAndValue);
         return typeAndValue;
         /**
          //Save
@@ -285,7 +277,7 @@ public class SymbolTable {
                     t.isArray = false;
                     t.arrayTypeDimension = 0; //TODO Gucken ob korrekt
                     ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
-                    log.warn("Returning ArrayTypeAndValue: " +  value);
+                    log.warn("Returning ArrayTypeAndValue: " + value);
                     return value;
                 }
             }
@@ -310,8 +302,8 @@ public class SymbolTable {
                 String replacerString = ",";
                 String splitterString = "@";
                 for (int j = accessIndexCount - i; 0 < j; j--) {
-                    replacerString =  "]" + replacerString + "[";
-                    splitterString =  "]" + splitterString + "[";
+                    replacerString = "]" + replacerString + "[";
+                    splitterString = "]" + splitterString + "[";
                 }
                 splitterString = splitterString.replaceAll("\\[", "[");
                 log.warn("4. ReplacerString: " + replacerString + " SplitterString: " + splitterString);
@@ -332,19 +324,16 @@ public class SymbolTable {
                 String element = objects.get(accessIndexes.get(i));
                 log.warn("Element: " + element);
                 someString = element;
-
-
-            //TODO SCHLEIFE IMPL für mehrfaches "entpacken" der Array Schichten/Dimensions
             }
 
             Type t = variableDecl.type;
             t.isArray = true;
             t.arrayTypeDimension = 0; //TODO BERECHNEN!
             ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
-            log.warn("Returning ArrayTypeAndValue: " +  value);
+            log.warn("Returning ArrayTypeAndValue: " + value);
             return value;
 
-            
+
         } else { // if more => Error
             throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: ArrayAccess has more Accesses than" +
                     "there are dimensions! Please reduce accessors.");

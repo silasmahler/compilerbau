@@ -912,8 +912,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
                                 Integer.parseInt(arrayAccess.value), getContext(node));
                         if (decl.type.type.equals(a.type.type)) {
-                            node.type = arrayAccess.type;
-                            node.value = arrayAccess.value;
+                            node.type = a.type;
+                            node.value = a.value;
                         } else {
                             throw new TypeCheckingException("VariableDecl and return-type of " +
                                     "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");
