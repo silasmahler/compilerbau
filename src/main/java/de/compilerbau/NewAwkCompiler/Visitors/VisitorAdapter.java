@@ -153,6 +153,12 @@ public class VisitorAdapter implements NewAwkParserVisitor {
                 "\n with content: " + node.toString() + " See if a visitor hasn't implemented it.");
     }
 
+    @Override
+    public Object visit(NextStmnt node, Object data) {
+        throw new VisitorException("Visitor called on unexpected AST node of class: " + node.getClass() +
+                "\n with content: " + node.toString() + " See if a visitor hasn't implemented it.");
+    }
+
     public Object visit(Token node, Object data) {
         throw new VisitorException("Visitor called on unexpected AST node of class: " + node.getClass() +
                 "\n with content: " + node.toString() + " See if a visitor hasn't implemented it.");

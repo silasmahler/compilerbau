@@ -4,8 +4,8 @@ import de.compilerbau.NewAwkCompiler.javacc21.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class SymbolTableBuilderVisitor extends VisitorAdapter {
@@ -1123,13 +1123,55 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
 
         Expr e = node.firstChildOfType(Expr.class);
+        log.warn("TEST3: " + node.getFirstChild().getClass());
+
         if (node.getFirstChild() instanceof PRINT_LINE) {
             System.out.println(e.value);
-        }
-        if (node.getFirstChild() instanceof PRINT) {
+        } else if (node.getFirstChild() instanceof PRINT) {
             System.out.print(e.value);
         }
 
+        printExit(node);
+        return data;
+    }
+
+    @Override
+    public Object visit(NextStmnt node, Object data) {
+        printEnter(node);
+        data = node.childrenAccept(this, data);
+
+        String arg = node.firstChildOfType(Token.class).getImage();
+        if (node.getFirstChild() instanceof NEXT) {
+        } else if (arg.equals("System.nextInt")) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Please enter the next INT");
+            int value = s.nextInt();
+            log.info("INT: " + value);
+        }
+        else if (arg.equals("System.nextDouble")) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Please enter the next DOUBLE");
+            double value = s.nextDouble();
+            log.info("DOUBLE: " + value);
+        }
+        else if (arg.equals("System.nextChar")) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Please enter the next CHAR");
+            double value = s.next().charAt(0);
+            log.info("CHAR: " + value);
+        }
+        else if (arg.equals("System.nextBoolean")) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Please enter the next BOOLEAN");
+            boolean value = s.nextBoolean();
+            log.info("BOOLEAN: " + value);
+        }
+        else if (arg.equals("System.nextString")) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Please enter the next STRING");
+            String value = s.next();
+            log.info("STRING: " + value);
+        }
         printExit(node);
         return data;
     }

@@ -243,6 +243,7 @@ void Stmnt() #Stmnt : {}
      | LOOKAHEAD(3) Assignement()
      | LOOKAHEAD(3) VariableDeclAndAssignement()
      | PrintStmnt()
+     | NextStmnt()
      | LOOKAHEAD(3) KlammerAffe()
       )
 }
@@ -425,5 +426,5 @@ void NextStmnt() #NextStmnt :
  | <NEXT_CHAR>
  | <NEXT_BOOLEAN>
  | <NEXT_STRING>
- ) <KlammerAuf> Expr() <KlammerZu> <SEMICOLON>
+ )  <KlammerAuf> <KlammerZu> <SEMICOLON>
 }
