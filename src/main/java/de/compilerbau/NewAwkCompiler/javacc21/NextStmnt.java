@@ -10,6 +10,9 @@ public class NextStmnt extends BaseNode {
 
     public String nextValue;
 
+    public String value;
+    public Type type;
+
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }

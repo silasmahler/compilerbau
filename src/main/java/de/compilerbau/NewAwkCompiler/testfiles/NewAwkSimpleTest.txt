@@ -1,7 +1,8 @@
 int a(){
-  System.nextInt();
-  System.nextDouble();
-  System.nextChar();
-  System.nextBoolean();
-  System.nextString();
+  System.out.println("hi");
+  int a = System.nextInt();
+  double b = System.nextDouble();
+  char c = System.nextChar();
+  boolean d = System.nextBoolean();
+  String e = System.nextString();
 }

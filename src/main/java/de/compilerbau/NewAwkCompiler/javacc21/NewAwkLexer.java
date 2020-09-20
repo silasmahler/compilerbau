@@ -98,6 +98,10 @@ public class NewAwkLexer implements NewAwkConstants {
         return tok;
     }
 
+    static public String addEscapes(String s) {
+        return ParseException.addEscapes(s);
+    }
+
     // Reset the token source input
     // to just after the Token passed in.
     void reset(Token t) {
@@ -150,7 +154,7 @@ public class NewAwkLexer implements NewAwkConstants {
             image.setLength(0);
             matchedCharsLength= 0;
             while (curChar<=32&&(0x100002600L&(1L<<curChar))!=0L) {
-                if (trace_enabled) LOGGER.info("Skipping character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+")");
+                if (trace_enabled) LOGGER.info("Skipping character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+")");
                 curChar= (char) input_stream.beginToken();
                 if (curChar== (char)-1) {
                     continue EOFLoop;
@@ -158,14 +162,14 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             jjmatchedKind= 0x7FFFFFFF;
             jjmatchedPos= 0;
-            if (trace_enabled) LOGGER.info("Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") "+"at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+            if (trace_enabled) LOGGER.info("Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") "+"at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
             curPos= jjMoveStringLiteralDfa0();
             if (jjmatchedKind!=0x7FFFFFFF) {
                 if (jjmatchedPos+1<curPos) {
                     if (trace_enabled) LOGGER.info("   Putting back "+(curPos-jjmatchedPos-1)+" characters into the input stream.");
                     input_stream.backup(curPos-jjmatchedPos-1);
                 }
-                if (trace_enabled) LOGGER.info("****** FOUND A "+tokenImage[jjmatchedKind]+" MATCH ("+ParseException.addEscapes(input_stream.getSuffix(jjmatchedPos+2))+") ******\n");
+                if (trace_enabled) LOGGER.info("****** FOUND A "+tokenImage[jjmatchedKind]+" MATCH ("+addEscapes(input_stream.getSuffix(jjmatchedPos+2))+") ******\n");
                 if (tokenSet.get(jjmatchedKind)) {
                     matchedToken= jjFillToken();
                     tokenLexicalActions();
@@ -447,7 +451,7 @@ public class NewAwkLexer implements NewAwkConstants {
         else {
             return pos+1;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") "+"at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") "+"at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         return jjMoveNfa(state, pos+1);
     }
 
@@ -554,7 +558,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 1;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 38:
             if ((active0&0x40000L)!=0L) return jjStopAtPos(1, 18);
@@ -611,7 +615,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 2;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 97:
             return jjMoveStringLiteralDfa3(active0, 0x200040000000L, active1, 0x0L);
@@ -656,7 +660,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 3;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 68:
             return jjMoveStringLiteralDfa4(active0, 0x0L, active1, 0x280L);
@@ -712,7 +716,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 4;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 101:
             return jjMoveStringLiteralDfa5(active0, 0xd000400080000000L, active1, 0x1fL);
@@ -750,7 +754,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 5;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 97:
             return jjMoveStringLiteralDfa6(active0, 0x400080000000L, active1, 0x0L);
@@ -794,7 +798,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 6;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 40:
             return jjMoveStringLiteralDfa7(active0, 0x2000000000000000L, active1, 0x140L);
@@ -833,7 +837,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 7;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 40:
             return jjMoveStringLiteralDfa8(active0, 0x0L, active1, 0x20L);
@@ -870,7 +874,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 8;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 41:
             if ((active1&0x20L)!=0L) return jjStopAtPos(8, 69);
@@ -901,7 +905,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 9;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 40:
             return jjMoveStringLiteralDfa10(active0, 0x0L, active1, 0x280L);
@@ -931,7 +935,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 10;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 41:
             if ((active1&0x80L)!=0L) return jjStopAtPos(10, 71);
@@ -967,7 +971,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 11;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 66:
             return jjMoveStringLiteralDfa12(active0, 0x0L, active1, 0x8L);
@@ -1003,7 +1007,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 12;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 104:
             return jjMoveStringLiteralDfa13(active0, 0x0L, active1, 0x4L);
@@ -1037,7 +1041,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 13;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 97:
             return jjMoveStringLiteralDfa14(active0, 0x0L, active1, 0x4L);
@@ -1074,7 +1078,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 14;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 98:
             return jjMoveStringLiteralDfa15(active0, 0x0L, active1, 0x2L);
@@ -1109,7 +1113,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 15;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 101:
             return jjMoveStringLiteralDfa16(active0, 0x0L, active1, 0x8L);
@@ -1145,7 +1149,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 16;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 97:
             return jjMoveStringLiteralDfa17(active0, 0x0L, active1, 0x8L);
@@ -1179,7 +1183,7 @@ public class NewAwkLexer implements NewAwkConstants {
             }
             return 17;
         }
-        if (trace_enabled) LOGGER.info(""+"Current character : "+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+        if (trace_enabled) LOGGER.info(""+"Current character : "+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         switch(curChar) {
             case 110:
             if ((active0&0x1000000000000000L)!=0L) return jjStopAtPos(17, 60);
@@ -1439,7 +1443,7 @@ public class NewAwkLexer implements NewAwkConstants {
             else {
                 return curPos;
             }
-            if (trace_enabled) LOGGER.info(""+ParseException.addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") "+"at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
+            if (trace_enabled) LOGGER.info(""+addEscapes(String.valueOf(curChar))+" ("+(int) curChar+") "+"at line "+input_stream.getEndLine()+" column "+input_stream.getEndColumn());
         }
     }
 

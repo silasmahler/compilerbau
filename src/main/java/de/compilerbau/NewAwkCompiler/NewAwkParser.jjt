@@ -243,7 +243,6 @@ void Stmnt() #Stmnt : {}
      | LOOKAHEAD(3) Assignement()
      | LOOKAHEAD(3) VariableDeclAndAssignement()
      | PrintStmnt()
-     | NextStmnt()
      | LOOKAHEAD(3) KlammerAffe()
       )
 }
@@ -301,9 +300,9 @@ void Atom() #Atom : {
     Token t;
 }
 {
-    PrintStmnt()
-    |
     NextStmnt()
+    |
+    PrintStmnt()
     |
     (t=<ID>
         (ArrayAccess()
@@ -426,5 +425,5 @@ void NextStmnt() #NextStmnt :
  | t=<NEXT_CHAR> {jjtThis.nextValue = t.getImage();}
  | t=<NEXT_BOOLEAN> {jjtThis.nextValue = t.getImage();}
  | t=<NEXT_STRING> {jjtThis.nextValue = t.getImage();}
- )  <KlammerAuf> <KlammerZu> <SEMICOLON>
+ )  <KlammerAuf> <KlammerZu>
 }

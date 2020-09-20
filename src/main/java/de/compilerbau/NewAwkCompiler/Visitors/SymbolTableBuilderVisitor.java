@@ -1031,6 +1031,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 log.info("Normal String detected: " + node.value);
             }
         }
+        else if(node.firstChildOfType(NextStmnt.class) != null){
+            log.info("Atom: NextStmnt detected.");
+            NextStmnt n = node.firstChildOfType(NextStmnt.class);
+            node.value = n.value;
+            node.type = n.type;
+        }
         printExit(node);
         return data;
     }
@@ -1144,32 +1150,37 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         } else if (node.nextValue.equals("System.nextInt")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next INT");
-            int value = s.nextInt();
-            log.info("INT: " + value);
+            node.value = String.valueOf(s.nextInt());
+            node.type = new Type("int");
+            log.info("NextStmnt: Read INT: " + node.value);
         }
         else if (node.nextValue.equals("System.nextDouble")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next DOUBLE");
-            double value = s.nextDouble();
-            log.info("DOUBLE: " + value);
+            node.value = String.valueOf(s.nextDouble());
+            node.type = new Type("double");
+            log.info("NextStmnt: Read DOUBLE: " + node.value);
         }
         else if (node.nextValue.equals("System.nextChar")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next CHAR");
-            double value = s.next().charAt(0);
-            log.info("CHAR: " + value);
+            node.value = String.valueOf(s.next().charAt(0));
+            node.type = new Type("char");
+            log.info("NextStmnt: Read CHAR: " + node.value);
         }
         else if (node.nextValue.equals("System.nextBoolean")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next BOOLEAN");
-            boolean value = s.nextBoolean();
-            log.info("BOOLEAN: " + value);
+            node.value = String.valueOf(s.nextBoolean());
+            node.type = new Type("boolean");
+            log.info("NextStmnt: Read BOOLEAN: " + node.value);
         }
         else if (node.nextValue.equals("System.nextString")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next STRING");
-            String value = s.next();
-            log.info("STRING: " + value);
+            node.value = s.next();
+            node.type = new Type("String");
+            log.info("NextStmnt: Read STRING: " + node.value);
         }
         printExit(node);
         return data;
