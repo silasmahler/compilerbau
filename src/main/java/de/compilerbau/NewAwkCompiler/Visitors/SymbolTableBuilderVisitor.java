@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SymbolTableBuilderVisitor extends VisitorAdapter {
@@ -1105,14 +1106,40 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         List<KlammerAffeAusdruck> regexes = node.childrenOfType(KlammerAffeAusdruck.class);
         String s = node.firstChildOfType(StringLiteral.class).getImage();
         s = s.substring(1, s.length() - 1);
-        String[] strings = s.replaceAll(" ", "").split("");
-        for (int i = 0; i < strings.length; i++) {
-            log.warn("String: " + strings[i]);
+        s = s.replaceAll(" ", "");
+        char[] ca = s.toCharArray();
+        // For every "Regex" go throught the whole string and do the ops defined
 
-        }
         for (KlammerAffeAusdruck ka : regexes) {
+            for (int i = 0; i < ca.length; i++) {
+                log.warn("Current operand from String: " + ca[i]);
 
 
+                Pattern.compile(".*[^0-9].*");
+
+
+                //Modify only integers
+                if(ka.regexType.type.equals("int")){
+                    if(Character.isDigit(ca[i])) {
+
+                    }
+                }
+                //Modify only doubles
+                else if(ka.regexType.type.equals("double")){
+
+                }
+                //Modify only chars
+                else if(ka.regexType.type.equals("char")){
+
+                } //Modify only booleans
+                else if(ka.regexType.type.equals("boolean")){
+
+                }
+                //Modify only certain Strings
+                else if(ka.regexType.type.equals("String")){
+
+                }
+            }
         }
 
         printExit(node);
