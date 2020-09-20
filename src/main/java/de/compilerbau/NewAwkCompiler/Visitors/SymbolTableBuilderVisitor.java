@@ -1030,8 +1030,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 node.value = imageString.substring(1, imageString.length() - 1); // Trim "
                 log.info("Normal String detected: " + node.value);
             }
-        }
-        else if(node.firstChildOfType(NextStmnt.class) != null){
+        } else if (node.firstChildOfType(NextStmnt.class) != null) {
             log.info("Atom: NextStmnt detected.");
             NextStmnt n = node.firstChildOfType(NextStmnt.class);
             node.value = n.value;
@@ -1091,21 +1090,21 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     /**
-     *
+     * Always returns an array
      */
     @Override
     public Object visit(KlammerAffe node, Object data) {
         printEnter(node);
-        printExit(node);
-        return data;
-    }
 
-    /**
-     *
-     */
-    @Override
-    public Object visit(KlammerAffeRegex node, Object data) {
-        printEnter(node);
+        // Immer return eines Array
+
+        // KlammerAffeAusdruck = return "this" or value of type or type
+        // :Integer: { return this; } all Integers return original value
+        // :Integer: { return 1; } all Integers return 1
+        // !:Integer: { return ; } all !Integers delete
+        // !:Integer: { return 2; } all !Integers return 2
+
+
         printExit(node);
         return data;
     }
@@ -1116,6 +1115,44 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(KlammerAffeAusdruck node, Object data) {
         printEnter(node);
+
+        //Lef side
+        if (node.getFirstChild() instanceof ConditionalNot) {
+            node.regexConditionalNot = true;
+        }
+        if (node.firstChildOfType(INTEGER_CLASS.class) != null) {
+            node.regexType = new Type("int");
+        } else if (node.firstChildOfType(DOUBLE_CLASS.class) != null) {
+            node.regexType = new Type("double");
+        } else if (node.firstChildOfType(CHAR_CLASS.class) != null) {
+            node.regexType = new Type("char");
+        } else if (node.firstChildOfType(BOOLEAN_CLASS.class) != null) {
+            node.regexType = new Type("boolean");
+        } else if (node.firstChildOfType(TypeString.class) != null) {
+            node.regexType = new Type("String");
+        } else {
+            throw new TypeCheckingException("KlaammerAffeAusdruck: No correct left side.");
+        }
+        //Right side
+        if (node.firstChildOfType(THIS.class) != null) {
+            node.actionType = new Type("String");
+            node.actionValue = "";
+        } else if (node.firstChildOfType(IntegerLiteral.class) != null) {
+            node.actionType = new Type("int");
+            node.actionValue = node.firstChildOfType(IntegerLiteral.class).getImage();
+        } else if (node.firstChildOfType(DoubleLiteral.class) != null) {
+            node.actionType = new Type("double");
+            node.actionValue = node.firstChildOfType(DoubleLiteral.class).getImage();
+        } else if (node.firstChildOfType(CharLiteral.class) != null) {
+            node.actionType = new Type("char");
+            node.actionValue = node.firstChildOfType(CharLiteral.class).getImage();
+        } else if (node.firstChildOfType(BooleanLiteral.class) != null) {
+            node.actionType = new Type("boolean");
+            node.actionValue = node.firstChildOfType(BooleanLiteral.class).getImage();
+        } else {
+            node.actionType = new Type("delete");
+            node.actionValue = "";
+        }
         printExit(node);
         return data;
     }
@@ -1153,29 +1190,25 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.value = String.valueOf(s.nextInt());
             node.type = new Type("int");
             log.info("NextStmnt: Read INT: " + node.value);
-        }
-        else if (node.nextValue.equals("System.nextDouble")) {
+        } else if (node.nextValue.equals("System.nextDouble")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next DOUBLE");
             node.value = String.valueOf(s.nextDouble());
             node.type = new Type("double");
             log.info("NextStmnt: Read DOUBLE: " + node.value);
-        }
-        else if (node.nextValue.equals("System.nextChar")) {
+        } else if (node.nextValue.equals("System.nextChar")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next CHAR");
             node.value = String.valueOf(s.next().charAt(0));
             node.type = new Type("char");
             log.info("NextStmnt: Read CHAR: " + node.value);
-        }
-        else if (node.nextValue.equals("System.nextBoolean")) {
+        } else if (node.nextValue.equals("System.nextBoolean")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next BOOLEAN");
             node.value = String.valueOf(s.nextBoolean());
             node.type = new Type("boolean");
             log.info("NextStmnt: Read BOOLEAN: " + node.value);
-        }
-        else if (node.nextValue.equals("System.nextString")) {
+        } else if (node.nextValue.equals("System.nextString")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next STRING");
             node.value = s.next();

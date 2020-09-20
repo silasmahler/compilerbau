@@ -190,15 +190,6 @@ public class DumpVisitor extends VisitorAdapter {
     }
 
     @Override
-    public Object visit(KlammerAffeRegex node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
-
-    @Override
     public Object visit(KlammerAffeAusdruck node, Object data) {
         System.out.println(indentString() + node);
         ++indent;

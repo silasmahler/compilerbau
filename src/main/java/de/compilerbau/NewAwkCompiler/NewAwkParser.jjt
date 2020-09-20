@@ -283,18 +283,20 @@ ReturnStmnt #ReturnStatement : <RETURN> Expr <SEMICOLON>;
 // "Klammeraffe"
 KlammerAffe #KlammerAffe :
     <StringLiteral> <AT> <BlockAuf>
-    KlammerAffeRegex KlammerAffeAusdruck
-    (KlammerAffeRegex KlammerAffeAusdruck)*
+    (KlammerAffeAusdruck)+
     <BlockZu>;
-KlammerAffeRegex #KlammerAffeRegex :
-    [<ConditionalNot>] <Colon>
-    (<INTEGER_CLASS> | <DOUBLE_CLASS> | <CHAR_CLASS>
-    | <BOOLEAN_CLASS> | <TypeString> ) <Colon>;
 KlammerAffeAusdruck #KlammerAffeAusdruck :
-    <BlockAuf> <RETURN>
-    [(<THIS> | <IntegerLiteral> | <DoubleLiteral>
-    | <CharLiteral> | <BooleanLiteral>)]
-    <SEMICOLON> <BlockZu>;
+    [<ConditionalNot>]
+    <Colon>
+        (<INTEGER_CLASS> | <DOUBLE_CLASS> | <CHAR_CLASS>
+        | <BOOLEAN_CLASS> | <TypeString> )
+    <Colon>
+    <BlockAuf>
+    <RETURN>
+        [(<THIS> | <IntegerLiteral> | <DoubleLiteral>
+        | <CharLiteral> | <BooleanLiteral>)]
+    <SEMICOLON>
+    <BlockZu>;
 // Print
 PrintStmnt #PrintStmnt: (<PRINT_LINE> | <PRINT> )
     <KlammerAuf> Expr <KlammerZu> <SEMICOLON>;

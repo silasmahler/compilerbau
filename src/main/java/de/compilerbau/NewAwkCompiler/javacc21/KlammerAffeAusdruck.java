@@ -4,9 +4,16 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
-import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
+import de.compilerbau.NewAwkCompiler.Visitors.RegexAction;
+
 @SuppressWarnings("unused")
 public class KlammerAffeAusdruck extends BaseNode {
+
+    public boolean regexConditionalNot;
+    public Type regexType = null;
+    public Type actionType = null;
+    public String actionValue = null;
+
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }

@@ -1,8 +1,6 @@
 int a(){
-  System.out.println("hi");
-  int a = System.nextInt();
-  double b = System.nextDouble();
-  char c = System.nextChar();
-  boolean d = System.nextBoolean();
-  String e = System.nextString();
+  "12345"@{
+         :Integer: { return this; }
+         !:Integer: { return ; }
+         }
 }
