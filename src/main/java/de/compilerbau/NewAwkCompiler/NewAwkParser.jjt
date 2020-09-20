@@ -202,228 +202,108 @@ TOKEN : /* LITERALS */
     Parser Rules and AST generation are defined/handled in this section
     ==============================================================================================
 */
-Node CompilationUnit() #CompilationUnit : {}
-{
+Node CompilationUnit #CompilationUnit : {}
     (LOOKAHEAD(14) VariableDecl() | // 14 = up to arrays with 5 dimensions
      LOOKAHEAD(4) Assignement() |
      LOOKAHEAD(8) VariableDeclAndAssignement() |
-     MethodDecl()
-     )+
-    <EOF>
-    {return jjtThis;}
-}
-void VariableDecl() #VariableDecl : {}
-{
-       Type() <ID> <SEMICOLON>
-}
-void Assignement() #Assignement: {}
-{
-    <ID> <Zuweisung> ExprStmnt()
-}
-void VariableDeclAndAssignement() #VariableDeclAndAssignement : {}
-{
-    Type() <ID> <Zuweisung> ExprStmnt()
-}
-void MethodDecl() #MethodDecl : { Token t;}
-{
+     MethodDecl())+
+     <EOF>
+    {return jjtThis;};
+VariableDecl #VariableDecl : Type() <ID> <SEMICOLON>;
+Assignement #Assignement: <ID> <Zuweisung> ExprStmnt();
+VariableDeclAndAssignement #VariableDeclAndAssignement :
+    Type() <ID> <Zuweisung> ExprStmnt();
+MethodDecl() #MethodDecl : { Token t;}
     (Type()| <VOID>  {jjtThis.isVoid = true;})
-    <ID> <KlammerAuf> ParameterList() <KlammerZu> Block()
-}
-void ParameterList() #ParameterList : {} {
-    [Type() <ID>] (<COMMA> Type() <ID>)*
-}
-void Stmnt() #Stmnt : {}
-{
-     (
-     //LOOKAHEAD(3) ExprStmnt() |
-       Block()
-     | IfStmnt()
-     | ReturnStmnt()
+    <ID> <KlammerAuf> ParameterList() <KlammerZu> Block();
+ParameterList #ParameterList : [Type() <ID>] (<COMMA> Type() <ID>)*;
+Stmnt #Stmnt :(Block() | IfStmnt() | ReturnStmnt() | PrintStmnt()
      | LOOKAHEAD(3) VariableDecl()
      | LOOKAHEAD(3) Assignement()
      | LOOKAHEAD(3) VariableDeclAndAssignement()
-     | PrintStmnt()
-     | LOOKAHEAD(3) KlammerAffe()
-      )
-}
-void Block() #Block : {}
-{
-    <BlockAuf> (Stmnt())+ <BlockZu>
-}
-void IfStmnt() #IfStmnt : {}
-{
-    <IF> <KlammerAuf> Expr() <KlammerZu> Stmnt() (<ELSE> Stmnt())* <SEMICOLON>
-}
-void ExprStmnt() #ExprStmnt : {}
-{
-    Expr() <SEMICOLON>
-}
-void Expr() #Expr : {}
-{
-    LogicalOrExpr() ( <Zuweisung> LogicalOrExpr())*
-}
-/**
-* OPERATORs (Nodes not in AST becuase precedence comes from nesting order)
-*/
-void LogicalOrExpr() #LogicalOrExpr : {}
-{
-    LogicalAndExpr() (<ConditionalOr> LogicalAndExpr())*
-}
-void LogicalAndExpr() #LogicalAndExpr : {}
-{
-    LogicalNotExpr() (<ConditionalAnd> LogicalNotExpr())*
-}
-void LogicalNotExpr() #LogicalNotExpr : {}
-{
-    (<ConditionalNot>)* CompExpr()
-}
-void CompExpr() #CompExpr : {}
-{
-    Sum() ((<GREATER> | <SMALLER>  | <S_OR_EQUAL> | <G_OR_EQUAL> | <EQUAL> |<NOT_EQUAL>) Sum())*
-}
-void Sum() #Sum : {}
-{
-    Product() ((<PLUS> | <MINUS> ) Product())*
-}
-void Product() #Product : {}
-{
-    Sign() ((<MULTIPLICATION> | <DIVISION> | <MODULO>) Sign() )*
-}
-void Sign() #Sign : {}
-{
-    Atom() | (<PLUS> | <MINUS> ) Atom()
-}
-/**
-* OPERATORs end -------------
-*/
-void Atom() #Atom : {
-    Token t;
-}
-{
-    NextStmnt()
-    |
-    PrintStmnt()
-    |
-    (t=<ID>
-        (ArrayAccess()
+     | LOOKAHEAD(3) KlammerAffe());
+Block       #Block : <BlockAuf> (Stmnt())+ <BlockZu>;
+IfStmnt     #IfStmnt : <IF> <KlammerAuf> Expr <KlammerZu> Stmnt (<ELSE> Stmnt)* <SEMICOLON>;
+ExprStmnt   #ExprStmnt :Expr <SEMICOLON>;
+Expr        #Expr : LogicalOrExpr ( <Zuweisung> LogicalOrExpr)*;
+LogicalOrExpr  #LogicalOrExpr : LogicalAndExpr (<ConditionalOr> LogicalAndExpr)*;
+LogicalAndExpr #LogicalAndExpr : LogicalNotExpr (<ConditionalAnd> LogicalNotExpr)*;
+LogicalNotExpr #LogicalNotExpr : (<ConditionalNot>)* CompExpr;
+CompExpr       #CompExpr : Sum ((<GREATER> | <SMALLER>  | <S_OR_EQUAL> | <G_OR_EQUAL> | <EQUAL> |<NOT_EQUAL>) Sum)*;
+Sum            #Sum : Product ((<PLUS> | <MINUS> ) Product)*;
+Product        #Product : Sign ((<MULTIPLICATION> | <DIVISION> | <MODULO>) Sign )*;
+Sign           #Sign: Atom | (<PLUS> | <MINUS> ) Atom;
+Atom           #Atom : { Token t; }
+    (NextStmnt() | PrintStmnt()
+    | (<ID>
+        (ArrayAccess
             {jjtThis.isArrayAccess = true;
             jjtThis.arrayAccessDimension++;}
         )*
-        [".length()"
-            {jjtThis.hasLength = true;
-            //Length needs to be determined by id value
-            //See Symboltable
-            }
-        ]
-    )
-    | <BlockAuf> Expr()
-        (<COMMA> Expr()
-        {jjtThis.isArrayInit = true;
-         // jjtThis.type.arrayTypeDimension++; NPE wg Type
-        }
+        [".length()"{jjtThis.hasLength = true;}])
+    | <BlockAuf> Expr
+        (<COMMA> Expr
+        {jjtThis.isArrayInit = true;}
         )*
-      <BlockZu>
-        {jjtThis.isArrayInit = true;
-         //jjtThis.type.arrayTypeDimension++; NPE wg Type
-        }
-    | <KlammerAuf> Expr() <KlammerZu>
-        {jjtThis.isExpression = true;
-        }
+     <BlockZu>
+        {jjtThis.isArrayInit = true;}
+    | <KlammerAuf> Expr <KlammerZu>
+        {jjtThis.isExpression = true;}
     | t=<BooleanLiteral>
         {jjtThis.type = new Type("boolean");
-         jjtThis.value = t.getImage();
-         }
+         jjtThis.value = t.getImage();}
     | t=<IntegerLiteral>
         {jjtThis.type = new Type("int");
-         jjtThis.value = t.getImage();
-         }
+         jjtThis.value = t.getImage();}
     | t=<DoubleLiteral>
         {jjtThis.type = new Type("double");
-         jjtThis.value = t.getImage();
-         }
+         jjtThis.value = t.getImage();}
     | t=<CharLiteral>
         {jjtThis.type = new Type("char");
-         jjtThis.value = t.getImage();
-         }
+         jjtThis.value = t.getImage();}
     | t=<NullLiteral>
     | LOOKAHEAD(3) t=<StringLiteral>
-        [(".length()"
-           {jjtThis.hasLength = true;
+        [(".length()" {jjtThis.hasLength = true;
            jjtThis.atomLength = t.getImage().length();}
-
-        |".isInt()"
-            {jjtThis.isInt = true;}
-
-        |".isDouble()"
-            {jjtThis.isDouble = true;}
-
-        |".toInt()"
-            {jjtThis.toInt = true;}
-
-        |".toDouble()"
-            {jjtThis.toDouble = true;}
+        |".isInt()" {jjtThis.isInt = true;}
+        |".isDouble()" {jjtThis.isDouble = true;}
+        |".toInt()" {jjtThis.toInt = true;}
+        |".toDouble()" {jjtThis.toDouble = true;}
         )]
-}
-void MethodCall() #MethodCall : {}
-{
-    <ID> <KlammerAuf>
-    [Expr() {/*Add Arg*/}
-    (<COMMA> Expr(){/*Add more args*/})*]
-    <KlammerZu>
-}
-void ArrayAccess() #ArrayAccess : {}
-{
-    <ArrayAuf> Expr() <ArrayZu>
-}
-void Type() #Type : {
-    Token t;
-}
-{
+    );
+MethodCall #MethodCall : <ID> <KlammerAuf> [Expr (<COMMA> Expr)*] <KlammerZu>;
+ArrayAccess #ArrayAccess : <ArrayAuf> Expr() <ArrayZu>;
+Type #Type : { Token t;}
   (t=<TypeInt> | t=<TypeDouble> | t=<TypeChar> | t=<TypeBoolean> | t=<TypeString>)
-  {
-       jjtThis.type = t.getImage(); //assign String-Value to Type
-  }
-  (
-  <ArrayAuf> <ArrayZu>
-      {
-          jjtThis.isArray = true;
-          jjtThis.arrayTypeDimension++;
-      }
-  )*
-}
-void ReturnStmnt() #ReturnStatement : {}
-{
-    <RETURN> Expr() <SEMICOLON>
-}
-void KlammerAffe() #KlammerAffe : {}
-{
+  {jjtThis.type = t.getImage();} //assign String-Value to Type
+  (<ArrayAuf> <ArrayZu>
+  {jjtThis.isArray = true; jjtThis.arrayTypeDimension++;}
+  )*;
+ReturnStmnt #ReturnStatement : <RETURN> Expr <SEMICOLON>;
+// "Klammeraffe"
+KlammerAffe #KlammerAffe :
     <StringLiteral> <AT> <BlockAuf>
-    KlammerAffeRegex() KlammerAffeAusdruck()
-    (KlammerAffeRegex() KlammerAffeAusdruck())*
-    <BlockZu>
-}
-void KlammerAffeRegex() #KlammerAffeRegex : {}
-{
-    [<ConditionalNot>] <Colon> (<INTEGER_CLASS> | <DOUBLE_CLASS> | <CHAR_CLASS> | <BOOLEAN_CLASS> | <TypeString> ) <Colon>
-}
-void KlammerAffeAusdruck() #KlammerAffeAusdruck : {}
-{
-    <BlockAuf>
-    <RETURN> [(<THIS> | <IntegerLiteral> | <DoubleLiteral> | <CharLiteral> | <BooleanLiteral>)] <SEMICOLON>
-    <BlockZu>
-}
-void PrintStmnt() #PrintStmnt :
-{}
-{ (<PRINT_LINE> | <PRINT> ) <KlammerAuf> Expr() <KlammerZu> <SEMICOLON>
-}
-
-void NextStmnt() #NextStmnt :
-{Token t;}
-{(t=<NEXT> {jjtThis.nextValue = t.getImage();}
+    KlammerAffeRegex KlammerAffeAusdruck
+    (KlammerAffeRegex KlammerAffeAusdruck)*
+    <BlockZu>;
+KlammerAffeRegex #KlammerAffeRegex :
+    [<ConditionalNot>] <Colon>
+    (<INTEGER_CLASS> | <DOUBLE_CLASS> | <CHAR_CLASS>
+    | <BOOLEAN_CLASS> | <TypeString> ) <Colon>;
+KlammerAffeAusdruck #KlammerAffeAusdruck :
+    <BlockAuf> <RETURN>
+    [(<THIS> | <IntegerLiteral> | <DoubleLiteral>
+    | <CharLiteral> | <BooleanLiteral>)]
+    <SEMICOLON> <BlockZu>;
+// Print
+PrintStmnt #PrintStmnt: (<PRINT_LINE> | <PRINT> )
+    <KlammerAuf> Expr <KlammerZu> <SEMICOLON>;
+// Next
+NextStmnt #NextStmnt : {Token t;}
+(t=<NEXT> {jjtThis.nextValue = t.getImage();}
  | t=<NEXT_INT> {jjtThis.nextValue = t.getImage();}
  | t=<NEXT_DOUBLE> {jjtThis.nextValue = t.getImage();}
  | t=<NEXT_CHAR> {jjtThis.nextValue = t.getImage();}
  | t=<NEXT_BOOLEAN> {jjtThis.nextValue = t.getImage();}
  | t=<NEXT_STRING> {jjtThis.nextValue = t.getImage();}
- )  <KlammerAuf> <KlammerZu>
-}
+ )  <KlammerAuf> <KlammerZu>;
