@@ -18,4 +18,13 @@ public class KlammerAffeAusdruck extends BaseNode {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "KlammerAffeAusdruck{" +
+                "regexConditionalNot=" + regexConditionalNot +
+                ", regexType=" + regexType +
+                ", actionType=" + actionType +
+                ", actionValue='" + actionValue + '\'' +
+                '}';
+    }
 }

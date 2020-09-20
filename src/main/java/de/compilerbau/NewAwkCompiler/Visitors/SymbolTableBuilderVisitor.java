@@ -1095,14 +1095,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(KlammerAffe node, Object data) {
         printEnter(node);
-
+        data = node.childrenAccept(this, data);
         // Immer return eines Array
-
         // KlammerAffeAusdruck = return "this" or value of type or type
         // :Integer: { return this; } all Integers return original value
         // :Integer: { return 1; } all Integers return 1
         // !:Integer: { return ; } all !Integers delete
         // !:Integer: { return 2; } all !Integers return 2
+        List<KlammerAffeAusdruck> regexes = node.childrenOfType(KlammerAffeAusdruck.class);
+
 
 
         printExit(node);
@@ -1115,6 +1116,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(KlammerAffeAusdruck node, Object data) {
         printEnter(node);
+        data = node.childrenAccept(this, data);
 
         //Lef side
         if (node.getFirstChild() instanceof ConditionalNot) {
@@ -1135,7 +1137,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         }
         //Right side
         if (node.firstChildOfType(THIS.class) != null) {
-            node.actionType = new Type("String");
+            node.actionType = new Type("this");
             node.actionValue = "";
         } else if (node.firstChildOfType(IntegerLiteral.class) != null) {
             node.actionType = new Type("int");
@@ -1153,6 +1155,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.actionType = new Type("delete");
             node.actionValue = "";
         }
+
         printExit(node);
         return data;
     }
