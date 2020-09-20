@@ -1103,8 +1103,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // !:Integer: { return ; } all !Integers delete
         // !:Integer: { return 2; } all !Integers return 2
         List<KlammerAffeAusdruck> regexes = node.childrenOfType(KlammerAffeAusdruck.class);
+        String s = node.firstChildOfType(StringLiteral.class).getImage();
+        s = s.substring(1, s.length() - 1);
+        String[] strings = s.replaceAll(" ", "").split("");
+        for (int i = 0; i < strings.length; i++) {
+            log.warn("String: " + strings[i]);
+
+        }
+        for (KlammerAffeAusdruck ka : regexes) {
 
 
+        }
 
         printExit(node);
         return data;
@@ -1155,7 +1164,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.actionType = new Type("delete");
             node.actionValue = "";
         }
-
         printExit(node);
         return data;
     }
