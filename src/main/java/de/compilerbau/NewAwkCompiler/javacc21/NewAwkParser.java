@@ -2165,31 +2165,44 @@ public class NewAwkParser implements NewAwkConstants {
         }
         ParseException parseException28= null;
         int callStackSize28= parsingStack.size();
+        Token t;
         try {
             // Code for ExpansionChoice specified on line 423 of NewAwkParser.jjt
             if (nextTokenType()== NEXT) {
                 // Code for RegexpRef specified on line 423 of NewAwkParser.jjt
-                consumeToken(NEXT);
+                t= consumeToken(NEXT);
+                // Code for CodeBlock specified on line 423 of NewAwkParser.jjt
+                NextStmnt28.nextValue= t.getImage();
             }
             else if (nextTokenType()== NEXT_INT) {
                 // Code for RegexpRef specified on line 424 of NewAwkParser.jjt
-                consumeToken(NEXT_INT);
+                t= consumeToken(NEXT_INT);
+                // Code for CodeBlock specified on line 424 of NewAwkParser.jjt
+                NextStmnt28.nextValue= t.getImage();
             }
             else if (nextTokenType()== NEXT_DOUBLE) {
                 // Code for RegexpRef specified on line 425 of NewAwkParser.jjt
-                consumeToken(NEXT_DOUBLE);
+                t= consumeToken(NEXT_DOUBLE);
+                // Code for CodeBlock specified on line 425 of NewAwkParser.jjt
+                NextStmnt28.nextValue= t.getImage();
             }
             else if (nextTokenType()== NEXT_CHAR) {
                 // Code for RegexpRef specified on line 426 of NewAwkParser.jjt
-                consumeToken(NEXT_CHAR);
+                t= consumeToken(NEXT_CHAR);
+                // Code for CodeBlock specified on line 426 of NewAwkParser.jjt
+                NextStmnt28.nextValue= t.getImage();
             }
             else if (nextTokenType()== NEXT_BOOLEAN) {
                 // Code for RegexpRef specified on line 427 of NewAwkParser.jjt
-                consumeToken(NEXT_BOOLEAN);
+                t= consumeToken(NEXT_BOOLEAN);
+                // Code for CodeBlock specified on line 427 of NewAwkParser.jjt
+                NextStmnt28.nextValue= t.getImage();
             }
             else if (nextTokenType()== NEXT_STRING) {
                 // Code for RegexpRef specified on line 428 of NewAwkParser.jjt
-                consumeToken(NEXT_STRING);
+                t= consumeToken(NEXT_STRING);
+                // Code for CodeBlock specified on line 428 of NewAwkParser.jjt
+                NextStmnt28.nextValue= t.getImage();
             }
             else {
                 pushOntoCallStack("NextStmnt", "NewAwkParser.jjt", 423, 3);

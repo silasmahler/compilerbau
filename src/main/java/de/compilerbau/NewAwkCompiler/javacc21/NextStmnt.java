@@ -7,6 +7,9 @@ package de.compilerbau.NewAwkCompiler.javacc21;
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class NextStmnt extends BaseNode {
+
+    public String nextValue;
+
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }

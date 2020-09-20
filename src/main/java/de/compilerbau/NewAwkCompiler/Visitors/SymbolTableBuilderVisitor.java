@@ -1140,33 +1140,32 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         printEnter(node);
         data = node.childrenAccept(this, data);
 
-        String arg = node.firstChildOfType(Token.class).getImage();
         if (node.getFirstChild() instanceof NEXT) {
-        } else if (arg.equals("System.nextInt")) {
+        } else if (node.nextValue.equals("System.nextInt")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next INT");
             int value = s.nextInt();
             log.info("INT: " + value);
         }
-        else if (arg.equals("System.nextDouble")) {
+        else if (node.nextValue.equals("System.nextDouble")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next DOUBLE");
             double value = s.nextDouble();
             log.info("DOUBLE: " + value);
         }
-        else if (arg.equals("System.nextChar")) {
+        else if (node.nextValue.equals("System.nextChar")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next CHAR");
             double value = s.next().charAt(0);
             log.info("CHAR: " + value);
         }
-        else if (arg.equals("System.nextBoolean")) {
+        else if (node.nextValue.equals("System.nextBoolean")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next BOOLEAN");
             boolean value = s.nextBoolean();
             log.info("BOOLEAN: " + value);
         }
-        else if (arg.equals("System.nextString")) {
+        else if (node.nextValue.equals("System.nextString")) {
             Scanner s = new Scanner(System.in);
             System.out.println("Please enter the next STRING");
             String value = s.next();

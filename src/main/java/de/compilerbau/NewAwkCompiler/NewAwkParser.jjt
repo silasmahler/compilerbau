@@ -419,12 +419,12 @@ void PrintStmnt() #PrintStmnt :
 }
 
 void NextStmnt() #NextStmnt :
-{}
-{(<NEXT>
- | <NEXT_INT>
- | <NEXT_DOUBLE>
- | <NEXT_CHAR>
- | <NEXT_BOOLEAN>
- | <NEXT_STRING>
+{Token t;}
+{(t=<NEXT> {jjtThis.nextValue = t.getImage();}
+ | t=<NEXT_INT> {jjtThis.nextValue = t.getImage();}
+ | t=<NEXT_DOUBLE> {jjtThis.nextValue = t.getImage();}
+ | t=<NEXT_CHAR> {jjtThis.nextValue = t.getImage();}
+ | t=<NEXT_BOOLEAN> {jjtThis.nextValue = t.getImage();}
+ | t=<NEXT_STRING> {jjtThis.nextValue = t.getImage();}
  )  <KlammerAuf> <KlammerZu> <SEMICOLON>
 }
