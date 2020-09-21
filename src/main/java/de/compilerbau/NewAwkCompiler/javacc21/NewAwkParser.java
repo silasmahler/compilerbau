@@ -1964,6 +1964,10 @@ public class NewAwkParser implements NewAwkConstants {
                     // Code for RegexpRef specified on line 298 of NewAwkParser.jjt
                     consumeToken(BooleanLiteral);
                 }
+                else if (nextTokenType()== StringLiteral) {
+                    // Code for RegexpRef specified on line 298 of NewAwkParser.jjt
+                    consumeToken(StringLiteral);
+                }
                 else {
                     pushOntoCallStack("KlammerAffeAusdruck", "NewAwkParser.jjt", 297, 11);
                     throw new ParseException(currentToken.getNext(), first_set$NewAwkParser_jjt$line_297$column_11, parsingStack);
@@ -2160,8 +2164,8 @@ public class NewAwkParser implements NewAwkConstants {
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_275$column_45= EnumSet.of(PLUS, MINUS, ConditionalNot, NullLiteral, KlammerAuf, BlockAuf, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, ID, StringLiteral, PRINT_LINE, PRINT, NEXT, NEXT_INT, NEXT_DOUBLE, NEXT_CHAR, NEXT_BOOLEAN, NEXT_STRING);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_278$column_4= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_292$column_10= EnumSet.of(INTEGER_CLASS, DOUBLE_CLASS, CHAR_CLASS, BOOLEAN_CLASS, BEGIN, END, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_297$column_10= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_297$column_11= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_297$column_10= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, StringLiteral);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_297$column_11= EnumSet.of(THIS, BooleanLiteral, CharLiteral, IntegerLiteral, DoubleLiteral, StringLiteral);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_302$column_26= EnumSet.of(PRINT_LINE, PRINT);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_306$column_2= EnumSet.of(NEXT, NEXT_INT, NEXT_DOUBLE, NEXT_CHAR, NEXT_BOOLEAN, NEXT_STRING);
     private final boolean scanToken(TokenType expectedType) {
@@ -3176,6 +3180,12 @@ public class NewAwkParser implements NewAwkConstants {
     private final boolean check$NewAwkParser_jjt$line_298$column_27() {
         if (remainingLookahead<=0) return true;
         if (!scanToken(BooleanLiteral)) return false;
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_298$column_46() {
+        if (remainingLookahead<=0) return true;
+        if (!scanToken(StringLiteral)) return false;
         return true;
     }
 

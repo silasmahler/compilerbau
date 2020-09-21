@@ -295,7 +295,7 @@ KlammerAffeAusdruck #KlammerAffeAusdruck :
     <BlockAuf>
     <RETURN>
         [(<THIS> | <IntegerLiteral> | <DoubleLiteral>
-        | <CharLiteral> | <BooleanLiteral>)]
+        | <CharLiteral> | <BooleanLiteral> | <StringLiteral>)]
     <SEMICOLON>
     <BlockZu>;
 // Print

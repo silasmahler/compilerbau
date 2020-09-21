@@ -1117,25 +1117,27 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         List<String> strings = Arrays.stream(literal.split(" ")).collect(Collectors.toList());
         // For every "Regex" go throught the whole string and do the ops defined
 
+        log.warn("Regexes: " + regexes);
+
         for (KlammerAffeAusdruck ka : regexes) {
-            log.warn("----------");
+            log.info("----------");
             boolean negated = ka.regexConditionalNot;
             String rType = ka.regexType.type;
             String aType = ka.actionType.type;
             String aVal = ka.actionValue;
 
-            log.warn("List: " + strings);
+            log.warn("List: " + strings + " rType: " +  rType +  " aType: " + aType + " aValue: " + aVal);
             for (int i = 0; i < strings.size(); i++) {
 
                 //Modify Begin
-                if(rType.equals("Begin")){
-                    log.info("Found Begin: " + strings.get(i));
+                if(!negated && rType.equals("Begin")  && (i == 0)){
+                    log.info("Found Begin: " + strings.get(i) + " : " + i + " : " + rType);
                     if(aType.equals("this")){} // Dont change value
                     else if(aType.equals("delete")){ strings.set(i, null);}
                     else { strings.set(i, aVal); } //Give new value
                 }
                 //Modify End
-                else if(rType.equals("End")){
+                else if(!negated && rType.equals("End") && (i == strings.size() - 1)){
                     log.info("Found End: " + strings.get(i));
                     if(aType.equals("this")){}
                     else if(aType.equals("delete")){ strings.set(i, null);}
@@ -1205,7 +1207,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     else if(aType.equals("delete")){ strings.set(i, null);}
                     else { strings.set(i, aVal); }
                 }
-                log.warn("List: " + strings);
             }
 
             // After every round delete the nulls
@@ -1223,7 +1224,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         else {
             //TODO Check if all int, double, char or boolean, then return a fitting array else String[]
         }
-        //TODO Range and End and Begin Impl
+        //TODO Range
         printExit(node);
         return data;
     }
@@ -1250,11 +1251,17 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.regexType = new Type("boolean");
         } else if (node.firstChildOfType(TypeString.class) != null) {
             node.regexType = new Type("String");
-        } else if (node.firstChildOfType(Token.class) != null) {
+        } else if (!node.regexConditionalNot && node.getChild(1) != null &&
+                node.getChild(1).getSource().equals("Begin")) {
             node.regexType = new Type("Begin");
-        } else if (node.firstChildOfType(Token.class) != null) {
+        } else if (!node.regexConditionalNot && node.getChild(1) != null  &&
+                node.getChild(1).getSource().equals("End")) {
             node.regexType = new Type("End");
         } else {
+            log.warn(node.children().toString());
+            for(Node n: node.children()){
+                log.warn("Child: " +  n.getSource());
+            }
             throw new TypeCheckingException("KlammerAffeAusdruck: No correct left side.");
         }
         //Right side
@@ -1273,6 +1280,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         } else if (node.firstChildOfType(BooleanLiteral.class) != null) {
             node.actionType = new Type("boolean");
             node.actionValue = node.firstChildOfType(BooleanLiteral.class).getImage();
+        } else if (node.firstChildOfType(StringLiteral.class) != null) {
+            node.actionType = new Type("String");
+            node.actionValue = node.firstChildOfType(StringLiteral.class).getImage().substring(1,
+                    node.firstChildOfType(StringLiteral.class).getImage().length() - 1);
         } else {
             node.actionType = new Type("delete");
             node.actionValue = "";
