@@ -133,7 +133,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
                 } else {
                     throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
-                            " please correct thatat: " + node.getBeginLine() + ":" + node.getBeginColumn());
+                            " please correct thatat: " + node.getBeginLine() + ":" + node.getBeginColumn() + "\n" +
+                            "VariableDecl-Type: " + variableDecl.type + " Expr-Type: " + exprStmnt.type);
                 }
             } else {
                 throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
@@ -194,7 +195,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
                     } else {
                         throw new TypeCheckingException("VariableDeclAndAssignement: Assignement-Types are not equal or boxable," +
-                                " please correct that at: " + node.getBeginLine() + ":" + node.getBeginColumn());
+                                " please correct that at: " + node.getBeginLine() + ":" + node.getBeginColumn() + "\n" +
+                                "VariableDecl-Type: " + variableDecl.type + " Expr-Type: " + exprStmnt.type);
                     }
                 } else {
                     throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
