@@ -1049,9 +1049,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     *
-     */
     @Override
     public Object visit(Cast node, Object data) {
         printEnter(node);
@@ -1059,9 +1056,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     *
-     */
     @Override
     public Object visit(MethodCall node, Object data) {
         printEnter(node);
@@ -1085,10 +1079,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-
-    /**
-     *
-     */
     @Override
     public Object visit(ReturnStatement node, Object data) {
         printEnter(node);
@@ -1098,9 +1088,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     * Always returns an array
-     */
     @Override
     public Object visit(KlammerAffe node, Object data) {
         printEnter(node);
@@ -1122,9 +1109,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //s = s.replaceAll(" ", "");
         List<String> strings = Arrays.stream(literal.split(" ")).collect(Collectors.toList());
         // For every "Regex" go throught the whole string and do the ops defined
-
         log.warn("Regexes: " + regexes);
-
         for (KlammerAffeAusdruck ka : regexes) {
             log.info("----------");
             boolean negated = ka.regexConditionalNot;
@@ -1214,8 +1199,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     else { strings.set(i, aVal); }
                 }
             }
-
-            // After every round delete the nulls
+            // After every round delete the null-values (marker for removal)
             for(Iterator<String> iter = strings.iterator(); iter.hasNext();){
                 if(iter.next() == null){
                     iter.remove();
@@ -1264,9 +1248,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     *
-     */
     @Override
     public Object visit(KlammerAffeAusdruck node, Object data) {
         printEnter(node);
@@ -1327,9 +1308,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     *
-     */
     @Override
     public Object visit(PrintStmnt node, Object data) {
         printEnter(node);

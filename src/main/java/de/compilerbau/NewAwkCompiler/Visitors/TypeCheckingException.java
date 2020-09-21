@@ -7,10 +7,6 @@ public class TypeCheckingException extends RuntimeException {
 
     private static final Logger log = LoggerFactory.getLogger(SymbolTableBuilderVisitor.class);
 
-
-    public TypeCheckingException() {
-    }
-
     public TypeCheckingException(String msg) {
         super(msg);
         log.error(msg);
