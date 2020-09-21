@@ -153,6 +153,8 @@ TOKEN : /* KEYWORDS */
 | <DOUBLE_CLASS: "Double">
 | <CHAR_CLASS: "Char">
 | <BOOLEAN_CLASS: "Boolean">
+| <BEGIN: "Begin">
+| <END: "End">
 }
 TOKEN : /* SEPARATORS */
 { <KlammerAuf: "(">
@@ -288,7 +290,7 @@ KlammerAffeAusdruck #KlammerAffeAusdruck :
     [<ConditionalNot>]
     <Colon>
         (<INTEGER_CLASS> | <DOUBLE_CLASS> | <CHAR_CLASS>
-        | <BOOLEAN_CLASS> | <TypeString> )
+        | <BOOLEAN_CLASS> | <TypeString> | <BEGIN> | <END>)
     <Colon>
     <BlockAuf>
     <RETURN>

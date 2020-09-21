@@ -1128,13 +1128,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             for (int i = 0; i < strings.size(); i++) {
 
                 //Modify Begin
-                if(rType.equals("begin")){
+                if(rType.equals("Begin")){
+                    log.info("Found Begin: " + strings.get(i));
                     if(aType.equals("this")){} // Dont change value
                     else if(aType.equals("delete")){ strings.set(i, null);}
                     else { strings.set(i, aVal); } //Give new value
                 }
                 //Modify End
-                else if(rType.equals("end")){
+                else if(rType.equals("End")){
+                    log.info("Found End: " + strings.get(i));
                     if(aType.equals("this")){}
                     else if(aType.equals("delete")){ strings.set(i, null);}
                     else { strings.set(i, aVal); }
@@ -1221,6 +1223,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         else {
             //TODO Check if all int, double, char or boolean, then return a fitting array else String[]
         }
+        //TODO Range and End and Begin Impl
         printExit(node);
         return data;
     }
@@ -1247,8 +1250,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.regexType = new Type("boolean");
         } else if (node.firstChildOfType(TypeString.class) != null) {
             node.regexType = new Type("String");
+        } else if (node.firstChildOfType(Token.class) != null) {
+            node.regexType = new Type("Begin");
+        } else if (node.firstChildOfType(Token.class) != null) {
+            node.regexType = new Type("End");
         } else {
-            throw new TypeCheckingException("KlaammerAffeAusdruck: No correct left side.");
+            throw new TypeCheckingException("KlammerAffeAusdruck: No correct left side.");
         }
         //Right side
         if (node.firstChildOfType(THIS.class) != null) {

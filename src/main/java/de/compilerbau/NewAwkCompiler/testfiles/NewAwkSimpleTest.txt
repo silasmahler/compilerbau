@@ -1,16 +1,9 @@
 int a(){
   String[] strings = "1 2 3.0 4 5 true hallo a"@{
          :Integer: { return this; }
+         :Begin: { return 9; }
+         :End: { return 8; }
          :Double: { return this; }
-         :Char: { return this; }
-         :Boolean: { return this; }
-         :String: { return this; }
-
-         !:Integer: { return ; }
-         !:Double: { return ; }
-         !:Char: { return ; }
-         !:Boolean: { return ; }
-         !:String: { return ; }
          }
          ;
 }
