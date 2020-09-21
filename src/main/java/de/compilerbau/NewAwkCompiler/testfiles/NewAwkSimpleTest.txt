@@ -1,5 +1,5 @@
 int a(){
-  int[] values = "1 2 3.0 4 5 true hallo a"@{
+  double[] values = "1 2 3.0 4 5 true hallo a"@{
          :Double: { return 3.4; }
          !:Double: { return 3.4; }
          };

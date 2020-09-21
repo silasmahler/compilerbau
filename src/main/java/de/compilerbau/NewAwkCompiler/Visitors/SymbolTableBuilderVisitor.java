@@ -207,9 +207,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     * -
-     */
     @Override
     public Object visit(MethodDecl node, Object data) {
         printEnter(node);
@@ -232,9 +229,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     *
-     */
     @Override
     public Object visit(ParameterList node, Object data) {
         printEnter(node);
@@ -282,23 +276,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     *
-     (
-     //LOOKAHEAD(3) ExprStmnt() |
-     Block()
-     | IfStmnt()
-     | ReturnStmnt()
-     | LOOKAHEAD(3) VariableDecl()
-     | LOOKAHEAD(3) Assignement()
-     | LOOKAHEAD(3) VariableDeclAndAssignement()
-     | PrintStmnt()
-     | LOOKAHEAD(3) KlammerAffe()
-     )
-     */
-    /**
-     * => No direct influence cause it only redirects to other methods
-     */
     @Override
     public Object visit(Stmnt node, Object data) {
         printEnter(node);
@@ -307,9 +284,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     * BaseNode not relevant for visitors
-     */
     @Override
     public Object visit(BaseNode node, Object data) {
         printEnter(node);
@@ -346,9 +320,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     *
-     */
     @Override
     public Object visit(Expr node, Object data) {
         printEnter(node);
