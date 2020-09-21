@@ -1114,9 +1114,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             for (int i = 0; i < ca.length; i++) {
                 log.warn("Current operand from String: " + ca[i]);
 
-
                 Pattern.compile(".*[^0-9].*");
-
 
                 //Modify only integers
                 if(ka.regexType.type.equals("int")){

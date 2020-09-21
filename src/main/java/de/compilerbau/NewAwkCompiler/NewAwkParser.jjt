@@ -203,26 +203,25 @@ TOKEN : /* LITERALS */
     ==============================================================================================
 */
 Node CompilationUnit #CompilationUnit : {}
-    (LOOKAHEAD(14) VariableDecl() | // 14 = up to arrays with 5 dimensions
-     LOOKAHEAD(4) Assignement() |
-     LOOKAHEAD(8) VariableDeclAndAssignement() |
-     MethodDecl())+
+    (LOOKAHEAD(14) VariableDecl | // 14 = up to arrays with 5 dimensions
+     LOOKAHEAD(4) Assignement |
+     LOOKAHEAD(8) VariableDeclAndAssignement |
+     MethodDecl)+
      <EOF>
     {return jjtThis;};
-VariableDecl #VariableDecl : Type() <ID> <SEMICOLON>;
-Assignement #Assignement: <ID> <Zuweisung> ExprStmnt();
+VariableDecl #VariableDecl : Type <ID> <SEMICOLON>;
+Assignement #Assignement: <ID> <Zuweisung> ExprStmnt;
 VariableDeclAndAssignement #VariableDeclAndAssignement :
-    Type() <ID> <Zuweisung> ExprStmnt();
-MethodDecl() #MethodDecl : { Token t;}
-    (Type()| <VOID>  {jjtThis.isVoid = true;})
-    <ID> <KlammerAuf> ParameterList() <KlammerZu> Block();
-ParameterList #ParameterList : [Type() <ID>] (<COMMA> Type() <ID>)*;
-Stmnt #Stmnt :(Block() | IfStmnt() | ReturnStmnt() | PrintStmnt()
-     | LOOKAHEAD(3) VariableDecl()
-     | LOOKAHEAD(3) Assignement()
-     | LOOKAHEAD(3) VariableDeclAndAssignement()
-     | LOOKAHEAD(3) KlammerAffe());
-Block       #Block : <BlockAuf> (Stmnt())+ <BlockZu>;
+    Type <ID> <Zuweisung> ExprStmnt;
+MethodDecl #MethodDecl : { Token t;}
+    (Type| <VOID>  {jjtThis.isVoid = true;})
+    <ID> <KlammerAuf> ParameterList <KlammerZu> Block;
+ParameterList #ParameterList : [Type <ID>] (<COMMA> Type <ID>)*;
+Stmnt #Stmnt :(Block | IfStmnt | ReturnStmnt | PrintStmnt
+     | LOOKAHEAD VariableDecl
+     | LOOKAHEAD Assignement
+     | LOOKAHEAD VariableDeclAndAssignement);
+Block       #Block : <BlockAuf> (Stmnt)+ <BlockZu>;
 IfStmnt     #IfStmnt : <IF> <KlammerAuf> Expr <KlammerZu> Stmnt (<ELSE> Stmnt)* <SEMICOLON>;
 ExprStmnt   #ExprStmnt :Expr <SEMICOLON>;
 Expr        #Expr : LogicalOrExpr ( <Zuweisung> LogicalOrExpr)*;
@@ -234,7 +233,7 @@ Sum            #Sum : Product ((<PLUS> | <MINUS> ) Product)*;
 Product        #Product : Sign ((<MULTIPLICATION> | <DIVISION> | <MODULO>) Sign )*;
 Sign           #Sign: Atom | (<PLUS> | <MINUS> ) Atom;
 Atom           #Atom : { Token t; }
-    (NextStmnt() | PrintStmnt()
+    (NextStmnt | PrintStmnt | KlammerAffe
     | (<ID>
         (ArrayAccess
             {jjtThis.isArrayAccess = true;
@@ -272,13 +271,13 @@ Atom           #Atom : { Token t; }
         )]
     );
 MethodCall #MethodCall : <ID> <KlammerAuf> [Expr (<COMMA> Expr)*] <KlammerZu>;
-ArrayAccess #ArrayAccess : <ArrayAuf> Expr() <ArrayZu>;
-Type #Type : { Token t;}
+ArrayAccess #ArrayAccess : <ArrayAuf> Expr <ArrayZu>;
+Type #Type : { Token t;}{
   (t=<TypeInt> | t=<TypeDouble> | t=<TypeChar> | t=<TypeBoolean> | t=<TypeString>)
   {jjtThis.type = t.getImage();} //assign String-Value to Type
   (<ArrayAuf> <ArrayZu>
   {jjtThis.isArray = true; jjtThis.arrayTypeDimension++;}
-  )*;
+  )*}
 ReturnStmnt #ReturnStatement : <RETURN> Expr <SEMICOLON>;
 // "Klammeraffe"
 KlammerAffe #KlammerAffe :
