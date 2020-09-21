@@ -4,6 +4,7 @@ import de.compilerbau.NewAwkCompiler.javacc21.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -1104,42 +1105,63 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // !:Integer: { return ; } all !Integers delete
         // !:Integer: { return 2; } all !Integers return 2
         List<KlammerAffeAusdruck> regexes = node.childrenOfType(KlammerAffeAusdruck.class);
-        String s = node.firstChildOfType(StringLiteral.class).getImage();
-        s = s.substring(1, s.length() - 1);
-        s = s.replaceAll(" ", "");
-        char[] ca = s.toCharArray();
+        if (regexes == null) {
+            node.type = new Type("String");
+            node.value = node.firstChildOfType(StringLiteral.class).getImage();
+            return data;
+        }
+        String literal = node.firstChildOfType(StringLiteral.class).getImage();
+        literal = literal.substring(1, literal.length() - 1);
+        //s = s.replaceAll(" ", "");
+        List<String> sa = Arrays.stream(literal.split(" ")).collect(Collectors.toList());
         // For every "Regex" go throught the whole string and do the ops defined
 
         for (KlammerAffeAusdruck ka : regexes) {
-            for (int i = 0; i < ca.length; i++) {
-                log.warn("Current operand from String: " + ca[i]);
-
-                Pattern.compile(".*[^0-9].*");
-
+            log.warn("----------");
+            boolean negated = ka.regexConditionalNot;
+            for (String s : sa) {
                 //Modify only integers
-                if(ka.regexType.type.equals("int")){
-                    if(Character.isDigit(ca[i])) {
-
-                    }
+                if (!negated && ka.regexType.type.equals("int") && s.matches("-?\\d+")) {
+                    log.info("Found int: " + s);
+                } else if (negated && ka.regexType.type.equals("int") && !(s.matches("-?\\d+"))) {
+                    log.info("Found negated int: " + s);
                 }
                 //Modify only doubles
-                else if(ka.regexType.type.equals("double")){
+                else if (!negated && (ka.regexType.type.equals("double") && s.matches("-?\\d+(\\.\\d+)"))) {
+                    log.info("Found double: " + s);
+
+                } else if (negated && ka.regexType.type.equals("double") && !(s.matches("-?\\d+(\\.\\d+)"))) {
+                    log.info("Found negated double: " + s);
 
                 }
                 //Modify only chars
-                else if(ka.regexType.type.equals("char")){
+                else if (!negated && ka.regexType.type.equals("char") && s.matches("\\D")) {
+                    log.info("Found char: " + s);
 
-                } //Modify only booleans
-                else if(ka.regexType.type.equals("boolean")){
+                } else if (negated && ka.regexType.type.equals("char") && !(s.matches("\\D"))) {
+                    log.info("Found negated char: " + s);
 
                 }
-                //Modify only certain Strings
-                else if(ka.regexType.type.equals("String")){
+                //Modify only booleans
+                else if (!negated && ka.regexType.type.equals("boolean") && (s.equals("true") || s.equals("false"))) {
+                    log.info("Found boolean: " + s);
+
+                } else if (negated && ka.regexType.type.equals("boolean") && !((s.equals("true") || s.equals("false")))) {
+                    log.info("Found negated boolean: " + s);
+
+                }
+                //Modify only certain Strings ()
+                else if (!negated && ka.regexType.type.equals("String") && s.matches("\\D\\D+")
+                        && !(s.equals("true") || s.equals("false"))) {
+                    log.info("Found String: " + s);
+
+                } else if (negated && ka.regexType.type.equals("String") && !(s.matches("\\D\\D+")
+                        && !(s.equals("true") || s.equals("false")))) {
+                    log.info("Found negated String: " + s);
 
                 }
             }
         }
-
         printExit(node);
         return data;
     }

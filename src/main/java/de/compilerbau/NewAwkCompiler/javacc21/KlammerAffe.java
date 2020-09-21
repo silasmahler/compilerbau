@@ -7,8 +7,19 @@ package de.compilerbau.NewAwkCompiler.javacc21;
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
 @SuppressWarnings("unused")
 public class KlammerAffe extends BaseNode {
+
+    public Type type = null;
+    public String value = "";
+
     public Object jjtAccept(NewAwkParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }
 
+    @Override
+    public String toString() {
+        return "KlammerAffe{" +
+                "type=" + type +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }
