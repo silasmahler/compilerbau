@@ -1039,6 +1039,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.value = n.value;
             node.type = n.type;
         }
+        else if(node.getFirstChild() instanceof KlammerAffe){
+            log.info("Atom: KlammerAffe detected.");
+            KlammerAffe k = node.firstChildOfType(KlammerAffe.class);
+            node.value = k.value;
+            node.type = k.type;
+        }
         printExit(node);
         return data;
     }
@@ -1217,12 +1223,41 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
             log.warn("List: " + strings);
         }
+        // Check if empty return empty string or
+        // all int, double, char or boolean, then return a fitting array else String[]
         if(strings.isEmpty()){
             node.type = new Type("String");
             node.value = "";
         }
-        else {
-            //TODO Check if all int, double, char or boolean, then return a fitting array else String[]
+        else if(strings.stream().allMatch((s -> s.matches("-?\\d+")))) {
+            List<Integer> integers = strings.stream().mapToInt(s -> Integer.parseInt(s)).boxed().collect(Collectors.toList());
+            log.info("Final KlammerAffe is only Integers: " + integers);
+            node.value = integers.toString();
+            node.type = new Type(true, 1, "int");
+        }
+        else if(strings.stream().allMatch((s -> s.matches("-?\\d+(\\.\\d+)")))) {
+            List<Double> doubles = strings.stream().mapToDouble(s -> Double.parseDouble(s)).boxed().collect(Collectors.toList());
+            log.info("Final KlammerAffe is only Doubles: " + doubles);
+            node.value = doubles.toString();
+            node.type = new Type(true, 1, "double");
+        }
+        else if(strings.stream().allMatch((s -> s.matches("\\D")))) {
+            List<Character> characters = strings.stream().map(c -> c.charAt(0)).collect(Collectors.toList());
+            log.info("Final KlammerAffe is only Characters: " + characters);
+            node.value = characters.toString();
+            node.type = new Type(true, 1, "char");
+        }
+        else if(strings.stream().allMatch((s -> s.equals("true") || s.equals("false")))) {
+            List<Boolean> booleans = strings.stream().map(s -> Boolean.valueOf(s)).collect(Collectors.toList());
+            log.info("Final KlammerAffe is only Booleans: " + booleans);
+            node.value = booleans.toString();
+            node.type = new Type(true, 1, "boolean");
+        }
+        else { //Strings
+            List<String> stringList = strings.stream().collect(Collectors.toList());
+            log.info("Final KlammerAffe is Strings: " + stringList);
+            node.value = stringList.toString();
+            node.type = new Type(true, 1, "String");
         }
         //TODO Range
         printExit(node);
