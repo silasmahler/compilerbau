@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -1113,54 +1114,112 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         String literal = node.firstChildOfType(StringLiteral.class).getImage();
         literal = literal.substring(1, literal.length() - 1);
         //s = s.replaceAll(" ", "");
-        List<String> sa = Arrays.stream(literal.split(" ")).collect(Collectors.toList());
+        List<String> strings = Arrays.stream(literal.split(" ")).collect(Collectors.toList());
         // For every "Regex" go throught the whole string and do the ops defined
 
         for (KlammerAffeAusdruck ka : regexes) {
             log.warn("----------");
             boolean negated = ka.regexConditionalNot;
-            for (String s : sa) {
+            String rType = ka.regexType.type;
+            String aType = ka.actionType.type;
+            String aVal = ka.actionValue;
+
+            log.warn("List: " + strings);
+            for (int i = 0; i < strings.size(); i++) {
+
+                //Modify Begin
+                if(rType.equals("begin")){
+                    if(aType.equals("this")){} // Dont change value
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); } //Give new value
+                }
+                //Modify End
+                else if(rType.equals("end")){
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
+                }
+
                 //Modify only integers
-                if (!negated && ka.regexType.type.equals("int") && s.matches("-?\\d+")) {
-                    log.info("Found int: " + s);
-                } else if (negated && ka.regexType.type.equals("int") && !(s.matches("-?\\d+"))) {
-                    log.info("Found negated int: " + s);
+                else if (!negated && rType.equals("int") && strings.get(i).matches("-?\\d+")) {
+                    log.info("Found int: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
+                } else if (negated && rType.equals("int") && !(strings.get(i).matches("-?\\d+"))) {
+                    log.info("Found negated int: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
                 }
                 //Modify only doubles
-                else if (!negated && (ka.regexType.type.equals("double") && s.matches("-?\\d+(\\.\\d+)"))) {
-                    log.info("Found double: " + s);
-
-                } else if (negated && ka.regexType.type.equals("double") && !(s.matches("-?\\d+(\\.\\d+)"))) {
-                    log.info("Found negated double: " + s);
-
+                else if (!negated && (rType.equals("double") && strings.get(i).matches("-?\\d+(\\.\\d+)"))) {
+                    log.info("Found double: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
+                } else if (negated && rType.equals("double") && !(strings.get(i).matches("-?\\d+(\\.\\d+)"))) {
+                    log.info("Found negated double: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
                 }
                 //Modify only chars
-                else if (!negated && ka.regexType.type.equals("char") && s.matches("\\D")) {
-                    log.info("Found char: " + s);
-
-                } else if (negated && ka.regexType.type.equals("char") && !(s.matches("\\D"))) {
-                    log.info("Found negated char: " + s);
-
+                else if (!negated && rType.equals("char") && strings.get(i).matches("\\D")) {
+                    log.info("Found char: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
+                } else if (negated && rType.equals("char") && !(strings.get(i).matches("\\D"))) {
+                    log.info("Found negated char: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
                 }
                 //Modify only booleans
-                else if (!negated && ka.regexType.type.equals("boolean") && (s.equals("true") || s.equals("false"))) {
-                    log.info("Found boolean: " + s);
+                else if (!negated && rType.equals("boolean") && (strings.get(i).equals("true") || strings.get(i).equals("false"))) {
+                    log.info("Found boolean: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
 
-                } else if (negated && ka.regexType.type.equals("boolean") && !((s.equals("true") || s.equals("false")))) {
-                    log.info("Found negated boolean: " + s);
-
+                } else if (negated && rType.equals("boolean") && !((strings.get(i).equals("true") || strings.get(i).equals("false")))) {
+                    log.info("Found negated boolean: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
                 }
-                //Modify only certain Strings ()
-                else if (!negated && ka.regexType.type.equals("String") && s.matches("\\D\\D+")
-                        && !(s.equals("true") || s.equals("false"))) {
-                    log.info("Found String: " + s);
+                //Modify only certain Strings
+                else if (!negated && rType.equals("String") && strings.get(i).matches("\\D\\D+")
+                        && !(strings.get(i).equals("true") || strings.get(i).equals("false"))) {
+                    log.info("Found String: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
+                } else if (negated && rType.equals("String") && !(strings.get(i).matches("\\D\\D+")
+                        && !(strings.get(i).equals("true") || strings.get(i).equals("false")))) {
+                    log.info("Found negated String: " + strings.get(i));
+                    if(aType.equals("this")){}
+                    else if(aType.equals("delete")){ strings.set(i, null);}
+                    else { strings.set(i, aVal); }
+                }
+                log.warn("List: " + strings);
+            }
 
-                } else if (negated && ka.regexType.type.equals("String") && !(s.matches("\\D\\D+")
-                        && !(s.equals("true") || s.equals("false")))) {
-                    log.info("Found negated String: " + s);
-
+            // After every round delete the nulls
+            for(Iterator<String> iter = strings.iterator(); iter.hasNext();){
+                if(iter.next() == null){
+                    iter.remove();
                 }
             }
+            log.warn("List: " + strings);
+        }
+        if(strings.isEmpty()){
+            node.type = new Type("String");
+            node.value = "";
+        }
+        else {
+            //TODO Check if all int, double, char or boolean, then return a fitting array else String[]
         }
         printExit(node);
         return data;
