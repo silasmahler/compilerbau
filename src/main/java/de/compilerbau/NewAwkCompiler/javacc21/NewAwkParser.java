@@ -6,8 +6,8 @@ import java.util.concurrent.CancellationException;
 import java.util.logging.*;
 import java.io.*;
 import static de.compilerbau.NewAwkCompiler.javacc21.NewAwkConstants.TokenType.*;
-import de.compilerbau.NewAwkCompiler.javacc21.*;
 import de.compilerbau.NewAwkCompiler.Visitors.*;
+import de.compilerbau.NewAwkCompiler.javacc21.*;
 @SuppressWarnings("unused")
 public class NewAwkParser implements NewAwkConstants {
     static public ArrayList<Node> roots= new ArrayList<> ();
@@ -105,7 +105,7 @@ public class NewAwkParser implements NewAwkConstants {
         Logger.getGlobal().getParent().getHandlers()[0].setLevel(level);
     }
 
-    static final int INDEFINITE= Integer.MAX_VALUE;
+    static final int UNLIMITED= Integer.MAX_VALUE;
     // The last token successfully "consumed"     
     Token currentToken;
     private TokenType nextTokenType;
@@ -2199,9 +2199,32 @@ public class NewAwkParser implements NewAwkConstants {
     //====================================
     // Lookahead Routines
     //====================================
+    private final boolean check$NewAwkParser_jjt$line_208$column_6$() {
+        if (remainingLookahead<=0) return true;
+        Token token28= currentLookaheadToken;
+        int remainingLookahead28= remainingLookahead;
+        if (!check$NewAwkParser_jjt$line_208$column_6()) {
+            currentLookaheadToken= token28;
+            remainingLookahead= remainingLookahead28;
+            if (!check$NewAwkParser_jjt$line_209$column_6()) {
+                currentLookaheadToken= token28;
+                remainingLookahead= remainingLookahead28;
+                if (!check$NewAwkParser_jjt$line_210$column_6()) {
+                    currentLookaheadToken= token28;
+                    remainingLookahead= remainingLookahead28;
+                    if (!check$NewAwkParser_jjt$line_211$column_6()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     private final boolean check$NewAwkParser_jjt$line_208$column_6() {
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 208, 20);
+        stopAtScanLimit= false;
         if (!check$VariableDecl()) {
             popLookaheadStack();
             return false;
@@ -2213,6 +2236,7 @@ public class NewAwkParser implements NewAwkConstants {
     private final boolean check$NewAwkParser_jjt$line_209$column_6() {
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 209, 19);
+        stopAtScanLimit= false;
         if (!check$Assignement()) {
             popLookaheadStack();
             return false;
@@ -2224,7 +2248,100 @@ public class NewAwkParser implements NewAwkConstants {
     private final boolean check$NewAwkParser_jjt$line_210$column_6() {
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 210, 19);
+        stopAtScanLimit= false;
         if (!check$VariableDeclAndAssignement()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_211$column_6() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 211, 6);
+        if (!check$MethodDecl()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_219$column_6() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("MethodDecl", "NewAwkParser.jjt", 219, 6);
+        if (!check$Type()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_221$column_33() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("ParameterList", "NewAwkParser.jjt", 221, 33);
+        if (!check$Type()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(ID)) return false;
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_221$column_45() {
+        if (remainingLookahead<=0) return true;
+        if (!scanToken(COMMA)) return false;
+        pushOntoLookaheadStack("ParameterList", "NewAwkParser.jjt", 221, 53);
+        stopAtScanLimit= false;
+        if (!check$Type()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(ID)) return false;
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_222$column_16() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 222, 16);
+        if (!check$Block()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_222$column_24() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 222, 24);
+        if (!check$IfStmnt()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_222$column_34() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 222, 34);
+        if (!check$ReturnStmnt()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_222$column_48() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 222, 48);
+        if (!check$PrintStmnt()) {
             popLookaheadStack();
             return false;
         }
@@ -2265,202 +2382,27 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_266$column_7() {
+    private final boolean check$NewAwkParser_jjt$line_226$column_34() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(StringLiteral)) return false;
-        Token token34= currentLookaheadToken;
-        if (!check$NewAwkParser_jjt$line_267$column_10()) currentLookaheadToken= token34;
+        pushOntoLookaheadStack("Block", "NewAwkParser.jjt", 226, 34);
+        if (!check$Stmnt()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
         return true;
     }
 
-    private final boolean check$VariableDecl() {
+    private final boolean check$NewAwkParser_jjt$line_227$column_66() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("VariableDecl", "NewAwkParser.jjt", 214, 30);
-        boolean stopAtScanLimit35= stopAtScanLimit;
+        if (!scanToken(ELSE)) return false;
+        pushOntoLookaheadStack("IfStmnt", "NewAwkParser.jjt", 227, 73);
         stopAtScanLimit= false;
-        if (!check$Type()) {
-            popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit35;
-            return false;
-        }
-        popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit35;
-        if (!scanToken(ID)) return false;
-        if (!scanToken(SEMICOLON)) return false;
-        return true;
-    }
-
-    private final boolean check$Assignement() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(ID)) return false;
-        if (!scanToken(Zuweisung)) return false;
-        pushOntoLookaheadStack("Assignement", "NewAwkParser.jjt", 215, 44);
-        if (!check$ExprStmnt()) {
+        if (!check$Stmnt()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$VariableDeclAndAssignement() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("VariableDeclAndAssignement", "NewAwkParser.jjt", 217, 5);
-        boolean stopAtScanLimit37= stopAtScanLimit;
-        stopAtScanLimit= false;
-        if (!check$Type()) {
-            popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit37;
-            return false;
-        }
-        popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit37;
-        if (!scanToken(ID)) return false;
-        if (!scanToken(Zuweisung)) return false;
-        pushOntoLookaheadStack("VariableDeclAndAssignement", "NewAwkParser.jjt", 217, 27);
-        if (!check$ExprStmnt()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_267$column_10() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_267$column_10)) return false;
-        return true;
-    }
-
-    private final boolean check$Type() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_278$column_4)) return false;
-        while (remainingLookahead> 0) {
-            Token token39= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_280$column_4()) {
-                currentLookaheadToken= token39;
-                break;
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$ExprStmnt() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("ExprStmnt", "NewAwkParser.jjt", 228, 25);
-        boolean stopAtScanLimit40= stopAtScanLimit;
-        stopAtScanLimit= false;
-        if (!check$Expr()) {
-            popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit40;
-            return false;
-        }
-        popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit40;
-        if (!scanToken(SEMICOLON)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_267$column_11() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(_TOKEN_71)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_269$column_10() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(_TOKEN_72)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_270$column_10() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(_TOKEN_73)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_271$column_10() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(_TOKEN_74)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_272$column_10() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(_TOKEN_75)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_278$column_4() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(TypeInt)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_278$column_18() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(TypeDouble)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_278$column_35() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(TypeChar)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_278$column_50() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(TypeBoolean)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_278$column_68() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(TypeString)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_280$column_4() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(ArrayAuf)) return false;
-        if (!scanToken(ArrayZu)) return false;
-        return true;
-    }
-
-    private final boolean check$Expr() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Expr", "NewAwkParser.jjt", 229, 21);
-        if (!check$LogicalOrExpr()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token42= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_229$column_37()) {
-                currentLookaheadToken= token42;
-                break;
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$LogicalOrExpr() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("LogicalOrExpr", "NewAwkParser.jjt", 230, 33);
-        if (!check$LogicalAndExpr()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token44= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_230$column_49()) {
-                currentLookaheadToken= token44;
-                break;
-            }
-        }
         return true;
     }
 
@@ -2468,6 +2410,7 @@ public class NewAwkParser implements NewAwkConstants {
         if (remainingLookahead<=0) return true;
         if (!scanToken(Zuweisung)) return false;
         pushOntoLookaheadStack("Expr", "NewAwkParser.jjt", 229, 49);
+        stopAtScanLimit= false;
         if (!check$LogicalOrExpr()) {
             popLookaheadStack();
             return false;
@@ -2476,47 +2419,12 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$LogicalAndExpr() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("LogicalAndExpr", "NewAwkParser.jjt", 231, 34);
-        if (!check$LogicalNotExpr()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token47= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_231$column_50()) {
-                currentLookaheadToken= token47;
-                break;
-            }
-        }
-        return true;
-    }
-
     private final boolean check$NewAwkParser_jjt$line_230$column_49() {
         if (remainingLookahead<=0) return true;
         if (!scanToken(ConditionalOr)) return false;
         pushOntoLookaheadStack("LogicalOrExpr", "NewAwkParser.jjt", 230, 65);
+        stopAtScanLimit= false;
         if (!check$LogicalAndExpr()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$LogicalNotExpr() {
-        if (remainingLookahead<=0) return true;
-        while (remainingLookahead> 0) {
-            Token token49= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_232$column_35()) {
-                currentLookaheadToken= token49;
-                break;
-            }
-        }
-        pushOntoLookaheadStack("LogicalNotExpr", "NewAwkParser.jjt", 232, 54);
-        if (!check$CompExpr()) {
             popLookaheadStack();
             return false;
         }
@@ -2528,6 +2436,7 @@ public class NewAwkParser implements NewAwkConstants {
         if (remainingLookahead<=0) return true;
         if (!scanToken(ConditionalAnd)) return false;
         pushOntoLookaheadStack("LogicalAndExpr", "NewAwkParser.jjt", 231, 67);
+        stopAtScanLimit= false;
         if (!check$LogicalNotExpr()) {
             popLookaheadStack();
             return false;
@@ -2536,75 +2445,16 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_232$column_35() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(ConditionalNot)) return false;
-        return true;
-    }
-
-    private final boolean check$CompExpr() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("CompExpr", "NewAwkParser.jjt", 233, 28);
-        if (!check$Sum()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token53= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_233$column_33()) {
-                currentLookaheadToken= token53;
-                break;
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$Sum() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Sum", "NewAwkParser.jjt", 234, 23);
-        if (!check$Product()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token55= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_234$column_32()) {
-                currentLookaheadToken= token55;
-                break;
-            }
-        }
-        return true;
-    }
-
     private final boolean check$NewAwkParser_jjt$line_233$column_33() {
         if (remainingLookahead<=0) return true;
         if (!scanToken(first_set$NewAwkParser_jjt$line_233$column_34)) return false;
         pushOntoLookaheadStack("CompExpr", "NewAwkParser.jjt", 233, 111);
+        stopAtScanLimit= false;
         if (!check$Sum()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$Product() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Product", "NewAwkParser.jjt", 235, 27);
-        if (!check$Sign()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        while (remainingLookahead> 0) {
-            Token token58= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_235$column_33()) {
-                currentLookaheadToken= token58;
-                break;
-            }
-        }
         return true;
     }
 
@@ -2612,6 +2462,7 @@ public class NewAwkParser implements NewAwkConstants {
         if (remainingLookahead<=0) return true;
         if (!scanToken(first_set$NewAwkParser_jjt$line_234$column_33)) return false;
         pushOntoLookaheadStack("Sum", "NewAwkParser.jjt", 234, 52);
+        stopAtScanLimit= false;
         if (!check$Product()) {
             popLookaheadStack();
             return false;
@@ -2620,77 +2471,16 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_233$column_34() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(GREATER)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_233$column_46() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(SMALLER)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_233$column_59() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(S_OR_EQUAL)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_233$column_74() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(G_OR_EQUAL)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_233$column_89() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(EQUAL)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_233$column_98() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(NOT_EQUAL)) return false;
-        return true;
-    }
-
-    private final boolean check$Sign() {
-        if (remainingLookahead<=0) return true;
-        Token token60= currentLookaheadToken;
-        int remainingLookahead60= remainingLookahead;
-        if (!check$NewAwkParser_jjt$line_236$column_23()) {
-            currentLookaheadToken= token60;
-            remainingLookahead= remainingLookahead60;
-            if (!check$NewAwkParser_jjt$line_236$column_30()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private final boolean check$NewAwkParser_jjt$line_235$column_33() {
         if (remainingLookahead<=0) return true;
         if (!scanToken(first_set$NewAwkParser_jjt$line_235$column_34)) return false;
         pushOntoLookaheadStack("Product", "NewAwkParser.jjt", 235, 76);
+        stopAtScanLimit= false;
         if (!check$Sign()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_234$column_33() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(PLUS)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_234$column_42() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(MINUS)) return false;
         return true;
     }
 
@@ -2709,95 +2499,12 @@ public class NewAwkParser implements NewAwkConstants {
         if (remainingLookahead<=0) return true;
         if (!scanToken(first_set$NewAwkParser_jjt$line_236$column_31)) return false;
         pushOntoLookaheadStack("Sign", "NewAwkParser.jjt", 236, 50);
+        stopAtScanLimit= false;
         if (!check$Atom()) {
             popLookaheadStack();
             return false;
         }
         popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_235$column_34() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(MULTIPLICATION)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_235$column_53() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(DIVISION)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_235$column_66() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(MODULO)) return false;
-        return true;
-    }
-
-    private final boolean check$Atom() {
-        if (remainingLookahead<=0) return true;
-        Token token64= currentLookaheadToken;
-        int remainingLookahead64= remainingLookahead;
-        if (!check$NewAwkParser_jjt$line_238$column_6()) {
-            currentLookaheadToken= token64;
-            remainingLookahead= remainingLookahead64;
-            if (!check$NewAwkParser_jjt$line_238$column_18()) {
-                currentLookaheadToken= token64;
-                remainingLookahead= remainingLookahead64;
-                if (!check$NewAwkParser_jjt$line_238$column_31()) {
-                    currentLookaheadToken= token64;
-                    remainingLookahead= remainingLookahead64;
-                    if (!check$NewAwkParser_jjt$line_239$column_7()) {
-                        currentLookaheadToken= token64;
-                        remainingLookahead= remainingLookahead64;
-                        if (!check$NewAwkParser_jjt$line_245$column_7()) {
-                            currentLookaheadToken= token64;
-                            remainingLookahead= remainingLookahead64;
-                            if (!check$NewAwkParser_jjt$line_251$column_7()) {
-                                currentLookaheadToken= token64;
-                                remainingLookahead= remainingLookahead64;
-                                if (!check$NewAwkParser_jjt$line_253$column_7()) {
-                                    currentLookaheadToken= token64;
-                                    remainingLookahead= remainingLookahead64;
-                                    if (!check$NewAwkParser_jjt$line_256$column_7()) {
-                                        currentLookaheadToken= token64;
-                                        remainingLookahead= remainingLookahead64;
-                                        if (!check$NewAwkParser_jjt$line_259$column_7()) {
-                                            currentLookaheadToken= token64;
-                                            remainingLookahead= remainingLookahead64;
-                                            if (!check$NewAwkParser_jjt$line_262$column_7()) {
-                                                currentLookaheadToken= token64;
-                                                remainingLookahead= remainingLookahead64;
-                                                if (!check$NewAwkParser_jjt$line_265$column_7()) {
-                                                    currentLookaheadToken= token64;
-                                                    remainingLookahead= remainingLookahead64;
-                                                    if (!check$NewAwkParser_jjt$line_266$column_7()) {
-                                                        return false;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_236$column_31() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(PLUS)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_236$column_40() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(MINUS)) return false;
         return true;
     }
 
@@ -2838,14 +2545,25 @@ public class NewAwkParser implements NewAwkConstants {
         if (remainingLookahead<=0) return true;
         if (!scanToken(ID)) return false;
         while (remainingLookahead> 0) {
-            Token token68= currentLookaheadToken;
+            Token token29= currentLookaheadToken;
             if (!check$NewAwkParser_jjt$line_240$column_10()) {
-                currentLookaheadToken= token68;
+                currentLookaheadToken= token29;
                 break;
             }
         }
-        Token token69= currentLookaheadToken;
-        if (!check$NewAwkParser_jjt$line_244$column_10()) currentLookaheadToken= token69;
+        Token token30= currentLookaheadToken;
+        if (!scanToken(_TOKEN_71)) currentLookaheadToken= token30;
+        return true;
+    }
+
+    private final boolean check$NewAwkParser_jjt$line_240$column_10() {
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 240, 10);
+        if (!check$ArrayAccess()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
         return true;
     }
 
@@ -2853,137 +2571,20 @@ public class NewAwkParser implements NewAwkConstants {
         if (remainingLookahead<=0) return true;
         if (!scanToken(BlockAuf)) return false;
         pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 245, 18);
-        boolean stopAtScanLimit70= stopAtScanLimit;
         stopAtScanLimit= false;
         if (!check$Expr()) {
             popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit70;
             return false;
         }
         popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit70;
         while (remainingLookahead> 0) {
-            Token token71= currentLookaheadToken;
+            Token token31= currentLookaheadToken;
             if (!check$NewAwkParser_jjt$line_246$column_10()) {
-                currentLookaheadToken= token71;
+                currentLookaheadToken= token31;
                 break;
             }
         }
         if (!scanToken(BlockZu)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_251$column_7() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(KlammerAuf)) return false;
-        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 251, 20);
-        boolean stopAtScanLimit72= stopAtScanLimit;
-        stopAtScanLimit= false;
-        if (!check$Expr()) {
-            popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit72;
-            return false;
-        }
-        popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit72;
-        if (!scanToken(KlammerZu)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_253$column_7() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(BooleanLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_256$column_7() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(IntegerLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_259$column_7() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(DoubleLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_262$column_7() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(CharLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_265$column_7() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(NullLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NextStmnt() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_306$column_2)) return false;
-        if (!scanToken(KlammerAuf)) return false;
-        if (!scanToken(KlammerZu)) return false;
-        return true;
-    }
-
-    private final boolean check$PrintStmnt() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_302$column_26)) return false;
-        if (!scanToken(KlammerAuf)) return false;
-        pushOntoLookaheadStack("PrintStmnt", "NewAwkParser.jjt", 303, 18);
-        boolean stopAtScanLimit73= stopAtScanLimit;
-        stopAtScanLimit= false;
-        if (!check$Expr()) {
-            popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit73;
-            return false;
-        }
-        popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit73;
-        if (!scanToken(KlammerZu)) return false;
-        if (!scanToken(SEMICOLON)) return false;
-        return true;
-    }
-
-    private final boolean check$KlammerAffe() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(StringLiteral)) return false;
-        if (!scanToken(AT)) return false;
-        if (!scanToken(BlockAuf)) return false;
-        if (!check$NewAwkParser_jjt$line_287$column_6()) {
-            return false;
-        }
-        while (remainingLookahead> 0) {
-            Token token74= currentLookaheadToken;
-            if (!check$NewAwkParser_jjt$line_287$column_6()) {
-                currentLookaheadToken= token74;
-                break;
-            }
-        }
-        if (!scanToken(BlockZu)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_240$column_10() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 240, 10);
-        boolean stopAtScanLimit75= stopAtScanLimit;
-        stopAtScanLimit= false;
-        if (!check$ArrayAccess()) {
-            popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit75;
-            return false;
-        }
-        popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit75;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_244$column_10() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(_TOKEN_71)) return false;
         return true;
     }
 
@@ -2991,210 +2592,93 @@ public class NewAwkParser implements NewAwkConstants {
         if (remainingLookahead<=0) return true;
         if (!scanToken(COMMA)) return false;
         pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 246, 18);
-        boolean stopAtScanLimit76= stopAtScanLimit;
         stopAtScanLimit= false;
         if (!check$Expr()) {
             popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit76;
             return false;
         }
         popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit76;
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_306$column_2() {
+    private final boolean check$NewAwkParser_jjt$line_251$column_7() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(NEXT)) return false;
+        if (!scanToken(KlammerAuf)) return false;
+        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 251, 20);
+        stopAtScanLimit= false;
+        if (!check$Expr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(KlammerZu)) return false;
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_307$column_4() {
+    private final boolean check$NewAwkParser_jjt$line_266$column_7() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(NEXT_INT)) return false;
+        if (!scanToken(StringLiteral)) return false;
+        Token token32= currentLookaheadToken;
+        if (!scanToken(first_set$NewAwkParser_jjt$line_267$column_10)) currentLookaheadToken= token32;
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_308$column_4() {
+    private final boolean check$NewAwkParser_jjt$line_275$column_45() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(NEXT_DOUBLE)) return false;
+        pushOntoLookaheadStack("MethodCall", "NewAwkParser.jjt", 275, 45);
+        if (!check$Expr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        while (remainingLookahead> 0) {
+            Token token33= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_275$column_51()) {
+                currentLookaheadToken= token33;
+                break;
+            }
+        }
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_309$column_4() {
+    private final boolean check$NewAwkParser_jjt$line_275$column_51() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(NEXT_CHAR)) return false;
+        if (!scanToken(COMMA)) return false;
+        pushOntoLookaheadStack("MethodCall", "NewAwkParser.jjt", 275, 59);
+        stopAtScanLimit= false;
+        if (!check$Expr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_310$column_4() {
+    private final boolean check$NewAwkParser_jjt$line_280$column_4() {
         if (remainingLookahead<=0) return true;
-        if (!scanToken(NEXT_BOOLEAN)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_311$column_4() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(NEXT_STRING)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_302$column_26() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(PRINT_LINE)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_302$column_41() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(PRINT)) return false;
+        if (!scanToken(ArrayAuf)) return false;
+        if (!scanToken(ArrayZu)) return false;
         return true;
     }
 
     private final boolean check$NewAwkParser_jjt$line_287$column_6() {
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("KlammerAffe", "NewAwkParser.jjt", 287, 6);
-        boolean stopAtScanLimit77= stopAtScanLimit;
-        stopAtScanLimit= false;
         if (!check$KlammerAffeAusdruck()) {
             popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit77;
             return false;
         }
         popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit77;
-        return true;
-    }
-
-    private final boolean check$ArrayAccess() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(ArrayAuf)) return false;
-        pushOntoLookaheadStack("ArrayAccess", "NewAwkParser.jjt", 276, 39);
-        boolean stopAtScanLimit78= stopAtScanLimit;
-        stopAtScanLimit= false;
-        if (!check$Expr()) {
-            popLookaheadStack();
-            stopAtScanLimit= stopAtScanLimit78;
-            return false;
-        }
-        popLookaheadStack();
-        stopAtScanLimit= stopAtScanLimit78;
-        if (!scanToken(ArrayZu)) return false;
-        return true;
-    }
-
-    private final boolean check$KlammerAffeAusdruck() {
-        if (remainingLookahead<=0) return true;
-        Token token79= currentLookaheadToken;
-        if (!check$NewAwkParser_jjt$line_290$column_6()) currentLookaheadToken= token79;
-        if (!scanToken(Colon)) return false;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_292$column_10)) return false;
-        if (!scanToken(Colon)) return false;
-        if (!scanToken(BlockAuf)) return false;
-        if (!scanToken(RETURN)) return false;
-        Token token80= currentLookaheadToken;
-        if (!check$NewAwkParser_jjt$line_297$column_10()) currentLookaheadToken= token80;
-        if (!scanToken(SEMICOLON)) return false;
-        if (!scanToken(BlockZu)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_290$column_6() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(ConditionalNot)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_292$column_10() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(INTEGER_CLASS)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_292$column_28() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(DOUBLE_CLASS)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_292$column_45() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(CHAR_CLASS)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_293$column_11() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(BOOLEAN_CLASS)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_293$column_29() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(TypeString)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_293$column_44() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(BEGIN)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_293$column_54() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(END)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_297$column_10() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(first_set$NewAwkParser_jjt$line_297$column_10)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_297$column_11() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(THIS)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_297$column_20() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(IntegerLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_297$column_39() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(DoubleLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_298$column_11() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(CharLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_298$column_27() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(BooleanLiteral)) return false;
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_298$column_46() {
-        if (remainingLookahead<=0) return true;
-        if (!scanToken(StringLiteral)) return false;
         return true;
     }
 
     private final boolean scan$NewAwkParser_jjt$line_208$column_6() {
         currentLookaheadToken= currentToken;
         remainingLookahead= 14;
-        stopAtScanLimit= true;
+        stopAtScanLimit= false;
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 208, 20);
+        stopAtScanLimit= false;
         if (!check$VariableDecl()) {
             popLookaheadStack();
             return false;
@@ -3206,9 +2690,10 @@ public class NewAwkParser implements NewAwkConstants {
     private final boolean scan$NewAwkParser_jjt$line_209$column_6() {
         currentLookaheadToken= currentToken;
         remainingLookahead= 4;
-        stopAtScanLimit= true;
+        stopAtScanLimit= false;
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 209, 19);
+        stopAtScanLimit= false;
         if (!check$Assignement()) {
             popLookaheadStack();
             return false;
@@ -3220,9 +2705,10 @@ public class NewAwkParser implements NewAwkConstants {
     private final boolean scan$NewAwkParser_jjt$line_210$column_6() {
         currentLookaheadToken= currentToken;
         remainingLookahead= 8;
-        stopAtScanLimit= true;
+        stopAtScanLimit= false;
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("CompilationUnit", "NewAwkParser.jjt", 210, 19);
+        stopAtScanLimit= false;
         if (!check$VariableDeclAndAssignement()) {
             popLookaheadStack();
             return false;
@@ -3233,7 +2719,7 @@ public class NewAwkParser implements NewAwkConstants {
 
     private final boolean scan$NewAwkParser_jjt$line_223$column_8() {
         currentLookaheadToken= currentToken;
-        remainingLookahead= INDEFINITE;
+        remainingLookahead= UNLIMITED;
         stopAtScanLimit= true;
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 223, 18);
@@ -3247,7 +2733,7 @@ public class NewAwkParser implements NewAwkConstants {
 
     private final boolean scan$NewAwkParser_jjt$line_224$column_8() {
         currentLookaheadToken= currentToken;
-        remainingLookahead= INDEFINITE;
+        remainingLookahead= UNLIMITED;
         stopAtScanLimit= true;
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 224, 18);
@@ -3261,7 +2747,7 @@ public class NewAwkParser implements NewAwkConstants {
 
     private final boolean scan$NewAwkParser_jjt$line_225$column_8() {
         currentLookaheadToken= currentToken;
-        remainingLookahead= INDEFINITE;
+        remainingLookahead= UNLIMITED;
         stopAtScanLimit= true;
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 225, 18);
@@ -3276,11 +2762,490 @@ public class NewAwkParser implements NewAwkConstants {
     private final boolean scan$NewAwkParser_jjt$line_266$column_7() {
         currentLookaheadToken= currentToken;
         remainingLookahead= 3;
-        stopAtScanLimit= true;
+        stopAtScanLimit= false;
         if (remainingLookahead<=0) return true;
         if (!scanToken(StringLiteral)) return false;
-        Token token87= currentLookaheadToken;
-        if (!check$NewAwkParser_jjt$line_267$column_10()) currentLookaheadToken= token87;
+        Token token34= currentLookaheadToken;
+        if (!scanToken(first_set$NewAwkParser_jjt$line_267$column_10)) currentLookaheadToken= token34;
+        return true;
+    }
+
+    private final boolean check$CompilationUnit() {
+        if (!check$NewAwkParser_jjt$line_208$column_6$()) {
+            return false;
+        }
+        while (remainingLookahead> 0) {
+            Token token35= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_208$column_6$()) {
+                currentLookaheadToken= token35;
+                break;
+            }
+        }
+        if (!scanToken(EOF)) return false;
+        return true;
+    }
+
+    private final boolean check$VariableDecl() {
+        pushOntoLookaheadStack("VariableDecl", "NewAwkParser.jjt", 214, 30);
+        if (!check$Type()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(ID)) return false;
+        if (!scanToken(SEMICOLON)) return false;
+        return true;
+    }
+
+    private final boolean check$Assignement() {
+        if (!scanToken(ID)) return false;
+        if (!scanToken(Zuweisung)) return false;
+        pushOntoLookaheadStack("Assignement", "NewAwkParser.jjt", 215, 44);
+        stopAtScanLimit= false;
+        if (!check$ExprStmnt()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$VariableDeclAndAssignement() {
+        pushOntoLookaheadStack("VariableDeclAndAssignement", "NewAwkParser.jjt", 217, 5);
+        if (!check$Type()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(ID)) return false;
+        if (!scanToken(Zuweisung)) return false;
+        pushOntoLookaheadStack("VariableDeclAndAssignement", "NewAwkParser.jjt", 217, 27);
+        stopAtScanLimit= false;
+        if (!check$ExprStmnt()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$MethodDecl() {
+        Token token36= currentLookaheadToken;
+        int remainingLookahead36= remainingLookahead;
+        if (!check$NewAwkParser_jjt$line_219$column_6()) {
+            currentLookaheadToken= token36;
+            remainingLookahead= remainingLookahead36;
+            if (!scanToken(VOID)) {
+                return false;
+            }
+        }
+        if (!scanToken(ID)) return false;
+        if (!scanToken(KlammerAuf)) return false;
+        pushOntoLookaheadStack("MethodDecl", "NewAwkParser.jjt", 220, 23);
+        stopAtScanLimit= false;
+        if (!check$ParameterList()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(KlammerZu)) return false;
+        pushOntoLookaheadStack("MethodDecl", "NewAwkParser.jjt", 220, 49);
+        stopAtScanLimit= false;
+        if (!check$Block()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$ParameterList() {
+        Token token37= currentLookaheadToken;
+        if (!check$NewAwkParser_jjt$line_221$column_33()) currentLookaheadToken= token37;
+        while (remainingLookahead> 0) {
+            Token token38= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_221$column_45()) {
+                currentLookaheadToken= token38;
+                break;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$Stmnt() {
+        Token token39= currentLookaheadToken;
+        int remainingLookahead39= remainingLookahead;
+        if (!check$NewAwkParser_jjt$line_222$column_16()) {
+            currentLookaheadToken= token39;
+            remainingLookahead= remainingLookahead39;
+            if (!check$NewAwkParser_jjt$line_222$column_24()) {
+                currentLookaheadToken= token39;
+                remainingLookahead= remainingLookahead39;
+                if (!check$NewAwkParser_jjt$line_222$column_34()) {
+                    currentLookaheadToken= token39;
+                    remainingLookahead= remainingLookahead39;
+                    if (!check$NewAwkParser_jjt$line_222$column_48()) {
+                        currentLookaheadToken= token39;
+                        remainingLookahead= remainingLookahead39;
+                        if (!check$NewAwkParser_jjt$line_223$column_8()) {
+                            currentLookaheadToken= token39;
+                            remainingLookahead= remainingLookahead39;
+                            if (!check$NewAwkParser_jjt$line_224$column_8()) {
+                                currentLookaheadToken= token39;
+                                remainingLookahead= remainingLookahead39;
+                                if (!check$NewAwkParser_jjt$line_225$column_8()) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$Block() {
+        if (!scanToken(BlockAuf)) return false;
+        if (!check$NewAwkParser_jjt$line_226$column_34()) {
+            return false;
+        }
+        while (remainingLookahead> 0) {
+            Token token40= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_226$column_34()) {
+                currentLookaheadToken= token40;
+                break;
+            }
+        }
+        if (!scanToken(BlockZu)) return false;
+        return true;
+    }
+
+    private final boolean check$IfStmnt() {
+        if (!scanToken(IF)) return false;
+        if (!scanToken(KlammerAuf)) return false;
+        pushOntoLookaheadStack("IfStmnt", "NewAwkParser.jjt", 227, 42);
+        stopAtScanLimit= false;
+        if (!check$Expr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(KlammerZu)) return false;
+        pushOntoLookaheadStack("IfStmnt", "NewAwkParser.jjt", 227, 59);
+        stopAtScanLimit= false;
+        if (!check$Stmnt()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        while (remainingLookahead> 0) {
+            Token token41= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_227$column_66()) {
+                currentLookaheadToken= token41;
+                break;
+            }
+        }
+        if (!scanToken(SEMICOLON)) return false;
+        return true;
+    }
+
+    private final boolean check$ExprStmnt() {
+        pushOntoLookaheadStack("ExprStmnt", "NewAwkParser.jjt", 228, 25);
+        if (!check$Expr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(SEMICOLON)) return false;
+        return true;
+    }
+
+    private final boolean check$Expr() {
+        pushOntoLookaheadStack("Expr", "NewAwkParser.jjt", 229, 21);
+        if (!check$LogicalOrExpr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        while (remainingLookahead> 0) {
+            Token token42= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_229$column_37()) {
+                currentLookaheadToken= token42;
+                break;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$LogicalOrExpr() {
+        pushOntoLookaheadStack("LogicalOrExpr", "NewAwkParser.jjt", 230, 33);
+        if (!check$LogicalAndExpr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        while (remainingLookahead> 0) {
+            Token token43= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_230$column_49()) {
+                currentLookaheadToken= token43;
+                break;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$LogicalAndExpr() {
+        pushOntoLookaheadStack("LogicalAndExpr", "NewAwkParser.jjt", 231, 34);
+        if (!check$LogicalNotExpr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        while (remainingLookahead> 0) {
+            Token token44= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_231$column_50()) {
+                currentLookaheadToken= token44;
+                break;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$LogicalNotExpr() {
+        while (remainingLookahead> 0) {
+            Token token45= currentLookaheadToken;
+            if (!scanToken(ConditionalNot)) {
+                currentLookaheadToken= token45;
+                break;
+            }
+        }
+        pushOntoLookaheadStack("LogicalNotExpr", "NewAwkParser.jjt", 232, 54);
+        stopAtScanLimit= false;
+        if (!check$CompExpr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean check$CompExpr() {
+        pushOntoLookaheadStack("CompExpr", "NewAwkParser.jjt", 233, 28);
+        if (!check$Sum()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        while (remainingLookahead> 0) {
+            Token token46= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_233$column_33()) {
+                currentLookaheadToken= token46;
+                break;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$Sum() {
+        pushOntoLookaheadStack("Sum", "NewAwkParser.jjt", 234, 23);
+        if (!check$Product()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        while (remainingLookahead> 0) {
+            Token token47= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_234$column_32()) {
+                currentLookaheadToken= token47;
+                break;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$Product() {
+        pushOntoLookaheadStack("Product", "NewAwkParser.jjt", 235, 27);
+        if (!check$Sign()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        while (remainingLookahead> 0) {
+            Token token48= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_235$column_33()) {
+                currentLookaheadToken= token48;
+                break;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$Sign() {
+        Token token49= currentLookaheadToken;
+        int remainingLookahead49= remainingLookahead;
+        if (!check$NewAwkParser_jjt$line_236$column_23()) {
+            currentLookaheadToken= token49;
+            remainingLookahead= remainingLookahead49;
+            if (!check$NewAwkParser_jjt$line_236$column_30()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$Atom() {
+        Token token50= currentLookaheadToken;
+        int remainingLookahead50= remainingLookahead;
+        if (!check$NewAwkParser_jjt$line_238$column_6()) {
+            currentLookaheadToken= token50;
+            remainingLookahead= remainingLookahead50;
+            if (!check$NewAwkParser_jjt$line_238$column_18()) {
+                currentLookaheadToken= token50;
+                remainingLookahead= remainingLookahead50;
+                if (!check$NewAwkParser_jjt$line_238$column_31()) {
+                    currentLookaheadToken= token50;
+                    remainingLookahead= remainingLookahead50;
+                    if (!check$NewAwkParser_jjt$line_239$column_7()) {
+                        currentLookaheadToken= token50;
+                        remainingLookahead= remainingLookahead50;
+                        if (!check$NewAwkParser_jjt$line_245$column_7()) {
+                            currentLookaheadToken= token50;
+                            remainingLookahead= remainingLookahead50;
+                            if (!check$NewAwkParser_jjt$line_251$column_7()) {
+                                currentLookaheadToken= token50;
+                                remainingLookahead= remainingLookahead50;
+                                if (!scanToken(BooleanLiteral)) {
+                                    currentLookaheadToken= token50;
+                                    remainingLookahead= remainingLookahead50;
+                                    if (!scanToken(IntegerLiteral)) {
+                                        currentLookaheadToken= token50;
+                                        remainingLookahead= remainingLookahead50;
+                                        if (!scanToken(DoubleLiteral)) {
+                                            currentLookaheadToken= token50;
+                                            remainingLookahead= remainingLookahead50;
+                                            if (!scanToken(CharLiteral)) {
+                                                currentLookaheadToken= token50;
+                                                remainingLookahead= remainingLookahead50;
+                                                if (!scanToken(NullLiteral)) {
+                                                    currentLookaheadToken= token50;
+                                                    remainingLookahead= remainingLookahead50;
+                                                    if (!check$NewAwkParser_jjt$line_266$column_7()) {
+                                                        return false;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$MethodCall() {
+        if (!scanToken(ID)) return false;
+        if (!scanToken(KlammerAuf)) return false;
+        Token token51= currentLookaheadToken;
+        if (!check$NewAwkParser_jjt$line_275$column_45()) currentLookaheadToken= token51;
+        if (!scanToken(KlammerZu)) return false;
+        return true;
+    }
+
+    private final boolean check$ArrayAccess() {
+        if (!scanToken(ArrayAuf)) return false;
+        pushOntoLookaheadStack("ArrayAccess", "NewAwkParser.jjt", 276, 39);
+        stopAtScanLimit= false;
+        if (!check$Expr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(ArrayZu)) return false;
+        return true;
+    }
+
+    private final boolean check$Type() {
+        if (!scanToken(first_set$NewAwkParser_jjt$line_278$column_4)) return false;
+        while (remainingLookahead> 0) {
+            Token token52= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_280$column_4()) {
+                currentLookaheadToken= token52;
+                break;
+            }
+        }
+        return true;
+    }
+
+    private final boolean check$ReturnStmnt() {
+        if (!scanToken(RETURN)) return false;
+        pushOntoLookaheadStack("ReturnStmnt", "NewAwkParser.jjt", 283, 41);
+        stopAtScanLimit= false;
+        if (!check$Expr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(SEMICOLON)) return false;
+        return true;
+    }
+
+    private final boolean check$KlammerAffe() {
+        if (!scanToken(StringLiteral)) return false;
+        if (!scanToken(AT)) return false;
+        if (!scanToken(BlockAuf)) return false;
+        if (!check$NewAwkParser_jjt$line_287$column_6()) {
+            return false;
+        }
+        while (remainingLookahead> 0) {
+            Token token53= currentLookaheadToken;
+            if (!check$NewAwkParser_jjt$line_287$column_6()) {
+                currentLookaheadToken= token53;
+                break;
+            }
+        }
+        if (!scanToken(BlockZu)) return false;
+        return true;
+    }
+
+    private final boolean check$KlammerAffeAusdruck() {
+        Token token54= currentLookaheadToken;
+        if (!scanToken(ConditionalNot)) currentLookaheadToken= token54;
+        if (!scanToken(Colon)) return false;
+        if (!scanToken(first_set$NewAwkParser_jjt$line_292$column_10)) return false;
+        if (!scanToken(Colon)) return false;
+        if (!scanToken(BlockAuf)) return false;
+        if (!scanToken(RETURN)) return false;
+        Token token55= currentLookaheadToken;
+        if (!scanToken(first_set$NewAwkParser_jjt$line_297$column_10)) currentLookaheadToken= token55;
+        if (!scanToken(SEMICOLON)) return false;
+        if (!scanToken(BlockZu)) return false;
+        return true;
+    }
+
+    private final boolean check$PrintStmnt() {
+        if (!scanToken(first_set$NewAwkParser_jjt$line_302$column_26)) return false;
+        if (!scanToken(KlammerAuf)) return false;
+        pushOntoLookaheadStack("PrintStmnt", "NewAwkParser.jjt", 303, 18);
+        stopAtScanLimit= false;
+        if (!check$Expr()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        if (!scanToken(KlammerZu)) return false;
+        if (!scanToken(SEMICOLON)) return false;
+        return true;
+    }
+
+    private final boolean check$NextStmnt() {
+        if (!scanToken(first_set$NewAwkParser_jjt$line_306$column_2)) return false;
+        if (!scanToken(KlammerAuf)) return false;
+        if (!scanToken(KlammerZu)) return false;
         return true;
     }
 
@@ -3314,18 +3279,17 @@ public class NewAwkParser implements NewAwkConstants {
         final int line, column;
         // We actually only use this when we're working with the LookaheadStack
         final boolean stopAtScanLimit;
-        NonTerminalCall(String sourceFile, String productionName, int line, int column, boolean stopAtScanLimit) {
+        NonTerminalCall(String sourceFile, String productionName, int line, int column) {
             this.sourceFile= sourceFile;
             this.productionName= productionName;
             this.line= line;
             this.column= column;
-            this.stopAtScanLimit= false;
+            this.stopAtScanLimit= NewAwkParser.this.stopAtScanLimit;
         }
 
-        NonTerminalCall(String sourceFile, String productionName, int line, int column) {
-            this(sourceFile, productionName, line, column, false);
-        }
-
+        //    NonTerminalCall(String sourceFile, String productionName, int line, int column) {
+        //        this (sourceFile, productionName, line, column, false);
+        //    }
         StackTraceElement createStackTraceElement() {
             return new StackTraceElement("NewAwkParser", productionName, sourceFile, line);
         }
@@ -3385,7 +3349,7 @@ public class NewAwkParser implements NewAwkConstants {
     }
 
     private final void pushOntoLookaheadStack(String methodName, String fileName, int line, int column) {
-        lookaheadStack.add(new NonTerminalCall(fileName, methodName, line, column, this.stopAtScanLimit));
+        lookaheadStack.add(new NonTerminalCall(fileName, methodName, line, column));
     }
 
     private final void popLookaheadStack() {
