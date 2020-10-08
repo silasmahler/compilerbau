@@ -12,6 +12,8 @@ import java.util.*;
 
 public class NewAwkParser {
     private static String testToken;
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NewAwkParser.class);
+
     static public ArrayList<Node> roots= new ArrayList<>();
 
     public static void main(String[] args) throws ParseException, FileNotFoundException {
@@ -216,10 +218,29 @@ MethodDecl #MethodDecl : { Token t;}
     (Type| <VOID>  {jjtThis.isVoid = true;})
     <ID> <KlammerAuf> ParameterList <KlammerZu> Block;
 ParameterList #ParameterList : [Type <ID>] (<COMMA> Type <ID>)*;
-Stmnt #Stmnt :(Block | IfStmnt | ReturnStmnt | PrintStmnt
+Stmnt #Stmnt :
+ATTEMPT
+    (Block | IfStmnt | ReturnStmnt | PrintStmnt
      | LOOKAHEAD VariableDecl
      | LOOKAHEAD Assignement
-     | LOOKAHEAD VariableDeclAndAssignement);
+     | LOOKAHEAD VariableDeclAndAssignement)
+RECOVER {
+    log.error("Encoutered Syntax-Error in Stmnt: Attempting Recovery (Assuming a Semicolon is missing)!");
+    Token t;
+    int counter = 0;
+      do {
+          t = getNextToken();
+          log.info("Skipping Token: " +  t.getImage());
+          counter++;
+      } while (//!t.equals(";")
+      !t.getImage().equals(";")
+      && counter <= 50000);
+    log.info("Successfully recovered missing simicolon!");
+        if(counter == 50000){
+            log.warn("Beware that the compiler checked the next 50.000 Tokens. It could be that your missing Semicolon is the last and you reached and of file.");
+        }
+    }
+    ;
 Block       #Block : <BlockAuf> (Stmnt)+ <BlockZu>;
 IfStmnt     #IfStmnt : <IF> <KlammerAuf> Expr <KlammerZu> Stmnt (<ELSE> Stmnt)* <SEMICOLON>;
 ExprStmnt   #ExprStmnt :Expr <SEMICOLON>;

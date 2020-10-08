@@ -1,5 +1,6 @@
 int a(String a, int b){
-  a = "123";
+  a = "123"
+  double c = 2.2;
   b = 4;
   System.out.println(a + " " + b);
 }
