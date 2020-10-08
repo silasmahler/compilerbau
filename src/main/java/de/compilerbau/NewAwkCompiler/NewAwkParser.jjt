@@ -287,7 +287,7 @@ KlammerAffeAusdruck #KlammerAffeAusdruck :
     [<ConditionalNot>]
     <Colon>
         (<INTEGER_CLASS> | <DOUBLE_CLASS> | <CHAR_CLASS>
-        | <BOOLEAN_CLASS> | <TypeString> | <BEGIN> | <END>)
+        | <BOOLEAN_CLASS> | <TypeString> [KlammerAffeStringRegex] | <BEGIN> | <END>)
     <Colon>
     <BlockAuf>
     <RETURN>
@@ -295,6 +295,7 @@ KlammerAffeAusdruck #KlammerAffeAusdruck :
         | <CharLiteral> | <BooleanLiteral> | <StringLiteral>)]
     <SEMICOLON>
     <BlockZu>;
+KlammerAffeStringRegex #KlammerAffeStringRegex : <StringLiteral>;
 // Print
 PrintStmnt #PrintStmnt: (<PRINT_LINE> | <PRINT> )
     <KlammerAuf> Expr <KlammerZu> <SEMICOLON>;

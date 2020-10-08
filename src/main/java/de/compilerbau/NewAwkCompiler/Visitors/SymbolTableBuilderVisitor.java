@@ -1088,6 +1088,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             String rType = ka.regexType.type;
             String aType = ka.actionType.type;
             String aVal = ka.actionValue;
+            String regexString = null;
+            if(ka.regexString != null){
+                regexString = ka.regexString;
+            }
 
             log.warn("List: " + strings + " rType: " +  rType +  " aType: " + aType + " aValue: " + aVal);
             for (int i = 0; i < strings.size(); i++) {
@@ -1159,16 +1163,44 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 //Modify only certain Strings
                 else if (!negated && rType.equals("String") && strings.get(i).matches("\\D\\D+")
                         && !(strings.get(i).equals("true") || strings.get(i).equals("false"))) {
-                    log.info("Found String: " + strings.get(i));
-                    if(aType.equals("this")){}
-                    else if(aType.equals("delete")){ strings.set(i, null);}
-                    else { strings.set(i, aVal); }
-                } else if (negated && rType.equals("String") && !(strings.get(i).matches("\\D\\D+")
-                        && !(strings.get(i).equals("true") || strings.get(i).equals("false")))) {
-                    log.info("Found negated String: " + strings.get(i));
-                    if(aType.equals("this")){}
-                    else if(aType.equals("delete")){ strings.set(i, null);}
-                    else { strings.set(i, aVal); }
+                    if(regexString != null && strings.get(i).equals(regexString)) {
+                        log.info("Found String: " + strings.get(i) + " that matches regex: " + regexString);
+                        if (aType.equals("this")) {
+                        } else if (aType.equals("delete")) {
+                            strings.set(i, null);
+                        } else {
+                            strings.set(i, aVal);
+                        }
+                    } else {
+                        log.info("Found String: " + strings.get(i));
+                        if (aType.equals("this")) {
+                        } else if (aType.equals("delete")) {
+                            strings.set(i, null);
+                        } else {
+                            strings.set(i, aVal);
+                        }
+                    }
+                } else if ((negated && rType.equals("String") && !(strings.get(i).matches("\\D\\D+")
+                        && !(strings.get(i).equals("true") || strings.get(i).equals("false"))))
+                ) {
+
+                    if(regexString != null && strings.get(i).equals(regexString)) {
+                        log.info("Found String: " + strings.get(i) + " that matches regex: " + regexString);
+                        if (aType.equals("this")) {
+                        } else if (aType.equals("delete")) {
+                            strings.set(i, null);
+                        } else {
+                            strings.set(i, aVal);
+                        }
+                    } else {
+                        log.info("Found String: " + strings.get(i));
+                        if (aType.equals("this")) {
+                        } else if (aType.equals("delete")) {
+                            strings.set(i, null);
+                        } else {
+                            strings.set(i, aVal);
+                        }
+                    }
                 }
             }
             // After every round delete the null-values (marker for removal)
@@ -1239,6 +1271,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.regexType = new Type("boolean");
         } else if (node.firstChildOfType(TypeString.class) != null) {
             node.regexType = new Type("String");
+            if(node.firstChildOfType(KlammerAffeStringRegex.class) != null) {
+                node.regexString = node.firstChildOfType(KlammerAffeStringRegex.class).
+                        firstChildOfType(StringLiteral.class).getImage().substring(1,
+                        node.firstChildOfType(KlammerAffeStringRegex.class).
+                                firstChildOfType(StringLiteral.class).getImage().length() - 1);
+            }
         } else if (!node.regexConditionalNot && node.getChild(1) != null &&
                 node.getChild(1).getSource().equals("Begin")) {
             node.regexType = new Type("Begin");

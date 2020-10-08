@@ -11,6 +11,7 @@ public class KlammerAffeAusdruck extends BaseNode {
 
     public boolean regexConditionalNot;
     public Type regexType = null;
+    public String regexString = null;
     public Type actionType = null;
     public String actionValue = null;
 
@@ -23,6 +24,7 @@ public class KlammerAffeAusdruck extends BaseNode {
         return "KlammerAffeAusdruck{" +
                 "regexConditionalNot=" + regexConditionalNot +
                 ", regexType=" + regexType +
+                ", regexString='" + regexString + '\'' +
                 ", actionType=" + actionType +
                 ", actionValue='" + actionValue + '\'' +
                 '}';
