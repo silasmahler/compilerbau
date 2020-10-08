@@ -10,10 +10,10 @@ public class Utils {
 
     public boolean checkTypeIsEqual(Type type1, Type type2) {
         if (type1 == null) {
-            throw new TypeCheckingException("Input/Origin-Type is not declared, please check beforehand");
+            throw new SemanticException("Input/Origin-Type is not declared, please check beforehand");
         }
         if (type2 == null) {
-            throw new TypeCheckingException("Rssult-Type is not declared, please check beforehand");
+            throw new SemanticException("Rssult-Type is not declared, please check beforehand");
         }
         log.info("Type1: " + type1.type + " Type2: " + type2.type);
         return type1.type.equals(type2) ? true : false;

@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SymbolTableBuilderVisitor extends VisitorAdapter {
@@ -87,7 +86,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (symbolTable.checkAndInsertVariableDecl(node, contextId)) {
             log.info("SUCCESS: insertVariableDecl: Variable: " + node.toString());
         } else {
-            throw new TypeCheckingException("Variable has already been declared in the same scope you cant declare " +
+            throw new SemanticException("Variable has already been declared in the same scope you cant declare " +
                     "it twice. Position: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         }
@@ -108,7 +107,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         String contextId = getContext(node); //Init with global context && Check if Method-Context
         //Is the assignement-variable declared? If not -> error
         if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), contextId)) {
-            throw new TypeCheckingException("Variable to assign to hasn't been declared in the same scope. Please declare it. " +
+            throw new SemanticException("Variable to assign to hasn't been declared in the same scope. Please declare it. " +
                     "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         }
@@ -132,12 +131,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     log.info("Assignement: Update Variable with value: VariableDecl: " + variableDecl);
                     symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
                 } else {
-                    throw new TypeCheckingException("Assignement-Types are not equal or boxable," +
+                    throw new SemanticException("Assignement-Types are not equal or boxable," +
                             " please correct thatat: " + node.getBeginLine() + ":" + node.getBeginColumn() + "\n" +
                             "VariableDecl-Type: " + variableDecl.type + " Expr-Type: " + exprStmnt.type);
                 }
             } else {
-                throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
+                throw new SemanticException("Dimensions of Array and Variable dont fit.");
             }
         }
         printExit(node);
@@ -159,7 +158,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         String contextId = getContext(node); //Init with global context && Check if Method-Context
 
         if (!symbolTable.checkAndInsertVariableDecl(new VariableDecl(node.type, node.id), contextId)) {
-            throw new TypeCheckingException("VariableDeclAndAssignement: Variable has already been declared in the same scope you cant declare " +
+            throw new SemanticException("VariableDeclAndAssignement: Variable has already been declared in the same scope you cant declare " +
                     "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                     + node.firstChildOfType(ID.class).getEndColumn());
         } else {
@@ -169,7 +168,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.exprStmnt = node.firstChildOfType(ExprStmnt.class);
             //Is the assignement-variable declared? If not -> error
             if (!symbolTable.isVariableDeclared(new VariableDecl(null, node.id), contextId)) {
-                throw new TypeCheckingException("VariableDeclAndAssignement: Variable to assign to hasn't been declared in the same scope. Please declare it. " +
+                throw new SemanticException("VariableDeclAndAssignement: Variable to assign to hasn't been declared in the same scope. Please declare it. " +
                         "Position of use: " + node.firstChildOfType(ID.class).getEndLine() + ":"
                         + node.firstChildOfType(ID.class).getEndColumn());
             }
@@ -194,12 +193,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         log.info("VariableDeclAndAssignement: Update Variable with value: VariableDecl: " + variableDecl);
                         symbolTable.updateVariableDeclValue(variableDecl.type, variableDecl.id, variableDecl.value, contextId);
                     } else {
-                        throw new TypeCheckingException("VariableDeclAndAssignement: Assignement-Types are not equal or boxable," +
+                        throw new SemanticException("VariableDeclAndAssignement: Assignement-Types are not equal or boxable," +
                                 " please correct that at: " + node.getBeginLine() + ":" + node.getBeginColumn() + "\n" +
                                 "VariableDecl-Type: " + variableDecl.type + " Expr-Type: " + exprStmnt.type);
                     }
                 } else {
-                    throw new TypeCheckingException("Dimensions of Array and Variable dont fit.");
+                    throw new SemanticException("Dimensions of Array and Variable dont fit.");
                 }
             }
         }
@@ -248,7 +247,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             List<ID> ids = node.childrenOfType(ID.class); //Get all IDs
             //Marry them
             if (!(types.size() == ids.size()) && (types.size() == parameterCount)) {
-                throw new TypeCheckingException("Something broke while checking Method Parameters." +
+                throw new SemanticException("Something broke while checking Method Parameters." +
                         "Please declare it like: TYPE ID COMMA TYPE ID ...");
             }
             for (int i = 0; i < types.size(); i++) {
@@ -364,7 +363,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
 
         } else {
-            throw new TypeCheckingException("LogicalOrExpr: Not all operands boolean at: " +
+            throw new SemanticException("LogicalOrExpr: Not all operands boolean at: " +
                     node.getBeginLine() + ":" + node.getBeginColumn());
         }
         printExit(node);
@@ -395,7 +394,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             }
 
         } else {
-            throw new TypeCheckingException("LogicalAndExpr: Not all operands boolean at: " +
+            throw new SemanticException("LogicalAndExpr: Not all operands boolean at: " +
                     node.getBeginLine() + ":" + node.getBeginColumn());
         }
         printExit(node);
@@ -424,15 +423,15 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     node.type = ce.type;
                     node.value = "true";
                 } else {
-                    throw new TypeCheckingException("LogicalNot: boolean type CompExpr-Type has a non-bool-value at:" +
+                    throw new SemanticException("LogicalNot: boolean type CompExpr-Type has a non-bool-value at:" +
                             ce.getBeginLine() + ":" + ce.getBeginColumn());
                 }
             } else {
-                throw new TypeCheckingException("LogicalNot: is used on a non-boolean expression at: " +
+                throw new SemanticException("LogicalNot: is used on a non-boolean expression at: " +
                         ce.getBeginLine() + ":" + ce.getBeginColumn());
             }
         } else {
-            throw new TypeCheckingException("LogicalNot: Please don't use multiple \"!\" together at: " +
+            throw new SemanticException("LogicalNot: Please don't use multiple \"!\" together at: " +
                     node.getBeginLine() + ":" + node.getBeginColumn());
         }
 
@@ -468,7 +467,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             log.info("CompExpr: BooleanList for only-bool Expr: " + bools + "\n" +
                     "and Operands: " + operands);
             if ((operands.size() + 1) != bools.size()) {
-                throw new TypeCheckingException("There are operators other than == and != " +
+                throw new SemanticException("There are operators other than == and != " +
                         "applied to a boolean CompExpr. Please correct this at: "
                         + node.getBeginLine() + ":" + node.getBeginColumn());
             }
@@ -506,7 +505,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             log.info("CompExpr: List for int, double, char Expr: " + doubles + "\n" +
                     "and Operands: " + operands);
             if ((operands.size() + 1) != doubles.size() || doubles.size() != 2) {
-                throw new TypeCheckingException("There are Operations with a comparator-operator (==, !=, >=, <=, <, >)" +
+                throw new SemanticException("There are Operations with a comparator-operator (==, !=, >=, <=, <, >)" +
                         " and more than 2 doubles or uncompatible types (e.g. boolean, double) " +
                         "applied to a boolean CompExpr. Please use int, double and char correct this at: "
                         + node.getBeginLine() + ":" + node.getBeginColumn());
@@ -531,7 +530,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.type = new Type("boolean");
             node.value = result ? "true" : "false";
         } else {
-            throw new TypeCheckingException("There are incompatible types in an Comparable-Expression beginning at:" +
+            throw new SemanticException("There are incompatible types in an Comparable-Expression beginning at:" +
                     +node.getBeginLine() + ":" + node.getBeginColumn() +
                     " Please use only boolean or int, double and char or adjust the paranthesis.");
         }
@@ -575,7 +574,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     } else if (op instanceof MINUS) {
                         sum.value = "" + (Integer.parseInt(sum.value) - Integer.parseInt(childValue));
                     } else {
-                        throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                        throw new SemanticException("Operation on sum with same types went wrong.");
                     }
                 }
                 // 1.2 DOUBLE x2
@@ -585,7 +584,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     } else if (op instanceof MINUS) {
                         sum.value = "" + (Double.parseDouble(sum.value) - Double.parseDouble(childValue));
                     } else {
-                        throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                        throw new SemanticException("Operation on sum with same types went wrong.");
                     }
                 }
                 // 1.3 CHAR x2
@@ -597,7 +596,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = "" + (sum.value.charAt(0) - childValue.charAt(0));
                         sum.type = new Type("int");
                     } else {
-                        throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                        throw new SemanticException("Operation on sum with same types went wrong.");
                     }
                 }
                 //1.4 Strings x2
@@ -606,9 +605,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = sum.value + childValue;
                         sum.type = sum.type; // Dont change it
                     } else if (op instanceof MINUS) {
-                        throw new TypeCheckingException("You can not operate with MINUS on 2 strings.");
+                        throw new SemanticException("You can not operate with MINUS on 2 strings.");
                     } else {
-                        throw new TypeCheckingException("Operation on sum with same types went wrong.");
+                        throw new SemanticException("Operation on sum with same types went wrong.");
                     }
                 }
             }
@@ -669,7 +668,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         sum.value = sum.value + childValue;
                     }
                 } else if (op instanceof MINUS) {
-                    throw new TypeCheckingException("You can not operate with MINUS on strings.");
+                    throw new SemanticException("You can not operate with MINUS on strings.");
                 }
             }
             node.type = sum.type;
@@ -701,7 +700,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 .filter(child -> !child.type.type.equals("char"))
                 .collect(Collectors.toList()).size() > 0
         ) {
-            throw new TypeCheckingException("There are other types than int, double or char" +
+            throw new SemanticException("There are other types than int, double or char" +
                     " in an operation which uses * / and %");
         } else {
             //Algo: 1) Get 2 operands, 2) parse both 3) operate with them 4) result save double
@@ -768,7 +767,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 case "char":
                     node.value = String.valueOf(-child.value.charAt(0));
                 default:
-                    throw new TypeCheckingException("Sign is used in front of type not applicable " +
+                    throw new SemanticException("Sign is used in front of type not applicable " +
                             "(Type != int, double or char) at: " +
                             node.getBeginColumn() + ":" + node.getBeginLine());
             }
@@ -816,7 +815,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     //TODO Find length zu ID in symboltable
 
                 } else {
-                    throw new TypeCheckingException("Variable: " + node.firstChildOfType(ID.class).getImage()
+                    throw new SemanticException("Variable: " + node.firstChildOfType(ID.class).getImage()
                             + " with .length() hasn't been defined, it wasn't found in the SymbolTable.");
                 }
             }
@@ -841,7 +840,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                             node.type = a.type;
                             node.value = a.value;
                         } else {
-                            throw new TypeCheckingException("VariableDecl and return-type of " +
+                            throw new SemanticException("VariableDecl and return-type of " +
                                     "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");
                         }
                     } else {
@@ -853,7 +852,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                             node.type = atv.type;
                             node.value = atv.value;
                         } else {
-                            throw new TypeCheckingException("VariableDecl and return-type of " +
+                            throw new SemanticException("VariableDecl and return-type of " +
                                     "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");
                         }
                     }
@@ -871,7 +870,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     //Table.getSubArrayTruthyBoolean();
 
                 } else {
-                    throw new TypeCheckingException("Array-Access has a non-boolean or non-int Type at: "
+                    throw new SemanticException("Array-Access has a non-boolean or non-int Type at: "
                             + node.getBeginLine() + ":" + node.getBeginColumn());
                 }
             }
@@ -893,7 +892,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     e.type.type.equals(node.firstChildOfType(Expr.class).type.type))) {
                 node.type = node.firstChildOfType(Expr.class).type;
             } else {
-                throw new TypeCheckingException("Not all value types are equal in Array init at: " +
+                throw new SemanticException("Not all value types are equal in Array init at: " +
                         node.getBeginLine() + ":" + node.getBeginColumn());
             }
             log.info("Atom: is arrayInit #2");
@@ -987,7 +986,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 try {
                     node.value = String.valueOf(Integer.parseInt(str));
                 } catch (NumberFormatException e) {
-                    throw new TypeCheckingException("Could not convert String value to integer!");
+                    throw new SemanticException("Could not convert String value to integer!");
                 }
             } else if (node.toDouble) {
                 node.type = new Type("double");
@@ -996,7 +995,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 try {
                     node.value = String.valueOf(Double.parseDouble(str));
                 } catch (NumberFormatException e) {
-                    throw new TypeCheckingException("Could not convert String value to double!");
+                    throw new SemanticException("Could not convert String value to double!");
                 }
             }
             //Normal String
@@ -1042,7 +1041,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         data = node.childrenAccept(this, data);
         Expr e = node.firstChildOfType(Expr.class);
         if (!(e.type.type.equals("int") || e.type.type.equals("boolean"))) {
-            throw new TypeCheckingException("Value-Type of Array-Accessor is not int or boolean at: " +
+            throw new SemanticException("Value-Type of Array-Accessor is not int or boolean at: " +
                     node.getBeginLine() + ":" + node.getBeginColumn());
         }
         log.info("Node has only 1 child, pass up data value and type.");
@@ -1251,7 +1250,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             for(Node n: node.children()){
                 log.warn("Child: " +  n.getSource());
             }
-            throw new TypeCheckingException("KlammerAffeAusdruck: No correct left side.");
+            throw new SemanticException("KlammerAffeAusdruck: No correct left side.");
         }
         //Right side
         if (node.firstChildOfType(THIS.class) != null) {

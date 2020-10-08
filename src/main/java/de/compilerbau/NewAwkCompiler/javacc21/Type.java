@@ -4,7 +4,7 @@
   */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
-import de.compilerbau.NewAwkCompiler.Visitors.TypeCheckingException;
+import de.compilerbau.NewAwkCompiler.Visitors.SemanticException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,10 +50,10 @@ public class Type extends BaseNode {
     static void typeCastCheck(final Type from, final Type to) {
         if (typelist.contains(from.type)) {
             if (!from.type.equals(to.type)) {
-                throw new TypeCheckingException("incompatible primitive type " + from.type + " -> " + to.type);
+                throw new SemanticException("incompatible primitive type " + from.type + " -> " + to.type);
             }
         } else if (typelist.contains(to.type)) {
-            throw new TypeCheckingException("cast ClassType to PrimitiveType " + from.type + " -> " + from.type);
+            throw new SemanticException("cast ClassType to PrimitiveType " + from.type + " -> " + from.type);
         } else {
 
         }

@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SymbolTable {
 
@@ -124,7 +123,7 @@ public class SymbolTable {
         return getVariableDeclsForContext(methodName).stream().filter(
                 o -> o.id.getImage().equals(id.getImage()))
                 .findFirst()
-                .orElseThrow(() -> new TypeCheckingException("Variable: " + id.getImage()
+                .orElseThrow(() -> new SemanticException("Variable: " + id.getImage()
                         + " hasn't been defined, it wasn't found in the SymbolTable."));
     }
 
@@ -168,7 +167,7 @@ public class SymbolTable {
         log.info("Symboltable: VariableDecls: " + variableDeclTable);
         VariableDecl variableDecl = findVariableDeclFromID(id, context);
         if (variableDecl.value == null) {
-            throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: The Array hasnt been " +
+            throw new SemanticException("getArrayValAndTypeForIDAndIntAccess: The Array hasnt been " +
                     "initialized or assigned a value and it can't be accessed.");
         }
         String[] values = variableDecl.value.substring(1, variableDecl.value.length() - 1)
@@ -180,7 +179,7 @@ public class SymbolTable {
             typeAndValue.type = variableDecl.type;
             typeAndValue.value = values[accessIndex];
         } else {
-            throw new TypeCheckingException("getArrayValAndTypeForIDAndIntAccess: Invalid Type!");
+            throw new SemanticException("getArrayValAndTypeForIDAndIntAccess: Invalid Type!");
         }
         log.info("Returning ArrayTypeAndValue: " + typeAndValue);
         return typeAndValue;
@@ -199,7 +198,7 @@ public class SymbolTable {
         log.info("getArrayAccessValAndTypeForIDAndInts: Try to get value from Array");
         VariableDecl variableDecl = findVariableDeclFromID(id, context);
         if (variableDecl.value == null) {
-            throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: The Array hasnt been " +
+            throw new SemanticException("getArrayAccessValAndTypeForIDAndInts: The Array hasnt been " +
                     "initialized or assigned a value and it can't be accessed.");
         }
         log.info("Params: ID:" + id + " AccessIndexes: " + accessIndexes + " Context: " + context);
@@ -322,7 +321,7 @@ public class SymbolTable {
             log.info("Returning ArrayTypeAndValue: " + value);
             return value;
         } else { // if more => Error
-            throw new TypeCheckingException("getArrayAccessValAndTypeForIDAndInts: ArrayAccess has more Accesses than" +
+            throw new SemanticException("getArrayAccessValAndTypeForIDAndInts: ArrayAccess has more Accesses than" +
                     "there are dimensions! Please reduce accessors.");
         }
         return null;
