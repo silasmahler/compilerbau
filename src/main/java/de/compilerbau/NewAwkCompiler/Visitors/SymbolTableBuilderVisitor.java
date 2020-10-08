@@ -886,7 +886,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             // Normal ID: x -> Check if it is an array access!
             else {
                 // Check if variable in Symboltable and if yes then return it
-                // TODO Remove "normal String" -> its wrong!!!
                 ID id = node.firstChildOfType(ID.class);
                 log.warn("Atom: Normal ID detected!" + node.firstChildOfType(ID.class));
                 VariableDecl v = symbolTable.findVariableDeclFromID(id, getContext(node));
@@ -905,11 +904,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                         node.getBeginLine() + ":" + node.getBeginColumn());
             }
             log.info("Atom: is arrayInit #2");
-
-            // 2. Check dim > 1
-            //TODO Macht das Sinn? --> Nope
-            boolean dimMoreThanOne = node.getChild(1) instanceof BlockAuf ? true : false;
-            // 3. Build Value
+            // 2. Build Value
             String valueString = "";
             // If 1 Child no iteration
             if (node.childrenOfType(Expr.class).size() == 1) {
@@ -1063,8 +1058,10 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     @Override
     public Object visit(ReturnStatement node, Object data) {
         printEnter(node);
-        // TODO Get return-type from method context, if we are in global => error
-        // TODO Check if matches return value (can be expression, variable, plain value, etc...)
+        data = node.childrenAccept(this, data);
+        Expr e = node.firstChildOfType(Expr.class);
+        node.type = e.type;
+        node.value = e.value;
         printExit(node);
         return data;
     }

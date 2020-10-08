@@ -691,8 +691,7 @@ public class NewAwkParser implements NewAwkConstants {
                     log.info("Skipping Token: "+t.getImage());
                     counter++;
                 }
-                while (//!t.equals(";")
-                !t.getImage().equals(";")&&counter<=50000);
+                while (!t.getImage().equals(";")&&counter<=50000);
                 log.info("Successfully recovered missing simicolon!");
                 if (counter== 50000) {
                     log.warn("Beware that the compiler checked the next 50.000 Tokens. It could be that your missing Semicolon is the last and you reached and of file.");

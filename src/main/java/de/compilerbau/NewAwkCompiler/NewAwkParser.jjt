@@ -232,7 +232,7 @@ RECOVER {
           t = getNextToken();
           log.info("Skipping Token: " +  t.getImage());
           counter++;
-      } while (//!t.equals(";")
+      } while (
       !t.getImage().equals(";")
       && counter <= 50000);
     log.info("Successfully recovered missing simicolon!");
