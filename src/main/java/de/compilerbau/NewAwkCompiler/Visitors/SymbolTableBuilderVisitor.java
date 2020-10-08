@@ -250,11 +250,20 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 throw new SemanticException("Something broke while checking Method Parameters." +
                         "Please declare it like: TYPE ID COMMA TYPE ID ...");
             }
+            String contextId = getContext(node); //Init with global context && Check if Method-Context
+
             for (int i = 0; i < types.size(); i++) {
                 Parameter p = new Parameter(types.get(i), ids.get(i));
                 log.info("Add Parameter to ParameterList: " + p.toString());
                 node.parameterList.add(p);
-                //TODO Insert VariableDecl for Method
+                symbolTable.checkAndInsertVariableDecl(new VariableDecl(types.get(i), ids.get(i)), contextId);
+
+                /*TODO Insert VariableDecl for Method
+                if (!symbolTable.checkAndInsertVariableDecl(new VariableDecl(types.get(i), node.id), contextId)) {
+                    throw new SemanticException("ParameterList: Variable has already been declared in the same scope you cant declare " +
+                            "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
+                            + node.firstChildOfType(ID.class).getEndColumn());
+                }*/
             }
 
         }

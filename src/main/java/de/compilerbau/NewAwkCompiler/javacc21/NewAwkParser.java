@@ -1411,9 +1411,9 @@ public class NewAwkParser implements NewAwkConstants {
                     popCallStack();
                 }
             }
-            else if (nextTokenType()== StringLiteral) {
+            else if (scan$NewAwkParser_jjt$line_235$column_31()) {
                 // Code for NonTerminal specified on line 235 of NewAwkParser.jjt
-                pushOntoCallStack("Atom", "NewAwkParser.jjt", 235, 31);
+                pushOntoCallStack("Atom", "NewAwkParser.jjt", 235, 41);
                 try {
                     KlammerAffe();
                 }
@@ -2580,7 +2580,7 @@ public class NewAwkParser implements NewAwkConstants {
 
     private final boolean check$NewAwkParser_jjt$line_235$column_31() {
         if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 235, 31);
+        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 235, 41);
         if (!check$KlammerAffe()) {
             popLookaheadStack();
             return false;
@@ -2808,6 +2808,20 @@ public class NewAwkParser implements NewAwkConstants {
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 222, 18);
         if (!check$VariableDeclAndAssignement()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
+    private final boolean scan$NewAwkParser_jjt$line_235$column_31() {
+        currentLookaheadToken= currentToken;
+        remainingLookahead= UNLIMITED;
+        stopAtScanLimit= true;
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Atom", "NewAwkParser.jjt", 235, 41);
+        if (!check$KlammerAffe()) {
             popLookaheadStack();
             return false;
         }

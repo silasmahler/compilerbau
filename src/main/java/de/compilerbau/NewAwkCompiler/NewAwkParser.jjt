@@ -232,7 +232,7 @@ Sum            #Sum : Product ((<PLUS> | <MINUS> ) Product)*;
 Product        #Product : Sign ((<MULTIPLICATION> | <DIVISION> | <MODULO>) Sign )*;
 Sign           #Sign: Atom | (<PLUS> | <MINUS> ) Atom;
 Atom           #Atom : { Token t; }
-    (NextStmnt | PrintStmnt | KlammerAffe
+    (NextStmnt | PrintStmnt | LOOKAHEAD KlammerAffe
     | (<ID>
         (ArrayAccess
             {jjtThis.isArrayAccess = true;

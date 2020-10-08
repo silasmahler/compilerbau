@@ -1,5 +1,5 @@
-int a(){
-  String[] values = "1 2 3.0 4 5 true hallo a"@{
-         !:String"hallo": { return "Hallo Welt"; }
-         };
+int a(String a, int b){
+  a = "123";
+  b = 4;
+  System.out.println(a + " " + b);
 }
