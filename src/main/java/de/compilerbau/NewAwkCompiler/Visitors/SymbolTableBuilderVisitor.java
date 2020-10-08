@@ -1183,7 +1183,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 } else if ((negated && rType.equals("String") && !(strings.get(i).matches("\\D\\D+")
                         && !(strings.get(i).equals("true") || strings.get(i).equals("false"))))
                 ) {
-
                     if(regexString != null && strings.get(i).equals(regexString)) {
                         log.info("Found String: " + strings.get(i) + " that matches regex: " + regexString);
                         if (aType.equals("this")) {
