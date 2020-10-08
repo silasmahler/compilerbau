@@ -1026,13 +1026,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     }
 
     @Override
-    public Object visit(Cast node, Object data) {
-        printEnter(node);
-        printExit(node);
-        return data;
-    }
-
-    @Override
     public Object visit(MethodCall node, Object data) {
         printEnter(node);
         printExit(node);
