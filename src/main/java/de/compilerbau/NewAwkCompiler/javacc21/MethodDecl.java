@@ -4,8 +4,6 @@
  */
 package de.compilerbau.NewAwkCompiler.javacc21;
 
-import java.util.List;
-
 @SuppressWarnings("unused")
 public class MethodDecl extends BaseNode {
 
@@ -15,7 +13,7 @@ public class MethodDecl extends BaseNode {
     public boolean isVoid = false;
     //Method-ID/Name
     public ID id = null;
-    public String idValue = null;
+    public String value = null;
 
     //Parameters in Parameterlist
     public ParameterList parameterList = null;
@@ -34,7 +32,7 @@ public class MethodDecl extends BaseNode {
                 "type=" + type +
                 ", isVoid=" + isVoid +
                 ", id=" + id +
-                ", idValue='" + idValue + '\'' +
+                ", value='" + value + '\'' +
                 ", parameterList=" + parameterList +
                 ", block=" + block +
                 '}';
