@@ -929,7 +929,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 node.value = v.value;
             }
         } else if (node.isArrayInit) {
-            log.info("Atom: is arrayInit #1");
+            log.info("Atom: is arrayInit");
             // 1. Build initial Array Data, check all Subtypes equal, easy way, no boxing considered
             if (node.childrenOfType(Expr.class).stream().allMatch(e ->
                     e.type.type.equals(node.firstChildOfType(Expr.class).type.type))) {
@@ -938,7 +938,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 throw new SemanticException("Not all value types are equal in Array init at: " +
                         node.getBeginLine() + ":" + node.getBeginColumn());
             }
-            log.info("Atom: is arrayInit #2");
             // 2. Build Value
             String valueString = "";
             // If 1 Child no iteration
@@ -951,7 +950,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 }
                 valueString = valueString.substring(0, valueString.length() - 2);
             }
-            log.info("Atom: is arrayInit #3");
 
             // Add outer Parenthesis
             valueString = "[" + valueString + "]";
