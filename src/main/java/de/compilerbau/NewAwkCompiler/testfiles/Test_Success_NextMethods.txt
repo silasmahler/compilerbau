@@ -1,7 +1,11 @@
 void a(){
-  System.nextInt();
-  System.nextDouble();
-  System.nextChar();
-  System.nextBoolean();
-  System.nextString();
+  int a = System.nextInt();
+  double b = System.nextDouble();
+  char c = System.nextChar();
+  boolean d = System.nextBoolean();
+  String s = System.nextString();
+
+  String abcds = a + b + c + d + s;
+
+  System.out.println(abcds);
 }

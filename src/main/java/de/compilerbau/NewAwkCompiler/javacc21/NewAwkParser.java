@@ -615,19 +615,9 @@ public class NewAwkParser implements NewAwkConstants {
                         popCallStack();
                     }
                 }
-                else if (nextTokenType()== IF) {
-                    // Code for NonTerminal specified on line 223 of NewAwkParser.jjt
-                    pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 223, 14);
-                    try {
-                        IfStmnt();
-                    }
-                    finally {
-                        popCallStack();
-                    }
-                }
                 else if (nextTokenType()== RETURN) {
                     // Code for NonTerminal specified on line 223 of NewAwkParser.jjt
-                    pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 223, 24);
+                    pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 223, 14);
                     try {
                         ReturnStmnt();
                     }
@@ -635,7 +625,7 @@ public class NewAwkParser implements NewAwkConstants {
                         popCallStack();
                     }
                 }
-                else if (nextTokenType()== PRINT_LINE||nextTokenType== PRINT) {
+                else if (scan$NewAwkParser_jjt$line_223$column_28()) {
                     // Code for NonTerminal specified on line 223 of NewAwkParser.jjt
                     pushOntoCallStack("Stmnt", "NewAwkParser.jjt", 223, 38);
                     try {
@@ -691,10 +681,10 @@ public class NewAwkParser implements NewAwkConstants {
                     log.info("Skipping Token: "+t.getImage());
                     counter++;
                 }
-                while (!t.getImage().equals(";")&&counter<=50000);
+                while (!t.getImage().equals(";")&&counter<=100);
                 log.info("Successfully recovered missing simicolon!");
-                if (counter== 50000) {
-                    log.warn("Beware that the compiler checked the next 50.000 Tokens. It could be that your missing Semicolon is the last and you reached and of file.");
+                if (counter== 100) {
+                    log.warn("Beware that the compiler checked the next "+counter+" Tokens. It could be that your missing Semicolon is the last and you reached and of file.");
                 }
                 if (false) throw new ParseException("Never happens!");
             }
@@ -2220,8 +2210,8 @@ public class NewAwkParser implements NewAwkConstants {
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_218$column_6$= EnumSet.of(VOID, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_218$column_6= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_220$column_33= EnumSet.of(TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_223$column_6= EnumSet.of(RETURN, IF, BlockAuf, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, ID, PRINT_LINE, PRINT);
-    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_244$column_34= EnumSet.of(RETURN, IF, BlockAuf, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, ID, PRINT_LINE, PRINT);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_223$column_6= EnumSet.of(RETURN, BlockAuf, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, ID, PRINT_LINE, PRINT);
+    static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_244$column_34= EnumSet.of(RETURN, BlockAuf, TypeInt, TypeDouble, TypeChar, TypeBoolean, TypeString, ID, PRINT_LINE, PRINT);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_251$column_33= EnumSet.of(EQUAL, NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_251$column_34= EnumSet.of(EQUAL, NOT_EQUAL, G_OR_EQUAL, S_OR_EQUAL, GREATER, SMALLER);
     static private final EnumSet<TokenType> first_set$NewAwkParser_jjt$line_252$column_33= EnumSet.of(PLUS, MINUS);
@@ -2390,17 +2380,6 @@ public class NewAwkParser implements NewAwkConstants {
     private final boolean check$NewAwkParser_jjt$line_223$column_14() {
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 223, 14);
-        if (!check$IfStmnt()) {
-            popLookaheadStack();
-            return false;
-        }
-        popLookaheadStack();
-        return true;
-    }
-
-    private final boolean check$NewAwkParser_jjt$line_223$column_24() {
-        if (remainingLookahead<=0) return true;
-        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 223, 24);
         if (!check$ReturnStmnt()) {
             popLookaheadStack();
             return false;
@@ -2409,7 +2388,7 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
-    private final boolean check$NewAwkParser_jjt$line_223$column_38() {
+    private final boolean check$NewAwkParser_jjt$line_223$column_28() {
         if (remainingLookahead<=0) return true;
         pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 223, 38);
         if (!check$PrintStmnt()) {
@@ -2796,6 +2775,20 @@ public class NewAwkParser implements NewAwkConstants {
         return true;
     }
 
+    private final boolean scan$NewAwkParser_jjt$line_223$column_28() {
+        currentLookaheadToken= currentToken;
+        remainingLookahead= UNLIMITED;
+        stopAtScanLimit= true;
+        if (remainingLookahead<=0) return true;
+        pushOntoLookaheadStack("Stmnt", "NewAwkParser.jjt", 223, 38);
+        if (!check$PrintStmnt()) {
+            popLookaheadStack();
+            return false;
+        }
+        popLookaheadStack();
+        return true;
+    }
+
     private final boolean scan$NewAwkParser_jjt$line_224$column_8() {
         currentLookaheadToken= currentToken;
         remainingLookahead= UNLIMITED;
@@ -2974,21 +2967,17 @@ public class NewAwkParser implements NewAwkConstants {
             if (!check$NewAwkParser_jjt$line_223$column_14()) {
                 currentLookaheadToken= token41;
                 remainingLookahead= remainingLookahead41;
-                if (!check$NewAwkParser_jjt$line_223$column_24()) {
+                if (!check$NewAwkParser_jjt$line_223$column_28()) {
                     currentLookaheadToken= token41;
                     remainingLookahead= remainingLookahead41;
-                    if (!check$NewAwkParser_jjt$line_223$column_38()) {
+                    if (!check$NewAwkParser_jjt$line_224$column_8()) {
                         currentLookaheadToken= token41;
                         remainingLookahead= remainingLookahead41;
-                        if (!check$NewAwkParser_jjt$line_224$column_8()) {
+                        if (!check$NewAwkParser_jjt$line_225$column_8()) {
                             currentLookaheadToken= token41;
                             remainingLookahead= remainingLookahead41;
-                            if (!check$NewAwkParser_jjt$line_225$column_8()) {
-                                currentLookaheadToken= token41;
-                                remainingLookahead= remainingLookahead41;
-                                if (!check$NewAwkParser_jjt$line_226$column_8()) {
-                                    return false;
-                                }
+                            if (!check$NewAwkParser_jjt$line_226$column_8()) {
+                                return false;
                             }
                         }
                     }

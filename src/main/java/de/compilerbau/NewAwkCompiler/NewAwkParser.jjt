@@ -220,7 +220,7 @@ MethodDecl #MethodDecl : { Token t;}
 ParameterList #ParameterList : [Type <ID>] (<COMMA> Type <ID>)*;
 Stmnt #Stmnt :
 ATTEMPT
-    (Block | IfStmnt | ReturnStmnt | PrintStmnt
+    (Block | ReturnStmnt | LOOKAHEAD PrintStmnt
      | LOOKAHEAD VariableDecl
      | LOOKAHEAD Assignement
      | LOOKAHEAD VariableDeclAndAssignement)
@@ -234,10 +234,10 @@ RECOVER {
           counter++;
       } while (
       !t.getImage().equals(";")
-      && counter <= 50000);
+      && counter <= 100);
     log.info("Successfully recovered missing simicolon!");
-        if(counter == 50000){
-            log.warn("Beware that the compiler checked the next 50.000 Tokens. It could be that your missing Semicolon is the last and you reached and of file.");
+        if(counter == 100){
+            log.warn("Beware that the compiler checked the next " + counter + " Tokens. It could be that your missing Semicolon is the last and you reached and of file.");
         }
     }
     ;

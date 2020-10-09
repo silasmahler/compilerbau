@@ -49,7 +49,7 @@ public class NewAwkCompilerApplication {
 		};
 		String[] sources2 = {path + "Test_Success_NextMethods" + txt};
 		try {
-			NewAwkParser.main(sources);
+			NewAwkParser.main(sources2);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
