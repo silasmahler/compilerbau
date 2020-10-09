@@ -196,7 +196,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                                 "VariableDecl-Type: " + variableDecl.type + " Expr-Type: " + exprStmnt.type);
                     }
                 } else {
-                    throw new SemanticException("Dimensions of Array and Variable dont fit.");
+                    throw new SemanticException("Dimensions of Array and Variable dont fit at: "
+                            + node.getBeginLine() + ":" + node.getBeginColumn() + "\n" +
+                            "VariableDecl-Type: " + variableDecl.type + " Expr-Type: " + exprStmnt.type);
                 }
             }
         }
@@ -285,17 +287,19 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             else {
                 //Und Statements enthalten
                 if (node.childrenOfType(Stmnt.class) != null) {
-                    List<Stmnt> stmnts = node.childrenOfType(Stmnt.class).stream().collect(Collectors.toList());
-                    //Check ob letztes Statement Werte enthält -> dann ReturnType --> Werte übernehmen
-                    if (stmnts.get(stmnts.size() - 1).type != null &&
-                            stmnts.get(stmnts.size() - 1).type != null) {
-                        node.type = node.firstChildOfType(Stmnt.class).type;
-                        node.value = node.firstChildOfType(Stmnt.class).value;
-                    }
-                    else {
-                        throw new SemanticException("Method-Block of method: \n " +
-                                node.firstAncestorOfType(MethodDecl.class).toString() + "\n " +
-                                "has a return type and exspects a return-value. Please define a return-statement.");
+                    if(!(node.getParent() instanceof KlammerAffe ||
+                            node.getParent() instanceof KlammerAffeAusdruck)) {
+                        List<Stmnt> stmnts = node.childrenOfType(Stmnt.class).stream().collect(Collectors.toList());
+                        //Check ob letztes Statement Werte enthält -> dann ReturnType --> Werte übernehmen
+                        if (stmnts.get(stmnts.size() - 1).type != null &&
+                                stmnts.get(stmnts.size() - 1).type != null) {
+                            node.type = node.firstChildOfType(Stmnt.class).type;
+                            node.value = node.firstChildOfType(Stmnt.class).value;
+                        } else {
+                            throw new SemanticException("Method-Block of method: \n " +
+                                    node.firstAncestorOfType(MethodDecl.class).toString() + "\n " +
+                                    "has a return type and exspects a return-value. Please define a return-statement.");
+                        }
                     }
                 }
             }
@@ -1251,7 +1255,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         // Check if empty return empty string or
         // all int, double, char or boolean, then return a fitting array else String[]
         if(strings.isEmpty()){
-            node.type = new Type("String");
+            node.type = new Type(true, 1, "String");
             node.value = "";
         }
         else if(strings.stream().allMatch((s -> s.matches("-?\\d+")))) {

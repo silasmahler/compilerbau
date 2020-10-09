@@ -4,10 +4,10 @@ boolean isint = "20.09".isDouble();
 
 int sum = 1 + 2 + 3;
 
-int ss = ("true" || "true");
+boolean ss = (true || true);
 
 int zy = "hallo".length();
-int main(String[] args) {
+void main(String[] args) {
     int f = "123".length();
     int x = 5;
     return x;

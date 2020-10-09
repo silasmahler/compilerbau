@@ -1,6 +1,7 @@
-String hello() {
-    "1 2 3 4 5 a"@{
+String[] hello() {
+     return "1 2 3 4 5 a"@{
       :Integer: { return this; }
       !:Integer: { return ; }
-     }
+     };
+
 }
