@@ -4,10 +4,7 @@ import de.compilerbau.NewAwkCompiler.javacc21.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SymbolTableBuilderVisitor extends VisitorAdapter {
@@ -41,10 +38,13 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
      */
     public String getContext(Node node) {
         String context = "";
-        MethodDecl m = node.firstAncestorOfType(MethodDecl.class);
-        if (m != null) {
-            log.info("getContext for MethodDecl: " + m);
-            context = m.id.getImage();
+        try {
+            if (node.firstAncestorOfType(MethodDecl.class) != null) {
+                log.info("getContext for MethodDecl: " + node.firstAncestorOfType(MethodDecl.class));
+                context = node.firstAncestorOfType(MethodDecl.class).id.getImage();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return context;
     }
@@ -118,7 +118,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.id, contextId);
             log.info("Assignement: Found VariableDecl in the Symboltable: " + variableDecl + "\n" +
                     "Comparing it with ExprStmt by type next: " + exprStmnt);
-            //TODO How to get Init-Stmnt Dimension? (Check how many braces would be possible)
             //Check Dimension equal
             if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension ||
                     exprStmnt.type.isArray) {
@@ -180,7 +179,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 log.info("VariableDeclAndAssignement: Found VariableDecl in the Symboltable: " + variableDecl + "\n" +
                         "Comparing it with ExprStmt by type next: " + exprStmnt);
                 //Check Dimension equal
-                //TODO Fix NPE from not handing up multiple Array Accesses
                 if (variableDecl.type.arrayTypeDimension == exprStmnt.type.arrayTypeDimension ||
                         exprStmnt.type.isArray
                 ) {
@@ -216,10 +214,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         if (node.isVoid) {
             node.id.setImage("void");
         }
-
         node.parameterList = node.firstChildOfType(ParameterList.class);
         node.block = node.firstChildOfType(Block.class);
-
 
         data = node.childrenAccept(this, data);
 
@@ -263,13 +259,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 log.info("Add Parameter to ParameterList: " + p.toString());
                 node.parameterList.add(p);
                 symbolTable.checkAndInsertVariableDecl(new VariableDecl(types.get(i), ids.get(i)), contextId);
-
-                /*TODO Insert VariableDecl for Method
-                if (!symbolTable.checkAndInsertVariableDecl(new VariableDecl(types.get(i), node.id), contextId)) {
-                    throw new SemanticException("ParameterList: Variable has already been declared in the same scope you cant declare " +
-                            "it twice. Position of first declaration: " + node.firstChildOfType(ID.class).getEndLine() + ":"
-                            + node.firstChildOfType(ID.class).getEndColumn());
-                }*/
             }
 
         }
@@ -352,13 +341,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(ExprStmnt node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
-        //TODO Type of Expr
-        // Value
-        // Wird verwendet bei Assignement und VariableDeclAndAssignement
-
         node.type = node.firstChildOfType(Expr.class).type;
         node.value = node.firstChildOfType(Expr.class).value;
-
         printExit(node);
         return data;
     }
@@ -367,7 +351,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(Expr node, Object data) {
         printEnter(node);
         node.childrenAccept(this, data);
-
         if (node.children().size() == 1) {
             log.info("Node has only 1 child, pass up data value and type.");
             node.type = node.firstChildOfType(LogicalOrExpr.class).type;
@@ -375,8 +358,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             printExit(node);
             return data;
         }
-        //TODO Else
-
         printExit(node);
         return data;
     }
@@ -820,44 +801,79 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         return data;
     }
 
-    /**
-     * | LOOKAHEAD(3) t=<ID>
-     * [".length"
-     * {jjtThis.hasLength = true;
-     * ]
-     * ) [ArrayAccess()]
-     * | <KlammerAuf> Expr() <KlammerZu>
-     * | t=<BooleanLiteral>
-     * | t=<IntegerLiteral>
-     * | t=<DoubleLiteral>
-     * | t=<CharLiteral>
-     * | t=<NullLiteral>
-     * | LOOKAHEAD(3) t=<StringLiteral>
-     * [".length"
-     * {jjtThis.hasLength = true;
-     * jjtThis.atomLength = t.getImage().length();}
-     * ]
-     * )
-     */
     @Override
     public Object visit(Atom node, Object data) {
         printEnter(node);
-        data = node.childrenAccept(this, data);
+        if (node.getFirstChild() instanceof ID && node.isArrayAccess && node.arrayAccessDimension == 1){
+                Optional<ID> suche = node.firstChildOfType(ArrayAccess.class).descendantsOfType(ID.class).stream()
+                        .filter(o -> o.getImage().equals("i")).findFirst();
+                if (suche.isPresent()) {
+                    log.info("Node: " + node);
+                    log.info("Var: " + node.getFirstChild());
+                    log.info("Suche: " + suche.get());
+                    if (symbolTable.isVariableDeclared(new VariableDecl(null, suche.get()), getContext(node))) {
+                        throw new SemanticException("Variable i has been declared and is used in ArrayAccess as a" +
+                                "running-variable. This is not allowed. Please don't use it OR don't declare it " +
+                                "when using it.");
+                    }
+                    node.firstChildOfType(ArrayAccess.class);
+                    ID x = node.firstChildOfType(ID.class);
+                    node.removeChild(0);
+                    int arrayElementCount = symbolTable.getArrayElementCountForOnDimensionalArray(x, getContext(node));
+                    Node child = node.getFirstChild();
+                    log.info("Count: " + arrayElementCount);
+                    log.info("1st: " + child);
+                    node.clearChildren();
 
-        // TODO Checking for .length, wenn vorhanden, dann umwandlung zu Integertyp
+                    for(int i = 0; i < arrayElementCount; i++){
+                        node.addChild(child);
+                    }
+                    log.info("Children: " + node.children());
+
+                    int accessIndex = 0;
+                    for(Node ch: node.children()){
+                        //1 Bekomme zugehörigen Array-Wert
+                        ArrayTypeAndValue atv = symbolTable.getArrayValAndTypeForIDAndIntAccess(x, accessIndex,getContext(x));
+                        log.info("ATV: " + atv);
+                        //2 Ersetze das i mit dem Array-Wert
+                        Atom atomInnerI = ch.descendantsOfType(ID.class).get(0).firstAncestorOfType(Atom.class);
+                        atomInnerI.type = atv.type;
+                        atomInnerI.value = atv.value;
+                        log.info("AtomInnerI: " + atomInnerI);
+                        //Entferne die Kinder?
+                        IntegerLiteral intLit = new IntegerLiteral();
+                        intLit.setImage("5");
+                        intLit.setParent(atomInnerI);
+                        atomInnerI.addChild(intLit);
+
+                        accessIndex++;
+                    }
+                    node.descendantsOfType(ID.class).get(0).firstAncestorOfType(Atom.class).clearChildren();
+
+                    log.warn("DUMP1--------------------------");
+                    node.jjtAccept(new DumpVisitor(), null);
+                    log.warn("DUMP1--------------------------");
+                    data = node.childrenAccept(this, data);
+
+                    log.warn("DUMP2--------------------------");
+                    node.jjtAccept(new DumpVisitor(), null);
+                    log.warn("DUMP2--------------------------");
+                    //TODO Sammel alle expressions beim x ein und compute die fertige Liste
+
+                }
+        }
+        data = node.childrenAccept(this, data);
 
         if (node.getFirstChild() instanceof ID) {
             //Length ID: x.length
             if (node.hasLength) {
+                //Checking for .length, wenn vorhanden, dann umwandlung zu Integertyp
                 log.info("Found Atom with \".length()\" with " + node.children().size() + " children.");
                 node.type = new Type("int");
-                //TODO Geben: ID, Gesucht: Exists, value, type
                 String context = getContext(node);
                 VariableDecl variableDecl = symbolTable.findVariableDeclFromID(node.firstChildOfType(ID.class), context);
                 if (variableDecl != null && variableDecl.value != null) {
                     log.info("Atom: VariableDecl-Value-Length: " + variableDecl.value.length());
-                    //TODO Find length zu ID in symboltable
-
                 } else {
                     throw new SemanticException("Variable: " + node.firstChildOfType(ID.class).getImage()
                             + " with .length() hasn't been defined, it wasn't found in the SymbolTable.");
@@ -869,36 +885,34 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 ID id = node.firstChildOfType(ID.class); //Use to find array
                 List<ArrayAccess> arrayAccesses = node.childrenOfType(ArrayAccess.class);
                 ArrayAccess arrayAccess = arrayAccesses.get(0);
-
                 // 2. check type == int || boolean, int => Return Single Value
                 if (arrayAccess.type.type.equals("int")) {
                     // 3. get type and value id
-                    VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
-                    log.info("Atom: ArrayAccess found VariableDecl: " + decl);
-                    if (node.arrayAccessDimension == 1) { // Single Dim
-                        log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
-                        // Get Array-Type and Value from symboltable
-                        ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
-                                Integer.parseInt(arrayAccess.value), getContext(node));
-                        if (decl.type.type.equals(a.type.type)) {
-                            node.type = a.type;
-                            node.value = a.value;
+                        VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
+                        log.info("Atom: ArrayAccess found VariableDecl: " + decl);
+                        if (node.arrayAccessDimension == 1) { // Single Dim
+                            log.info("Atom: ArrayAccess detected with Type int and dimension 1.");
+                            ArrayTypeAndValue a = symbolTable.getArrayValAndTypeForIDAndIntAccess(id,
+                                    Integer.parseInt(arrayAccess.value), getContext(node));
+                            if (decl.type.type.equals(a.type.type)) {
+                                node.type = a.type;
+                                node.value = a.value;
+                            } else {
+                                throw new SemanticException("VariableDecl and return-type of " +
+                                        "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");
+                            }
                         } else {
-                            throw new SemanticException("VariableDecl and return-type of " +
-                                    "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");
-                        }
-                    } else {
-                        log.info("Atom: ArrayAccess detected with Type int and dimension > 1.");
-                        ArrayTypeAndValue atv = symbolTable.getArrayAccessValAndTypeForIDAndInts(id,
-                                arrayAccesses.stream().map(a -> Integer.parseInt(a.value))
-                                        .collect(Collectors.toList()), getContext(node));
-                        if (decl.type.type.equals(atv.type.type)) {
-                            node.type = atv.type;
-                            node.value = atv.value;
-                        } else {
-                            throw new SemanticException("VariableDecl and return-type of " +
-                                    "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");
-                        }
+                            log.info("Atom: ArrayAccess detected with Type int and dimension > 1.");
+                            ArrayTypeAndValue atv = symbolTable.getArrayAccessValAndTypeForIDAndInts(id,
+                                    arrayAccesses.stream().map(a -> Integer.parseInt(a.value))
+                                            .collect(Collectors.toList()), getContext(node));
+                            if (decl.type.type.equals(atv.type.type)) {
+                                node.type = atv.type;
+                                node.value = atv.value;
+                            } else {
+                                throw new SemanticException("VariableDecl and return-type of " +
+                                        "one-dimensional arrayAccess (ArrayTypeAndValue) not equal.");
+                            }
                     }
                 }
                 // 3.2 boolean => Return field for truthy condition
@@ -908,11 +922,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     // 3.3. get type and value id
                     VariableDecl decl = symbolTable.findVariableDeclFromID(id, getContext(node));
                     log.info("Atom: ArrayAccess found VariableDecl: " + decl);
-
-                    //TODO Impl
-                    //arrayAccesses.stream().map(a -> )
-                    //Table.getSubArrayTruthyBoolean();
-
                 } else {
                     throw new SemanticException("Array-Access has a non-boolean or non-int Type at: "
                             + node.getBeginLine() + ":" + node.getBeginColumn());
@@ -950,11 +959,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 }
                 valueString = valueString.substring(0, valueString.length() - 2);
             }
-
             // Add outer Parenthesis
             valueString = "[" + valueString + "]";
             node.value = valueString;
-
             boolean stopped = false;
             int dimCounter = 0;
             for (int i = 0; i < valueString.length(); i++) {
@@ -967,7 +974,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.type.arrayTypeDimension = dimCounter;
             node.type.isArray = true;
             log.info("Atom: .isArrayInit: Passed up Atom-Node: " + node);
-
         } else if (node.getFirstChild() instanceof KlammerAuf &&
                 node.getChild(1) instanceof Expr &&
                 node.getChild(2) instanceof KlammerZu) {
@@ -1278,7 +1284,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             node.value = stringList.toString();
             node.type = new Type(true, 1, "String");
         }
-        //TODO Range
         printExit(node);
         return data;
     }

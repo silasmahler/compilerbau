@@ -27,7 +27,7 @@ public class SymbolTable {
     /**
      * A Method to insert a VariableDeclaration into the symbol table
      * <p>
-     * //TODO Checks if node can be inserted, if it can't, it is already declared
+     * Checks if node can be inserted, if it can't, it is already declared
      *
      * @param node       the node to be inserted
      * @param methodName name of the method (context) a variable is used in, leave empty string or null, if outside
@@ -162,6 +162,19 @@ public class SymbolTable {
         this.variableDeclTable = variableDeclTable;
     }
 
+    public int getArrayElementCountForOnDimensionalArray(ID id, String context){
+        log.info("getArrayElementCountForOnDimensionalArray: Try to get One-Dim-Array-Count");
+        log.info("Symboltable: VariableDecls: " + variableDeclTable);
+        VariableDecl variableDecl = findVariableDeclFromID(id, context);
+        if (variableDecl.value == null) {
+            throw new SemanticException("getArrayValAndTypeForIDAndIntAccess: The Array hasnt been " +
+                    "initialized or assigned a value and it can't be accessed.");
+        }
+        String[] values = variableDecl.value.substring(1, variableDecl.value.length() - 1)
+                .replaceAll("\\s", "").split(",");
+        return values.length;
+    }
+
     public ArrayTypeAndValue getArrayValAndTypeForIDAndIntAccess(ID id, int accessIndex, String context) {
         log.info("getArrayValAndTypeForIDAndIntAccess: Try to get value from Array");
         log.info("Symboltable: VariableDecls: " + variableDeclTable);
@@ -269,7 +282,7 @@ public class SymbolTable {
                     someString = element;
                     Type t = variableDecl.type;
                     t.isArray = false;
-                    t.arrayTypeDimension = 0; //TODO Gucken ob korrekt
+                    t.arrayTypeDimension = 0;
                     ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
                     log.info("Returning ArrayTypeAndValue: " + value);
                     return value;
@@ -316,7 +329,7 @@ public class SymbolTable {
             }
             Type t = variableDecl.type;
             t.isArray = true;
-            t.arrayTypeDimension = 0; //TODO BERECHNEN!
+            t.arrayTypeDimension = 0;
             ArrayTypeAndValue value = new ArrayTypeAndValue(t, someString);
             log.info("Returning ArrayTypeAndValue: " + value);
             return value;
