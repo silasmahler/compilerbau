@@ -63,3 +63,8 @@ Falls sie selber generieren möchten:
 Die Präsentation zu Montag habe ich noch nicht fertiggestellt, sie können den aktuellen Stand unter:  
 https://docs.google.com/presentation/d/1oO8AXvcdRG1M5RA1igMmx7_hPPv2lE2UWRIHfmekMeM/edit?usp=sharing 
 einsehen.
+
+Sollten Sie Fragen haben, kontaktieren Sie mich gerne.
+
+VG
+Silas Mahler
