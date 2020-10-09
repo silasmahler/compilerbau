@@ -479,11 +479,11 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             printExit(node);
             return data;
         }
-        log.warn("CompExpr: Node has more than 1 child, begin computing...");
+        log.info("CompExpr: Node has more than 1 child, begin computing...");
 
         //1) Handle ==, != for all Boolean
         if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("boolean"))) {
-            log.warn("CompExpr: All Types are boolean.");
+            log.info("CompExpr: All Types are boolean.");
             // Alle children zu boolean parsen für einfachere ops
             List<Boolean> bools = node.childrenOfType(Sum.class).stream().map(child -> Boolean.parseBoolean(child.value)).collect(Collectors.toList());
             //Get Operands List
@@ -511,7 +511,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //2) Handle ==, !=, >=, <=, <, > for int, double & char
         else if (node.childrenOfType(Sum.class).stream().allMatch(child -> child.type.type.equals("int") ||
                 child.type.type.equals("double") || child.type.type.equals("char"))) {
-            log.warn("CompExpr: All types are int, double or char");
+            log.info("CompExpr: All types are int, double or char");
             //Maximum of 2 doubles possible
             List<Double> doubles = node.childrenOfType(Sum.class).stream().map(child -> {
                 Double value = 0.0;
@@ -585,7 +585,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         log.info("Sum-Type: " + sum.type.toString() +
                 "Sum-Value: " + sum.value + "\n" + node.children().size());
         for (int i = 2; i < node.children().size(); i += 2) {
-            log.warn("INFO: i: " + i + " childs: " + childs);
+            log.info("INFO: i: " + i + " childs: " + childs);
             String childType = ((Product) childs.get(i)).type.type;
             String childValue = ((Product) childs.get(i)).value;
             String sumType = sum.type.type;
@@ -859,7 +859,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     node.jjtAccept(new DumpVisitor(), null);
                     log.warn("DUMP2--------------------------");
                     //TODO Sammel alle expressions beim x ein und compute die fertige Liste
-
+                    log.error("WIP: ArrayAccess with i-index.");
                 }
         }
         data = node.childrenAccept(this, data);
@@ -931,9 +931,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
             else {
                 // Check if variable in Symboltable and if yes then return it
                 ID id = node.firstChildOfType(ID.class);
-                log.warn("Atom: Normal ID detected!" + node.firstChildOfType(ID.class));
+                log.info("Atom: Normal ID detected!" + node.firstChildOfType(ID.class));
                 VariableDecl v = symbolTable.findVariableDeclFromID(id, getContext(node));
-                log.warn("Atom: Found VariableDecl to ID: " + v);
+                log.info("Atom: Found VariableDecl to ID: " + v);
                 node.type = v.type;
                 node.value = v.value;
             }
@@ -1119,7 +1119,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
         //s = s.replaceAll(" ", "");
         List<String> strings = Arrays.stream(literal.split(" ")).collect(Collectors.toList());
         // For every "Regex" go throught the whole string and do the ops defined
-        log.warn("Regexes: " + regexes);
+        log.info("Regexes: " + regexes);
         for (KlammerAffeAusdruck ka : regexes) {
             log.info("----------");
             boolean negated = ka.regexConditionalNot;
@@ -1131,7 +1131,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 regexString = ka.regexString;
             }
 
-            log.warn("List: " + strings + " rType: " +  rType +  " aType: " + aType + " aValue: " + aVal);
+            log.info("List: " + strings + " rType: " +  rType +  " aType: " + aType + " aValue: " + aVal);
             for (int i = 0; i < strings.size(); i++) {
 
                 //Modify Begin
@@ -1246,7 +1246,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                     iter.remove();
                 }
             }
-            log.warn("List: " + strings);
+            log.info("List: " + strings);
         }
         // Check if empty return empty string or
         // all int, double, char or boolean, then return a fitting array else String[]
@@ -1320,9 +1320,9 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 node.getChild(1).getSource().equals("End")) {
             node.regexType = new Type("End");
         } else {
-            log.warn(node.children().toString());
+            log.info(node.children().toString());
             for(Node n: node.children()){
-                log.warn("Child: " +  n.getSource());
+                log.info("Child: " +  n.getSource());
             }
             throw new SemanticException("KlammerAffeAusdruck: No correct left side.");
         }
@@ -1358,16 +1358,12 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(PrintStmnt node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
-
         Expr e = node.firstChildOfType(Expr.class);
-        log.warn("TEST3: " + node.getFirstChild().getClass());
-
         if (node.getFirstChild() instanceof PRINT_LINE) {
             System.out.println(e.value);
         } else if (node.getFirstChild() instanceof PRINT) {
             System.out.print(e.value);
         }
-
         printExit(node);
         return data;
     }
@@ -1376,7 +1372,6 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
     public Object visit(NextStmnt node, Object data) {
         printEnter(node);
         data = node.childrenAccept(this, data);
-
         if (node.getFirstChild() instanceof NEXT) {
         } else if (node.nextValue.equals("System.nextInt")) {
             Scanner s = new Scanner(System.in);

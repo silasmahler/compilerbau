@@ -196,15 +196,6 @@ public class SymbolTable {
         }
         log.info("Returning ArrayTypeAndValue: " + typeAndValue);
         return typeAndValue;
-        /**
-         //Save
-         int[] test = {1,2,3,5};
-         String value = Arrays.toString(test);
-         // Unsave
-         String[] strings = value.substring(1, value.length()-1).replaceAll("\\s","").split(",");
-         for(String s: strings) {
-         log.info(s);
-         }*/
     }
 
     public ArrayTypeAndValue getArrayAccessValAndTypeForIDAndInts(ID id, List<Integer> accessIndexes, String context) {
