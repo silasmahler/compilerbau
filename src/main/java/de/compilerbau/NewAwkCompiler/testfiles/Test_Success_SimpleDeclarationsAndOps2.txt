@@ -5,11 +5,8 @@ int main(String[] args, boolean a) {
 int y = 7;
 char a = 'A';
 String s = "hallo";
-void test123(int a, char b) {
+char test123(int a, char b) {
     a = 5;
     b = 'A';
-    return a;
-    b = 4 + 3 / 2 || !3;
-    x = a != b * 3 + 2;
-    c = 3 + 5 * 3 || true;
+    return b;
 }

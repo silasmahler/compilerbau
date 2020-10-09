@@ -22,8 +22,10 @@ public class NewAwkCompilerApplication {
 				path + "Test_Fail_CompExpr" + txt,
 				path + "Test_Fail_KlammerAffe4" + txt,
 				path + "Test_Fail_LogicalNot" + txt,
+				path + "Test_Fail_LogicalNotUsedInNonBool" + txt,
 				path + "Test_Fail_LogicalOr" + txt,
 				path + "Test_Fail_NotBoxableTypeError" + txt,
+				path + "Test_Fail_TypesNotAllowedInOperation" + txt,
 				path + "Test_Success_AddNumbers" + txt,
 				path + "Test_Success_Arrays1" + txt,
 				path + "Test_Success_Arrays2" + txt,
@@ -45,9 +47,9 @@ public class NewAwkCompilerApplication {
 				path + "Test_Success_SimpleDeclarationsAndOps2" + txt,
 				path + "NewAwkSimpleTest" + txt,
 		};
-		String[] sources2 = {path + "Test_Success_SimpleDeclarationsAndOps2" + txt};
+		String[] sources2 = {path + "Test_Success_NextMethods" + txt};
 		try {
-			NewAwkParser.main(sources2);
+			NewAwkParser.main(sources);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
