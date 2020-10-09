@@ -730,7 +730,8 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 .collect(Collectors.toList()).size() > 0
         ) {
             throw new SemanticException("There are other types than int, double or char" +
-                    " in an operation which uses * / and %");
+                    " in an operation which uses * / and % at: " +
+                    node.getBeginLine() + ":" + node.getBeginColumn());
         } else {
             //Algo: 1) Get 2 operands, 2) parse both 3) operate with them 4) result save double
             Sign firstChild = node.firstChildOfType(Sign.class);
@@ -798,7 +799,7 @@ public class SymbolTableBuilderVisitor extends VisitorAdapter {
                 default:
                     throw new SemanticException("Sign is used in front of type not applicable " +
                             "(Type != int, double or char) at: " +
-                            node.getBeginColumn() + ":" + node.getBeginLine());
+                            node.getBeginLine() + ":" + node.getBeginColumn());
             }
         }
         printExit(node);

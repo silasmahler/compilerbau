@@ -4,20 +4,11 @@ int z;
 int zx;
 int main(String[] args) {
     int x = 5;
-    return x;
-    int a;
-
-    int x = 3;
-
-    a = 4 + 2;
-    b = 4 * 3 + 8 % -2;
-    c = 123 + test() ;
-    d = x[4];
-    e = y[true];
-    f = (int) 5;
-    g = 7 * 2 + 3;
-    h = 7 * (2 + 3);
-    i = 7 * true || ((2 + 3) % 2);
-    y = 2;
+    int a = 4 + 2;
+    double b = 4 * 3 + 8 % 2;
+    double f = 5.0;
+    String g = 7 * 2 + 3;
+    String h = 7 * (2 + 3);
     String[][][] j;
+    return x;
 }

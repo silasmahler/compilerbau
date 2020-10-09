@@ -1,4 +1,4 @@
-int a(String a, int b){
+void a(String a, int b){
   a = "123";
   b = 4;
   System.out.println(a + " " + b);

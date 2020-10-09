@@ -1,4 +1,4 @@
-int a(){
+void a(){
   System.out.println("String" + "Blub");
   System.out.println(2 + (1 + 3));
   System.out.println("String" + (1 + 3));

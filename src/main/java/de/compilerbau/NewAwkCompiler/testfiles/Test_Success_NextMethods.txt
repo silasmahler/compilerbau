@@ -1,4 +1,4 @@
-int a(){
+void a(){
   System.nextInt();
   System.nextDouble();
   System.nextChar();
