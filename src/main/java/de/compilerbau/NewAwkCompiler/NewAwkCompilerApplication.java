@@ -44,7 +44,7 @@ public class NewAwkCompilerApplication {
 				path + "Test_Success_SimpleDeclarationsAndOps2" + txt,
 				path + "NewAwkSimpleTest" + txt,
 		};
-		String[] sources2 = {path + "Test_Success_KlammerAffe4" + txt};
+		String[] sources2 = {path + "Test_Success_KlammerAffe5StringRegexNegated" + txt};
 		try {
 			NewAwkParser.main(sources2);
 		} catch (ParseException e) {
